@@ -33,4 +33,10 @@ npm test
 npm i vant -S
 中文官网 https://youzan.github.io/vant/#/zh-CN/panel
 
+
+# 使用vue-awesome
+npm install vue-awesome
+https://justineo.github.io/vue-awesome/demo/
+查看图标可以去font awesome官网上查看，vue-awesome是基于font awesome图标库来的
+
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

@@ -1,8 +1,8 @@
 <template>
 <div class="index">
   <div class="banner">
-    <img src="../assets/images/banner.jpg" class="img-auto" />
-    <!--<div class="user-center"><i></i></div>-->
+    <!--<img src="../assets/images/banner.jpg" class="img-auto" />-->
+    <div class="user-center" @click="goToUser"><icon name="user" scale="2"></icon></div>
   </div>
   <div class="blank01">
     <div class="blank-tit">我的运营仪表盘</div>
@@ -42,23 +42,40 @@ export default {
     return {
 
     }
+  },
+  methods: {
+    goToUser () {
+      this.$router.push({path: '/user/userIndex'})
+    }
   }
 }
 </script>
 <style lang="less">
   .index{
-  .img-auto{
-    display: inline-block;
-    width: 100%;
-  }
+  /*.img-auto{*/
+    /*display: inline-block;*/
+    /*width: 100%;*/
+  /*}*/
   .fa-icon{
     color: #4983f7;
   }
-  /*.banner{*/
-      /*width: 100%;*/
-      /*height: 300px;*/
-      /*background: #4983f7;*/
-  /*}*/
+  .banner{
+      width: 100%;
+      height: 300px;
+      background: #4983f7;
+  }
+  .user-center{
+    position: absolute;
+    right: 34px;
+    top: 30px;
+    background: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 40px;
+
+  }
 
   .blank-tit{
     color: #555d73;
@@ -97,7 +114,7 @@ export default {
 
   }
   .blank01-box-item03{
-    margin: 40px 0 0 90px;
+    margin: 43px 0 0 131px;
     font-size: 28px;
     a{
       color: #4983f7;
