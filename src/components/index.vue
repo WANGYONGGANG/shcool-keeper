@@ -40,9 +40,9 @@ export default {
   name: 'index',
   data () {
     return {
-      routerUrl:{
-        user:'/user/userIndex',
-        chargeReport:'/chargeReport'
+      routerUrl: {
+        user: '/user/userIndex',
+        chargeReport: '/chargeReport'
       }
     }
   },

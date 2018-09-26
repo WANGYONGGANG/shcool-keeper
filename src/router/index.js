@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/index'
-import ChargeReport from '@/components/chargeReport'
+import ChargeReport from '@/components/charge/chargeReport'
 import Blank from '@/components/user/blank'
 import UserIndex from '@/components/user/userIndex'
 import ChangePassword from '@/components/user/changePassword'
+
+import TeacherIndex from '@/components/teacher/teacherIndex'
 Vue.use(Router)
 
 export default new Router({
@@ -34,6 +36,12 @@ export default new Router({
       path: '/user/changePassword',
       name: 'changePassword',
       component: ChangePassword
+    },
+    {
+      path: '/teacher/teacherIndex',
+      name: 'teacherIndex',
+      component: TeacherIndex
     }
+
   ]
 })
