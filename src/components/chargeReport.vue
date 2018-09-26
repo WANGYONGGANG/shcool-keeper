@@ -3,7 +3,7 @@
   <div class="charge-report-title">收费报表</div>
   <van-cell-group>
     <van-cell title="收费汇总表" icon="edit-data" is-link to="" />
-    <van-cell title="颓废汇总表" icon="records" is-link  />
+    <van-cell title="退费汇总表" icon="records" is-link  />
     <van-cell title="课程收费汇总" icon="sign" is-link />
     <van-cell title="净收汇总表" icon="sign" is-link />
   </van-cell-group>
