@@ -58,7 +58,7 @@
   <van-tabbar v-model="active">
     <van-tabbar-item icon="shop">主页</van-tabbar-item>
     <van-tabbar-item icon="chat" dot>师生信</van-tabbar-item>
-    <van-tabbar-item icon="records" info="5">我的</van-tabbar-item>
+    <van-tabbar-item icon="records" info="5" to="/teacher/mine">我的</van-tabbar-item>
   </van-tabbar>
 
 
@@ -69,10 +69,7 @@ export default {
   name: 'index',
   data () {
     return {
-      teacherRouterUrl: {
-        user: '/user/userIndex',
-        chargeReport: '/chargeReport'
-      }
+      active:0
     }
   },
   methods: {

@@ -7,6 +7,7 @@ import UserIndex from '@/components/user/userIndex'
 import ChangePassword from '@/components/user/changePassword'
 
 import TeacherIndex from '@/components/teacher/teacherIndex'
+import Mine from '@/components/teacher/mine'
 Vue.use(Router)
 
 export default new Router({
@@ -41,7 +42,13 @@ export default new Router({
       path: '/teacher/teacherIndex',
       name: 'teacherIndex',
       component: TeacherIndex
+    },
+    {
+      path: '/teacher/mine',
+      name: 'mine',
+      component: Mine
     }
+
 
   ]
 })

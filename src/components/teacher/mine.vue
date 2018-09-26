@@ -5,13 +5,25 @@
       <img src="../../assets/images/user/test.jpg"/>
     </li>
     <li class="user-name">测试员</li>
-    <li class="user-ip">测试</li>
+    <li class="user-ip">班主任</li>
   </ul>
 
   <van-cell-group>
-    <van-cell title="修改密码" icon="edit-data" is-link to="/user/changePassword" />
-    <van-cell title="查看投诉与建议" icon="records" is-link to="/user/blank" />
-    <van-cell title="退出登录" icon="sign" is-link />
+    <van-cell title="修改密码" icon="edit-data" is-link to="" />
+    <van-cell title="修改图像" icon="records" is-link to="" />
+  </van-cell-group>
+
+  <van-cell-group>
+    <van-cell title="工作统计" icon="edit-data" is-link to="" />
+    <van-cell title="家长评价排名" icon="records" is-link to="" />
+    <van-cell title="投诉与建议" icon="sign" is-link />
+  </van-cell-group>
+
+  <van-cell-group>
+    <van-cell title="老师秀" icon="edit-data" is-link to="" />
+  </van-cell-group>
+  <van-cell-group>
+    <van-cell title="退出登陆" icon="edit-data" is-link to="" />
   </van-cell-group>
 
 </div>
@@ -62,12 +74,13 @@ export default {
   }
   }
   .van-cell-group{
-    background: #eef1f6
+    background: #eef1f6;
+    margin:30px 0 0 0 ;
   }
   .van-cell{
     font-size: 26px;
     line-height: 80px;
-    margin:30px 0 0 0 ;
+
     padding: 8px 15px 0;
   }
   .van-cell__left-icon{
@@ -80,6 +93,7 @@ export default {
     line-height: 100px;
     font-size: 20px;
   }
+
   }
 
 </style>
