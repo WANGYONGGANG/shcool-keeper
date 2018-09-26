@@ -2,7 +2,7 @@
 <div class="index">
   <div class="banner">
     <!--<img src="../assets/images/banner.jpg" class="img-auto" />-->
-    <div class="user-center" @click="goToUser"><icon name="user" scale="2"></icon></div>
+    <div class="user-center" @click="goTo(routerUrl.user)"><icon name="user" scale="2"></icon></div>
   </div>
   <div class="blank01">
     <div class="blank-tit">我的运营仪表盘</div>
@@ -15,7 +15,7 @@
   <div class="blank02">
     <div class="blank-tit">校区数据统计报表</div>
     <ul class="blank02-category">
-      <li class="category-item">
+      <li class="category-item" @click="goTo(routerUrl.chargeReport)">
         <icon name="home" scale="3"></icon>
         <span>收费报表</span>
       </li>
@@ -40,12 +40,15 @@ export default {
   name: 'index',
   data () {
     return {
-
+      routerUrl:{
+        user:'/user/userIndex',
+        chargeReport:'/chargeReport'
+      }
     }
   },
   methods: {
-    goToUser () {
-      this.$router.push({path: '/user/userIndex'})
+    goTo (param) {
+      this.$router.push({path: param})
     }
   }
 }
@@ -69,11 +72,11 @@ export default {
     right: 34px;
     top: 30px;
     background: #fff;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 42px;
     border-radius: 100%;
     text-align: center;
-    line-height: 40px;
+    padding-top: 3px;
 
   }
 
