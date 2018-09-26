@@ -10,7 +10,7 @@
 
   <van-cell-group>
     <van-cell title="修改密码" icon="edit-data" is-link to="/user/changePassword" />
-    <van-cell title="查看投诉与建议" icon="records" is-link />
+    <van-cell title="查看投诉与建议" icon="records" is-link to="/user/blank" />
     <van-cell title="退出登录" icon="sign" is-link />
   </van-cell-group>
 
