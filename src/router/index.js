@@ -48,7 +48,5 @@ export default new Router({
       name: 'mine',
       component: Mine
     }
-
-
   ]
 })

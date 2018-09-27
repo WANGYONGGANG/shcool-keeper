@@ -60,8 +60,6 @@
     <van-tabbar-item icon="chat" dot>师生信</van-tabbar-item>
     <van-tabbar-item icon="records" info="5" to="/teacher/mine">我的</van-tabbar-item>
   </van-tabbar>
-
-
 </div>
 </template>
 <script>
