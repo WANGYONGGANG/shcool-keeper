@@ -16,7 +16,7 @@ export default {
 }
 </script>
 <style lang="less">
-  .charge-report{
+  .charge{
   .charge-report-title{
     font-size: 28px;
     line-height: 120px;

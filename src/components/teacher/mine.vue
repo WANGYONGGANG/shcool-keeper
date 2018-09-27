@@ -1,5 +1,5 @@
 <template>
-<div class="user-index">
+<div class="mine">
   <ul class="banner">
     <li class="user-img">
       <img src="../../assets/images/user/test.jpg"/>
@@ -40,7 +40,7 @@ export default {
 }
 </script>
 <style lang="less">
-  .user-index{
+  .mine{
   .banner{
     width: 100%;
     height: 347px;
@@ -80,8 +80,8 @@ export default {
   .van-cell{
     font-size: 26px;
     line-height: 80px;
-
     padding: 8px 15px 0;
+    margin: 0;
   }
   .van-cell__left-icon{
     font-size: 28px;
