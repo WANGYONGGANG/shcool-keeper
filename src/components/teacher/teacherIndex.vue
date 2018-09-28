@@ -4,7 +4,7 @@
   <div class="banner">
     <img src="../../assets/images/teacherbanner.jpg" class="img-auto" />
   </div>
-  <div class="teacher-ip">当前身份：<span class="yellow">班主任</span></div>
+  <div class="teacher-ip">当前身份：<span class="yellow" @click="showIpDia">{{ipName}}<i class="van-icon van-icon-arrow van-cell__right-icon"></i></span></div>
   <ul class="teacher-nav">
       <li class="teacher-nav-item">
         <i class="item-img"><icon name="home" scale="4"></icon></i>
@@ -60,21 +60,57 @@
     <van-tabbar-item icon="chat" dot>师生信</van-tabbar-item>
     <van-tabbar-item icon="records" info="5" to="/teacher/mine">我的</van-tabbar-item>
   </van-tabbar>
+  <ip-pop></ip-pop>
 </div>
 </template>
 <script>
-export default {
+  import IpPop from '../popup/ipPop'
+ export default {
   name: 'index',
+  components: {
+    IpPop
+  },
   data () {
     return {
-      active:0
+      active:0,
+      ipName:'',
+      ipData:{
+        studytube :'学管师',
+        teacher :'老师',
+        headmaster :'班主任'
+      }
     }
   },
+  mounted () {
+    this.ipName = this.ipData[ this.getStatus(this.$route.path)]
+  },
   methods: {
+    showIpDia () {
+      this.$store.state.ipPopup.ipShow = true
+    },
     goTo (param) {
       this.$router.push({path: param})
+    },
+    getStatus (urlStr) {
+      var urlStrArr = urlStr.split('/')
+      return urlStrArr[urlStrArr.length - 1]
     }
-  }
+  },
+  computed: {
+    ipShow:{
+      get:function () {
+        return this.$store.state.ipPopup.ipShow
+      },
+      set:function(){
+      }
+    }
+  },
+   watch: {
+     '$route' (to, from) {
+       //切换身份
+       this.ipName = this.ipData[ this.getStatus(this.$route.path)]
+     }
+   }
 }
 </script>
 <style lang="less">
@@ -141,6 +177,14 @@ export default {
   .van-tabbar-item__icon{
     font-size: 34px;
     margin-bottom: 10px;
+  }
+  .van-cell__right-icon{
+    font-size: 20px;
+    margin-left: 10px;
+  }
+  .van-cell__right-icon:before{
+    -webkit-transform: rotate(90deg);
+    color: #ee8434;
   }
   }
 

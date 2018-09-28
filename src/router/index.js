@@ -41,7 +41,13 @@ export default new Router({
     {
       path: '/teacher/teacherIndex',
       name: 'teacherIndex',
-      component: TeacherIndex
+      component: TeacherIndex,
+      children: [
+        {path: 'studytube', component: TeacherIndex},
+        {path: 'teacher', component: TeacherIndex},
+        {path: 'headmaster', component: TeacherIndex}
+      ]
+
     },
     {
       path: '/teacher/mine',

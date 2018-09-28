@@ -5,29 +5,24 @@
       <img src="../../assets/images/user/test.jpg"/>
     </li>
     <li class="user-name">测试员</li>
-    <li class="user-ip" @click="showIpDia">测试<i class="van-icon van-icon-arrow van-cell__right-icon"></i></li>
+    <li class="user-ip" @click="showIpDia">校长<i class="van-icon van-icon-arrow van-cell__right-icon"></i></li>
   </ul>
   <van-cell-group>
     <van-cell title="修改密码" icon="edit-data" is-link to="/user/changePassword" />
     <van-cell title="查看投诉与建议" icon="records" is-link to="/user/blank" />
     <van-cell title="退出登录" icon="sign" is-link />
   </van-cell-group>
-  <van-popup v-model="ipShow" position="bottom">
-    <dl class="ip-list">
-      <dt>身份切换</dt>
-      <dd @click="goTo(routerUrl.index)">校长</dd>
-      <dd @click="goTo(routerUrl.teacher)">学管师</dd>
-      <dd @click="goTo(routerUrl.teacher)">老师</dd>
-      <dd @click="goTo(routerUrl.teacher)">班主任</dd>
-    </dl>
-  </van-popup>
+  <ip-pop></ip-pop>
 </div>
 </template>
 <script>
+import IpPop from '../popup/ipPop'
 export default {
+  components: {
+    IpPop
+  },
   data () {
     return {
-      ipShow: false,
       routerUrl: {
         index: '/index',
         teacher: '/teacher/teacherIndex'
@@ -36,10 +31,10 @@ export default {
   },
   methods: {
     showIpDia () {
-      this.ipShow = true
+      this.$store.state.ipPopup.ipShow = true
     },
-    goTo (param) {
-      this.$router.push({path: param})
+    goTo (url, ip) {
+      this.$router.push({path: url, query: {name: ip}})
     }
 
   }
@@ -100,27 +95,6 @@ export default {
   .van-cell__right-icon:before{
     -webkit-transform: rotate(90deg);
     color: #fff;
-  }
-  .van-popup{
-    width: 100%;
-  }
-  .ip-list{
-    background:#fff ;
-
-    text-align: left;
-
-  }
-  .ip-list dt{
-    text-align: center;
-    font-size: 32px;
-    line-height: 100px;
-  }
-  .ip-list dd{
-    height: 100px;
-    line-height: 100px;
-    font-size: 30px;
-    text-indent: 15px;
-    border-bottom:1px #eef1f6 solid ;
   }
   }
 

@@ -10,14 +10,18 @@ import '../static/css/base.less'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import Vant from 'vant'
+import store from './store'
+
 Vue.config.productionTip = false
 
+// vuex
 Vue.component('icon', Icon)
 Vue.use(Vant)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
