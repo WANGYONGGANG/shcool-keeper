@@ -6,7 +6,7 @@
   </div>
   <div class="teacher-ip">当前身份：<span class="yellow" @click="showIpDia">{{ipName}}<i class="van-icon van-icon-arrow van-cell__right-icon"></i></span></div>
   <ul class="teacher-nav">
-      <li class="teacher-nav-item">
+      <li class="teacher-nav-item" @click="goTo(urls.myTimetable)">
         <i class="item-img"><icon name="home" scale="4"></icon></i>
         <span>我的课表</span>
       </li>
@@ -78,6 +78,9 @@
         studytube :'学管师',
         teacher :'老师',
         headmaster :'班主任'
+      },
+      urls:{
+        myTimetable:'/teacher/myTimetable'
       }
     }
   },
@@ -89,6 +92,7 @@
       this.$store.state.ipPopup.ipShow = true
     },
     goTo (param) {
+      console.log(param)
       this.$router.push({path: param})
     },
     getStatus (urlStr) {

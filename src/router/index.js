@@ -7,6 +7,8 @@ import UserIndex from '@/components/user/userIndex'
 import ChangePassword from '@/components/user/changePassword'
 
 import TeacherIndex from '@/components/teacher/teacherIndex'
+import MyTimetable from '@/components/teacher/myTimetable'
+
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
 
@@ -53,6 +55,11 @@ export default new Router({
       path: '/teacher/mine',
       name: 'mine',
       component: Mine
-    }
+    },
+    {
+      path: '/teacher/myTimetable',
+      name: 'myTimetable',
+      component: MyTimetable
+    },
   ]
 })
