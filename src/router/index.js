@@ -11,6 +11,11 @@ import MyTimetable from '@/components/teacher/myTimetable'
 import Naming from '@/components/teacher/Naming'
 import ChooseClass from '@/components/teacher/chooseClass'
 import Commented from '@/components/teacher/commented'
+import CommentedList from '@/components/teacher/commentedList'
+import ClassContent from '@/components/teacher/classContent'
+import CommentedDetial from '@/components/teacher/commentedDetial'
+import ReplyList from '@/components/teacher/replyList'
+import ReplyDetial from '@/components/teacher/replyDetial'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -78,6 +83,31 @@ export default new Router({
       path: '/teacher/commented',
       name: 'commented',
       component: Commented
+    },
+    {
+      path: '/teacher/commentedList',
+      name: 'commentedList',
+      component: CommentedList
+    },
+    {
+      path: '/teacher/commentedDetial',
+      name: 'commentedDetial',
+      component: CommentedDetial
+    },
+    {
+      path: '/teacher/classContent',
+      name: 'classContent',
+      component: ClassContent
+    },
+    {
+      path: '/teacher/replyList',
+      name: 'replyList',
+      component: ReplyList
+    },
+    {
+      path: '/teacher/replyDetial',
+      name: 'replyDetial',
+      component: ReplyDetial
     }
   ]
 })
