@@ -16,6 +16,7 @@ import ClassContent from '@/components/teacher/classContent'
 import CommentedDetial from '@/components/teacher/commentedDetial'
 import ReplyList from '@/components/teacher/replyList'
 import ReplyDetial from '@/components/teacher/replyDetial'
+import ImmediatelyCommented from '@/components/teacher/immediatelyCommented'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -108,6 +109,11 @@ export default new Router({
       path: '/teacher/replyDetial',
       name: 'replyDetial',
       component: ReplyDetial
+    },
+    {
+      path: '/teacher/immediatelyCommented',
+      name: 'immediatelyCommented',
+      component: ImmediatelyCommented
     }
   ]
 })

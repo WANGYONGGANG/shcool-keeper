@@ -4,7 +4,7 @@
       <van-cell title="上课内容：" is-link to="/teacher/classContent"/>
       <van-cell title="查看家长回复" value="1" to="/teacher/replyList" is-link />
     </van-cell-group>
-    <div class="list-box">
+    <div class="list-box" @click="goTo">
       <div class="list-box-l">
         <span class="box-l"><img src="../../assets/images/user/test.jpg"/></span>
         <span class="name">张跃龙</span>
@@ -12,7 +12,7 @@
       </div>
       <div class="list-box-r">立即点评<van-icon name="arrow" /></div>
     </div>
-    <div class="list-box">
+    <div class="list-box" @click="goTo">
       <div class="list-box-l">
         <span class="box-l"><img src="../../assets/images/user/test.jpg"/></span>
         <span class="name">张跃龙</span>
@@ -24,7 +24,7 @@
       <div class="bottom-l">
         <van-checkbox v-model="checked">全选</van-checkbox>
       </div>
-      <div class="bottom-r"><span>上课点评</span></div>
+      <div class="bottom-r"><span @click="goTo">上课点评</span></div>
     </div>
   </div>
 </template>
@@ -36,6 +36,9 @@
       }
     },
     methods: {
+      goTo () {
+        this.$router.push({path: '/teacher/immediatelyCommented'})
+      }
     }
   }
 </script>
