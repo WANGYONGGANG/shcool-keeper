@@ -1,10 +1,7 @@
 <template>
-<div class="my-timetable">
-  <div class="time-tab">
-    <span class="select-label">上周</span>
-    <span class="select-label">本周</span>
-    <span class="select-label">下周</span>
-    <span class="select-label fn-right">按月</span>
+<div class="choose-class">
+  <div class="class-tab">
+    <van-search placeholder="请输入搜索关键词" background="#fff" show-action v-model="value" @search="search" />
   </div>
   <div class="timetable-tit">
     <span class="tit-l">星期一</span>
@@ -55,29 +52,41 @@ export default {
     }
   },
   methods: {
+    search () {
+
+    }
   }
+
 }
 </script>
 <style lang="less">
-  .my-timetable{
-    .time-tab{
-      height: 86px;
+  .choose-class{
+    .class-tab{
+      height: 76px;
+      padding-top: 10px;
       background: #fff;
       padding-left:20px;
-      .select-label{
-        height: 53px;
-        display: inline-block;
-        padding: 0px 30px;
-        font-size: 24px;
-        line-height: 55px;
-        border-radius: 50px;
-        border: 1px #eff1f6 solid;
-        margin: 17px 10px 0;
-      }
-      .fn-right{
-        float: right;
-        background: #eff1f6;
-      }
+      text-align: center;
+    .van-cell{
+      font-size: 28px;
+      border-radius: 50px;
+      padding: 8px 10px;
+
+    border:1px #ccc solid;
+    .van-cell__left-icon{
+      font-size: 28px;
+      position: relative;
+      top: 6px;
+    }
+    .van-field__body{
+      width: 400px;
+    }
+
+    }
+  .van-search__action{
+    font-size: 26px;
+
+  }
     }
   .timetable-tit{
     height: 80px;

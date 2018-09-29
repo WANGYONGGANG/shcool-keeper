@@ -1,4 +1,3 @@
-<script src="../../main.js"></script>
 <template>
   <van-popup v-model="ipShow" position="bottom" @click-overlay="closePop">
     <dl class="ip-list">
@@ -34,13 +33,13 @@ export default {
   mounted () {
   },
   computed: {
-    ipShow:{
-      get:function () {
+    ipShow: {
+      get () {
         return this.$store.state.ipPopup.ipShow
       },
-      set:function(){
+      set () {
       }
-    },
+    }
   }
 }
 </script>

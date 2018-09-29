@@ -8,6 +8,9 @@ import ChangePassword from '@/components/user/changePassword'
 
 import TeacherIndex from '@/components/teacher/teacherIndex'
 import MyTimetable from '@/components/teacher/myTimetable'
+import Naming from '@/components/teacher/Naming'
+import ChooseClass from '@/components/teacher/chooseClass'
+import Commented from '@/components/teacher/commented'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -61,5 +64,20 @@ export default new Router({
       name: 'myTimetable',
       component: MyTimetable
     },
+    {
+      path: '/teacher/Naming',
+      name: 'Naming',
+      component: Naming
+    },
+    {
+      path: '/teacher/chooseClass',
+      name: 'chooseClass',
+      component: ChooseClass
+    },
+    {
+      path: '/teacher/commented',
+      name: 'commented',
+      component: Commented
+    }
   ]
 })

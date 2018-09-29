@@ -10,11 +10,11 @@
         <i class="item-img"><icon name="home" scale="4"></icon></i>
         <span>我的课表</span>
       </li>
-      <li class="teacher-nav-item">
+      <li class="teacher-nav-item" @click="goTo(urls.Naming)">
         <i class="item-img"><icon name="book" scale="4"></icon></i>
         <span>上课点名</span>
       </li>
-      <li class="teacher-nav-item">
+      <li class="teacher-nav-item" @click="goTo(urls.commented)">
         <i class="item-img"><icon name="server" scale="4"></icon></i>
         <span>上课点评</span>
       </li>
@@ -80,7 +80,9 @@
         headmaster :'班主任'
       },
       urls:{
-        myTimetable:'/teacher/myTimetable'
+        myTimetable:'/teacher/myTimetable',
+        Naming:'/teacher/Naming',
+        commented:'/teacher/commented'
       }
     }
   },
@@ -92,7 +94,6 @@
       this.$store.state.ipPopup.ipShow = true
     },
     goTo (param) {
-      console.log(param)
       this.$router.push({path: param})
     },
     getStatus (urlStr) {
