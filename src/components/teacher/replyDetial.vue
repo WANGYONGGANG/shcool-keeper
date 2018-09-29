@@ -1,54 +1,44 @@
 <template>
-<div class="reply-list">
-  <div class="list-cont" @click="goTo">
-    <div class="cont-l">
-      <dl><dt>2018.09.13 18:34</dt><dd>老师仪容仪表5星；教学态度5星；教学内容五星</dd></dl>
-    </div>
-    <div class="cont-r"><van-icon name="arrow" /></div>
+  <div class="reply-detial">
+    <dl class="detial-list">
+      <dt>教学内容</dt>
+      <dd><van-rate v-model="value" size="40" disabled-color="#f8d304" disabled /></dd>
+    </dl>
+    <dl class="detial-list">
+      <dt>教学态度</dt>
+      <dd><van-rate v-model="value" size="40" disabled-color="#f8d304" disabled /></dd>
+    </dl>
+    <dl class="detial-list">
+      <dt>教学仪容仪表</dt>
+      <dd><van-rate v-model="value" size="40" disabled-color="#f8d304" disabled /></dd>
+    </dl>
   </div>
-</div>
 </template>
 <script>
-export default {
-  data () {
-    return {
-      checked: true
-    }
-  },
-  methods: {
-    goTo () {
-      this.$router.push({path: '/teacher/commentedList'})
+  export default {
+    data () {
+      return {
+        value: 5
+      }
     }
   }
-}
 </script>
 <style lang="less">
-  .reply-list{
-    .list-cont{
-      padding: 0 25px;
+  .reply-detial{
+    .detial-list{
+      padding: 30px 0;
       background: #fff;
-      height: 137px;
-
-      .cont-l{
-        padding-top: 20px;
-        float: left;
-        dt{
-          font-size: 24px;
-          color: #888;
-          line-height: 50px;
-        }
-        dd{
-          font-size: 26px;
-          color: #444;
-        }
+      margin-bottom: 15px;
+      text-align: center;
+      dt{
+        color: #444;
+        font-size: 28px;
+        line-height: 40px;
       }
-  .cont-r{
-    line-height: 137px;
-    float: right;
-    .van-icon-arrow{
-      color: #888;
+      dd{
+        padding:20px 0 0;
+      }
     }
-  }
-    }
+
   }
 </style>
