@@ -15,30 +15,29 @@
   </div>
 </template>
 <script>
-  export default {
-    data () {
-      return {
-        value: 5
-      }
+export default {
+  data () {
+    return {
+      value: 5
     }
   }
+}
 </script>
 <style lang="less">
-  .reply-detial{
-    .detial-list{
-      padding: 30px 0;
-      background: #fff;
-      margin-bottom: 15px;
-      text-align: center;
-      dt{
-        color: #444;
-        font-size: 28px;
-        line-height: 40px;
-      }
-      dd{
-        padding:20px 0 0;
-      }
+.reply-detial{
+  .detial-list{
+    padding: 30px 0;
+    background: #fff;
+    margin-bottom: 15px;
+    text-align: center;
+    dt{
+      color: #444;
+      font-size: 28px;
+      line-height: 40px;
     }
-
+    dd{
+      padding:20px 0 0;
+    }
   }
+}
 </style>

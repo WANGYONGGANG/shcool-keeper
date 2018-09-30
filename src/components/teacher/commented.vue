@@ -18,119 +18,119 @@
   </div>
 </template>
 <script>
-  import CommentedPop from '../popup/commentedPop'
-  export default {
-    components: {
-      CommentedPop
+import CommentedPop from '../popup/commentedPop'
+export default {
+  components: {
+    CommentedPop
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
+    showCommentedDia () {
+      this.$store.state.commentPopup.isShow = true
     },
-    data () {
-      return {
-      }
-    },
-    methods: {
-      showCommentedDia () {
-        this.$store.state.commentPopup.isShow = true
-      },
-      goTo () {
-        this.$router.push({path: '/teacher/commentedList'})
-      }
+    goTo () {
+      this.$router.push({path: '/teacher/commentedList'})
     }
   }
+}
 </script>
 <style lang="less">
-  .commented{
-  .commented-tab{
-    height: 76px;
-    padding-top: 10px;
-    background: #fff;
-    margin-bottom: 10px;
-    padding-left:20px;
-  .tab-radius{
-    height: 53px;
-    display: inline-block;
-    padding: 0px 30px;
-    font-size: 24px;
-    line-height: 55px;
-    border-radius: 50px;
-    border: 1px #eff1f6 solid;
-    margin: 17px 10px 0;
-  }
-  .arrow-down .van-icon{
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-  }
-  }
-  .timetable-tit{
-    height: 80px;
-    color: #494847;
-    font-size: 28px;
-    line-height: 80px;
-    padding: 0 30px;
-  .tit-r{
-    float: right;
-  }
-  }
-  .timetable-table{
-    background: #fff;
-    height: 170px;
-  .empty{
-    line-height: 170px;
-    text-align: center;
-    font-size: 32px;
-    color: #838383;
-  }
-  .table-l{
-    float: left;
-    padding-left:30px;
+.commented{
+.commented-tab{
+  height: 76px;
+  padding-top: 10px;
+  background: #fff;
+  margin-bottom: 10px;
+  padding-left:20px;
+.tab-radius{
+  height: 53px;
+  display: inline-block;
+  padding: 0px 30px;
+  font-size: 24px;
+  line-height: 55px;
+  border-radius: 50px;
+  border: 1px #eff1f6 solid;
+  margin: 17px 10px 0;
+}
+.arrow-down .van-icon{
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+}
+.timetable-tit{
+  height: 80px;
+  color: #494847;
+  font-size: 28px;
+  line-height: 80px;
+  padding: 0 30px;
+.tit-r{
+  float: right;
+}
+}
+.timetable-table{
+  background: #fff;
+  height: 170px;
+.empty{
+  line-height: 170px;
+  text-align: center;
+  font-size: 32px;
+  color: #838383;
+}
+.table-l{
+  float: left;
+  padding-left:30px;
 
-  /*width: 550px;*/
-  .class-tit{
-    font-size: 32px;
-    color: #141414;
-    line-height: 65px;
-    padding-top: 10px;
-  }
+/*width: 550px;*/
+.class-tit{
+  font-size: 32px;
+  color: #141414;
+  line-height: 65px;
+  padding-top: 10px;
+}
 
-  .class-details{
-    font-size: 24px;
-    color: #838383;
-    line-height: 40px;
-  .name{
-    padding-right: 15px;
-  .van-icon{
-    position: relative;
-    top: 4px;
-    margin-right: 15px;
-    color: #dc951a;
+.class-details{
+  font-size: 24px;
+  color: #838383;
+  line-height: 40px;
+.name{
+  padding-right: 15px;
+.van-icon{
+  position: relative;
+  top: 4px;
+  margin-right: 15px;
+  color: #dc951a;
 
-  }
-  }
-  .time{
-  .van-icon{
-    position: relative;
-    top: 4px;
-    margin-right: 15px;
-    color: #dc951a;
-  }
-  }
-  }
-  }
-  .table-r{
-    float: right;
-    text-align: center;
-    font-size: 26px;
-    padding-top: 35px;
-    width: 180px;
-    color: #838383;
-  .completion{
-    display: inline-block;
-    border-radius: 50px;
-    line-height: 40px;
-    padding: 0 20px;
-    margin: 15px auto 0;
-  }
-  }
-  }
-  }
+}
+}
+.time{
+.van-icon{
+  position: relative;
+  top: 4px;
+  margin-right: 15px;
+  color: #dc951a;
+}
+}
+}
+}
+.table-r{
+  float: right;
+  text-align: center;
+  font-size: 26px;
+  padding-top: 35px;
+  width: 180px;
+  color: #838383;
+.completion{
+  display: inline-block;
+  border-radius: 50px;
+  line-height: 40px;
+  padding: 0 20px;
+  margin: 15px auto 0;
+}
+}
+}
+}
 
 </style>

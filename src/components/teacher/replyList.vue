@@ -9,46 +9,46 @@
   </div>
 </template>
 <script>
-  export default {
-    data () {
-      return {
-        checked: true
-      }
-    },
-    methods: {
-      goTo () {
-        this.$router.push({path: '/teacher/replyDetial'})
-      }
+export default {
+  data () {
+    return {
+      checked: true
+    }
+  },
+  methods: {
+    goTo () {
+      this.$router.push({path: '/teacher/replyDetial'})
     }
   }
+}
 </script>
 <style lang="less">
-  .reply-list{
-  .list-cont{
-    padding: 0 25px;
-    background: #fff;
-    height: 137px;
+.reply-list{
+.list-cont{
+  padding: 0 25px;
+  background: #fff;
+  height: 137px;
 
-  .cont-l{
-    padding-top: 20px;
-    float: left;
-  dt{
-    font-size: 24px;
-    color: #888;
-    line-height: 50px;
-  }
-  dd{
-    font-size: 26px;
-    color: #444;
-  }
-  }
-  .cont-r{
-    line-height: 137px;
-    float: right;
-  .van-icon-arrow{
-    color: #888;
-  }
-  }
-  }
-  }
+.cont-l{
+  padding-top: 20px;
+  float: left;
+dt{
+  font-size: 24px;
+  color: #888;
+  line-height: 50px;
+}
+dd{
+  font-size: 26px;
+  color: #444;
+}
+}
+.cont-r{
+  line-height: 137px;
+  float: right;
+.van-icon-arrow{
+  color: #888;
+}
+}
+}
+}
 </style>
