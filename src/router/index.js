@@ -20,6 +20,13 @@ import ImmediatelyCommented from '@/components/teacher/immediatelyCommented'
 import ResleaseTask from '@/components/teacher/resleaseTask'
 import TaskDetial from '@/components/teacher/taskDetial'
 import StudentCompletion from '@/components/teacher/studentCompletion'
+import StudentCommunication from '@/components/teacher/studentCommunication'
+import SchoolBulletin from '@/components/teacher/schoolBulletin'
+import Notice from '@/components/teacher/notice'
+import BulletinDetial from '@/components/teacher/bulletinDetial'
+import IntentionalCustomers from '@/components/teacher/intentionalCustomers'
+import Roster from '@/components/teacher/Roster'
+import RosterDetial from '@/components/teacher/rosterDetial'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -132,6 +139,41 @@ export default new Router({
       path: '/teacher/studentCompletion',
       name: 'studentCompletion',
       component: StudentCompletion
+    },
+    {
+      path: '/teacher/studentCommunication',
+      name: 'studentCommunication',
+      component: StudentCommunication
+    },
+    {
+      path: '/teacher/notice',
+      name: 'notice',
+      component: Notice
+    },
+    {
+      path: '/teacher/schoolBulletin',
+      name: 'schoolBulletin',
+      component: SchoolBulletin
+    },
+    {
+      path: '/teacher/bulletinDetial',
+      name: 'bulletinDetial',
+      component: BulletinDetial
+    },
+    {
+      path: '/teacher/intentionalCustomers',
+      name: 'intentionalCustomers',
+      component: IntentionalCustomers
+    },
+    {
+      path: '/teacher/Roster',
+      name: 'Roster',
+      component: Roster
+    },
+    {
+      path: '/teacher/rosterDetial',
+      name: 'rosterDetial',
+      component: RosterDetial
     }
   ]
 })

@@ -1,12 +1,26 @@
 <template>
   <div class="student-completion">
-    <van-tabs type="card">
-      <van-tab v-for="(item,index) in tabItem" :title="item" :key="index">
-      <div class="card-list">
-        <div class="card-list-l"><img class="img" src="../../assets/images/user/test.jpg"/>王梓桐
+    <van-tabs type="card" v-model="active">
+      <van-tab title="全部（0）">
+        <div class="card-list">
+          <div class="card-list-l"><img class="img" src="../../assets/images/user/test.jpg"/>王梓桐
+          </div>
+          <div class="card-list-r">待评价<van-icon name="arrow" /></div>
         </div>
-        <div class="card-list-r">待评价<van-icon name="arrow" /></div>
-      </div>
+      </van-tab>
+      <van-tab title="已提交（0）">
+        <div class="card-list">
+          <div class="card-list-l"><img class="img" src="../../assets/images/user/test.jpg"/>王梓桐
+          </div>
+          <div class="card-list-r">待评价<van-icon name="arrow" /></div>
+        </div>
+      </van-tab>
+      <van-tab title="未提交（0）">
+        <div class="card-list">
+          <div class="card-list-l"><img class="img" src="../../assets/images/user/test.jpg"/>王梓桐
+          </div>
+          <div class="card-list-r">待评价<van-icon name="arrow" /></div>
+        </div>
       </van-tab>
     </van-tabs>
   </div>
@@ -15,7 +29,7 @@
 export default {
   data () {
     return {
-      tabItem: ['全部', '已提交', '未提交']
+      active: 1
     }
   }
 }
