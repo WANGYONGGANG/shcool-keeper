@@ -1,7 +1,7 @@
 <template>
   <div class="commented">
     <div class="commented-tab">
-      <span class="tab-radius">2018-09-01</span> － <span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
+      <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
     </div>
     <div class="timetable-table" @click="goTo">
       <div class="table-l">
@@ -53,7 +53,7 @@ export default {
   line-height: 55px;
   border-radius: 50px;
   border: 1px #eff1f6 solid;
-  margin: 17px 10px 0;
+  margin: 8px 10px 0;
 }
 .arrow-down .van-icon{
   -webkit-transform: rotate(90deg);

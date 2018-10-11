@@ -18,7 +18,7 @@
         <i class="item-img"><icon name="server" scale="4"></icon></i>
         <span>上课点评</span>
       </li>
-      <li class="teacher-nav-item">
+      <li class="teacher-nav-item" @click="goTo(urls.resleaseTask)">
         <i class="item-img"><icon name="server" scale="4"></icon></i>
         <span>作业</span>
       </li>
@@ -82,7 +82,9 @@
       urls:{
         myTimetable:'/teacher/myTimetable',
         Naming:'/teacher/Naming',
-        commented:'/teacher/commented'
+        commented:'/teacher/commented',
+        resleaseTask:'/teacher/resleaseTask'
+
       }
     }
   },

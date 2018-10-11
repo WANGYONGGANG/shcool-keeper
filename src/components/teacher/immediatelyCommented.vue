@@ -27,6 +27,16 @@
       </dl>
     </div>
     <div class="class-evaluation">
+      <van-cell-group>
+        <van-cell title="选择评价模版" is-link />
+        <van-field
+          v-model="message"
+          type="textarea"
+          placeholder="写点评价吧，您的评价对这位学生会有更大的帮助呦！（1000字以内）"
+          rows="1"
+        />
+      </van-cell-group>
+
     </div>
     <div class="immediately-bottom">
       <span class="blue-font">存为草稿</span>
@@ -38,7 +48,8 @@
 export default {
   data () {
     return {
-      value: 3
+      value: 3,
+      message: ''
     }
   }
 }
@@ -48,7 +59,7 @@ export default {
 .immediately-title{
   height: 78px;
   line-height: 78px;
-  font-size: 28px;
+  font-size: 26px;
   color: #5f5f5f;
   padding-left: 30px;
 .van-icon{
@@ -131,6 +142,22 @@ span{
 .blue-bg{
   color: #fff;
   background: #38f;
+}
+}
+.class-evaluation{
+  width: 692px;
+  margin: 0 auto;
+  .van-cell{
+    font-size: 24px;
+    line-height: 24px;
+    padding: 35px 15px;
+  }
+  .van-field{
+    line-height: 40px;
+    height: 300px;
+  }
+.van-field--min-height .van-field__control{
+  min-height: 300px;
 }
 }
 }

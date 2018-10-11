@@ -17,6 +17,9 @@ import CommentedDetial from '@/components/teacher/commentedDetial'
 import ReplyList from '@/components/teacher/replyList'
 import ReplyDetial from '@/components/teacher/replyDetial'
 import ImmediatelyCommented from '@/components/teacher/immediatelyCommented'
+import ResleaseTask from '@/components/teacher/resleaseTask'
+import TaskDetial from '@/components/teacher/taskDetial'
+import StudentCompletion from '@/components/teacher/studentCompletion'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -114,6 +117,21 @@ export default new Router({
       path: '/teacher/immediatelyCommented',
       name: 'immediatelyCommented',
       component: ImmediatelyCommented
+    },
+    {
+      path: '/teacher/resleaseTask',
+      name: 'resleaseTask',
+      component: ResleaseTask
+    },
+    {
+      path: '/teacher/taskDetial',
+      name: 'taskDetial',
+      component: TaskDetial
+    },
+    {
+      path: '/teacher/studentCompletion',
+      name: 'studentCompletion',
+      component: StudentCompletion
     }
   ]
 })
