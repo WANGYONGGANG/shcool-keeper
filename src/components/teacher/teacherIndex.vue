@@ -193,6 +193,9 @@
     -webkit-transform: rotate(90deg);
     color: #ee8434;
   }
+  .van-tabbar{
+    background-color: #f2f2f2;
+  }
   }
 
 </style>
