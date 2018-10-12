@@ -1,5 +1,5 @@
 <template>
-  <van-popup v-model="ipShow" position="bottom" @click-overlay="closePop">
+  <van-popup v-model="isShow" position="bottom" @click-overlay="closePop">
     <dl class="ip-list">
       <dt>选择校区</dt>
       <dd @click="goTo">潮人部落</dd>
@@ -25,7 +25,7 @@ export default {
     console.log(this.$store.state.schoolPopup)
   },
   computed: {
-    ipShow: {
+    isShow: {
       get () {
         return this.$store.state.schoolPopup.isShow
       },

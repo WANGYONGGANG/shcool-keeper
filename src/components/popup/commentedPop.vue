@@ -1,5 +1,5 @@
 <template>
-  <van-popup v-model="ipShow" position="bottom" @click-overlay="closePop">
+  <van-popup v-model="isShow" position="bottom" @click-overlay="closePop">
     <dl class="ip-list">
       <dt>日期快速切换</dt>
       <dd @click="goTo">今天</dd>
@@ -29,7 +29,7 @@ export default {
   mounted () {
   },
   computed: {
-    ipShow: {
+    isShow: {
       get () {
         return this.$store.state.commentPopup.isShow
       },
