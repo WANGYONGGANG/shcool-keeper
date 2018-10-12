@@ -31,6 +31,7 @@ npm test
 # 本项目使用框架vant
 一款轻量、可靠的移动端 Vue 组件库
 npm i vant -S
+通用的需要重写的样式在/static/css/private-vant.less
 中文官网 https://youzan.github.io/vant/#/zh-CN/panel
 
 

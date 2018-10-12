@@ -6,6 +6,7 @@ import router from './router'
 
 import 'vant/lib/vant-css/index.css'
 import '../static/css/base.less'
+import '../static/css/private-vant.less'
 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'

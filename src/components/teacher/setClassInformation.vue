@@ -1,58 +1,25 @@
 <template>
-  <div class="choose-class">
-    <div class="class-tab">
-      <div class="list-search-l">
-        <van-search placeholder="输入班级名称" background="#fff"  show-action v-model="value">
-          <div slot="action" @click="onSearch">搜索</div>
-        </van-search>
-      </div>
-      <div class="operation">筛选</div>
-    </div>
-    <div class="choose-school-zone">
-      <van-cell-group>
-        <van-cell title="选择校区" value="潮人部落" is-link />
-      </van-cell-group>
-    </div>
+  <div class="set-class">
+    <van-cell-group class="set-class-item01">
+      <van-cell title="上课日期" value="2018.10.12" />
+      <van-cell title="上课班级" value="17暑初二英语同步班_补课班级"/>
+    </van-cell-group>
+    <van-cell-group class="set-class-item02">
+      <van-cell required title="任课老师" value="测试员" is-link />
+      <van-cell title="助教" is-link />
+      <van-cell required title="开始时间" is-link value="15:20" />
+      <van-cell required title="上课时长" is-link />
+      <van-cell required title="上课教室" is-link />
+    </van-cell-group>
     <van-radio-group v-model="radio">
-    <div class="class-list"  @click="radio = '1'">
-    <div class="class-list-l">
-        <van-radio name="1" />
-    </div>
-    <div class="class-list-r">
-      <dl>
-        <dt>2018暑假初二英语同步班0523<span class="num">1/1</span></dt>
-        <dd><van-icon name="location" />潮人部落</dd>
-        <dd class="last-item"><van-icon name="contact" />潮人部落<span><van-icon name="idcard" />2018寒假五年...</span></dd>
-      </dl>
-    </div>
-  </div>
-    <div class="class-list"  @click="radio = '2'">
-      <div class="class-list-l">
-          <van-radio name="2" />
-      </div>
-      <div class="class-list-r">
-        <dl>
-          <dt>2018暑假初二英语同步班0523<span class="num">1/1</span></dt>
-          <dd><van-icon name="location" />潮人部落</dd>
-          <dd class="last-item"><van-icon name="contact" />潮人部落<span><van-icon name="idcard" />2018寒假五年...</span></dd>
-        </dl>
-      </div>
-    </div>
-    <div class="class-list"  @click="radio = '3'">
-      <div class="class-list-l">
-          <van-radio name="3" />
-      </div>
-      <div class="class-list-r">
-        <dl>
-          <dt>2018暑假初二英语同步班0523<span class="num">1/1</span></dt>
-          <dd><van-icon name="location" />潮人部落</dd>
-          <dd class="last-item"><van-icon name="contact" />潮人部落<span><van-icon name="idcard" />2018寒假五年...</span></dd>
-        </dl>
-      </div>
-    </div>
+      <van-cell-group class="set-class-item03">
+        <van-cell title="检查上课冲突" clickable @click="radio = '1'">
+          <van-radio name="1" />
+        </van-cell>
+      </van-cell-group>
     </van-radio-group>
     <div class="bottom-btn">
-      点击下一步进行班级信息填写 <span>下一步</span>
+      <span class="white-bg" @click="$router.back(-1)">上一步</span><span class="blue-bg">保存并点名</span>
     </div>
   </div>
 </template>
@@ -60,7 +27,6 @@
 export default {
   data () {
     return {
-      value: '',
       radio: '1'
     }
   },
@@ -72,131 +38,45 @@ export default {
 }
 </script>
 <style lang="less">
-.choose-class{
-  .class-tab{
-    background: #fff;
-    height: 83px;
-    border-top:1px #000 solid ;
-    padding:10px 20px;
-  .list-search-l{
-    float: left;
+.set-class{
+  .set-class-item01{
+
   }
-  .van-cell{
-    font-size: 26px;
+  .set-class-item02{
+    .van-cell__value{
+      color: #4286ed;
+    }
+
   }
-  .van-cell__left-icon{
-    font-size: 26px;
-    top:5px;
-    margin-right: 10px;
-  }
-  .van-search__action{
-    font-size: 26px;
-    background: #eff1f6;
-    position: relative;
-    left:-32px;
-    border-radius: 35px;
-    padding: 16px 23px;
-  }
-  .van-search{
-    width: 606px;
-  }
-  .van-search .van-cell{
-    border: 1px #eff1f6 solid;
-    border-right:none;
-    border-top-left-radius: 35px;
-    border-bottom-left-radius: 35px;
-    padding: 12px 10px;
-  }
-  .operation{
-    float: right;
-    padding: 16px 23px;
-    font-size: 26px;
-    background: #eff1f6;
-    border-radius: 35px;
-    margin: 6px 5px 0 0;
-  }
-  }
-  .choose-school-zone{
-  .van-cell{
-    font-size: 28px;
-    line-height: 45px;
-    padding: 15px 35px;
-  }
-  .van-cell__right-icon{
-    font-size: 24px;
-    line-height: 45px;
-    margin-left: 10px;
-  }
-  }
-.class-list{
-  padding: 10px 35px;
-  background:#fff;
-  margin-bottom: 20px;
-  height:170px;
-.class-list-l{
-  float: left;
-  width: 60px;
-  .van-radio__input{
-    height: 5em;
-    top:72px;
-    font-size: 30px;
-  }
-.van-radio .van-icon-checked{
-  color: #4286ed;
-}
-}
-.class-list-r{
-  float: left;
-width:600px;
-dt{
-  font-size: 32px;
-  line-height: 64px;
-span{
-  float: right;
-  color: #838383;
-}
-}
-dd{
-  color: #838383;
-  line-height: 43px;
-.van-icon{
-  position: relative;
-  top: 4px;
-  margin-right: 10px;
-}
-}
-.last-item{
-span{
-  float: right;
-}
-.van-icon{
-  position: relative;
-  top: 4px;
-  margin-right: 10px;
-  color: #dc951a;
-}
-}
-}
+.van-radio__input{
+  top: -18px;
 }
 .bottom-btn{
-  width: 100%;
   height: 100px;
+  background: #fff;
+  text-align: right;
+  width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
-  background:#fff;
-  line-height: 100px;
-  text-align: right;
-  color: #838383;
   span{
     display: inline-block;
-    background: #4286ed;
-    color: #fff;
-    line-height: 35px;
-    padding: 10px 40px;
-    border-radius: 40px;
-    margin: 0 15px;
+    padding: 0 55px;
+    line-height: 51px;
+    border-radius: 30px;
+    margin-right: 15px;
+    margin-top: 23px;
   }
+  .white-bg{
+    border: 1px #4286ed solid;
+    color: #4286ed;
+  }
+  .blue-bg{
+    border: 1px #4286ed solid;
+    color: #fff;
+    background: #4286ed;
+  }
+
 }
 }
 </style>

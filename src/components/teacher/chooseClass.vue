@@ -98,7 +98,7 @@ export default {
   }
   .van-cell__left-icon{
     font-size: 26px;
-    top:5px;
+    top:15px;
     margin-right: 10px;
   }
   .van-search__action{
@@ -117,7 +117,8 @@ export default {
     border-right:none;
     border-top-left-radius: 35px;
     border-bottom-left-radius: 35px;
-    padding: 12px 10px;
+    padding: 0px 10px;
+    line-height: 54px;
   }
   .operation{
     float: right;
