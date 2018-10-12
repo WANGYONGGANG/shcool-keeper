@@ -8,7 +8,7 @@
       </div>
       <div class="operation">筛选</div>
     </div>
-    <div class="choose-school-zone" @click="showShoolZoneDia">
+    <div class="choose-school-zone">
       <van-cell-group>
         <van-cell title="选择校区" value="潮人部落" is-link />
       </van-cell-group>
@@ -52,33 +52,21 @@
     </div>
     </van-radio-group>
     <div class="bottom-btn">
-      点击下一步进行班级信息填写 <span @click="goTo">下一步</span>
+      点击下一步进行班级信息填写 <span>下一步</span>
     </div>
-    <school-pop></school-pop>
   </div>
 </template>
 <script>
-import SchoolPop from '../popup/schoolPop'
 export default {
-  components: {
-    SchoolPop
-  },
   data () {
     return {
       value: '',
       radio: '1'
     }
   },
-  mounted () {
-  },
   methods: {
     onSearch () {
-    },
-    showShoolZoneDia () {
-      this.$store.state.schoolPopup.isShow = true
-    },
-    goTo () {
-      this.$router.push({path: '/teacher/setClassInformation'})
+
     }
   }
 }
@@ -210,30 +198,5 @@ span{
     margin: 0 15px;
   }
 }
-.van-popup{
-  width: 100%;
-}
-.ip-list{
-  background:#fff ;
-  text-align: left;
-dt{
-  text-align: center;
-  font-size: 30px;
-  line-height: 100px;
-  color: #838383;
-}
-dd{
-  height: 80px;
-  line-height: 80px;
-  font-size: 28px;
-  text-indent: 15px;
-  border-bottom:1px #eef1f6 solid ;
-}
-
-}
-
-}
-.shool-zone{
-
 }
 </style>

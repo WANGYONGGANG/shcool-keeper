@@ -27,6 +27,7 @@ import BulletinDetial from '@/components/teacher/bulletinDetial'
 import IntentionalCustomers from '@/components/teacher/intentionalCustomers'
 import Roster from '@/components/teacher/Roster'
 import RosterDetial from '@/components/teacher/rosterDetial'
+import SetClassInformation from '@/components/teacher/setClassInformation'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -174,6 +175,11 @@ export default new Router({
       path: '/teacher/rosterDetial',
       name: 'rosterDetial',
       component: RosterDetial
+    },
+    {
+      path: '/teacher/setClassInformation',
+      name: 'setClassInformation',
+      component: SetClassInformation
     }
   ]
 })
