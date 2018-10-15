@@ -1,7 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/index'
-import ChargeReport from '@/components/charge/chargeReport'
+import ChargeReport from '@/components/remittance_table/chargeReport'
+import Charge from '@/components/remittance_table/charge'
+import CourseCharge from '@/components/remittance_table/courseCharge'
+import NetIncome from '@/components/remittance_table/netIncome'
+import Refund from '@/components/remittance_table/Refund'
+
+
 import Blank from '@/components/user/blank'
 import UserIndex from '@/components/user/userIndex'
 import ChangePassword from '@/components/user/changePassword'
@@ -49,6 +55,26 @@ export default new Router({
       path: '/chargeReport',
       name: 'chargeReport',
       component: ChargeReport
+    },
+    {
+      path: '/chargeReport/charge',
+      name: 'charge',
+      component: Charge
+    },
+    {
+      path: '/chargeReport/courseCharge',
+      name: 'courseCharge',
+      component: CourseCharge
+    },
+    {
+      path: '/chargeReport/netIncome',
+      name: 'NetIncome',
+      component: NetIncome
+    },
+    {
+      path: '/chargeReport/Refund',
+      name: 'Refund',
+      component: Refund
     },
     {
       path: '/user/userIndex',

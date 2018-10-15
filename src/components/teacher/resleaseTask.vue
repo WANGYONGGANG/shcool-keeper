@@ -82,24 +82,25 @@ export default {
   color: #bbb;
   font-size: 24px;
   line-height: 50px;
-.van-hairline--top-bottom::after{
-  border-width:0 0;
-}
-}
 
+}
+}
+.tab-list-item02.van-hairline--top-bottom::after{
+  border-width:0;
 }
 .tabl-list-item03{
   width: 100%;
   padding-bottom: 20px;
+
   display: -webkit-inline-flex; /* Safari */
   display: inline-flex;
   span{
     display: inline-block;
     width: 33%;
     text-align: left;
-    color: #bbb;
+    color: #838383;
     line-height: 40px;
-    text-indent: 15px;
+    text-indent: 30px;
   }
 }
 }

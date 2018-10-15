@@ -51,24 +51,21 @@
         <span>班级花名册</span>
       </li>
     </ul>
-    <van-tabbar v-model="active">
-      <van-tabbar-item icon="shop">主页</van-tabbar-item>
-      <van-tabbar-item icon="chat" dot>师生信</van-tabbar-item>
-      <van-tabbar-item icon="records" info="5" to="/teacher/mine">我的</van-tabbar-item>
-    </van-tabbar>
+    <btm-tobbar></btm-tobbar>
     <ip-pop></ip-pop>
   </div>
 </template>
 <script>
   import IpPop from '../popup/ipPop'
+  import BtmTobbar from '../general/tabbar'
   export default {
     name: 'index',
     components: {
-      IpPop
+      IpPop,
+      BtmTobbar
     },
     data () {
       return {
-        active:0,
         ipName:'',
         ipData:{
           studytube :'学管师',
@@ -175,27 +172,7 @@
 
   }
   }
-  .van-tabbar{
-    height: 100px;
-  }
-  .van-tabbar-item{
-    font-size: 24px;
-  }
-  .van-tabbar-item__icon{
-    font-size: 34px;
-    margin-bottom: 10px;
-  }
-  .van-cell__right-icon{
-    font-size: 20px;
-    margin-left: 10px;
-  }
-  .van-cell__right-icon:before{
-    -webkit-transform: rotate(90deg);
-    color: #ee8434;
-  }
-  .van-tabbar{
-    background-color: #f2f2f2;
-  }
+
   }
 
 </style>

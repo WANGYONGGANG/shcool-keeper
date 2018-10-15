@@ -11,6 +11,7 @@
   <van-cell-group>
     <van-cell title="修改密码" icon="edit-data" is-link to="/user/changePassword" />
     <van-cell title="修改图像" icon="records" is-link to="" />
+    <van-cell title="招生二维码" icon="records" is-link to="" />
   </van-cell-group>
 
   <van-cell-group>
@@ -21,15 +22,20 @@
 
   <van-cell-group>
     <van-cell title="老师秀" icon="edit-data" is-link to="" />
+    <van-cell title="电子推荐卡" icon="edit-data" is-link to="" />
   </van-cell-group>
   <van-cell-group>
     <van-cell title="退出登陆" icon="edit-data" is-link to="" />
   </van-cell-group>
-
+  <btm-tobbar></btm-tobbar>
 </div>
 </template>
 <script>
+import BtmTobbar from '../general/tabbar'
 export default {
+  components: {
+    BtmTobbar
+  },
   data () {
     return {
 
@@ -75,7 +81,7 @@ export default {
   }
   .van-cell-group{
     background: #eef1f6;
-    margin:30px 0 0 0 ;
+    margin:0 0 30px 0 ;
   }
   .van-cell{
     font-size: 26px;
