@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/index'
-import ChargeReport from '@/components/remittance_table/chargeReport'
+import ChargeReport from '@/components/chart/chargeReport'
+import EarningReport from '@/components/chart/earningReport'
+import CurriculuConsumption from '@/components/chart/curriculuConsumption'
+import ClassReport from '@/components/chart/classReport'
+
 import Charge from '@/components/remittance_table/charge'
 import CourseCharge from '@/components/remittance_table/courseCharge'
 import NetIncome from '@/components/remittance_table/netIncome'
@@ -52,9 +56,24 @@ export default new Router({
       component: Blank
     },
     {
-      path: '/chargeReport',
+      path: '/chart/chargeReport',
       name: 'chargeReport',
       component: ChargeReport
+    },
+    {
+      path: '/chart/curriculuConsumption',
+      name: 'curriculuConsumption',
+      component: CurriculuConsumption
+    },
+    {
+      path: '/chart/earningReport',
+      name: 'earningReport',
+      component: EarningReport
+    },
+    {
+      path: '/chart/classReport',
+      name: 'classReport',
+      component: ClassReport
     },
     {
       path: '/chargeReport/charge',

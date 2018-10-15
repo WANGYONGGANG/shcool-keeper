@@ -60,7 +60,7 @@ export default {
     color: #fff;
     font-size: 28px;
     text-align: center;
-    padding: 30px 0 20px;
+    padding: 90px 0 20px;
   }
   .user-ip{
     width: 163px;
@@ -91,6 +91,7 @@ export default {
   }
   .van-cell__right-icon{
     font-size: 20px;
+    line-height: 54px;
   }
   .van-cell__right-icon:before{
     -webkit-transform: rotate(90deg);

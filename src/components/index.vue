@@ -19,15 +19,15 @@
         <icon name="home" scale="3"></icon>
         <span>收费报表</span>
       </li>
-      <li class="category-item">
+      <li class="category-item" @click="goTo(routerUrl.curriculuConsumption)">
         <icon name="book" scale="3"></icon>
         <span>课消报表</span>
       </li>
-      <li class="category-item">
+      <li class="category-item" @click="goTo(routerUrl.earningReport)">
         <icon name="server" scale="3"></icon>
         <span>业绩报表</span>
       </li>
-      <li class="category-item">
+      <li class="category-item" @click="goTo(routerUrl.classReport)">
         <icon name="user" scale="3"></icon>
         <span>班级报表</span>
       </li>
@@ -42,7 +42,10 @@ export default {
     return {
       routerUrl: {
         user: '/user/userIndex',
-        chargeReport: '/chargeReport'
+        chargeReport: '/chart/chargeReport',
+        curriculuConsumption: '/chart/curriculuConsumption',
+        earningReport: '/chart/earningReport',
+        classReport: '/chart/classReport'
       }
     }
   },
@@ -135,7 +138,7 @@ export default {
     flex-wrap: wrap;
   .category-item{
     width: 280px;
-    padding: 40px 0 0 40px;
+    padding: 28px 0 0 40px;
     height: 141px;
     margin: 0 0 30px 30px;
     background: #fff;
