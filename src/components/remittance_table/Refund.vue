@@ -12,7 +12,7 @@
     <template>
       <div>
         <v-table
-          :width="1100"
+          :width="750"
           :columns="columns"
           :table-data="tableData"
           :title-row-height="120"
