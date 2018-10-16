@@ -1,28 +1,25 @@
 <template>
-<div class="charge">
+<div class="class-report">
   <div class="charge-top">
     <div class="charge-top-tab">
-      <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
+     开班: <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
     </div>
     <div class="charge-top-right">
-      选择列<van-icon name="wap-nav" />
+      筛选<van-icon name="wap-nav" />
     </div>
   </div>
-  <div class="charge-table"></div>
-    <template>
-      <div>
-        <v-table
-          :width="750"
-          :columns="columns"
-          :table-data="tableData"
-          :title-row-height="120"
-          :row-height="100"
-          even-bg-color="#f4f4f4"
-          row-hover-color="#eee"
-          row-click-color="#edf7ff"
-        ></v-table>
-      </div>
-    </template>
+  <div class="class-chart">
+    <div class="erea">不限区域<van-icon name="arrow" /></div>
+    <div class="set" @click="goTo"><van-icon name="discount" />设置</div>
+    <div id="classChart"></div>
+  </div>
+  <van-cell-group>
+    <van-cell title="满班率" value="班级数"  />
+    <van-cell title="0%-50%" is-link value="0" />
+    <van-cell title="52%-80%" is-link value="0" />
+    <van-cell title="81%-90%" is-link value="0" />
+    <van-cell title="91%-100%" is-link value="0" />
+  </van-cell-group>
   <commented-pop></commented-pop>
 </div>
 </template>
@@ -34,47 +31,80 @@ export default {
   },
   data () {
     return {
-      tableData: [
-        {"name":"潮人部落","shishoujiner":"0.00","zhuanjieshao":"0.00","lianbao":"0.00","yucun":"0.00","zhuanjie":"0.00","duoqi":'0.00',"xufei":'0.00',"kuoke":'0.00',"xinzeng":'0.00',"buqianjiao":'0.00',"xiaoshou":'0.00'},
-        ],
-      columns: [
-        {field: 'name', title:'校区', width: 200, titleAlign: 'center',columnAlign:'center', isFrozen: true},
-        {field: 'shishoujiner', title: '实收金额', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'zhuanjieshao', title: '转介绍', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'lianbao', title: '连报', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'yucun', title: '预存', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'zhuanjie', title: '从他人转接的费用', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'duoqi', title: '多期', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'xufei', title: '续费', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'kuoke', title: '扩科', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'xinzeng', title: '新增', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'buqianjiao', title: '补欠交', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'xiaoshou', title: '销售', width: 150, titleAlign: 'center',columnAlign:'center'}
-
-      ]
     }
   },
+  mounted(){
+    this.drawLine();
+  },
   methods: {
+    goTo () {
+      this.$router.push({path: '/chart/fullclassRate'})
+    },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
-  },
-  created(){
-
+    drawLine(){
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById('classChart'))
+      // 绘制图表
+      myChart.setOption({
+//        title: {
+//          text: '课消总趋势图（最近七天）',
+//          textStyle:{
+//            color:'#fff',
+//            fontSize:26
+//          },
+//          padding:[30,0,0,30]
+//        },
+        color:['#00a0f4', '#14a5f4','#4bb3f4','#33acf4','#46b2f4'],
+        series: [
+          {
+            name:'满班率',
+            type:'pie',
+            radius: ['50%', '70%'],
+            hoverAnimation:false,
+            legendHoverLink:false,
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '30',
+                  fontWeight: 'bold'
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data:[
+              {value:335, name:'0%-50%'},
+              {value:310, name:'52%-80%'},
+              {value:234, name:'81%-90%'},
+              {value:135, name:'91%-100%'},
+            ]
+          }
+        ]
+      })
+    }
   }
-
-
 }
 </script>
 <style lang="less">
-.charge{
+.class-report{
   .charge-top{
     padding-top: 10px;
     height: 76px;
     background: #fff;
     .charge-top-tab{
       float: left;
-      width: 500px;
+      width: 557px;
       margin-bottom: 10px;
       padding-left:20px;
     .tab-radius{
@@ -104,19 +134,43 @@ export default {
      }
    }
   }
-  .charge-table{
-    overflow: hidden;
-    background:#fff;
-    .charge-table-left{
-      width: 200px;
-      float: left;
-    }
-    .charge-table-right{
-      width: 500px;
-      float: left;
-    }
-  }
 
+.class-chart{
+  width: 100%;
+  padding-top: 50px;
+  height: 450px;
+  position: relative;
+  background: #0095f1;
+ #classChart{
+  width: 750px;
+  height: 400px;
+}
+ .erea{
+   position: absolute;
+   left: 300px;
+   top: 40px;
+   color: #fff;
+   font-size: 28px;
+ .van-icon{
+   position: relative;
+   top: 2px;
+   margin-left: 10px;
+   font-size: 24px;
+ }
+ }
+ .set{
+   position: absolute;
+   right:30px;
+   top: 40px;
+   color: #fff;
+ .van-icon{
+   position: relative;
+   top: 5px;
+   font-size: 24px;
+   margin-right: 10px;
+ }
+ }
+}
 }
 
 </style>

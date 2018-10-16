@@ -5,7 +5,7 @@ import ChargeReport from '@/components/chart/chargeReport'
 import EarningReport from '@/components/chart/earningReport'
 import CurriculuConsumption from '@/components/chart/curriculuConsumption'
 import ClassReport from '@/components/chart/classReport'
-
+import FullclassRate from '@/components/chart/class/fullclassRate'
 import Charge from '@/components/remittance_table/charge'
 import CourseCharge from '@/components/remittance_table/courseCharge'
 import NetIncome from '@/components/remittance_table/netIncome'
@@ -74,6 +74,11 @@ export default new Router({
       path: '/chart/classReport',
       name: 'classReport',
       component: ClassReport
+    },
+    {
+      path: '/chart/fullclassRate',
+      name: 'fullclassRate',
+      component: FullclassRate
     },
     {
       path: '/chargeReport/charge',
