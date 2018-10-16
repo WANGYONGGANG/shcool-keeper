@@ -60,16 +60,6 @@ export default {
   transform: rotate(90deg);
 }
 }
-.timetable-tit{
-  height: 80px;
-  color: #494847;
-  font-size: 28px;
-  line-height: 80px;
-  padding: 0 30px;
-.tit-r{
-  float: right;
-}
-}
 .timetable-table{
   background: #fff;
   height: 170px;

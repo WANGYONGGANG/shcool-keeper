@@ -1,5 +1,5 @@
 <template>
-<div class="charge">
+<div class="earning-report">
   <div class="charge-top">
     <div class="charge-top-tab">
       <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
@@ -8,21 +8,19 @@
       选择列<van-icon name="wap-nav" />
     </div>
   </div>
-  <div class="charge-table"></div>
-    <template>
-      <div>
-        <v-table
-          :width="750"
-          :columns="columns"
-          :table-data="tableData"
-          :title-row-height="120"
-          :row-height="100"
-          even-bg-color="#f4f4f4"
-          row-hover-color="#eee"
-          row-click-color="#edf7ff"
-        ></v-table>
-      </div>
-    </template>
+  <van-search placeholder="请输入老师姓名" background="#fff" class="earning-search" v-model="value" />
+  <div class="timetable-table">
+    <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
+    <div class="table-l">
+      <div class="class-tit">潮人部落</div>
+      <div class="class-details"><span class="time">班级：1</span><span class="people-num">人数：2</span></div>
+      <div class="class-details"> <span class="time">课消：10000.00（4.00小时，0.00次）</span></div>
+    </div>
+    <div class="table-r">
+      <van-rate v-model="starValue" count=1 size=30 />0.00<br/>
+      <span class="completion">评分</span>
+    </div>
+  </div>
   <commented-pop></commented-pop>
 </div>
 </template>
@@ -51,7 +49,8 @@ export default {
         {field: 'buqianjiao', title: '补欠交', width: 150, titleAlign: 'center',columnAlign:'center'},
         {field: 'xiaoshou', title: '销售', width: 150, titleAlign: 'center',columnAlign:'center'}
 
-      ]
+      ],
+      starValue:1
     }
   },
   methods: {
@@ -67,11 +66,11 @@ export default {
 }
 </script>
 <style lang="less">
-.charge{
+.earning-report{
   .charge-top{
     padding-top: 10px;
-    height: 76px;
-    background: #fff;
+    height: 86px;
+    background: #eef1f6;
     .charge-top-tab{
       float: left;
       width: 500px;
@@ -104,19 +103,80 @@ export default {
      }
    }
   }
-  .charge-table{
-    overflow: hidden;
-    background:#fff;
-    .charge-table-left{
-      width: 200px;
-      float: left;
-    }
-    .charge-table-right{
-      width: 500px;
-      float: left;
+.earning-search{
+  padding: 26px 15px;
+  width: 100%;
+  .van-cell{
+    border: 1px #cbcbcb solid;
+    border-radius: 10px;
+  }
+  .van-cell__left-icon{
+    display: none;
+  }
+}
+  .timetable-table{
+    background: #fff;
+    border-bottom: 1px #eff1f6 solid;
+    height: 170px;
+  .img{
+    width: 80px;
+    height: 80px;
+    float: left;
+    padding: 50px 30px 0 30px;
+    border-radius: 100%;
+    img{
+      width: 80px;
+      height: 80px;
+      border-radius: 100%;
     }
   }
+  .empty{
+    line-height: 170px;
+    text-align: center;
+    font-size: 32px;
+    color: #838383;
+  }
+  .table-l{
+    float: left;
+    padding-left:60px;
 
+  .class-tit{
+    font-size: 32px;
+    color: #141414;
+    line-height: 65px;
+    padding-top: 10px;
+  }
+
+  .class-details{
+    font-size: 24px;
+    color: #838383;
+    line-height: 40px;
+  .name{
+    padding-right: 15px;
+
+  }
+  .people-num{
+    padding-left: 10px;
+  }
+
+  }
+  }
+  .table-r{
+    float: right;
+    text-align: center;
+    font-size: 26px;
+    padding-top: 35px;
+    width: 180px;
+    color: #838383;
+  .completion{
+    display: inline-block;
+    border-radius: 50px;
+    line-height: 40px;
+    padding: 0 20px;
+    margin: 0px auto 0;
+  }
+  }
+  }
 }
 
 </style>

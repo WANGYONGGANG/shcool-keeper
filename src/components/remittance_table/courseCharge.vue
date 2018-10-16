@@ -1,5 +1,5 @@
 <template>
-<div class="charge">
+<div class="course-charge">
   <tolltrend-chart></tolltrend-chart>
   <div class="charge-top">
     <div class="charge-top-tab">
@@ -73,43 +73,43 @@ export default {
 }
 </script>
 <style lang="less">
-.charge{
-  .charge-top{
-    padding-top: 10px;
-    height: 76px;
-    background: #fff;
-    .charge-top-tab{
-      float: left;
-      width: 500px;
-      margin-bottom: 10px;
-      padding-left:20px;
-    .tab-radius{
-      height: 53px;
-      display: inline-block;
-      padding: 0px 30px;
-      font-size: 24px;
-      line-height: 55px;
-      border-radius: 50px;
-      border: 1px #eff1f6 solid;
-      margin: 8px 10px 0;
-    }
-    .arrow-down .van-icon{
-      -webkit-transform: rotate(90deg);
-      transform: rotate(90deg);
-    }
-    }
-   .charge-top-right{
-     float: right;
-     line-height: 40px;
-     padding-top: 15px;
-     padding-right: 15px;
-     .van-icon{
-       margin-left: 10px;
-       position: relative;
-       top: 5px;
-     }
-   }
-  }
+.course-charge{
+.charge-top{
+  padding-top: 10px;
+  height: 86px;
+  background: #eef1f6;
+.charge-top-tab{
+  float: left;
+  width: 500px;
+  margin-bottom: 10px;
+  padding-left:20px;
+.tab-radius{
+  height: 53px;
+  display: inline-block;
+  padding: 0px 30px;
+  font-size: 24px;
+  line-height: 55px;
+  border-radius: 50px;
+  border: 1px #eff1f6 solid;
+  margin: 8px 10px 0;
+}
+.arrow-down .van-icon{
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+}
+.charge-top-right{
+  float: right;
+  line-height: 40px;
+  padding-top: 15px;
+  padding-right: 15px;
+.van-icon{
+  margin-left: 10px;
+  position: relative;
+  top: 5px;
+}
+}
+}
   .charge-table{
     overflow: hidden;
     background:#fff;
