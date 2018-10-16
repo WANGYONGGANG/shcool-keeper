@@ -46,5 +46,9 @@ npm install vue-awesome
 http://doc.huangsw.com/vue-easytable/app.html#/start
 基于 vue2.x 的 table 组件支持单元格合并、单元格编辑、多表头固定、多列固定、列拖动、排序、自定义列、分页、单元格编辑、多选、条件过滤、footer 汇总等功能
 
+# 使用echarts
+npm install echarts -S
+https://www.cnblogs.com/st-leslie/p/5771241.html
+http://echarts.baidu.com/tutorial.html#5%20%E5%88%86%E9%92%9F%E4%B8%8A%E6%89%8B%20ECharts
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

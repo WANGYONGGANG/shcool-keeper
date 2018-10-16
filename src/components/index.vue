@@ -137,7 +137,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
   .category-item{
-    width: 280px;
+    width: 317px;
     padding: 28px 0 0 40px;
     height: 141px;
     margin: 0 0 30px 30px;
