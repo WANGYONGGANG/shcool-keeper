@@ -9,7 +9,7 @@
     <div class="blank01-box">
       <div class="blank01-box-item01"><icon name="home" scale="6"></icon></div>
       <div class="blank01-box-item02"><dl><dt>已为您生成运营日报</dt><dd>日期：2018-09-19</dd></dl></div>
-      <div class="blank01-box-item03"><a class="">立即查看></a></div>
+      <div class="blank01-box-item03" @click="goTo(routerUrl.operationOverview)"><span>立即查看></span></div>
     </div>
   </div>
   <div class="blank02">
@@ -45,7 +45,8 @@ export default {
         chargeReport: '/chart/chargeReport',
         curriculuConsumption: '/chart/curriculuConsumption',
         earningReport: '/chart/earningReport',
-        classReport: '/chart/classReport'
+        classReport: '/chart/classReport',
+        operationOverview: '/chart/operationOverview'
       }
     }
   },
@@ -122,7 +123,7 @@ export default {
   .blank01-box-item03{
     margin: 43px 0 0 131px;
     font-size: 28px;
-    a{
+    span{
       color: #4983f7;
     }
   }

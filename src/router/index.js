@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/index'
+
+import OperationOverview from '@/components/chart/operationOverview'
 import ChargeReport from '@/components/chart/chargeReport'
 import EarningReport from '@/components/chart/earningReport'
 import CurriculuConsumption from '@/components/chart/curriculuConsumption'
@@ -10,7 +12,6 @@ import Charge from '@/components/remittance_table/charge'
 import CourseCharge from '@/components/remittance_table/courseCharge'
 import NetIncome from '@/components/remittance_table/netIncome'
 import Refund from '@/components/remittance_table/Refund'
-
 
 import Blank from '@/components/user/blank'
 import UserIndex from '@/components/user/userIndex'
@@ -54,6 +55,11 @@ export default new Router({
       path: '/user/blank',
       name: 'blank',
       component: Blank
+    },
+    {
+      path: '/chart/operationOverview',
+      name: 'operationOverview',
+      component: OperationOverview
     },
     {
       path: '/chart/chargeReport',

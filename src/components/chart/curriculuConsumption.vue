@@ -38,31 +38,30 @@ export default {
   data () {
     return {
       tableData: [
-        {"name":"潮人部落","shishoujiner":"0.00","zhuanjieshao":"0.00","lianbao":"0.00","yucun":"0.00","zhuanjie":"0.00","duoqi":'0.00',"xufei":'0.00',"kuoke":'0.00',"xinzeng":'0.00',"buqianjiao":'0.00',"xiaoshou":'0.00'},
-        ],
+        {'name': '潮人部落', 'shishoujiner': '0.00', 'zhuanjieshao': '0.00', 'lianbao': '0.00', 'yucun': '0.00', 'zhuanjie': '0.00', 'duoqi': '0.00', 'vxufei': '0.00', 'kuoke': '0.00', 'xinzeng': '0.00', 'buqianjiao': '0.00', 'xiaoshou': '0.00'}
+      ],
       columns: [
-        {field: 'name', title:'校区', width: 200, titleAlign: 'center',columnAlign:'center', isFrozen: true},
-        {field: 'shishoujiner', title: '实收金额', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'zhuanjieshao', title: '转介绍', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'lianbao', title: '连报', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'yucun', title: '预存', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'zhuanjie', title: '从他人转接的费用', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'duoqi', title: '多期', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'xufei', title: '续费', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'kuoke', title: '扩科', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'xinzeng', title: '新增', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'buqianjiao', title: '补欠交', width: 150, titleAlign: 'center',columnAlign:'center'},
-        {field: 'xiaoshou', title: '销售', width: 150, titleAlign: 'center',columnAlign:'center'}
-
+        {field: 'name', title: '校区', width: 200, titleAlign: 'center', columnAlign: 'center', isFrozen: true},
+        {field: 'shishoujiner', title: '实收金额', width: 150, titleAlign: 'center', columnAlign: 'center'},
+        {field: 'zhuanjieshao', title: '转介绍', width: 150, titleAlign: 'center', columnAlign: 'center'},
+        {field: 'lianbao', title: '连报', width: 150, titleAlign: 'center', columnAlign: 'center'},
+        {field: 'yucun', title: '预存', width: 150, titleAlign: 'center', columnAlign: 'center'},
+        {field: 'zhuanjie', title: '从他人转接的费用', width: 150, titleAlign: 'center', columnAlign: 'center'},
+        {field: 'duoqi', title: '多期', width: 150, titleAlign: 'center', columnAlign: 'center'},
+        {field: 'xufei', title: '续费', width: 150, titleAlign: 'center', columnAlign: 'center'},
+        {field: 'kuoke', title: '扩科', width: 150, titleAlign: 'center', columnAlign: 'center'},
+        {field: 'xinzeng', title: '新增', width: 150, titleAlign: 'center', columnAlign: 'center'},
+        {field: 'buqianjiao', title: '补欠交', width: 150, titleAlign: 'center', columnAlign: 'center'},
+        {field: 'xiaoshou', title: '销售', width: 150, titleAlign: 'center', columnAlign: 'center'}
       ]
     }
   },
-  mounted(){
+  mounted () {
   },
   methods: {
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
-    },
+    }
   }
 }
 </script>

@@ -33,8 +33,8 @@ export default {
     return {
     }
   },
-  mounted(){
-    this.drawLine();
+  mounted () {
+    this.drawLine()
   },
   methods: {
     goTo () {
@@ -43,27 +43,19 @@ export default {
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
-    drawLine(){
+    drawLine () {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById('classChart'))
       // 绘制图表
       myChart.setOption({
-//        title: {
-//          text: '课消总趋势图（最近七天）',
-//          textStyle:{
-//            color:'#fff',
-//            fontSize:26
-//          },
-//          padding:[30,0,0,30]
-//        },
-        color:['#00a0f4', '#14a5f4','#4bb3f4','#33acf4','#46b2f4'],
+        color: ['#00a0f4', '#14a5f4', '#4bb3f4', '#33acf4', '#46b2f4'],
         series: [
           {
-            name:'满班率',
-            type:'pie',
+            name: '满班率',
+            type: 'pie',
             radius: ['50%', '70%'],
-            hoverAnimation:false,
-            legendHoverLink:false,
+            hoverAnimation: false,
+            legendHoverLink: false,
             avoidLabelOverlap: false,
             label: {
               normal: {
@@ -83,11 +75,11 @@ export default {
                 show: false
               }
             },
-            data:[
-              {value:335, name:'0%-50%'},
-              {value:310, name:'52%-80%'},
-              {value:234, name:'81%-90%'},
-              {value:135, name:'91%-100%'},
+            data: [
+              {value: 335, name: '0%-50%'},
+              {value: 310, name: '52%-80%'},
+              {value: 234, name: '81%-90%'},
+              {value: 135, name: '91%-100%'}
             ]
           }
         ]
