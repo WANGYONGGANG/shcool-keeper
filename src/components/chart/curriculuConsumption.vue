@@ -1,8 +1,6 @@
 <template>
 <div class="charge">
-  <div class="charge-chart">
-    <div id="myChart" class="my-chart"></div>
-  </div>
+  <tolltrend-chart></tolltrend-chart>
   <div class="charge-top">
     <div class="charge-top-tab">
       <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
@@ -18,8 +16,8 @@
           :width="750"
           :columns="columns"
           :table-data="tableData"
-          :title-row-height="120"
-          :row-height="100"
+          :title-row-height="80"
+          :row-height="60"
           even-bg-color="#f4f4f4"
           row-hover-color="#eee"
           row-click-color="#edf7ff"
@@ -31,9 +29,11 @@
 </template>
 <script>
 import CommentedPop from '../popup/commentedPop'
+import tolltrendChart from '../general/tolltrendChart'
 export default {
   components: {
-    CommentedPop
+    CommentedPop,
+    tolltrendChart
   },
   data () {
     return {
@@ -58,50 +58,11 @@ export default {
     }
   },
   mounted(){
-    this.drawLine();
   },
   methods: {
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
-
-    drawLine(){
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById('myChart'))
-      // 绘制图表
-      myChart.setOption({
-        title: { text: '' },
-        tooltip: {},
-        xAxis: {
-          data: ['衬衫','羊毛衫','雪纺衫','裤子','高跟鞋','袜子'],
-          nameTextStyle:{
-            fontSize:40
-          },
-          axisLine: {
-            lineStyle: {             //x轴颜色和字体大小
-              color: '#000',
-              fontSize:40
-            }
-          }
-        },
-        yAxis: {
-          nameTextStyle:{
-            fontSize:40
-          }
-        },
-        series: [{
-          name: '销量',
-          type: 'line',
-          data: [5, 20, 36, 10, 10, 20],
-          label:{
-            fontSize:40
-          }
-        }]
-      });
-    }
-  },
-  created(){
-
   }
 }
 </script>
@@ -155,10 +116,7 @@ export default {
       float: left;
     }
   }
- #myChart{
-   width: 750px;
-   height: 400px;
- }
+
 }
 
 </style>

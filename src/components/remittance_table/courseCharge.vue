@@ -1,13 +1,17 @@
 <template>
 <div class="charge">
+  <tolltrend-chart></tolltrend-chart>
   <div class="charge-top">
     <div class="charge-top-tab">
       <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
     </div>
     <div class="charge-top-right">
-      选择列<van-icon name="wap-nav" />
+      筛选<van-icon name="wap-nav" />
     </div>
   </div>
+  <van-cell-group>
+    <van-cell title="收费类型" value="课程收费汇总" is-link arrow-direction="down"	/>
+  </van-cell-group>
   <div class="charge-table"></div>
     <template>
       <div>
@@ -28,9 +32,11 @@
 </template>
 <script>
 import CommentedPop from '../popup/commentedPop'
+import tolltrendChart from '../general/tolltrendChart'
 export default {
   components: {
-    CommentedPop
+    CommentedPop,
+    tolltrendChart
   },
   data () {
     return {
