@@ -1,54 +1,51 @@
 <template>
-  <div class="operation-overview">
-    <dl class="overview-title"><dt>运营总览</dt><dd>日期：2018-10-15</dd></dl>
-    <div class="chart01" @click="goTo(urls.myTimetable)"><div id="chart01"></div></div>
-    <div class="chart02"><div id="chart02"></div></div>
-    <div class="overview-class-tit">
-      <van-icon name="more-o" />班级指标
-    </div>
-    <div class="overview-class">
-      <div class="chart03"><div id="chart03"></div><span>满班率</span></div>
-      <div class="chart04"><div id="chart04"></div><span>出勤率</span></div>
-      <div class="chart05"><div id="chart05"></div><span>缴费率</span></div>
-    </div>
-    <div class="overview-class-tit">
-      <van-icon name="more-o" />招生情况
-    </div>
-    <div class="recruit-students">
-      <ul class="stu-block fn-left">
-        <li class="stu-block-item01">
-          到访率<van-icon name="question" />
-        </li>
-        <li class="stu-block-item02"><span>0.00</span>%</li>
-        <li class="stu-block-item03"><i class="circle"></i>邀约人数：0</li>
-        <li class="stu-block-item04"><i class="circle"></i>到访人数：0</li>
-      </ul>
-      <ul class="stu-block fn-right">
-        <li class="stu-block-item01">
-          到访率<van-icon name="question" />
-        </li>
-        <li class="stu-block-item02"><span>0.00</span>%</li>
-        <li class="stu-block-item03"><i class="circle"></i>邀约人数：0</li>
-        <li class="stu-block-item04"><i class="circle"></i>到访人数：0</li>
-      </ul>
-    </div>
+<div class="operation-overview">
+  <dl class="overview-title"><dt>运营总览</dt><dd>日期：2018-10-15</dd></dl>
+  <div class="chart01"><div id="chart01"></div></div>
+  <div class="chart02"><div id="chart02"></div></div>
+  <div class="overview-class-tit">
+    <van-icon name="more-o" />班级指标
   </div>
+  <div class="overview-class">
+    <div class="chart03"><div id="chart03"></div><span>满班率</span></div>
+    <div class="chart04"><div id="chart04"></div><span>出勤率</span></div>
+    <div class="chart05"><div id="chart05"></div><span>缴费率</span></div>
+  </div>
+  <div class="overview-class-tit">
+    <van-icon name="more-o" />招生情况
+  </div>
+  <div class="recruit-students">
+    <ul class="stu-block fn-left">
+      <li class="stu-block-item01">
+        到访率<van-icon name="question" />
+      </li>
+      <li class="stu-block-item02"><span>0.00</span>%</li>
+      <li class="stu-block-item03"><i class="circle"></i>邀约人数：0</li>
+      <li class="stu-block-item04"><i class="circle"></i>到访人数：0</li>
+    </ul>
+    <ul class="stu-block fn-right">
+      <li class="stu-block-item01">
+        到访率<van-icon name="question" />
+      </li>
+      <li class="stu-block-item02"><span>0.00</span>%</li>
+      <li class="stu-block-item03"><i class="circle"></i>邀约人数：0</li>
+      <li class="stu-block-item04"><i class="circle"></i>到访人数：0</li>
+    </ul>
+  </div>
+</div>
 </template>
 <script>
 export default {
   data () {
     return {
-      urls: {
-        myTimetable: '/analysis/chargeAnal'
-      }
     }
   },
   mounted () {
     this.drawLine()
   },
   methods: {
-    goTo (param) {
-      this.$router.push({path: param})
+    goTo () {
+      this.$router.push({path: '/chart/fullclassRate'})
     },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
@@ -295,20 +292,20 @@ export default {
 .operation-overview{
   width: 100%;
   background: #fff;
-.overview-title{
-  text-align: center;
-  border-bottom: 1px #eef1f6 solid;
-  padding: 20px 0;
-  line-height: 45px;
-dt{
-  font-size: 28px;
-  color: #141414;
-  font-weight: bold;
-}
-dd{
-  font-size: 24px;
-}
-}
+  .overview-title{
+    text-align: center;
+    border-bottom: 1px #eef1f6 solid;
+    padding: 20px 0;
+    line-height: 45px;
+    dt{
+      font-size: 28px;
+      color: #141414;
+      font-weight: bold;
+    }
+    dd{
+      font-size: 24px;
+    }
+  }
 .chart01{
   width: 710px;
   margin: 10px auto;
@@ -360,37 +357,37 @@ dd{
 }
 .recruit-students{
   height: 300px;
-  color:#fff;
-.stu-block{
-  width: 330px;
-  padding: 30px 0 0 30px;
-  border-radius: 10px;
-  height: 270px;
-.stu-block-item01{
-  font-size: 26px;
-.van-icon{
-  font-size: 24px;
-  margin-left: 10px;
-  position: relative;
-  top: 2px;
-}
-}
+   color:#fff;
+  .stu-block{
+    width: 330px;
+    padding: 30px 0 0 30px;
+    border-radius: 10px;
+    height: 270px;
+    .stu-block-item01{
+      font-size: 26px;
+      .van-icon{
+        font-size: 24px;
+        margin-left: 10px;
+        position: relative;
+        top: 2px;
+      }
+    }
 .stu-block-item02{
   line-height: 90px;
-span{
-  font-size: 50px;
-}
+  span{
+    font-size: 50px;
+  }
 }
 .stu-block-item03{
   line-height: 40px;
-.circle{
-  display: inline-block;
-  border: 6px #fff solid;
-  width: 18px;
-  height: 18px;
-  border-radius: 100%;
-  margin-right: 10px;
-}
+  .circle{
+    display: inline-block;
+    border: 6px #fff solid;
+    width: 18px;
+    height: 18px;
+    border-radius: 100%;
+    margin-right: 10px;
+  }
 }
 .stu-block-item04{
   line-height: 40px;
@@ -405,8 +402,8 @@ span{
 }
 }
 .fn-left{
-  background: #6eadf5;
-  margin-left: 30px;
+    background: #6eadf5;
+    margin-left: 30px;
 }
 .fn-right{
   background: #74859a;
