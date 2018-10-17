@@ -13,6 +13,8 @@ import CourseCharge from '@/components/remittance_table/courseCharge'
 import NetIncome from '@/components/remittance_table/netIncome'
 import Refund from '@/components/remittance_table/Refund'
 
+import ChargeAnal from '@/components/chart/analysis/chargeAnal'
+
 import Blank from '@/components/user/blank'
 import UserIndex from '@/components/user/userIndex'
 import ChangePassword from '@/components/user/changePassword'
@@ -105,6 +107,11 @@ export default new Router({
       path: '/chargeReport/Refund',
       name: 'Refund',
       component: Refund
+    },
+    {
+      path: '/analysis/chargeAnal',
+      name: 'chargeAnal',
+      component: ChargeAnal
     },
     {
       path: '/user/userIndex',
