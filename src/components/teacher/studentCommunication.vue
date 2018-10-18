@@ -140,7 +140,6 @@ export default {
 .list-search{
   background: #fff;
   height: 105px;
-  border-top:1px #000 solid ;
  padding:10px 20px;
 .list-search-l{
   float: left;

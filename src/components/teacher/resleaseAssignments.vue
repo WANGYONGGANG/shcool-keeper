@@ -30,6 +30,7 @@
       <div class="add-img">添加视频</div>
       <div class="add-img">添加文件</div>
     </div>
+    <div class="list-bottom">提价</div>
   </div>
 </template>
 <script>
@@ -100,6 +101,18 @@ export default {
   text-align: center;
   border: 1px #e0e5ed solid;
 }
+}
+.list-bottom{
+  height: 95px;
+  line-height: 95px;
+  position: fixed;
+  bottom: 0;
+  left:0;
+  width:100%;
+  background: #4286ed;
+  color: #fff;
+  text-align: center;
+  font-size: 32px;
 }
 }
 </style>

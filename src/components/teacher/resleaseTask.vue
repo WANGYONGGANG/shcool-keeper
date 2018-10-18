@@ -30,9 +30,9 @@ export default {
   },
   data () {
     return {
-      urls:{
-        studentCompletion:'/teacher/studentCompletion',
-        resleaseAssignments:'/teacher/resleaseAssignments',
+      urls: {
+        studentCompletion: '/teacher/studentCompletion',
+        resleaseAssignments: '/teacher/resleaseAssignments'
       }
     }
   },

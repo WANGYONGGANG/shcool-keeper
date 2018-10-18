@@ -3,7 +3,7 @@
   <div class="naming-tab">
     9月28日(周五)
   </div>
-  <div class="naming-table">
+  <div class="naming-table" @click="goTo(urls.studentList)">
     <div class="table-l">
       <div class="class-tit">17暑假初二英语同步班_补课班级</div>
       <div class="class-address"><van-icon name="location" />超人部落</div>
@@ -16,19 +16,23 @@
      0/1
     </div>
   </div>
-  <div class="quick-schedule" @click="chooseClass">快速排课</div>
+  <div class="quick-schedule" @click="goTo(urls.chooseClass)">快速排课</div>
 </div>
 </template>
 <script>
 export default {
   data () {
     return {
+      urls: {
+        chooseClass: '/teacher/chooseClass',
+        studentList: '/teacher/studentList'
+      }
 
     }
   },
   methods: {
-    chooseClass () {
-      this.$router.push({path: '/teacher/chooseClass'})
+    goTo (url) {
+      this.$router.push({path: url})
     }
   },
   mounted () {

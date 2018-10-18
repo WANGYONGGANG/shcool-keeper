@@ -5,6 +5,7 @@
       <van-cell title="上课班级" value="17暑初二英语同步班_补课班级"/>
     </van-cell-group>
     <van-cell-group class="set-class-item02">
+      <van-cell required title="科目" value="钢琴" is-link />
       <van-cell required title="任课老师" value="测试员" is-link />
       <van-cell title="助教" is-link />
       <van-cell required title="开始时间" is-link value="15:20" />

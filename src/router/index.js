@@ -42,6 +42,7 @@ import Roster from '@/components/teacher/Roster'
 import RosterDetial from '@/components/teacher/rosterDetial'
 import SetClassInformation from '@/components/teacher/setClassInformation'
 import ResleaseAssignments from '@/components/teacher/resleaseAssignments'
+import StudentList from '@/components/teacher/studentList'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -249,6 +250,11 @@ export default new Router({
       path: '/teacher/resleaseAssignments',
       name: 'resleaseAssignments',
       component: ResleaseAssignments
+    },
+    {
+      path: '/teacher/studentList',
+      name: 'studentList',
+      component: StudentList
     }
   ]
 })

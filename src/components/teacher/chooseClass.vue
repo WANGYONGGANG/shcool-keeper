@@ -234,7 +234,5 @@ dd{
 }
 
 }
-.shool-zone{
 
-}
 </style>
