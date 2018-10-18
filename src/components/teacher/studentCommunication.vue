@@ -82,7 +82,7 @@ export default {
   color: #fff;
 }
 .van-tabs--card .van-tabs__wrap{
-  height: 56px;
+  height: 105px;
 }
 .van-tabs__content{
   padding-top: 20px;
@@ -139,7 +139,7 @@ export default {
 }
 .list-search{
   background: #fff;
-  height: 83px;
+  height: 105px;
   border-top:1px #000 solid ;
  padding:10px 20px;
 .list-search-l{
@@ -200,7 +200,7 @@ export default {
 }
 .card-list-btn{
   background: #fff;
-  height: 50px;
+  height: 95px;
   padding: 20px 0;
   border-top: 1px #eff1f6 solid;
 text-align:right;
