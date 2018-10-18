@@ -7,7 +7,7 @@
       <div class="table-l">
         <div class="class-tit">17暑假初二英语同步班_补课班级</div>
         <div class="class-details"><span class="time"><van-icon name="idcard" />17暑假初二英语同</span></div>
-        <div class="class-details"> <span class="time"><van-icon name="clock" />09:00-11:00</span></div>
+        <div class="class-details"><span class="time"><van-icon name="clock" />10.12 09:00-11:00</span></div>
       </div>
       <div class="table-r">
         点评<br/>

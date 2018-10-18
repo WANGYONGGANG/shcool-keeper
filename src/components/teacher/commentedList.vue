@@ -24,7 +24,7 @@
       <div class="bottom-l">
         <van-checkbox v-model="checked">全选</van-checkbox>
       </div>
-      <div class="bottom-r"><span @click="goTo">上课点评</span></div>
+      <div class="bottom-r"><span @click="goTo">上课点评（0）</span></div>
     </div>
   </div>
 </template>
@@ -69,7 +69,7 @@ export default {
   line-height: 80px;
   border-bottom: 1px #eceff4 solid;
   margin-bottom: 10px;
-  padding: 10px 15px 10px 38px;
+  padding: 0px 15px 0px 38px;
 }
 .van-cell__right-icon{
   font-size: 24px;
