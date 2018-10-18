@@ -13,7 +13,7 @@ export default {
 </script>
 <style lang="less">
 .taskDetial{
-  width: 660px;
+  width: 696px;
   margin: 20px auto;
   padding: 20px;
   background: #fff;

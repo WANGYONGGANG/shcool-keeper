@@ -7,7 +7,7 @@
       <van-cell-group class="tab-list-item01">
         <van-cell title="基础舞蹈" is-link to="/teacher/taskDetial"/>
       </van-cell-group>
-      <div @click="goTo">
+      <div @click="goTo(urls.studentCompletion)">
       <van-cell-group class="tab-list-item02">
         <van-cell title="17暑初二英语同步班0523班" value="2018-07-0411:28"/>
       </van-cell-group>
@@ -19,7 +19,7 @@
       </div>
     </div>
     <commented-pop></commented-pop>
-    <div class="list-bottom">发布作业</div>
+    <div class="list-bottom" @click="goTo(urls.resleaseAssignments)">发布作业</div>
   </div>
 </template>
 <script>
@@ -30,14 +30,18 @@ export default {
   },
   data () {
     return {
+      urls:{
+        studentCompletion:'/teacher/studentCompletion',
+        resleaseAssignments:'/teacher/resleaseAssignments',
+      }
     }
   },
   methods: {
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
-    goTo () {
-      this.$router.push({path: '/teacher/studentCompletion'})
+    goTo (url) {
+      this.$router.push({path: url})
     }
   }
 }

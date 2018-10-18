@@ -41,6 +41,7 @@ import IntentionalCustomers from '@/components/teacher/intentionalCustomers'
 import Roster from '@/components/teacher/Roster'
 import RosterDetial from '@/components/teacher/rosterDetial'
 import SetClassInformation from '@/components/teacher/setClassInformation'
+import ResleaseAssignments from '@/components/teacher/resleaseAssignments'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -243,6 +244,11 @@ export default new Router({
       path: '/teacher/setClassInformation',
       name: 'setClassInformation',
       component: SetClassInformation
+    },
+    {
+      path: '/teacher/resleaseAssignments',
+      name: 'resleaseAssignments',
+      component: ResleaseAssignments
     }
   ]
 })
