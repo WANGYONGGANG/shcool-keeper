@@ -7,7 +7,7 @@
      <div class="empty">还没有通知消息，需要发布一条吗？</div>
     </div>
     <commented-pop></commented-pop>
-    <div class="bottom-btn">发布通知</div>
+    <div class="bottom-btn" @click="goTo(urls.resleaseNotice)">发布通知</div>
   </div>
 </template>
 <script>
@@ -18,14 +18,17 @@ export default {
   },
   data () {
     return {
+      urls:{
+        resleaseNotice:'/teacher/resleaseNotice'
+      }
     }
   },
   methods: {
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
-    goTo () {
-      this.$router.push({path: '/teacher/commentedList'})
+    goTo (url) {
+      this.$router.push({path: url})
     }
   }
 }

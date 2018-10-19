@@ -47,6 +47,9 @@ import CommunicationRecord from '@/components/teacher/communicationRecord'
 import AddCommunicationRecord from '@/components/teacher/addCommunicationRecord'
 import CommunicationTemplate from '@/components/teacher/communicationTemplate'
 import PurchaseDetails from '@/components/teacher/purchaseDetails'
+import ResleaseNotice from '@/components/teacher/resleaseNotice'
+import ResultInquiry from '@/components/teacher/resultInquiry'
+import ResultInput from '@/components/teacher/ResultInput'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -284,6 +287,21 @@ export default new Router({
       path: '/teacher/purchaseDetails',
       name: 'purchaseDetails',
       component: PurchaseDetails
+    },
+    {
+      path: '/teacher/resleaseNotice',
+      name: 'resleaseNotice',
+      component: ResleaseNotice
+    },
+    {
+      path: '/teacher/resultInquiry',
+      name: 'resultInquiry',
+      component: ResultInquiry
+    },
+    {
+      path: '/teacher/ResultInput',
+      name: 'ResultInput',
+      component: ResultInput
     }
   ]
 })

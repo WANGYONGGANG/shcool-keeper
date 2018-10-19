@@ -42,7 +42,7 @@
         <i class="item-img"><icon name="book" scale="4"></icon></i>
         <span>补课管理</span>
       </li>
-      <li class="teacher-nav-item">
+      <li class="teacher-nav-item" @click="goTo(urls.resultInquiry)">
         <i class="item-img"><icon name="server" scale="4"></icon></i>
         <span>成绩录入</span>
       </li>
@@ -81,7 +81,8 @@
           notice:'/teacher/notice',
           schoolBulletin:'/teacher/schoolBulletin',
           intentionalCustomers:'/teacher/intentionalCustomers',
-          Roster:'/teacher/Roster'
+          Roster:'/teacher/Roster',
+          resultInquiry:'/teacher/resultInquiry'
         }
       }
     },
