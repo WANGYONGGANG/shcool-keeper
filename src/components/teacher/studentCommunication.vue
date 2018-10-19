@@ -11,40 +11,43 @@
           <div class="operation">筛选</div>
           <div class="operation">排序</div>
         </div>
-        <div class="card-list">
-          <div class="card-list-l">
-            <img class="img" src="../../assets/images/user/test.jpg"/>王梓桐<span class="times">沟通次数：2</span>
+        <div @click="goTo(urls.communicationRecord)">
+          <div class="card-list">
+            <div class="card-list-l">
+              <img class="img" src="../../assets/images/user/test.jpg"/>王梓桐<span class="times">沟通次数：2</span>
+            </div>
+            <div class="card-list-r"><van-icon name="arrow" /></div>
           </div>
-          <div class="card-list-r"><van-icon name="arrow" /></div>
+          <van-cell-group class="card-list-item">
+            <van-cell title="上次沟通" value="2018-07-04" />
+            <van-cell title="下次沟通" value="待定" />
+            <van-cell title="手机号码" value="1300000000" />
+            <van-cell title="剩余学费" value="23,300.00" class="tuition" />
+            <van-cell title="学管师" value="测试员" />
+          </van-cell-group>
         </div>
-        <van-cell-group class="card-list-item">
-          <van-cell title="上次沟通" value="2018-07-04" />
-          <van-cell title="下次沟通" value="待定" />
-          <van-cell title="手机号码" value="1300000000" />
-          <van-cell title="剩余学费" value="23,300.00" class="tuition" />
-          <van-cell title="学管师" value="测试员" />
-        </van-cell-group>
         <div class="card-list-btn">
           <span>拨号</span>
-          <span>查看购买详情</span>
+          <span @click="goTo(urls.purchaseDetails)">查看购买详情</span>
         </div>
-
-        <div class="card-list">
-          <div class="card-list-l">
-            <img class="img" src="../../assets/images/user/test.jpg"/>王梓桐<span class="times">沟通次数：2</span>
+        <div @click="goTo(urls.communicationRecord)">
+          <div class="card-list">
+            <div class="card-list-l">
+              <img class="img" src="../../assets/images/user/test.jpg"/>王梓桐<span class="times">沟通次数：2</span>
+            </div>
+            <div class="card-list-r"><van-icon name="arrow" /></div>
           </div>
-          <div class="card-list-r"><van-icon name="arrow" /></div>
+          <van-cell-group class="card-list-item">
+            <van-cell title="上次沟通" value="2018-07-04" />
+            <van-cell title="下次沟通" value="待定" />
+            <van-cell title="手机号码" value="1300000000" />
+            <van-cell title="剩余学费" value="23,300.00" class="tuition" />
+            <van-cell title="学管师" value="测试员" />
+          </van-cell-group>
         </div>
-        <van-cell-group class="card-list-item">
-          <van-cell title="上次沟通" value="2018-07-04" />
-          <van-cell title="下次沟通" value="待定" />
-          <van-cell title="手机号码" value="1300000000" />
-          <van-cell title="剩余学费" value="23,300.00" class="tuition" />
-          <van-cell title="学管师" value="测试员" />
-        </van-cell-group>
         <div class="card-list-btn">
           <span>拨号</span>
-          <span>查看购买详情</span>
+          <span @click="goTo(urls.purchaseDetails)">查看购买详情</span>
         </div>
       </van-tab>
       <van-tab title="待沟通">
@@ -59,12 +62,16 @@
 export default {
   data () {
     return {
-      active: 1
+      active: 1,
+      urls: {
+        communicationRecord: '/teacher/communicationRecord',
+        purchaseDetails: '/teacher/purchaseDetails'
+      }
     }
   },
   methods: {
-    onSearch () {
-
+    goTo (param) {
+      this.$router.push({path: param})
     }
   }
 }

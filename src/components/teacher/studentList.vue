@@ -35,9 +35,10 @@
 export default {
   data () {
     return {
+      value: '',
       tableData: [
-//        {"name":"赵伟","chuqin":"156*****1987","jifei":"钢琴、书法、唱歌","shiting":"上海市黄浦区金陵东路569号17楼","queqin":""}
-         ],
+      //        {"name":"赵伟","chuqin":"156*****1987","jifei":"钢琴、书法、唱歌","shiting":"上海市黄浦区金陵东路569号17楼","queqin":""}
+      ],
       columns: [
         {field: 'name', title: '姓名', width: 160, titleAlign: 'center', columnAlign: 'center'},
         {field: 'chuqin', title: '出勤', width: 130, titleAlign: 'center', columnAlign: 'center'},
@@ -45,6 +46,14 @@ export default {
         {field: 'shiting', title: '试听', width: 130, titleAlign: 'center', columnAlign: 'left'},
         {field: 'queqin', title: '缺勤原因', width: 130, titleAlign: 'center', columnAlign: 'left'}
       ]
+    }
+  },
+  methods: {
+    onSearch () {
+
+    },
+    goTo () {
+
     }
   }
 }

@@ -43,6 +43,10 @@ import RosterDetial from '@/components/teacher/rosterDetial'
 import SetClassInformation from '@/components/teacher/setClassInformation'
 import ResleaseAssignments from '@/components/teacher/resleaseAssignments'
 import StudentList from '@/components/teacher/studentList'
+import CommunicationRecord from '@/components/teacher/communicationRecord'
+import AddCommunicationRecord from '@/components/teacher/addCommunicationRecord'
+import CommunicationTemplate from '@/components/teacher/communicationTemplate'
+import PurchaseDetails from '@/components/teacher/purchaseDetails'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -255,6 +259,31 @@ export default new Router({
       path: '/teacher/studentList',
       name: 'studentList',
       component: StudentList
+    },
+    {
+      path: '/teacher/studentList',
+      name: 'studentList',
+      component: StudentList
+    },
+    {
+      path: '/teacher/communicationRecord',
+      name: 'communicationRecord',
+      component: CommunicationRecord
+    },
+    {
+      path: '/teacher/addCommunicationRecord',
+      name: 'addCommunicationRecord',
+      component: AddCommunicationRecord
+    },
+    {
+      path: '/teacher/communicationTemplate',
+      name: 'communicationTemplate',
+      component: CommunicationTemplate
+    },
+    {
+      path: '/teacher/purchaseDetails',
+      name: 'purchaseDetails',
+      component: PurchaseDetails
     }
   ]
 })
