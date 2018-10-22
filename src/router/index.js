@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/index'
+import Login from '@/components/user/login'
 
 import OperationOverview from '@/components/chart/operationOverview'
 import ChargeReport from '@/components/chart/chargeReport'
@@ -61,6 +62,11 @@ export default new Router({
       path: '/index',
       name: 'index',
       component: Index
+    },
+    {
+      path: '/user/login',
+      name: 'login',
+      component: Login
     },
     {
       path: '/user/blank',

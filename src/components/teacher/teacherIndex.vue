@@ -145,7 +145,7 @@
     background: #fff;
     width: 100%;
     flex-wrap: wrap;
-    padding-top:20px;
+    padding:20px 0 50px;
 
   .teacher-nav-item {
     width: 227px;

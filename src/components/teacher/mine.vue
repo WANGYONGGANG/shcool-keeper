@@ -53,7 +53,7 @@ export default {
     background: #4983f7;
   .user-img{
     width: 117px;
-    height: 117px;
+    height: 173px;
     padding: 57px 0 0 0;
     margin: 0 auto;
   }
