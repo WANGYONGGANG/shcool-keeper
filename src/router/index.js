@@ -51,6 +51,7 @@ import PurchaseDetails from '@/components/teacher/purchaseDetails'
 import ResleaseNotice from '@/components/teacher/resleaseNotice'
 import ResultInquiry from '@/components/teacher/resultInquiry'
 import ResultInput from '@/components/teacher/ResultInput'
+import ExaminationResult from '@/components/teacher/examinationResult'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -308,6 +309,11 @@ export default new Router({
       path: '/teacher/ResultInput',
       name: 'ResultInput',
       component: ResultInput
+    },
+    {
+      path: '/teacher/examinationResult',
+      name: 'examinationResult',
+      component: ExaminationResult
     }
   ]
 })

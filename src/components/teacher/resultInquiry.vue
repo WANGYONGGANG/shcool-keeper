@@ -12,7 +12,7 @@
       </van-cell-group>
     </div>
     <van-radio-group v-model="radio">
-    <div class="class-list"  @click="radio = '1'">
+    <div class="class-list"  @click="selectFn('1',urls.examinationResult)">
     <div class="class-list-l">
         <van-radio name="1" />
     </div>
@@ -24,7 +24,7 @@
       </dl>
     </div>
   </div>
-    <div class="class-list"  @click="radio = '2'">
+    <div class="class-list"  @click="selectFn('2',urls.examinationResult)">
       <div class="class-list-l">
           <van-radio name="2" />
       </div>
@@ -36,7 +36,7 @@
         </dl>
       </div>
     </div>
-    <div class="class-list"  @click="radio = '3'">
+    <div class="class-list"  @click="selectFn('3',urls.examinationResult)">
       <div class="class-list-l">
           <van-radio name="3" />
       </div>
@@ -71,6 +71,9 @@ export default {
       buttonData: {
         text: '录入成绩',
         url: '/teacher/resultInput'
+      },
+      urls: {
+        examinationResult: '/teacher/examinationResult'
       }
     }
   },
@@ -85,8 +88,12 @@ export default {
     showShoolZoneDia () {
       this.$store.state.schoolPopup.isShow = true
     },
-    goTo () {
-      this.$router.push({path: '/teacher/setClassInformation'})
+    goTo (url) {
+      this.$router.push({path: url})
+    },
+    selectFn (value, url) {
+      this.radio = value
+      this.goTo(url)
     }
   }
 }
