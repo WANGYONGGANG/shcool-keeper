@@ -23,13 +23,12 @@
 export default {
   data () {
     return {
-      username:'',
-      password:''
+      username: '',
+      password: ''
     }
   },
   methods: {
-    password () {
-    }
+
   }
 }
 </script>

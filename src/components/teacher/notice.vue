@@ -18,8 +18,8 @@ export default {
   },
   data () {
     return {
-      urls:{
-        resleaseNotice:'/teacher/resleaseNotice'
+      urls: {
+        resleaseNotice: '/teacher/resleaseNotice'
       }
     }
   },
