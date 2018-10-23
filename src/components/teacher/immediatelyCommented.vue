@@ -58,6 +58,7 @@ export default {
 </script>
 <style lang="less">
 .immediately{
+padding-bottom:200px;
 .immediately-title{
   height: 78px;
   line-height: 78px;
@@ -149,6 +150,7 @@ span{
 .class-evaluation{
   width: 692px;
   background: #fff;
+  padding-bottom: 100px;
   margin: 0 auto;
   .van-cell{
     font-size: 24px;

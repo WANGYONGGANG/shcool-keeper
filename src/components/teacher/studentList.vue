@@ -118,6 +118,7 @@ export default {
   float: left;
   padding: 10px 0 0 20px;
   margin-left: 20px;
+  font-size: 24px;
 }
 .bottom-btn-item03{
   float: right;

@@ -6,11 +6,11 @@
    </dl>
     <dl class="resultinput-item02">
       <dt>选择此次考试您需要录入成绩的班级里的<br/>所有学员</dt>
-      <dd><span>选择班级</span></dd>
+      <dd><span @click="goTo(urls.examinationClass)">选择班级</span></dd>
     </dl>
     <dl class="resultinput-item02">
       <dt>选择此次考试您需要录入成绩学员，并选<br/>择学员所在班级</dt>
-      <dd><span class="yellow">选择学员</span></dd>
+      <dd><span  @click="goTo(urls.examinationClass)" class="yellow">选择学员</span></dd>
     </dl>
   </div>
 </template>
@@ -21,6 +21,9 @@ export default {
   },
   data () {
     return {
+      urls :{
+        examinationClass: '/teacher/examinationClass',
+      }
 
     }
   },

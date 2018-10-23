@@ -1,7 +1,7 @@
 <template>
 <div class="index">
   <div class="banner">
-    <!--<img src="../assets/images/banner.jpg" class="img-auto" />-->
+    <img src="../assets/images/banner.jpg" class="img-auto" />
     <div class="user-center" @click="goTo(routerUrl.user)"><icon name="user" scale="2"></icon></div>
   </div>
   <div class="blank01">
@@ -59,18 +59,18 @@ export default {
 </script>
 <style lang="less">
   .index{
-  /*.img-auto{*/
-    /*display: inline-block;*/
-    /*width: 100%;*/
-  /*}*/
+  .img-auto{
+    display: inline-block;
+    width: 100%;
+  }
   .fa-icon{
     color: #4983f7;
   }
-  .banner{
-      width: 100%;
-      height: 300px;
-      background: #4983f7;
-  }
+  /*.banner{*/
+      /*width: 100%;*/
+      /*height: 300px;*/
+      /*background: #4983f7;*/
+  /*}*/
   .user-center{
     position: absolute;
     right: 34px;
