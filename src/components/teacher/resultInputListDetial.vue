@@ -16,17 +16,23 @@
         autosize
       />
     </van-cell-group>
-
-
+    <bottom-btn :buttonData="buttonData"></bottom-btn>
   </div>
 </template>
 <script>
+  import BottomBtn from '../general/bottomBtn'
 export default {
+  components: {
+    BottomBtn
+  },
   data () {
     return {
       active: 0,
       urls: {
-
+      },
+      buttonData: {
+        text: '确认提交',
+        url: ''
       }
     }
   },
@@ -39,11 +45,26 @@ export default {
 </script>
 <style lang="less">
 .result-input-list-detial{
-  padding: 20px;
-  background: #fff;
   .van-tab{
   font-size: 26px;
 }
 
+.detial-tit{
+  color: #838383;
+  padding: 20px 0 0;
+  text-align: center;
+  font-size: 27px;
+  span{
+    font-size: 28px;
+    color: #333333;
+    display: inline-block;
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+  }
+}
+.van-cell{
+  border-bottom: 20px #eef1f6 solid;
+}
 }
 </style>
