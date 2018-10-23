@@ -10,7 +10,7 @@
     </dl>
     <dl class="resultinput-item02">
       <dt>选择此次考试您需要录入成绩学员，并选<br/>择学员所在班级</dt>
-      <dd><span  @click="goTo(urls.examinationClass)" class="yellow">选择学员</span></dd>
+      <dd><span  @click="goTo(urls.selectStudents)" class="yellow">选择学员</span></dd>
     </dl>
   </div>
 </template>
@@ -23,6 +23,7 @@ export default {
     return {
       urls :{
         examinationClass: '/teacher/examinationClass',
+        selectStudents: '/teacher/selectStudents'
       }
 
     }
