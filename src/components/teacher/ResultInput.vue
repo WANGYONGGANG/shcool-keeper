@@ -21,7 +21,7 @@ export default {
   },
   data () {
     return {
-      urls :{
+      urls: {
         examinationClass: '/teacher/examinationClass',
         selectStudents: '/teacher/selectStudents'
       }

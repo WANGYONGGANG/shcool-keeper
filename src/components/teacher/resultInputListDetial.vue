@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-  import BottomBtn from '../general/bottomBtn'
+import BottomBtn from '../general/bottomBtn'
 export default {
   components: {
     BottomBtn

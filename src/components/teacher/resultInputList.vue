@@ -28,7 +28,7 @@ export default {
     return {
       active: 0,
       urls: {
-        resultInputListDetial:'/teacher/resultInputListDetial'
+        resultInputListDetial: '/teacher/resultInputListDetial'
       }
     }
   },

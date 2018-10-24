@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-  import BottomBtn from '../general/bottomBtn'
+import BottomBtn from '../general/bottomBtn'
 export default {
   components: {
     BottomBtn
@@ -30,21 +30,21 @@ export default {
   data () {
     return {
       tableData: [
-        {'name': '17暑初二英语同步班_补课班级','teacher': '测试员','number': '0/100','time': '2018-07-04'},
-        {'name': '17暑初二英语同步班_补课班级','teacher': '测试员','number': '0/100','time': '2018-07-04'},
-        {'name': '17暑初二英语同步班_补课班级','teacher': '测试员','number': '0/100','time': '2018-07-04'},
+        {'name': '17暑初二英语同步班_补课班级', 'teacher': '测试员', 'number': '0/100', 'time': '2018-07-04'},
+        {'name': '17暑初二英语同步班_补课班级', 'teacher': '测试员', 'number': '0/100', 'time': '2018-07-04'},
+        {'name': '17暑初二英语同步班_补课班级', 'teacher': '测试员', 'number': '0/100', 'time': '2018-07-04'}
       ],
       columns: [
-        {width: 62, titleAlign: 'center',columnAlign:'center',type: 'selection'},
-        {field: 'name', title: '班级名称', width: 172, titleAlign: 'center', columnAlign: 'center',isResize:true},
-        {field: 'teacher', title: '任课老师', width: 172, titleAlign: 'center', columnAlign: 'center',isResize:true},
-        {field: 'number', title: '人数', width: 172, titleAlign: 'center', columnAlign: 'center',isResize:true},
-        {field: 'time', title: '开班日期', width: 172, titleAlign: 'center', columnAlign: 'left',isResize:true}
+        {width: 62, titleAlign: 'center', columnAlign: 'center', type: 'selection'},
+        {field: 'name', title: '班级名称', width: 172, titleAlign: 'center', columnAlign: 'center', isResize: true},
+        {field: 'teacher', title: '任课老师', width: 172, titleAlign: 'center', columnAlign: 'center', isResize: true},
+        {field: 'number', title: '人数', width: 172, titleAlign: 'center', columnAlign: 'center', isResize: true},
+        {field: 'time', title: '开班日期', width: 172, titleAlign: 'center', columnAlign: 'left', isResize: true}
       ],
       buttonData: {
         text: '确定',
         url: '/teacher/resultInputList'
-      },
+      }
     }
   },
   mounted () {

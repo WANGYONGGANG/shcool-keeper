@@ -29,7 +29,7 @@ export default{
       ]
     }
   },
-  methods :{
+  methods: {
     columnCellClass (rowIndex, columnName, rowData) {
       if (columnName === 'highest') {
         return 'column-cell-class-name-color1'
