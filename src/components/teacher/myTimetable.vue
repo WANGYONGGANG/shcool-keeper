@@ -122,7 +122,7 @@ export default {
   }
   }
   .class-details{
-    font-size: 28px;
+    font-size: 26px;
     color: #838383;
     line-height: 50px;
   .name{
@@ -132,7 +132,6 @@ export default {
     top: 4px;
     margin-right: 5px;
     color: #dc951a;
-
   }
   }
   .time{

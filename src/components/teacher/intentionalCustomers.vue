@@ -59,7 +59,7 @@ export default {
 }
 .van-cell__right-icon{
   position: relative;
-  top: 13px;
+  top: -2px;
   font-size: 24px;
   margin-left: 15px;
 }
