@@ -56,6 +56,7 @@ import ExaminationClass from '@/components/teacher/examinationClass'
 import ResultInputList from '@/components/teacher/resultInputList'
 import ResultInputListDetial from '@/components/teacher/resultInputListDetial'
 import SelectStudents from '@/components/teacher/selectStudents'
+import MakeUpClass from '@/components/teacher/makeUpClass'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -338,6 +339,11 @@ export default new Router({
       path: '/teacher/selectStudents',
       name: 'selectStudents',
       component: SelectStudents
+    },
+    {
+      path: '/teacher/makeUpClass',
+      name: 'makeUpClass',
+      component: MakeUpClass
     }
   ]
 })

@@ -38,7 +38,7 @@
         <i class="item-img"><icon name="server" scale="4"></icon></i>
         <span>意向客户</span>
       </li>
-      <li class="teacher-nav-item">
+      <li class="teacher-nav-item" @click="goTo(urls.makeUpClass)">
         <i class="item-img"><icon name="book" scale="4"></icon></i>
         <span>补课管理</span>
       </li>
@@ -82,7 +82,8 @@
           schoolBulletin:'/teacher/schoolBulletin',
           intentionalCustomers:'/teacher/intentionalCustomers',
           Roster:'/teacher/Roster',
-          resultInquiry:'/teacher/resultInquiry'
+          resultInquiry:'/teacher/resultInquiry',
+          makeUpClass:'/teacher/makeUpClass'
         }
       }
     },
