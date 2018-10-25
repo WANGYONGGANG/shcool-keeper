@@ -11,7 +11,7 @@
     </van-cell-group>
     <van-cell-group>
       <van-cell title="客户管理" is-link to="/teacher/customerManagement" />
-      <van-cell title="跟进统计" is-link to="" />
+      <van-cell title="跟进统计" is-link to="/teacher/customerFollowUpStatistics" />
       <van-cell title="客户分析" is-link to="" />
     </van-cell-group>
     <div class="bottom-btn" @click="goTo(urls.addCustomers)">添加客户</div>
