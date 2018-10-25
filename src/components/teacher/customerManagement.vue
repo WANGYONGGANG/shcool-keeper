@@ -17,7 +17,7 @@
         <div class="card-list-r">沟通记录<van-icon name="arrow" /></div>
       </div>
     </div>
-    <div class="management-list">
+    <div class="management-list" @click="goTo(urls.intentionalCustomersDetial)">
       <ul class="management-list-l fn-left">
         <li>主责任人：测试员</li>
         <li>手机号码：13123678649</li>
@@ -45,7 +45,8 @@ export default {
       urls: {
         addCustomers: '/teacher/addCustomers',
         intentionalCustomersList: '/teacher/intentionalCustomersList',
-        customerCommunicationRecord: '/teacher/customerCommunicationRecord'
+        customerCommunicationRecord: '/teacher/customerCommunicationRecord',
+        intentionalCustomersDetial: '/teacher/intentionalCustomersDetial'
       }
     }
   },
