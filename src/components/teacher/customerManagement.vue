@@ -9,7 +9,7 @@
       <div class="operation">筛选</div>
       <div class="operation">排序</div>
     </div>
-    <div @click="goTo(urls.communicationRecord)">
+    <div @click="goTo(urls.customerCommunicationRecord)">
       <div class="card-list">
         <div class="card-list-l">
           Cindy王
@@ -44,7 +44,8 @@ export default {
       star: 4,
       urls: {
         addCustomers: '/teacher/addCustomers',
-        intentionalCustomersList: '/teacher/intentionalCustomersList'
+        intentionalCustomersList: '/teacher/intentionalCustomersList',
+        customerCommunicationRecord: '/teacher/customerCommunicationRecord'
       }
     }
   },

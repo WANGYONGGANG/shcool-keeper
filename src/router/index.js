@@ -60,6 +60,7 @@ import MakeUpClass from '@/components/teacher/makeUpClass'
 import CustomerManagement from '@/components/teacher/customerManagement'
 import AddCustomers from '@/components/teacher/addCustomers'
 import IntentionalCustomersList from '@/components/teacher/intentionalCustomersList'
+import CustomerCommunicationRecord from '@/components/teacher/customerCommunicationRecord'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -362,6 +363,11 @@ export default new Router({
       path: '/teacher/intentionalCustomersList',
       name: 'intentionalCustomersList',
       component: IntentionalCustomersList
+    },
+    {
+      path: '/teacher/customerCommunicationRecord',
+      name: 'customerCommunicationRecord',
+      component: CustomerCommunicationRecord
     }
   ]
 })
