@@ -22,7 +22,7 @@
         <li>主责任人：测试员</li>
         <li>手机号码：13123678649</li>
         <li>客户状态：转化成功</li>
-        <li>意项级别：<van-rate :count="value" v-model="value"  readonly="true" /></li>
+        <li>意项级别：<van-rate :count="star" v-model="star"  readonly="true" /></li>
       </ul>
       <div class="management-list-r fn-right">
         <span>
@@ -32,7 +32,7 @@
     </div>
     <div class="bottom-btn">
       <span class="border-right" @click="goTo(urls.addCustomers)">添加客户</span>
-      <span>客户管理操作</span>
+      <span @click="goTo(urls.intentionalCustomersList)">客户管理操作</span>
     </div>
   </div>
 </template>
@@ -40,9 +40,11 @@
 export default {
   data () {
     return {
-      value: 4,
+      value:'',
+      star: 4,
       urls: {
-        addCustomers: '/teacher/addCustomers'
+        addCustomers: '/teacher/addCustomers',
+        intentionalCustomersList: '/teacher/intentionalCustomersList'
       }
     }
   },
@@ -55,40 +57,6 @@ export default {
 </script>
 <style lang="less">
 .customer-management{
-.van-tab{
-  font-size: 26px;
-}
-.van-tabs--card{
-  padding-top: 75px;
-}
-.van-tabs__nav--card .van-tab.van-tab--active{
-  background-color: #4286ed;
-  color: #fff;
-}
-.van-tabs--card .van-tabs__wrap{
-  height: 105px;
-}
-.van-tabs__content{
-  padding-top: 20px;
-
-}
-.van-tabs__nav--card{
-  border: 1px #4286ed solid;
-  height: 56px;
-
-}
-.van-tabs__nav--card .van-tab{
-  border-right:1px #4286ed solid ;
-  line-height: 56px;
-  color: #4286ed;
-}
-.van-tabs__nav--card .van-tab{
-
-}
-.van-tabs--card .van-tabs__wrap{
-  padding: 20px;
-  background: #fff;
-}
 .card-list{
   background: #fff;
   height:90px;

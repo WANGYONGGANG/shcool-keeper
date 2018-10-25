@@ -5,7 +5,7 @@
       <dd>1</dd>
     </dl>
     <van-cell-group>
-      <van-cell title="今日新增客户" is-linkvalue="0" />
+      <van-cell title="今日新增客户" is-link value="0" />
       <van-cell title="今日待沟通客户" is-link value="0" />
       <van-cell title="今日已沟通客户" is-link value="0" />
     </van-cell-group>
@@ -14,7 +14,7 @@
       <van-cell title="跟进统计" is-link to="" />
       <van-cell title="客户分析" is-link to="" />
     </van-cell-group>
-    <div class="bottom-btn">添加客户</div>
+    <div class="bottom-btn" @click="goTo(urls.addCustomers)">添加客户</div>
   </div>
 </template>
 <script>
@@ -22,7 +22,7 @@ export default {
   data () {
     return {
       urls: {
-        customerManagement: '/teacher/customerManagement'
+        addCustomers: '/teacher/addCustomers'
       }
     }
   },

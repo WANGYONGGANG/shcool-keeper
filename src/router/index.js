@@ -59,6 +59,7 @@ import SelectStudents from '@/components/teacher/selectStudents'
 import MakeUpClass from '@/components/teacher/makeUpClass'
 import CustomerManagement from '@/components/teacher/customerManagement'
 import AddCustomers from '@/components/teacher/addCustomers'
+import IntentionalCustomersList from '@/components/teacher/intentionalCustomersList'
 
 import Mine from '@/components/teacher/mine'
 Vue.use(Router)
@@ -356,6 +357,11 @@ export default new Router({
       path: '/teacher/addCustomers',
       name: 'addCustomers',
       component: AddCustomers
+    },
+    {
+      path: '/teacher/intentionalCustomersList',
+      name: 'intentionalCustomersList',
+      component: IntentionalCustomersList
     }
   ]
 })
