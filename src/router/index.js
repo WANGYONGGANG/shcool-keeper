@@ -46,6 +46,7 @@ import ResleaseAssignments from '@/components/teacher/resleaseAssignments'
 import StudentList from '@/components/teacher/studentList'
 import CommunicationRecord from '@/components/teacher/communicationRecord'
 import AddCommunicationRecord from '@/components/teacher/addCommunicationRecord'
+import AddCommunicationRecordTwo from '@/components/teacher/addCommunicationRecordTwo'
 import CommunicationTemplate from '@/components/teacher/communicationTemplate'
 import PurchaseDetails from '@/components/teacher/purchaseDetails'
 import ResleaseNotice from '@/components/teacher/resleaseNotice'
@@ -368,6 +369,11 @@ export default new Router({
       path: '/teacher/customerCommunicationRecord',
       name: 'customerCommunicationRecord',
       component: CustomerCommunicationRecord
+    },
+    {
+      path: '/teacher/addCommunicationRecordTwo',
+      name: 'addCommunicationRecordTwo',
+      component: AddCommunicationRecordTwo
     }
   ]
 })

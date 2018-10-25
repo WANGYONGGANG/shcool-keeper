@@ -24,10 +24,8 @@
       <li class="record-list-item04">是否到访<van-switch v-model="checked" size="25px" /><span>实到访日：2018-07-04 17:00</span></li>
       <li class="record-list-item05">待审核</li>
     </ul>
-
-
     <commented-pop></commented-pop>
-    <div class="bottom-btn" @click="goTo(urls.resleaseNotice)">添加沟通记录</div>
+    <div class="bottom-btn" @click="goTo(urls.addCommunicationRecordTwo)">添加沟通记录</div>
   </div>
 </template>
 <script>
@@ -40,7 +38,7 @@ export default {
     return {
       checked: true,
       urls: {
-        resleaseNotice: '/teacher/resleaseNotice'
+        addCommunicationRecordTwo: '/teacher/addCommunicationRecordTwo'
       }
     }
   },
