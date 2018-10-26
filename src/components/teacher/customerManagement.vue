@@ -40,7 +40,7 @@
 export default {
   data () {
     return {
-      value:'',
+      value: '',
       star: 4,
       urls: {
         addCustomers: '/teacher/addCustomers',

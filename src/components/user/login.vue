@@ -15,11 +15,12 @@
       placeholder="请输入密码"
     />
   </van-cell-group>
-  <van-button type="default" size="large" block>保存</van-button>
+  <van-button type="default" size="large" block  @click="submitForm">保存</van-button>
   <div class="forget-password">忘记密码?</div>
 </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
@@ -27,7 +28,38 @@ export default {
       password: ''
     }
   },
+  mounted:function () {
+           
+        },
   methods: {
+    submitForm:function () {
+        let _self = this;
+        let loginData = new URLSearchParams();
+         loginData.append('username',this.username)
+				loginData.append('password',this.password)
+        api.submitLogin(loginData)
+					.then(res=>{
+            if(res.code == 1){
+						  this.active = true;
+							this.$router.push({path: "/index"});
+
+						}else if(res.code == 0){
+							// alert('用户名或密码错误');
+							let instance = Toast('用户名或密码错误');
+							setTimeout(() => {
+								instance.close();
+							}, 1500);
+							// _self.$toast({
+							// 	message: '',
+							// 	position: 'bottom',
+							// 	duration: 3000,
+							// 	// className:'errorMes'
+							// 	});
+          }
+				},()=>{
+					alert('请输入用户名或密码');
+				});
+            }
 
   }
 }

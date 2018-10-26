@@ -49,8 +49,6 @@ export default {
   width: 100%;
 }
 }
-
-
 .address{
   padding-bottom: 40px;
 .van-cell{

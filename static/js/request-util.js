@@ -1,6 +1,6 @@
 //es6异步promise网络请求
 import axios from 'axios'
-import {baseAjaxUrl} from './config/global-config.js'
+// import {baseAjaxUrl} from './config/global-config.js'
 axios.defaults.timeout = 20000; //设置请求响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';//配置请求头
 axios.defaults.withCredentials=true;
