@@ -2,7 +2,7 @@
 import { fetchPost,fetchGet,fetchDelete} from '../request-util.js'
 import {baseLiveAjaxUrl} from '../config/global-config.js'
 let baseUrl = '/api';
-// let baseUrl = 'http://api.rexuejiewu.com.cn';
+// let baseUrl = 'http://teacher.rexuejiewu.com.cn';
 export   const  api={
     //登录
     submitLogin(params){
