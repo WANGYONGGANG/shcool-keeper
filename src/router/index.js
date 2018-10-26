@@ -16,9 +16,11 @@ import Refund from '@/components/remittance_table/Refund'
 
 import ChargeAnal from '@/components/chart/analysis/chargeAnal'
 
+import Mine from '@/components/user/mine'
 import Blank from '@/components/user/blank'
 import UserIndex from '@/components/user/userIndex'
 import ChangePassword from '@/components/user/changePassword'
+import WorkStatistics from '@/components/user/workStatistics'
 
 import TeacherIndex from '@/components/teacher/teacherIndex'
 import MyTimetable from '@/components/teacher/myTimetable'
@@ -27,7 +29,6 @@ import ChooseClass from '@/components/teacher/chooseClass'
 import Commented from '@/components/teacher/commented'
 import CommentedList from '@/components/teacher/commentedList'
 import ClassContent from '@/components/teacher/classContent'
-import CommentedDetial from '@/components/teacher/commentedDetial'
 import ReplyList from '@/components/teacher/replyList'
 import ReplyDetial from '@/components/teacher/replyDetial'
 import ImmediatelyCommented from '@/components/teacher/immediatelyCommented'
@@ -64,8 +65,13 @@ import IntentionalCustomersList from '@/components/teacher/intentionalCustomersL
 import CustomerCommunicationRecord from '@/components/teacher/customerCommunicationRecord'
 import IntentionalCustomersDetial from '@/components/teacher/intentionalCustomersDetial'
 import CustomerFollowUpStatistics from '@/components/teacher/customerFollowUpStatistics'
+import CustomerAnalysis from '@/components/teacher/customerAnalysis'
+import EnrollmentStatistics from '@/components/teacher/enrollmentStatistics'
+import EnrollmentStatistics2 from '@/components/teacher/enrollmentStatistics2'
+import EnrollmentStatistics3 from '@/components/teacher/enrollmentStatistics3'
+import CustomerContrast from '@/components/teacher/customerContrast'
 
-import Mine from '@/components/teacher/mine'
+
 Vue.use(Router)
 
 export default new Router({
@@ -85,6 +91,26 @@ export default new Router({
       path: '/user/blank',
       name: 'blank',
       component: Blank
+    },
+    {
+      path: '/user/mine',
+      name: 'mine',
+      component: Mine
+    },
+    {
+      path: '/user/userIndex',
+      name: 'userIndex',
+      component: UserIndex
+    },
+    {
+      path: '/user/changePassword',
+      name: 'changePassword',
+      component: ChangePassword
+    },
+    {
+      path: '/user/workStatistics',
+      name: 'workStatistics',
+      component: WorkStatistics
     },
     {
       path: '/chart/operationOverview',
@@ -142,16 +168,6 @@ export default new Router({
       component: ChargeAnal
     },
     {
-      path: '/user/userIndex',
-      name: 'userIndex',
-      component: UserIndex
-    },
-    {
-      path: '/user/changePassword',
-      name: 'changePassword',
-      component: ChangePassword
-    },
-    {
       path: '/teacher/teacherIndex',
       name: 'teacherIndex',
       component: TeacherIndex,
@@ -161,11 +177,6 @@ export default new Router({
         {path: 'headmaster', component: TeacherIndex}
       ]
 
-    },
-    {
-      path: '/teacher/mine',
-      name: 'mine',
-      component: Mine
     },
     {
       path: '/teacher/myTimetable',
@@ -191,11 +202,6 @@ export default new Router({
       path: '/teacher/commentedList',
       name: 'commentedList',
       component: CommentedList
-    },
-    {
-      path: '/teacher/commentedDetial',
-      name: 'commentedDetial',
-      component: CommentedDetial
     },
     {
       path: '/teacher/classContent',
@@ -386,6 +392,31 @@ export default new Router({
       path: '/teacher/customerFollowUpStatistics',
       name: 'customerFollowUpStatistics',
       component: CustomerFollowUpStatistics
+    },
+    {
+      path: '/teacher/customerAnalysis',
+      name: 'customerAnalysis',
+      component: CustomerAnalysis
+    },
+    {
+      path: '/teacher/enrollmentStatistics',
+      name: 'enrollmentStatistics',
+      component: EnrollmentStatistics
+    },
+    {
+      path: '/teacher/enrollmentStatistics2',
+      name: 'enrollmentStatistics2',
+      component: EnrollmentStatistics2
+    },
+    {
+      path: '/teacher/enrollmentStatistics3',
+      name: 'enrollmentStatistics3',
+      component: EnrollmentStatistics3
+    },
+    {
+      path: '/teacher/customerContrast',
+      name: 'customerContrast',
+      component: CustomerContrast
     }
   ]
 })

@@ -1,5 +1,5 @@
 <template>
-  <div class="customers">
+  <div class="intentional-customers">
     <dl class="my-customers">
       <dt>我的客户（人）</dt>
       <dd>1</dd>
@@ -12,7 +12,7 @@
     <van-cell-group>
       <van-cell title="客户管理" is-link to="/teacher/customerManagement" />
       <van-cell title="跟进统计" is-link to="/teacher/customerFollowUpStatistics" />
-      <van-cell title="客户分析" is-link to="" />
+      <van-cell title="客户分析" is-link to="/teacher/customerAnalysis" />
     </van-cell-group>
     <div class="bottom-btn" @click="goTo(urls.addCustomers)">添加客户</div>
   </div>
@@ -34,7 +34,7 @@ export default {
 }
 </script>
 <style lang="less">
-  .customers{
+  .intentional-customers{
   .my-customers{
     background: #fff;
     width: 100%;
