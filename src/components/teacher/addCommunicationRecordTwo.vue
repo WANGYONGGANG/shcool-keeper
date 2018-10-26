@@ -44,7 +44,7 @@ export default {
   },
   data () {
     return {
-      star:4,
+      star: 4,
       buttonData: {
         text: '提交',
         url: ''

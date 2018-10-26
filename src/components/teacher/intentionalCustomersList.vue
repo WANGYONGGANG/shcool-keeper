@@ -25,22 +25,22 @@
   </div>
 </template>
 <script>
-  export default {
-    data () {
-      return {
-        value:'',
-        star: 4,
-        urls: {
-          addCustomers: '/teacher/addCustomers'
-        }
-      }
-    },
-    methods: {
-      goTo (param) {
-        this.$router.push({path: param})
+export default {
+  data () {
+    return {
+      value: '',
+      star: 4,
+      urls: {
+        addCustomers: '/teacher/addCustomers'
       }
     }
+  },
+  methods: {
+    goTo (param) {
+      this.$router.push({path: param})
+    }
   }
+}
 </script>
 <style lang="less">
   .intentional-customers-list{
