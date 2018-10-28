@@ -48,13 +48,35 @@
 </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
+      allDatas : [],
 
     }
   },
+  mounted () {
+    this.getMyClassRecord();
+  },
   methods: {
+    //findMyClassRecord
+    getMyClassRecord () {
+      let _self = this;
+      let params = new URLSearchParams();
+      params.append('begin_date','2018-10-01');
+      params.append('end_date','2018-10-31');
+      params.append('page',1);
+      params.append('rows',10);
+      api.findMyClassRecord( params ).then( res => {
+        console.log(res);
+        if( res.data.code == 1 ){
+          var allDatas = res.data.data.rows;
+          _self.allDatas = allDatas;
+          console.log(allDatas);
+        }
+      } );
+    }
   }
 }
 </script>

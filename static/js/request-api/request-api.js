@@ -121,6 +121,10 @@ export   const  api={
     getMyClassRoster(params){
         return fetchGet(baseUrl+"/myClassRecord/ getMyClassRoster",params)
     },
+    //获取当前登录人的排课计划/myClassRecord/findMyClassRecord
+    findMyClassRecord(params){
+        return fetchGet(baseUrl+"/myClassRecord/findMyClassRecord",params)
+    },
 
     //获取上课的学员信息，包含评论信息/classEvaluation/findAllClassAndCommentsInTheClass
     findAllClassAndCommentsInTheClass(params){
