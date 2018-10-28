@@ -3,7 +3,7 @@
     <div class="commented-tab">
       <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
     </div>
-    <div class="timetable-table" @click="goTo">
+    <div class="timetable-table" @click="goTo"  v-for="data in datas">
       <div class="table-l">
         <div class="class-tit">17暑假初二英语同步班_补课班级</div>
         <div class="class-details"><span class="time"><van-icon name="idcard" />17暑假初二英语同</span></div>
@@ -18,6 +18,7 @@
   </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 import CommentedPop from '../popup/commentedPop'
 export default {
   components: {
@@ -25,9 +26,24 @@ export default {
   },
   data () {
     return {
+      datas:[]
     }
   },
+  mounted () {
+    this.getAllClassAndCommentsInTheClass();
+  },
   methods: {
+    //findAllClassAndCommentsInTheClass
+    getAllClassAndCommentsInTheClass () {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('timeable_id',371);
+      api.findAllClassAndCommentsInTheClass(param).then( res => {
+        if( res.code == 1 ){
+            console.log(res);
+          }
+      } );
+    },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },

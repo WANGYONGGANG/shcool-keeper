@@ -114,7 +114,18 @@ export   const  api={
     //删除购物车
     deleteProductToCart(params){
         return fetchDelete(baseUrl+"/cart/deleteProductToCart",{'data':params})
-    }
+    },
+    
+    
+    //获取班级花名册/myClassRecord/ getMyClassRoster
+    getMyClassRoster(params){
+        return fetchGet(baseUrl+"/myClassRecord/ getMyClassRoster",params)
+    },
+
+    //获取上课的学员信息，包含评论信息/classEvaluation/findAllClassAndCommentsInTheClass
+    findAllClassAndCommentsInTheClass(params){
+        return fetchGet(baseUrl+"/classEvaluation/findAllClassAndCommentsInTheClass",params)
+    },
 
    
 }
