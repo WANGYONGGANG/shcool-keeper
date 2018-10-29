@@ -14,6 +14,7 @@ import Icon from 'vue-awesome/components/Icon'
 import Vant from 'vant'
 import store from './store'
 import echarts from 'echarts'
+import { Toast } from 'vant';
 
 // 导入 table 和 分页组件
 import {VTable} from 'vue-easytable'
@@ -28,6 +29,7 @@ Vue.component('icon', Icon)
 // 注册到全局
 Vue.component(VTable.name, VTable)
 Vue.use(Vant)
+Vue.use(Toast);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

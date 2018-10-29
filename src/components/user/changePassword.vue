@@ -24,6 +24,7 @@
     />
   </van-cell-group>
   <van-button type="default" size="large" block>保存</van-button>
+  <van-popup v-model="show">两次密码不一样</van-popup>
 
 </div>
 </template>
@@ -31,12 +32,21 @@
 export default {
   data () {
     return {
-
+      show: false
     }
   },
   methods: {
     password () {
+    },
+    clickAlert(){
+      this.$toast.alert({
+        title: '标题',
+        message: '弹窗内容'
+      }).then(() => {
+        // on close
+      });
     }
+    
   }
 }
 </script>
