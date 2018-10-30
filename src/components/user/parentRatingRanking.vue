@@ -35,11 +35,6 @@
     ></v-table>
     <school-pop></school-pop>
     <commented-pop></commented-pop>
-    <div class="bottom-btn fn-clear">
-      <span class="bottom-btn-item01 fn-left">删除</span>
-      <span class="bottom-btn-item03 fn-right">新开班补课</span>
-      <span class="bottom-btn-item02 fn-right">跟班补课</span>
-    </div>
   </div>
 </template>
 <script>
@@ -235,45 +230,7 @@ td{
     height: 30px;
   }
 }
+}
 
-
-}
-.no-data{
-  padding-top: 300px;
-  text-align: center;
-  font-size: 32px;
-  color: #838383;
-}
-.bottom-btn{
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #fff;
-  padding-top: 15px;
-  height: 85px;
-  span{
-    display: inline-block;
-    line-height: 45px;
-    padding: 0px 40px;
-    text-align: center;
-    border-radius: 45px;
-    font-size: 28px;
-    margin-left: 20px;
-  }
-  .bottom-btn-item01{
-    color: #333333;
-    border: 1px #333333 solid;
-  }
-  .bottom-btn-item02{
-    color: #4286ed;
-    border: 1px #4286ed solid;
-  }
- .bottom-btn-item03{
-   color: #fff;
-   background: #4286ed;
-   border: 1px #4286ed solid;
-   margin-right: 20px;
- }
-}
 }
 </style>
