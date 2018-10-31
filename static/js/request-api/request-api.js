@@ -130,6 +130,10 @@ export   const  api={
     findAllClassAndCommentsInTheClass(params){
         return fetchGet(baseUrl+"/classEvaluation/findAllClassAndCommentsInTheClass",params)
     },
+    //获取接到作业的全部学员/releaseHomework/ getAllReleaseHomeworkStudent
+    getAllReleaseHomeworkStudent(params){
+        return fetchGet(baseUrl+"/releaseHomework/ getAllReleaseHomeworkStudent",params)
+    },
 
    
 }

@@ -18,6 +18,7 @@
   </div>
 </template>
 <script>
+//上课点评页面
 import {api} from  '../../../static/js/request-api/request-api.js';
 import CommentedPop from '../popup/commentedPop'
 export default {

@@ -1,8 +1,8 @@
 <template>
   <div class="student-completion">
     <van-tabs type="card" v-model="active">
-      <van-tab title="全部（0）">
-        <div class="card-list">
+      <van-tab title='全部（0）' >
+        <div class="card-list" v-for="data in allDatas">
           <div class="card-list-l"><img class="img" src="../../assets/images/user/test.jpg"/>王梓桐
           </div>
           <div class="card-list-r">待评价<van-icon name="arrow" /></div>
@@ -26,12 +26,32 @@
   </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
-      active: 1
+      active: 1,
+      allDatas:[],
     }
-  }
+  },
+  //getAllReleaseHomeworkStudent
+  mounted () {
+    this.getAllReleaseHomeworkStudent();
+  },
+  methods: {
+    getAllReleaseHomeworkStudent : function () {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('work_id' , 2);
+      api.getAllReleaseHomeworkStudent(param)
+        .then( res => {
+          if( res.data.code == 1 ){
+            console.log(res.data.data);
+            _self.allDatas = res.data.data;
+          }
+        });
+    }
+  },
 }
 </script>
 <style lang="less">
