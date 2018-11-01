@@ -8,8 +8,8 @@
             <div slot="action" @click="onSearch">搜索</div>
           </van-search>
           </div>
-          <div class="operation">筛选</div>
-          <div class="operation">排序</div>
+          <div class="operation" >筛选</div>
+          <div class="operation" @click="showSortDia">排序</div>
         </div>
         <div @click="goTo(urls.communicationRecord)">
           <div class="card-list">
@@ -56,10 +56,15 @@
       </div>
       </van-tab>
     </van-tabs>
+    <sort-pop></sort-pop>
   </div>
 </template>
 <script>
+import SortPop from '../popup/sortPop'
 export default {
+  components: {
+    SortPop
+  },
   data () {
     return {
       active: 1,
@@ -70,6 +75,13 @@ export default {
     }
   },
   methods: {
+    onSearch () {
+
+    },
+    showSortDia () {
+      //控制排序弹出层显示
+      this.$store.state.sortPopup.isShow = true
+    },
     goTo (param) {
       this.$router.push({path: param})
     }
