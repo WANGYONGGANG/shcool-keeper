@@ -82,62 +82,84 @@
     <van-popup v-model="classFilterShow" position="right" class="filter">
       <div class="class-back" @click="goBack"><van-icon name="arrow-left" />选择班级</div>
       <div class="class-search"><input type="text" placeholder="请输入名称" /></div>
-      <van-cell-group class="filter-cell">
-      <van-cell title="01-美术01-启蒙涂鸦_试听班级">
-        <input type="radio" name="class" value="" />
-      </van-cell>
-        <van-cell title="01-数学111_试听班级">
-          <input type="radio" name="class" value="" />
+      <van-radio-group v-model="radio">
+        <van-cell-group class="filter-cell">
+          <van-cell title="01-美术01-启蒙涂鸦_试听班级" clickable @click="radio = '1'">
+            <van-radio name="1" />
+          </van-cell>
+          <van-cell title="01-数学111_试听班级" clickable @click="radio = '2'">
+          <van-radio name="2" />
         </van-cell>
-        <van-cell title="01-美术1111-试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-美术01-启蒙涂鸦_试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-数学111_试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-美术1111-试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-美术01-启蒙涂鸦_试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-数学111_试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-美术1111-试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-美术01-启蒙涂鸦_试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-数学111_试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-美术1111-试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-美术01-启蒙涂鸦_试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-数学111_试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-美术1111-试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-美术01-启蒙涂鸦_试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-数学111_试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-        <van-cell title="01-美术1111-试听班级">
-          <input type="radio" name="class" value="" />
-        </van-cell>
-      </van-cell-group>
+          <van-cell title="01-数学111_试听班级" clickable @click="radio = '3'">
+            <van-radio name="3" />
+          </van-cell>
+          <van-cell title="01-数学111_试听班级" clickable @click="radio = '4'">
+            <van-radio name="4" />
+          </van-cell>
+          <van-cell title="01-数学111_试听班级" clickable @click="radio = '5'">
+            <van-radio name="5" />
+          </van-cell>
+          <van-cell title="01-数学111_试听班级" clickable @click="radio = '6'">
+            <van-radio name="6" />
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+      <!--<van-cell-group class="filter-cell">-->
+      <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
+        <!--<input type="radio" name="class" value="" />-->
+      <!--</van-cell>-->
+        <!--<van-cell title="01-数学111_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术1111-试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-数学111_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术1111-试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-数学111_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术1111-试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-数学111_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术1111-试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-数学111_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术1111-试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-数学111_试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+        <!--<van-cell title="01-美术1111-试听班级">-->
+          <!--<input type="radio" name="class" value="" />-->
+        <!--</van-cell>-->
+      <!--</van-cell-group>-->
       <div class="filter-btn">
         <span class="btn-reset" @click="resetFn(2)">重置</span>
         <span class="btn-submit" @click="submitFn(2)">确定</span>
@@ -153,8 +175,9 @@
     },
     data () {
       return {
-        filterShow:true,
-        classFilterShow:true,
+        radio:'1',
+        filterShow:false,
+        classFilterShow:false,
         active: 1,
         urls: {
           communicationRecord: '/teacher/communicationRecord',
@@ -424,24 +447,25 @@
   }
   .filter-cell{
     overflow-y: scroll;
-  height:800px;
+  min-height:800px;
     .van-cell{
       font-size: 24px;
+      height: 70px;
       padding: 18px 20px;
       line-height: 32px;
       .van-cell__title{
         -webkit-box-flex: 6;
         flex:6;
       }
-      .van-cell__value{
-        input{
-          width: 25px;
-          height: 25px;
-          border: 1px #999 solid;
-          border-radius: 100%;
-          -webkit-appearance:button;
-        }
-      }
+  .van-radio__input{
+    height: 5em;
+    top:2px;
+    right: 2px;
+    font-size: 30px;
+  }
+  .van-radio .van-icon-checked{
+    color: #4286ed;
+  }
     }
   }
   }
