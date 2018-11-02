@@ -4,7 +4,7 @@
       <van-tab title="全部">
         <div class="list-search">
           <div class="list-search-l">
-            <van-search placeholder="姓名／电话／学号" background="#fff"  show-action v-model="value">
+            <van-search placeholder="姓名／电话／学号" background="#fff"  show-action >
               <div slot="action" @click="onSearch">搜索</div>
             </van-search>
           </div>
@@ -65,11 +65,11 @@
         </dd>
       </dl>
       <dl class="filter-dl"><dt>沟通时间</dt><dd>
-        <input type="text" placeholder="开始日期" /> --- <input type="text" placeholder="结束日期" />
+        <input type="text" placeholder="开始日期" @click="showCalendar" v-model="date1"  /> --- <input type="text" placeholder="结束日期" @click="showCalendar" v-model="date2" />
       </dd></dl>
       <dl class="filter-dl"><dt>跟进时间</dt>
         <dd>
-          <input type="text" placeholder="开始日期" /> --- <input type="text" placeholder="结束日期" />
+          <input type="text" placeholder="开始日期" @click="showCalendar" v-model="date3" /> --- <input type="text" placeholder="结束日期" @click="showCalendar" v-model="date4" />
         </dd></dl>
       <van-cell-group class="class-name">
         <van-cell title="班级名称" is-link  @click="showClassPop" />
@@ -104,123 +104,87 @@
           </van-cell>
         </van-cell-group>
       </van-radio-group>
-      <!--<van-cell-group class="filter-cell">-->
-      <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
-        <!--<input type="radio" name="class" value="" />-->
-      <!--</van-cell>-->
-        <!--<van-cell title="01-数学111_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术1111-试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-数学111_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术1111-试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-数学111_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术1111-试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-数学111_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术1111-试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-数学111_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术1111-试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-数学111_试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-        <!--<van-cell title="01-美术1111-试听班级">-->
-          <!--<input type="radio" name="class" value="" />-->
-        <!--</van-cell>-->
-      <!--</van-cell-group>-->
       <div class="filter-btn">
         <span class="btn-reset" @click="resetFn(2)">重置</span>
         <span class="btn-submit" @click="submitFn(2)">确定</span>
       </div>
     </van-popup>
+    <calendar></calendar>
   </div>
 </template>
 <script>
-  import SortPop from '../popup/sortPop'
-  export default {
-    components: {
-      SortPop
+import SortPop from '../popup/sortPop'
+import Calendar from '../general/calendar'
+export default {
+  components: {
+    SortPop,
+    Calendar
+  },
+  data () {
+    return {
+      date1:'',
+      date2:'',
+      date3:'',
+      date4:'',
+      radio:'1',
+      filterShow:false,
+      classFilterShow:false,
+      active: 1,
+      urls: {
+        communicationRecord: '/teacher/communicationRecord',
+        purchaseDetails: '/teacher/purchaseDetails'
+      }
+    }
+  },
+  methods: {
+    onSearch () {
+
     },
-    data () {
-      return {
-        radio:'1',
-        filterShow:false,
-        classFilterShow:false,
-        active: 1,
-        urls: {
-          communicationRecord: '/teacher/communicationRecord',
-          purchaseDetails: '/teacher/purchaseDetails'
-        }
+    showFilterDia () {
+      this.filterShow = true
+    },
+    showSortDia () {
+      //控制排序弹出层显示
+      this.$store.state.sortPopup.isShow = true
+    },
+    showClassPop () {
+      this.classFilterShow = true
+    },
+    goTo (param) {
+      this.$router.push({path: param})
+    },
+    resetFn (param){
+      if(param === 2){
+        this.classFilterShow = false
+      }else{
+        this.filterShow = false
       }
     },
-    methods: {
-      onSearch () {
-
-      },
-      showFilterDia () {
-        this.filterShow = true
-      },
-      showSortDia () {
-        //控制排序弹出层显示
-        this.$store.state.sortPopup.isShow = true
-      },
-      showClassPop () {
-        this.classFilterShow = true
-      },
-      goTo (param) {
-        this.$router.push({path: param})
-      },
-      resetFn (param){
-        if(param === 2){
-          this.classFilterShow = false
-        }else{
-          this.filterShow = false
-        }
-      },
-      submitFn (param) {
-        if(param === 2){
-          this.classFilterShow = false
-        }else{
-          this.filterShow = false
-        }
-      },
-      goBack () {
+    submitFn (param) {
+      if(param === 2){
         this.classFilterShow = false
+      }else{
+        this.filterShow = false
+      }
+    },
+    goBack () {
+      this.classFilterShow = false
+    },
+    showCalendar () {
+      this.$store.state.calendar.isShow = true
+      this.date1 = this.inputDate
+    }
+  },
+  computed: {
+    inputDate: {
+      get () {
+        return this.$store.state.calendar.date
+      },
+      set () {
       }
     }
   }
+}
 </script>
 <style lang="less">
   .student-communication{

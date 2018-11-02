@@ -5,6 +5,8 @@ import commentStore from '../static/js/commentPopup_store.js'
 import schoolStore from '../static/js/schoolPopup_store.js'
 import navbarStore from '../static/js/navbar.js'
 import sortStore from '../static/js/sortPopup_store.js'
+import calendarStore from '../static/js/calendar.js'
+
 Vue.use(vuex)
 
 export default new vuex.Store({
@@ -13,6 +15,7 @@ export default new vuex.Store({
     commentPopup: commentStore,
     schoolPopup: schoolStore,
     navbar: navbarStore,
-    sortPopup: sortStore
+    sortPopup: sortStore,
+    calendar: calendarStore
   }
 })

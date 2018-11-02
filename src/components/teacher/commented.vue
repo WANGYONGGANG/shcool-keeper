@@ -1,8 +1,6 @@
 <template>
   <div class="commented">
-    <div class="commented-tab">
-      <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
-    </div>
+    <calendar-packing></calendar-packing>
     <div class="timetable-table" @click="goTo"  v-for="data in Alldatas">
       <div class="table-l">
         <div class="class-tit">{{data.className}}</div>
@@ -14,16 +12,16 @@
         <span class="completion">0/2</span>
       </div>
     </div>
-    <commented-pop></commented-pop>
   </div>
 </template>
 <script>
 //上课点评页面
 import {api} from  '../../../static/js/request-api/request-api.js';
-import CommentedPop from '../popup/commentedPop'
+//日历选择组件
+import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
-    CommentedPop
+    CalendarPacking
   },
   data () {
     return {
@@ -51,33 +49,15 @@ export default {
     },
     goTo () {
       this.$router.push({path: '/teacher/commentedList'})
+    },
+    showCalendar () {
+      this.$store.state.calendar.isShow = true
     }
   }
 }
 </script>
 <style lang="less">
 .commented{
-.commented-tab{
-  height: 76px;
-  padding-top: 10px;
-  background: #fff;
-  margin-bottom: 10px;
-  padding-left:20px;
-.tab-radius{
-  height: 53px;
-  display: inline-block;
-  padding: 0px 30px;
-  font-size: 24px;
-  line-height: 55px;
-  border-radius: 50px;
-  border: 1px #eff1f6 solid;
-  margin: 8px 10px 0;
-}
-.arrow-down .van-icon{
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-}
 .timetable-table{
   background: #fff;
   height: 170px;

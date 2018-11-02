@@ -10,7 +10,6 @@
 export default {
   data () {
     return {
-
     }
   },
   methods: {
@@ -22,7 +21,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$store.state.schoolPopup)
   },
   computed: {
     isShow: {
