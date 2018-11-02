@@ -68,11 +68,11 @@ export   const  api={
     },
     //加入购物车
     addProductToCart(params){
-       return fetchPost(baseUrl+"/cart/addProductToCart",params)
-        },
+    return fetchPost(baseUrl+"/cart/addProductToCart",params)
+    },
     
      //获取购物车列表
-     refreshShoppingCartList(params){
+    refreshShoppingCartList(params){
         return fetchGet(baseUrl+"/cart/refreshShoppingCartList",params)
     },
     //增加购物车数量
@@ -134,6 +134,13 @@ export   const  api={
     getAllReleaseHomeworkStudent(params){
         return fetchGet(baseUrl+"/releaseHomework/ getAllReleaseHomeworkStudent",params)
     },
-
+    //获取接到作业的学员并且是没有提交的/releaseHomework/getAllReleaseHomeworkStudentAndSubmit
+    getAllReleaseHomeworkStudentAndSubmit(params){
+        return fetchGet(baseUrl+"/releaseHomework/getAllReleaseHomeworkStudentAndSubmit",params)
+    },
+    //获取接到作业的学员并且是已提交的/releaseHomework/getAllReleaseHomeworkStudentNoSubmit
+    getAllReleaseHomeworkStudentNoSubmit(params){
+        return fetchGet(baseUrl+"/releaseHomework/getAllReleaseHomeworkStudentNoSubmit",params)
+    },
    
 }

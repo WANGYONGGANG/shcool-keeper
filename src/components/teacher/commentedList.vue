@@ -4,41 +4,54 @@
       <van-cell title="上课内容：" is-link to="/teacher/classContent"/>
       <van-cell title="查看家长回复" value="1" to="/teacher/replyList" is-link />
     </van-cell-group>
-    <div class="list-box">
+
+    <div class="list-box" v-for="data in allDatas">
       <div class="list-box-l">
         <span class="box-l"><img src="../../assets/images/user/test.jpg"/></span>
-        <span class="name">张跃龙</span>
+        <span class="name">{{data.studentName}}</span>
         <span><van-checkbox v-model="checked"></van-checkbox></span>
       </div>
-      <div class="list-box-r" @click="goTo">立即点评<van-icon name="arrow" /></div>
+      <div class="list-box-r" @click="goTo(data.id)">立即点评<van-icon name="arrow" /></div>
     </div>
-    <div class="list-box">
-      <div class="list-box-l">
-        <span class="box-l"><img src="../../assets/images/user/test.jpg"/></span>
-        <span class="name">张跃龙</span>
-        <span><van-checkbox v-model="checked"></van-checkbox></span>
-      </div>
-      <div class="list-box-r" @click="goTo">立即点评<van-icon name="arrow" /></div>
-    </div>
+    
     <div class="list-bottom">
       <div class="bottom-l">
         <van-checkbox v-model="checked">全选</van-checkbox>
       </div>
       <div class="bottom-r"><span @click="goTo">上课点评（0）</span></div>
     </div>
+
   </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
-      checked: true
+      checked: false,
+      allDatas : [],
     }
   },
+  mounted () {
+    this.findAllClassAndCommentsInTheClass();
+  },
   methods: {
-    goTo () {
-      this.$router.push({path: '/teacher/immediatelyCommented'})
-    }
+    goTo (param) {
+      this.$router.push({path: '/teacher/immediatelyCommented',query:{id:param}})
+    },
+    //findAllClassAndCommentsInTheClass获取上课的学员信息，包含评论信息
+    findAllClassAndCommentsInTheClass : function () {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('timeable_id' , 371);
+      api.findAllClassAndCommentsInTheClass(param)
+        .then( res => {
+          if( res.data.code == 1 ){
+            console.log(res.data.data);
+            _self.allDatas = res.data.data;
+          }
+        });
+    },
   }
 }
 </script>
