@@ -1,6 +1,6 @@
 export default {
   state: {
     isShow: false,
-    date:''
+    date:'2018-10-15'
   }
 }

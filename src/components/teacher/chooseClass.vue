@@ -14,19 +14,19 @@
       </van-cell-group>
     </div>
     <van-radio-group v-model="radio">
-    <div class="class-list"  @click="radio = '1'">
+    <div class="class-list"  @click="radio = index" v-for="(data,index) in allDatas" :key="index">
     <div class="class-list-l">
-        <van-radio name="1" />
+        <van-radio v-bind:name=index />
     </div>
     <div class="class-list-r">
       <dl>
-        <dt>2018暑假初二英语同步班0523<span class="num">1/1</span></dt>
-        <dd><van-icon name="location" />潮人部落</dd>
-        <dd class="last-item"><van-icon name="contact" />潮人部落<span><van-icon name="idcard" />2018寒假五年...</span></dd>
+        <dt>{{data.className}}<span class="num">{{data.currentStudentCount}}/{{data.recruitStudentsCount}}</span></dt>
+        <dd><van-icon name="location" />{{data.campusName}}</dd>
+        <dd class="last-item"><van-icon name="contact" />{{data.headerteacherName}}<span><van-icon name="idcard" />{{subStrClassName(data.couseName)}}</span></dd>
       </dl>
     </div>
   </div>
-    <div class="class-list"  @click="radio = '2'">
+    <!-- <div class="class-list"  @click="radio = '2'">
       <div class="class-list-l">
           <van-radio name="2" />
       </div>
@@ -37,8 +37,8 @@
           <dd class="last-item"><van-icon name="contact" />潮人部落<span><van-icon name="idcard" />2018寒假五年...</span></dd>
         </dl>
       </div>
-    </div>
-    <div class="class-list"  @click="radio = '3'">
+    </div> -->
+    <!-- <div class="class-list"  @click="radio = '3'">
       <div class="class-list-l">
           <van-radio name="3" />
       </div>
@@ -49,7 +49,7 @@
           <dd class="last-item"><van-icon name="contact" />潮人部落<span><van-icon name="idcard" />2018寒假五年...</span></dd>
         </dl>
       </div>
-    </div>
+    </div> -->
     </van-radio-group>
     <div class="bottom-btn">
       点击下一步进行班级信息填写 <span @click="goTo">下一步</span>
@@ -58,6 +58,7 @@
   </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
 import SchoolPop from '../popup/schoolPop'
 export default {
   components: {
@@ -66,10 +67,12 @@ export default {
   data () {
     return {
       value: '',
-      radio: '1'
+      radio: '1',
+      allDatas:[]
     }
   },
   mounted () {
+    this.findAllClassInfo();
   },
   methods: {
     onSearch () {
@@ -77,7 +80,26 @@ export default {
     showShoolZoneDia () {
       this.$store.state.schoolPopup.isShow = true
     },
+     subStrClassName(name) {
+      return name.substring(0, 8) + "...";
+    },
+    findAllClassInfo() {
+      let _self = this;
+      let params = new URLSearchParams();
+      params.append("class_name",2 );
+      // params.append("page", 1);
+      // params.append("rows", 10);
+      api.findAllClassInfo(params).then(res => {
+        // console.log(res);
+        if (res.data.code == 1) {
+          var allDatas = res.data.data.rows;
+          _self.allDatas = allDatas;
+          // console.log(allDatas);
+        }
+      });
+    },
     goTo () {
+      // console.log(this.radio);
       this.$router.push({path: '/teacher/setClassInformation'})
     }
   }

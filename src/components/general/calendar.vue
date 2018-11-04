@@ -30,7 +30,6 @@
     </ul>
     <!-- 日期 -->
     <ul class="day fn-clear">
-
       <li v-for="(dayobject ,index) in days" @click="output(dayobject.day)">
         <!--如果不是本月  改变类名加灰色-->
         <span v-if="dayobject.day.getMonth()+1 != currentMonth" class="other-month">{{ dayobject.day.getDate() }}</span>
@@ -169,6 +168,8 @@ export default {
       let date =dateObject.getDate()//获取当前日(1-31)
       this.$store.state.calendar.date = this.formatDate(year,month,date)
       this.$store.state.calendar.isShow = false
+      // alert(this.$store.state.calendar.date)
+      // console.log(this.$store.state.calendar.date)
       //通过获取this.$store.state.calendar.date 的值来做后续操作
     }
   },

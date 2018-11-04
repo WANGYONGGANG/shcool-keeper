@@ -32,6 +32,7 @@
   </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
 export default {
   data () {
     return {
@@ -48,9 +49,25 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.getMyClassRecord();
+  },
   methods: {
     onSearch () {
 
+    },
+     getMyClassRecord() {
+      let _self = this;
+      let params = {};
+      params.timeable_id=_self.$route.query.timeable_id;
+      api.getMyClassRecord(params).then(res => {
+        console.log(res);
+        if (res.data.code == 1) {
+          var allDatas = res.data.data.rows;
+          _self.allDatas = allDatas;
+          // console.log(allDatas);
+        }
+      });
     },
     goTo () {
 

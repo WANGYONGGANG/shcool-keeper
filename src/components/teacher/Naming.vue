@@ -1,46 +1,87 @@
 <template>
 <div class="naming">
   <div class="naming-tab">
-    9月28日(周五)
+    {{dataStr}}(周{{nowDayOfWeek}})
   </div>
-  <div class="naming-table" @click="goTo(urls.studentList)">
+  <div class="naming-table" @click="goTo(urls.studentList,data.id)" v-for="(data,index) in allDatas" :key="index">
     <div class="table-l">
-      <div class="class-tit">17暑假初二英语同步班_补课班级</div>
-      <div class="class-address"><van-icon name="location" />超人部落</div>
+      <div class="class-tit">{{data.className}}</div>
+      <div class="class-address"><van-icon name="location" />{{data.classRoomName}}</div>
       <div class="class-details">
-        <span class="name"><van-icon name="idcard" />17暑假初二英语同</span>
-        <span class="time">09:00-11:00<i class="no-class">未上课</i></span>
+        <span class="name"><van-icon name="idcard" />{{subStrClassName(data.courseName)}}</span>
+        <span class="time">{{subStr(data.createTime)}}-{{subStr(data.endTime)}}<i class="no-class" v-if="data.stateId==1">未上课</i><i class="no-class" v-if="data.stateId==2">已上课</i></span>
       </div>
     </div>
     <div class="table-r">
-     0/1
+     {{data.realPeopleCount}}/{{data.willPeopleCount}}
     </div>
   </div>
   <div class="quick-schedule" @click="goTo(urls.chooseClass)">快速排课</div>
 </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
 export default {
   data () {
     return {
       urls: {
         chooseClass: '/teacher/chooseClass',
         studentList: '/teacher/studentList'
-      }
+      },
+      allDatas : [],
+      nowDayOfWeek:null,
+      nowMonth:null,
+      dataStr:null
 
     }
   },
+ mounted() {
+    this.getMyClassRecord();
+    this.getNowDateWeek();
+  },
   methods: {
-    goTo (url) {
-      this.$router.push({path: url})
+    goTo (url,id) {
+      this.$router.push({path: url,query: {timeable_id: id}})
+    },
+     subStr(time) {
+      return time.substring(10, 20);
+    },
+    subStrClassName(name) {
+      return name.substring(0, 8) + "...";
+    },
+    getNowDateWeek(){
+     let now = new Date(); //当前日期
+     let nowDayOfWeek = now.getDay(); //今天本周的第几天
+     let weekArray = new Array("日", "一", "二", "三", "四", "五", "六");
+     let nowWeek = weekArray[new Date().getDay()];
+
+     let nowMonth = now.getMonth()+1; //当前月
+     this.nowDayOfWeek=nowWeek;
+     this.nowMonth=nowMonth;
+     this.dataStr=nowMonth+"月"+now.getDate()+"日";
+    },
+    getMyClassRecord() {
+      let _self = this;
+      let params = new URLSearchParams();
+      params.append("begin_date", "2018-10-01");
+      params.append("end_date", "2018-10-31");
+      params.append("page", 1);
+      params.append("rows", 10);
+      api.findMyClassRecord(params).then(res => {
+        // console.log(res);
+        if (res.data.code == 1) {
+          var allDatas = res.data.data.rows;
+          _self.allDatas = allDatas;
+          console.log(allDatas);
+        }
+      });
     }
   },
-  mounted () {
-  }
 }
 </script>
 <style lang="less">
   .naming{
+    padding-bottom: 99px;
     .naming-tab{
       height: 86px;
       background: #fff;
