@@ -16,10 +16,12 @@ export   const  api={
     resetPassword(params){
         return fetchPost(baseUrl+'/user/resetPassword',params)
     },
-    // 我的喜欢
-    refreshProductLove(params){
-        return fetchGet(baseUrl+'/product/refreshProductLove',params)
+    // 获取当前登录人的排课计划
+    findMyClassRecord(params){
+        return fetchGet(baseUrl+'/myClassRecord/findMyClassRecord',params)
     },
+
+    
     // 获取登录用户信息
     getUserInfo(params){
         return fetchGet(baseUrl+'/user/getUserInfo',params)
