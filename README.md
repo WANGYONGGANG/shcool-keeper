@@ -34,11 +34,13 @@ npm i vant -S
 通用的需要重写的样式在/static/css/private-vant.less
 中文官网 https://youzan.github.io/vant/#/zh-CN/panel
 
-
 # 使用vue-awesome
 npm install vue-awesome
 https://justineo.github.io/vue-awesome/demo/
+https://github.com/Justineo/vue-awesome/blob/master/README.zh_CN.md
 查看图标可以去font awesome官网上查看，vue-awesome是基于font awesome图标库来的
+请注意当你在 FontAwesome 官网查找到图标名词后，需要确认一下图标集的名称。
+比如，在 500px 这个图标的详情页会有一个 URL 参数 style=brands，故图标名称就是 brands/500px。
 
 
 # 使用vue-easytable

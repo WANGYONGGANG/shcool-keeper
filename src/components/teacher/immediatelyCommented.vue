@@ -3,9 +3,9 @@
     <div class="class-detial">
       <div class="immediately-title"><van-icon name="pending-payment" />上课详情</div>
       <van-cell-group>
-        <van-cell title="学生" value="王自信" />
-        <van-cell title="班级" value="17暑初二英语同步班_试听班级" />
-        <van-cell title="老师" value="超人部落" />
+        <van-cell title="学生" :value="stuMessage.studentName" />
+        <van-cell title="班级" :value="stuMessage.courseName" />
+        <van-cell title="老师" :value="stuMessage.classTeacherName" />
       </van-cell-group>
     </div>
     <div class="class-comment">
@@ -47,12 +47,39 @@
   </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
       value: 3,
-      message: ''
+      message: '',
+      stuMessage : null,
     }
+  },
+  mounted () {
+    this.findAllClassAndCommentsInTheClass();
+  },
+  methods: {
+    //findAllClassAndCommentsInTheClass获取上课的学员信息，包含评论信息
+    findAllClassAndCommentsInTheClass : function () {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('timeable_id' , 371);
+      api.findAllClassAndCommentsInTheClass(param)
+        .then( res => {
+          if( res.data.code == 1 ){
+            console.log(res.data.data);
+            let data = res.data.data;
+            console.log(_self.$route.query.id)
+            data.forEach(element => {
+              if(element.id == _self.$route.query.id ){
+                _self.stuMessage = element;
+                console.log(_self.stuMessage);
+              }
+            });
+          }
+        });
+    },
   }
 }
 </script>

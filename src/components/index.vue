@@ -81,9 +81,7 @@ export default {
     border-radius: 100%;
     text-align: center;
     padding-top: 3px;
-
   }
-
   .blank-tit{
     color: #555d73;
     font-size:24px;

@@ -21,6 +21,8 @@ import Blank from '@/components/user/blank'
 import UserIndex from '@/components/user/userIndex'
 import ChangePassword from '@/components/user/changePassword'
 import WorkStatistics from '@/components/user/workStatistics'
+import ParentRatingRanking from '@/components/user/parentRatingRanking'
+
 
 import TeacherIndex from '@/components/teacher/teacherIndex'
 import MyTimetable from '@/components/teacher/myTimetable'
@@ -70,8 +72,6 @@ import EnrollmentStatistics from '@/components/teacher/enrollmentStatistics'
 import EnrollmentStatistics2 from '@/components/teacher/enrollmentStatistics2'
 import EnrollmentStatistics3 from '@/components/teacher/enrollmentStatistics3'
 import CustomerContrast from '@/components/teacher/customerContrast'
-
-
 Vue.use(Router)
 
 export default new Router({
@@ -111,6 +111,11 @@ export default new Router({
       path: '/user/workStatistics',
       name: 'workStatistics',
       component: WorkStatistics
+    },
+    {
+      path: '/user/parentRatingRanking',
+      name: 'parentRatingRanking',
+      component: ParentRatingRanking
     },
     {
       path: '/chart/operationOverview',

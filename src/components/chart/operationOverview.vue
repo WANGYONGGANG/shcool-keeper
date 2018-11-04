@@ -25,11 +25,11 @@
       </ul>
       <ul class="stu-block fn-right">
         <li class="stu-block-item01">
-          到访率<van-icon name="question" />
+          转化率<van-icon name="question" />
         </li>
         <li class="stu-block-item02"><span>0.00</span>%</li>
-        <li class="stu-block-item03"><i class="circle"></i>邀约人数：0</li>
-        <li class="stu-block-item04"><i class="circle"></i>到访人数：0</li>
+        <li class="stu-block-item03"><i class="circle"></i>已跟进：0</li>
+        <li class="stu-block-item04"><i class="circle"></i>已转化：0</li>
       </ul>
     </div>
   </div>
@@ -60,7 +60,7 @@ export default {
       // 绘制图表
       chart01.setOption({
         title: {
-          text: '收费金额（元）',
+          text: '收费金额（元）0.00 0人次',
           textStyle: {
             color: '#fff',
             fontSize: 26

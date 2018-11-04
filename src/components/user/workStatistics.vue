@@ -102,8 +102,6 @@ export default {
     margin: 20px auto;
   }
   }
-
-
   }
 
 </style>

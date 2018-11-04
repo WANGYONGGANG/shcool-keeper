@@ -1,68 +1,67 @@
 <template>
   <div class="commented">
-    <div class="commented-tab">
-      <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
-    </div>
-    <div class="timetable-table" @click="goTo">
+    <calendar-packing></calendar-packing>
+    <div class="timetable-table" @click="goTo"  v-for="data in Alldatas">
       <div class="table-l">
-        <div class="class-tit">17暑假初二英语同步班_补课班级</div>
-        <div class="class-details"><span class="time"><van-icon name="idcard" />17暑假初二英语同</span></div>
-        <div class="class-details"><span class="time"><van-icon name="clock" />10.12 09:00-11:00</span></div>
+        <div class="class-tit">{{data.className}}</div>
+        <div class="class-details"><span class="time"><van-icon name="idcard" />{{data.courseName}}</span></div>
+        <div class="class-details"><span class="time"><van-icon name="clock" />{{data.classPleanDate}}</span></div>
       </div>
       <div class="table-r">
         点评<br/>
         <span class="completion">0/2</span>
       </div>
     </div>
-    <commented-pop></commented-pop>
   </div>
 </template>
 <script>
-import CommentedPop from '../popup/commentedPop'
+//上课点评页面
+import {api} from  '../../../static/js/request-api/request-api.js';
+//日历选择组件
+import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
-    CommentedPop
+    CalendarPacking
   },
   data () {
     return {
+      Alldatas:[]
     }
   },
+  mounted () {
+    this.getAllClassAndCommentsInTheClass();
+  },
   methods: {
+    //findAllClassAndCommentsInTheClass
+    getAllClassAndCommentsInTheClass () {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('timeable_id',371);
+      api.findAllClassAndCommentsInTheClass(param).then( res => {
+        if( res.data.code == 1 ){
+          _self.Alldatas = res.data.data;
+          console.log(_self.Alldatas);
+          }
+      } );
+    },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
     goTo () {
       this.$router.push({path: '/teacher/commentedList'})
+    },
+    showCalendar () {
+      this.$store.state.calendar.isShow = true
     }
   }
 }
 </script>
 <style lang="less">
 .commented{
-.commented-tab{
-  height: 76px;
-  padding-top: 10px;
-  background: #fff;
-  margin-bottom: 10px;
-  padding-left:20px;
-.tab-radius{
-  height: 53px;
-  display: inline-block;
-  padding: 0px 30px;
-  font-size: 24px;
-  line-height: 55px;
-  border-radius: 50px;
-  border: 1px #eff1f6 solid;
-  margin: 8px 10px 0;
-}
-.arrow-down .van-icon{
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-}
 .timetable-table{
   background: #fff;
   height: 170px;
+  margin-bottom: 10px;
 .empty{
   line-height: 170px;
   text-align: center;
@@ -72,8 +71,8 @@ export default {
 .table-l{
   float: left;
   padding-left:30px;
-
-/*width: 550px;*/
+  overflow: hidden;
+  width: 550px;
 .class-tit{
   font-size: 32px;
   color: #141414;
@@ -85,6 +84,7 @@ export default {
   font-size: 24px;
   color: #838383;
   line-height: 40px;
+  white-space: nowrap;
 .name{
   padding-right: 15px;
 .van-icon{

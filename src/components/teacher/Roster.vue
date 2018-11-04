@@ -30,19 +30,34 @@
 </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
+  name:'roster',
   data () {
     return {
-
+      datas:[]
     }
+  },
+  mounted () {
+    this.getRosterData();
   },
   methods: {
     goTo () {
       this.$router.push({path: '/teacher/rosterDetial'})
+    },
+    getRosterData : function () {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('class_plan_id',341);
+      api.getMyClassRoster(param)
+        .then( res => {
+          if( res.code == 1 ){
+            console.log(res);
+          }
+        });
     }
   },
-  mounted () {
-  }
+  
 }
 </script>
 <style lang="less">

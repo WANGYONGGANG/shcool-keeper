@@ -70,11 +70,11 @@ export   const  api={
     },
     //加入购物车
     addProductToCart(params){
-       return fetchPost(baseUrl+"/cart/addProductToCart",params)
-        },
+    return fetchPost(baseUrl+"/cart/addProductToCart",params)
+    },
     
      //获取购物车列表
-     refreshShoppingCartList(params){
+    refreshShoppingCartList(params){
         return fetchGet(baseUrl+"/cart/refreshShoppingCartList",params)
     },
     //增加购物车数量
@@ -116,7 +116,33 @@ export   const  api={
     //删除购物车
     deleteProductToCart(params){
         return fetchDelete(baseUrl+"/cart/deleteProductToCart",{'data':params})
-    }
+    },
+    
+    
+    //获取班级花名册/myClassRecord/ getMyClassRoster
+    getMyClassRoster(params){
+        return fetchGet(baseUrl+"/myClassRecord/ getMyClassRoster",params)
+    },
+    //获取当前登录人的排课计划/myClassRecord/findMyClassRecord
+    findMyClassRecord(params){
+        return fetchGet(baseUrl+"/myClassRecord/findMyClassRecord",params)
+    },
 
+    //获取上课的学员信息，包含评论信息/classEvaluation/findAllClassAndCommentsInTheClass
+    findAllClassAndCommentsInTheClass(params){
+        return fetchGet(baseUrl+"/classEvaluation/findAllClassAndCommentsInTheClass",params)
+    },
+    //获取接到作业的全部学员/releaseHomework/ getAllReleaseHomeworkStudent
+    getAllReleaseHomeworkStudent(params){
+        return fetchGet(baseUrl+"/releaseHomework/ getAllReleaseHomeworkStudent",params)
+    },
+    //获取接到作业的学员并且是没有提交的/releaseHomework/getAllReleaseHomeworkStudentAndSubmit
+    getAllReleaseHomeworkStudentAndSubmit(params){
+        return fetchGet(baseUrl+"/releaseHomework/getAllReleaseHomeworkStudentAndSubmit",params)
+    },
+    //获取接到作业的学员并且是已提交的/releaseHomework/getAllReleaseHomeworkStudentNoSubmit
+    getAllReleaseHomeworkStudentNoSubmit(params){
+        return fetchGet(baseUrl+"/releaseHomework/getAllReleaseHomeworkStudentNoSubmit",params)
+    },
    
 }

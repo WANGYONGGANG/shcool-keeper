@@ -13,7 +13,7 @@
 import BottomBtn from '../general/bottomBtn'
 export default {
   components: {
-    BottomBtn,
+    BottomBtn
   },
   data () {
     return {
