@@ -109,7 +109,7 @@
         <span class="btn-submit" @click="submitFn(2)">确定</span>
       </div>
     </van-popup>
-    <!--每个日历调用都需要对应一个组件-->
+    <!--每个日历选择按钮都需要调用一个日历组件-->
     <calendar :date.sync="calendar.item1.date" :isVisible.sync="calendar.item1.isVisible"></calendar>
     <calendar :date.sync="calendar.item2.date" :isVisible.sync="calendar.item2.isVisible"></calendar>
     <calendar :date.sync="calendar.item3.date" :isVisible.sync="calendar.item3.isVisible"></calendar>
