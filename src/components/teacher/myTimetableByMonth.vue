@@ -10,7 +10,7 @@
       <span @click="toClassByWeek">按周</span>
     </div>
   </div>
-  <calendar-table :date.sync="calendar.date" :haveDetial="calendar.detialDate"></calendar-table>
+  <calendar-table :date.sync="calendar.date" :haveDetial="calendar.detialDate" :list="calendar.list"></calendar-table>
   <!-- <div class="timetable-tit">
     <span class="tit-l">星期一</span>
     <span class="tit-r">09-17</span>
@@ -32,10 +32,8 @@
     <span class="tit-l">星期二</span>
     <span class="tit-r">09-18</span>
   </div> -->
-  <div class="timetable-table">
-    <div class="empty">暂无上课班级</div>
-  </div>
 
+  <div class="empty">暂无上课班级</div>
 </div>
 </template>
 <script>
@@ -52,7 +50,22 @@ export default {
       calendar:{
         //显示小黄点的日期，需传入一个格式为2018-11-10数组
         detialDate:['2018-11-10','2018-11-17'],
-        date:''
+        date:'',
+        list:[{
+          time:'13:50-15:20',
+          class:'10秋科技馆六年级英语',
+          schoolArea:'临邑新概念',
+          state:'科技馆000',
+          content:'已上课',
+          num:'1/1'
+        },{
+          time:'13:50-15:20',
+          class:'10秋科技馆六年级英语',
+          schoolArea:'临邑新概念',
+          state:'科技馆000',
+          content:'已上课',
+          num:'1/1'
+        }]
       }
     };
   },
@@ -122,16 +135,12 @@ span {
   }
 }
 }
+
   .timetable-table {
     background: #fff;
     height: 170px;
     border-bottom: 1px solid #494847;
-    .empty {
-      line-height: 170px;
-      text-align: center;
-      font-size: 32px;
-      color: #838383;
-    }
+
 
     .table-l {
       float: left;
@@ -204,5 +213,11 @@ span {
       }
     }
   }
+.empty {
+  line-height: 170px;
+  text-align: center;
+  font-size: 32px;
+  color: #838383;
+}
 }
 </style>

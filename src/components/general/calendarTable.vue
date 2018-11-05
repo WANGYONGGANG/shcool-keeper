@@ -41,7 +41,7 @@
          </span>
       </li>
     </ul>
-    <div>
+    <div class="detial-list">
       <dl>
         <dt>13:50-15:20</dt>
         <dd>班级：10秋科技馆六年级英语</dd>
@@ -50,6 +50,14 @@
         <dd>状态：已上课</dd>
         <dd>内容：第三单元</dd>
       </dl>
+      <!--<dl>-->
+        <!--<dt>{{list.time}}</dt>-->
+        <!--<dd>班级：{{list.class}}</dd>-->
+        <!--<dd>校区：{{list.schoolArea}}</dd>-->
+        <!--<dd>教室：{{list.schoolArea}}</dd>-->
+        <!--<dd>状态：{{list.state}}</dd>-->
+        <!--<dd>内容：{{list.content}}</dd>-->
+      <!--</dl>-->
       <van-cell-group>
         <van-cell title="上课人数" value="1/1" isLink />
       </van-cell-group>
@@ -58,7 +66,7 @@
 </template>
 <script>
 export default {
-  props:['date','haveDetial'],
+  props:['date','haveDetial','list'],
   data () {
     return {
       currentYear:2018,//初始化当天的年份动态取值
@@ -275,7 +283,20 @@ export default {
     height: 70px;
     line-height: 70px;
   }
-
+.detial-list{
+  width: 700px;
+  padding: 20px 0;
+  margin: 0 auto 20px;
+  background: #fff;
+  dt{
+    padding-left: 20px;
+    line-height: 60px;
+  }
+  dd{
+    padding-left: 20px;
+    line-height: 40px;
+  }
+}
   }
 
 </style>
