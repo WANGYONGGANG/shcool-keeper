@@ -1,5 +1,5 @@
 <template>
-<van-popup v-model="isShow" position="bottom" @click-overlay="closePop">
+<van-popup v-model="isVisible" position="bottom" @click-overlay="closePop">
   <div class="calendar">
     <!-- 年份 月份 -->
     <ul class="select">
@@ -47,6 +47,7 @@
 </template>
 <script>
 export default {
+  props:['date','isVisible'],
   data () {
     return {
       currentYear:2018,//初始化当天的年份动态取值
@@ -60,7 +61,8 @@ export default {
   },
   methods: {
     closePop () {
-      this.$store.state.calendar.isShow = false
+//      this.$store.state.calendar.isShow = false
+      this.$emit('update:isVisible', false)
     },
     pickerLastYear (year, month) {
       let yearDate=year
@@ -166,24 +168,13 @@ export default {
       let year =dateObject.getFullYear()//获取完整的年份(4位,1970-????)
       let month =dateObject.getMonth()+1//获取当前月份(0-11,0代表1月)
       let date =dateObject.getDate()//获取当前日(1-31)
-      this.$store.state.calendar.date = this.formatDate(year,month,date)
-      this.$store.state.calendar.isShow = false
-      // alert(this.$store.state.calendar.date)
-      // console.log(this.$store.state.calendar.date)
-      //通过获取this.$store.state.calendar.date 的值来做后续操作
+      let newDate = this.formatDate(year,month,date)
+      this.$emit('update:isVisible', false)
+      this.$emit('update:date', newDate)
     }
   },
   mounted () {
     this.renderDays()
-  },
-  computed: {
-    isShow: {
-      get () {
-        return this.$store.state.calendar.isShow
-      },
-      set () {
-      }
-    }
   }
 }
 </script>

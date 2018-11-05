@@ -65,11 +65,11 @@
         </dd>
       </dl>
       <dl class="filter-dl"><dt>沟通时间</dt><dd>
-        <input type="text" placeholder="开始日期" @click="showCalendar" v-model="date1"  /> --- <input type="text" placeholder="结束日期" @click="showCalendar" v-model="date2" />
+        <input type="text" placeholder="开始日期" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束日期" @click="showCalendar(2)" v-model="calendar.item2.date" />
       </dd></dl>
       <dl class="filter-dl"><dt>跟进时间</dt>
         <dd>
-          <input type="text" placeholder="开始日期" @click="showCalendar" v-model="date3" /> --- <input type="text" placeholder="结束日期" @click="showCalendar" v-model="date4" />
+          <input type="text" placeholder="开始日期" @click="showCalendar(3)" v-model="calendar.item3.date" /> --- <input type="text" placeholder="结束日期" @click="showCalendar(4)" v-model="calendar.item4.date" />
         </dd></dl>
       <van-cell-group class="class-name">
         <van-cell title="班级名称" is-link  @click="showClassPop" />
@@ -109,7 +109,11 @@
         <span class="btn-submit" @click="submitFn(2)">确定</span>
       </div>
     </van-popup>
-    <calendar></calendar>
+    <!--每个日历调用都需要对应一个组件-->
+    <calendar :date.sync="calendar.item1.date" :isVisible.sync="calendar.item1.isVisible"></calendar>
+    <calendar :date.sync="calendar.item2.date" :isVisible.sync="calendar.item2.isVisible"></calendar>
+    <calendar :date.sync="calendar.item3.date" :isVisible.sync="calendar.item3.isVisible"></calendar>
+    <calendar :date.sync="calendar.item4.date" :isVisible.sync="calendar.item4.isVisible"></calendar>
   </div>
 </template>
 <script>
@@ -122,10 +126,24 @@ export default {
   },
   data () {
     return {
-      date1:'',
-      date2:'',
-      date3:'',
-      date4:'',
+      calendar:{
+        item1:{
+          isVisible:false,
+          date:''
+        },
+        item2:{
+          isVisible:false,
+          date:''
+        },
+        item3:{
+          isVisible:false,
+          date:''
+        },
+        item4:{
+          isVisible:false,
+          date:''
+        },
+      },
       radio:'1',
       filterShow:false,
       classFilterShow:false,
@@ -138,13 +156,12 @@ export default {
   },
   methods: {
     onSearch () {
-
     },
     showFilterDia () {
       this.filterShow = true
     },
     showSortDia () {
-      //控制排序弹出层显示
+      //排序弹出层显示
       this.$store.state.sortPopup.isShow = true
     },
     showClassPop () {
@@ -170,17 +187,24 @@ export default {
     goBack () {
       this.classFilterShow = false
     },
-    showCalendar () {
-      this.$store.state.calendar.isShow = true
-      this.date1 = this.inputDate
-    }
-  },
-  computed: {
-    inputDate: {
-      get () {
-        return this.$store.state.calendar.date
-      },
-      set () {
+    showCalendar (n) {
+      //根据参数显示对应日历弹层
+      switch(n)
+      {
+        case 1:
+          this.calendar.item1.isVisible = true
+          break;
+        case 2:
+          this.calendar.item2.isVisible = true
+          break;
+        case 3:
+          this.calendar.item3.isVisible = true
+          break;
+        case 4:
+          this.calendar.item4.isVisible = true
+          break;
+        default:
+          Toast('出错了');
       }
     }
   }
