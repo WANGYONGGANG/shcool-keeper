@@ -64,7 +64,7 @@ export default {
     //按月查询
     toClassByMonth() {
       this.$router.push({
-        path: "/myTimetableByMonth",
+        path: "/teacher/myTimetableByMonth",
         query: {}
       });
     },
@@ -154,7 +154,7 @@ export default {
         if (result.code == 1) {
           // console.log(result.data.rows);
           _self.allDatas = result.data.rows;
-          
+
         }
       });
     }

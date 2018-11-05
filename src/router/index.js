@@ -26,6 +26,7 @@ import ParentRatingRanking from '@/components/user/parentRatingRanking'
 
 import TeacherIndex from '@/components/teacher/teacherIndex'
 import MyTimetable from '@/components/teacher/myTimetable'
+import myTimetableByMonth from '@/components/teacher/myTimetableByMonth'
 import Naming from '@/components/teacher/Naming'
 import ChooseClass from '@/components/teacher/chooseClass'
 import Commented from '@/components/teacher/commented'
@@ -53,8 +54,6 @@ import AddCommunicationRecordTwo from '@/components/teacher/addCommunicationReco
 import CommunicationTemplate from '@/components/teacher/communicationTemplate'
 import PurchaseDetails from '@/components/teacher/purchaseDetails'
 import ResleaseNotice from '@/components/teacher/resleaseNotice'
-
-import myTimetableByMonth from '@/components/teacher/myTimetableByMonth'
 import ResultInquiry from '@/components/teacher/resultInquiry'
 import ResultInput from '@/components/teacher/ResultInput'
 import ExaminationResult from '@/components/teacher/examinationResult'
@@ -98,11 +97,6 @@ export default new Router({
       path: '/user/mine',
       name: 'mine',
       component: Mine
-    },
-    {
-      path: '/myTimetableByMonth',
-      name: 'myTimetableByMonth',
-      component: myTimetableByMonth
     },
     {
       path: '/user/userIndex',
@@ -194,6 +188,11 @@ export default new Router({
       path: '/teacher/myTimetable',
       name: 'myTimetable',
       component: MyTimetable
+    },
+    {
+      path: '/teacher/myTimetableByMonth',
+      name: 'myTimetableByMonth',
+      component: myTimetableByMonth
     },
     {
       path: '/teacher/Naming',
