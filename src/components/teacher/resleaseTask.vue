@@ -1,8 +1,6 @@
 <template>
   <div class="task">
-    <div class="commented-tab">
-      <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
-    </div>
+    <calendar-packing></calendar-packing>
     <div class="task-table">
       <van-cell-group class="tab-list-item01">
         <van-cell title="基础舞蹈" is-link to="/teacher/taskDetial"/>
@@ -18,15 +16,14 @@
       </div>
       </div>
     </div>
-    <commented-pop></commented-pop>
     <div class="list-bottom" @click="goTo(urls.resleaseAssignments)">发布作业</div>
   </div>
 </template>
 <script>
-import CommentedPop from '../popup/commentedPop'
+import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
-    CommentedPop
+    CalendarPacking
   },
   data () {
     return {
@@ -37,9 +34,6 @@ export default {
     }
   },
   methods: {
-    showCommentedDia () {
-      this.$store.state.commentPopup.isShow = true
-    },
     goTo (url) {
       this.$router.push({path: url})
     }

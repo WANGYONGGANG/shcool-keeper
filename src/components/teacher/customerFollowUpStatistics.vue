@@ -2,9 +2,12 @@
   <div class="customer-follow-up">
     <van-tabs type="card">
       <van-tab title="沟通统计">
-        <div class="commented-tab">
-          <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
-        <span class="fuzeren"><input type="checkbox" />主负责人</span>
+        <!--<div class="commented-tab">-->
+          <!--<span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>-->
+        <!--</div>-->
+        <div class="card-tit">
+          <calendar-packing></calendar-packing>
+          <span class="fuzeren"><input type="checkbox" />主负责人</span>
         </div>
         <van-cell-group class="card-list-item">
           <van-cell title="选择校区" value="潮人部落" is-link class="line65"/>
@@ -15,8 +18,8 @@
         </van-cell-group>
       </van-tab>
       <van-tab title="转化统计">
-        <div class="commented-tab">
-          <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
+        <div class="card-tit">
+          <calendar-packing></calendar-packing>
           <span class="fuzeren"><input type="checkbox" />主负责人</span>
         </div>
         <van-cell-group class="card-list-item">
@@ -34,14 +37,13 @@
         </van-cell-group>
       </van-tab>
     </van-tabs>
-    <commented-pop></commented-pop>
   </div>
 </template>
 <script>
-import CommentedPop from '../popup/commentedPop'
+import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
-    CommentedPop
+    CalendarPacking
   },
   data () {
     return {
@@ -53,9 +55,6 @@ export default {
     }
   },
   methods: {
-    showCommentedDia () {
-      this.$store.state.commentPopup.isShow = true
-    },
     goTo (param) {
       this.$router.push({path: param})
     }
@@ -64,39 +63,27 @@ export default {
 </script>
 <style lang="less">
   .customer-follow-up{
-  .commented-tab{
+  .card-tit{
     height: 76px;
-    background: #fff;
-    margin-bottom: 10px;
-    padding-left:20px;
-  .tab-radius{
-    height: 53px;
-    display: inline-block;
-    padding: 0px 30px;
-    font-size: 24px;
-    line-height: 55px;
-    border-radius: 50px;
-    border: 1px #eff1f6 solid;
-    margin: 8px 10px 0;
-  }
-  .arrow-down .van-icon{
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-  }
+    position: relative;
+
   .fuzeren{
     padding-right: 30px;
-    padding-top: 20px;
-  float:right;
-    input{
-      -webkit-appearance:checkbox;
-      width: 25px;
-      height: 25px;
-      position: relative;
-      top: 5px;
-      margin-right: 10px;
-    }
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    padding-top: 19px;
+  input{
+    -webkit-appearance:checkbox;
+    width: 25px;
+    height: 25px;
+    position: relative;
+    top: 5px;
+    margin-right: 10px;
   }
   }
+  }
+
   .van-tab{
     font-size: 26px;
   }

@@ -1,8 +1,6 @@
 <template>
   <div class="customer-communication-record">
-    <div class="commented-tab">
-      <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
-    </div>
+    <calendar-packing></calendar-packing>
       <ul class="record-list">
         <li class="record-list-item01">
           <span class="list-item01-l"><img class="img" src="../../assets/images/user/test.jpg"/></span>
@@ -29,10 +27,10 @@
   </div>
 </template>
 <script>
-import CommentedPop from '../popup/commentedPop'
+import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
-    CommentedPop
+    CalendarPacking
   },
   data () {
     return {
@@ -43,9 +41,6 @@ export default {
     }
   },
   methods: {
-    showCommentedDia () {
-      this.$store.state.commentPopup.isShow = true
-    },
     goTo (url) {
       this.$router.push({path: url})
     }
@@ -55,27 +50,6 @@ export default {
 <style lang="less">
 .customer-communication-record{
   background: #fff;
-.commented-tab{
-  height: 76px;
-  padding-top: 10px;
-  background: #fff;
-  margin-bottom: 10px;
-  padding-left:20px;
-.tab-radius{
-  height: 53px;
-  display: inline-block;
-  padding: 0px 30px;
-  font-size: 24px;
-  line-height: 55px;
-  border-radius: 50px;
-  border: 1px #eff1f6 solid;
-  margin: 8px 10px 0;
-}
-.arrow-down .van-icon{
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-}
 .record-list{
   margin-bottom: 20px;
   padding-bottom: 20px;

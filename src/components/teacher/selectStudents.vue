@@ -1,13 +1,10 @@
 <template>
   <div class="select-students">
     <div class="class-tab">
-      <div class="commented-tab">
-        <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
-      </div>
+      <calendar-packing></calendar-packing>
       <div class="operation">筛选</div>
     </div>
     <van-radio-group v-model="radio">
-
       <table border="0" width="750" class="list-table">
         <tr>
           <th width="10%"></th>
@@ -30,15 +27,14 @@
       </table>
       </van-radio-group>
     <bottom-btn :buttonData="buttonData"></bottom-btn>
-    <commented-pop></commented-pop>
   </div>
 </template>
 <script>
-import CommentedPop from '../popup/commentedPop'
 import BottomBtn from '../general/bottomBtn'
+import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
-    CommentedPop,
+    CalendarPacking,
     BottomBtn
   },
   data () {
@@ -56,9 +52,6 @@ export default {
   methods: {
     onSearch () {
     },
-    showCommentedDia () {
-      this.$store.state.commentPopup.isShow = true
-    },
     goTo (url) {
       this.$router.push({path: url})
     },
@@ -72,32 +65,11 @@ export default {
 <style lang="less">
 .select-students{
   background: #fff;
-.commented-tab{
-  height: 76px;
-  padding-top: 10px;
-  background: #fff;
-  margin-bottom: 10px;
-  float: left;
-  padding-left:20px;
-.tab-radius{
-  height: 53px;
-  display: inline-block;
-  padding: 0px 30px;
-  font-size: 24px;
-  line-height: 55px;
-  border-radius: 50px;
-  border: 1px #eff1f6 solid;
-  margin: 8px 10px 0;
-}
-.arrow-down .van-icon{
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-}
-  .class-tab{
+ .class-tab{
     background: #fff;
     height: 83px;
-    border-top:1px #000 solid ;
+   position: relative;
+   border-top:1px #000 solid ;
     padding:10px 20px;
   .list-search-l{
     float: left;
@@ -130,8 +102,10 @@ export default {
     line-height: 54px;
   }
   .operation{
-    float: right;
-    padding: 16px 23px;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    padding: 10px 23px;
     font-size: 26px;
     background: #eff1f6;
     border-radius: 35px;
