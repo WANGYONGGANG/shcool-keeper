@@ -1,5 +1,16 @@
 <template>
 <div class="my-timetable">
+  <div class="month-tit fn-clear">
+    <div class="month-tit-l fn-left">
+      <span>上月</span>
+      <span>2018.11</span>
+      <span>下月</span>
+    </div>
+    <div class="month-tit-r fn-right">
+      <span @click="toClassByWeek">按周</span>
+    </div>
+  </div>
+
   <!-- <div class="timetable-tit">
     <span class="tit-l">星期一</span>
     <span class="tit-r">09-17</span>
@@ -24,16 +35,14 @@
   <div class="timetable-table">
     <div class="empty">暂无上课班级</div>
   </div>
-   <calendar></calendar>
+
 </div>
 </template>
 <script>
 import { api } from "../../../static/js/request-api/request-api.js";
-import Calendar from "../general/calendar";
 import Router from "vue-router";
 export default {
   components: {
-    Calendar
   },
   data() {
     return {
@@ -58,13 +67,14 @@ export default {
     subStrClassName(name) {
       return name.substring(0, 8) + "...";
     },
-    //按月查询
-    toClassByMonth() {
+    //按周查询
+    toClassByWeek() {
       this.$router.push({
-        path: "/resleaseNoticeByMonth",
+        path: "/teacher/myTimetable",
         query: {}
       });
     },
+
     getMyClassRecord() {
       let _self = this;
       let params = new URLSearchParams();
@@ -94,35 +104,25 @@ export default {
 </script>
 <style lang="less">
 .my-timetable {
-  .time-tab {
-    height: 86px;
-    background: #fff;
-    padding-left: 20px;
-    .select-label {
-      height: 53px;
-      display: inline-block;
-      padding: 0px 30px;
-      font-size: 24px;
-      line-height: 55px;
-      border-radius: 50px;
-      border: 1px #eff1f6 solid;
-      margin: 17px 10px 0;
-    }
-    .fn-right {
-      float: right;
-      background: #eff1f6;
-    }
+.month-tit{
+  height: 86px;
+  background: #fff;
+span {
+  height: 53px;
+  display: inline-block;
+  padding: 0px 30px;
+  font-size: 24px;
+  line-height: 53px;
+  border-radius: 50px;
+  border: 1px #b9babb solid;
+  margin: 17px 10px 0;
+}
+.fn-right {
+  span{
+    background: #eff1f6;
   }
-  .timetable-tit {
-    height: 80px;
-    color: #494847;
-    font-size: 28px;
-    line-height: 80px;
-    padding: 0 30px;
-    .tit-r {
-      float: right;
-    }
-  }
+}
+}
   .timetable-table {
     background: #fff;
     height: 170px;

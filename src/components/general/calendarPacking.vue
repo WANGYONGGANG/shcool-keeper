@@ -1,10 +1,13 @@
 <template>
   <div>
   <div class="commented-tab">
-    <span class="tab-radius" @click="showCalendar">2018-09-01</span>-<span class="tab-radius" @click="showCalendar">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
+    <span class="tab-radius" @click="showCalendar(1)" >{{calendar.item1.date}}</span>-<span class="tab-radius" @click="showCalendar(2)">{{calendar.item2.date}}</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
+
   </div>
   <commented-pop></commented-pop>
-  <calendar></calendar>
+    <!--每个日历选择按钮都需要调用一个日历组件-->
+    <calendar :date.sync="calendar.item1.date" :isVisible.sync="calendar.item1.isVisible"></calendar>
+    <calendar :date.sync="calendar.item2.date" :isVisible.sync="calendar.item2.isVisible"></calendar>
   </div>
 </template>
 <script>
@@ -16,12 +19,43 @@ export default {
     CommentedPop,
     Calendar
   },
+  data () {
+    return {
+      calendar:{
+        item1:{
+          isVisible:false,
+          date:'2018-10-30'
+        },
+        item2:{
+          isVisible:false,
+          date:'2018-11-05'
+        }
+      }
+    }
+  },
   methods: {
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
-    showCalendar () {
-      this.$store.state.calendar.isShow = true
+    showCalendar (n) {
+      //根据参数显示对应日历弹层
+      switch(n)
+      {
+        case 1:
+          this.calendar.item1.isVisible = true
+          break;
+        case 2:
+          this.calendar.item2.isVisible = true
+          break;
+        case 3:
+          this.calendar.item3.isVisible = true
+          break;
+        case 4:
+          this.calendar.item4.isVisible = true
+          break;
+        default:
+          Toast('出错了');
+      }
     }
   }
 }

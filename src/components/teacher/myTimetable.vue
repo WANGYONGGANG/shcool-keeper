@@ -180,9 +180,9 @@ export default {
       display: inline-block;
       padding: 0px 30px;
       font-size: 24px;
-      line-height: 55px;
+      line-height: 53px;
       border-radius: 50px;
-      border: 1px #eff1f6 solid;
+      border: 1px #b9babb solid;
       margin: 17px 10px 0;
     }
     .fn-right {
