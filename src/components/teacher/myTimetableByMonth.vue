@@ -32,8 +32,28 @@
     <span class="tit-l">星期二</span>
     <span class="tit-r">09-18</span>
   </div> -->
-
-  <div class="empty">暂无上课班级</div>
+  <div v-if="true" class="detial-list">
+    <dl>
+      <dt>13:50-15:20</dt>
+      <dd>班级：10秋科技馆六年级英语</dd>
+      <dd>校区：临邑新概念</dd>
+      <dd>教室：科技馆000</dd>
+      <dd>状态：已上课</dd>
+      <dd>内容：第三单元</dd>
+    </dl>
+    <!--<dl>-->
+    <!--<dt>{{list.time}}</dt>-->
+    <!--<dd>班级：{{list.class}}</dd>-->
+    <!--<dd>校区：{{list.schoolArea}}</dd>-->
+    <!--<dd>教室：{{list.schoolArea}}</dd>-->
+    <!--<dd>状态：{{list.state}}</dd>-->
+    <!--<dd>内容：{{list.content}}</dd>-->
+    <!--</dl>-->
+    <van-cell-group>
+      <van-cell title="上课人数" value="1/1" isLink />
+    </van-cell-group>
+  </div>
+  <div v-else class="empty">暂无上课班级</div>
 </div>
 </template>
 <script>
@@ -102,6 +122,15 @@ export default {
           console.log(allDatas);
         }
       });
+    },
+    isHaveDetial(dateObject){
+      let year =dateObject.getFullYear()//获取完整的年份(4位,1970-????)
+      let month =dateObject.getMonth()+1//获取当前月份(0-11,0代表1月)
+      let date =dateObject.getDate()//获取当前日(1-31)
+      let newDate = this.formatDate(year,month,date)
+      if(this.haveDetial.includes(newDate)){
+        return true
+      }
     }
   },
   computed: {
@@ -213,11 +242,26 @@ span {
       }
     }
   }
+.detial-list{
+  width: 700px;
+  padding: 20px 0;
+  margin: 0 auto 20px;
+  background: #fff;
+dt{
+  padding-left: 20px;
+  line-height: 60px;
+}
+dd{
+  padding-left: 20px;
+  line-height: 40px;
+}
+}
 .empty {
   line-height: 170px;
   text-align: center;
   font-size: 32px;
   color: #838383;
 }
+
 }
 </style>
