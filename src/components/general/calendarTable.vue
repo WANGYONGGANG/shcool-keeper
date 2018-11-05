@@ -1,6 +1,5 @@
 <template>
-<van-popup v-model="isVisible" position="bottom" @click-overlay="closePop">
-  <div class="calendar">
+  <div class="calendar-table">
     <!-- 年份 月份 -->
     <ul class="select">
       <li class="year">
@@ -20,34 +19,46 @@
     </ul>
     <!-- 星期 -->
     <ul class="week">
-      <li>日</li>
-      <li>一</li>
-      <li>二</li>
-      <li>三</li>
-      <li>四</li>
-      <li>五</li>
-      <li>六</li>
+      <li>周日</li>
+      <li>周一</li>
+      <li>周二</li>
+      <li>周三</li>
+      <li>周四</li>
+      <li>周五</li>
+      <li>周六</li>
     </ul>
     <!-- 日期 -->
     <ul class="day fn-clear">
-      <li v-for="(dayobject ,index) in days" @click="output(dayobject.day)">
-        <!--如果不是本月  改变类名加灰色-->
-        <span v-if="dayobject.day.getMonth()+1 != currentMonth" class="other-month">{{ dayobject.day.getDate() }}</span>
-        <!--如果是本月  还需要判断是不是这一天-->
-        <span v-else>
+      <li v-for="(dayobject ,index) in days" @click="output(dayobject.day,index)">
+        <i v-if="isHaveDetial(dayobject.day)" class="point"></i>
+          <!--如果不是本月  改变类名加灰色-->
+          <span v-if="dayobject.day.getMonth()+1 != currentMonth" class="other-month" >{{ dayobject.day.getDate() }}</span>
+          <!--如果是本月  还需要判断是不是这一天-->
+          <span v-else>
           <!--今天  同年同月同日-->
                 <span v-if="dayobject.day.getFullYear() == new Date().getFullYear() && dayobject.day.getMonth() == new Date().getMonth() && dayobject.day.getDate() == new Date().getDate()" class="active">{{ dayobject.day.getDate() }}</span>
                 <span v-else>{{ dayobject.day.getDate() }}</span>
          </span>
-
       </li>
     </ul>
+    <div>
+      <dl>
+        <dt>13:50-15:20</dt>
+        <dd>班级：10秋科技馆六年级英语</dd>
+        <dd>校区：临邑新概念</dd>
+        <dd>教室：科技馆000</dd>
+        <dd>状态：已上课</dd>
+        <dd>内容：第三单元</dd>
+      </dl>
+      <van-cell-group>
+        <van-cell title="上课人数" value="1/1" isLink />
+      </van-cell-group>
+    </div>
   </div>
-</van-popup>
 </template>
 <script>
 export default {
-  props:['date','isVisible'],
+  props:['date','haveDetial'],
   data () {
     return {
       currentYear:2018,//初始化当天的年份动态取值
@@ -56,14 +67,11 @@ export default {
       currentDay:1,
       minYear: 1980,//设置最小可以查看的年份
       maxYear: 2050,//设置最大可以查看的年份
+      isSelect:false,
       days:[]
     }
   },
   methods: {
-    closePop () {
-//      this.$store.state.calendar.isShow = false
-      this.$emit('update:isVisible', false)
-    },
     pickerLastYear (year, month) {
       let yearDate=year
       // 当前要查看的年份等于设置的最小年份时禁止点击
@@ -144,6 +152,7 @@ export default {
         d.setDate(d.getDate() - i);
         let dayobject={}; //用一个对象包装Date对象  以便为以后预定功能添加属性
         dayobject.day=d;
+        dayobject.isSelect=false
         this.days.push(dayobject);//将日期放入data 中的days数组 供页面渲染使用
       }
       //其他周
@@ -152,6 +161,7 @@ export default {
         d.setDate(d.getDate() + i);
         let dayobject={};
         dayobject.day=d;
+        dayobject.isSelect = false
         this.days.push(dayobject);
       }
     },
@@ -164,13 +174,27 @@ export default {
       if(d<10) d = "0" + d;
       return y+"-"+m+"-"+d
     },
-    output (dateObject) {
+    output (dateObject,index) {
       let year =dateObject.getFullYear()//获取完整的年份(4位,1970-????)
       let month =dateObject.getMonth()+1//获取当前月份(0-11,0代表1月)
       let date =dateObject.getDate()//获取当前日(1-31)
       let newDate = this.formatDate(year,month,date)
-      this.$emit('update:isVisible', false)
       this.$emit('update:date', newDate)
+      if(this.haveDetial.includes(newDate)){
+
+      }
+    },
+    isHaveDetial(dateObject){
+      let year =dateObject.getFullYear()//获取完整的年份(4位,1970-????)
+      let month =dateObject.getMonth()+1//获取当前月份(0-11,0代表1月)
+      let date =dateObject.getDate()//获取当前日(1-31)
+      let newDate = this.formatDate(year,month,date)
+      if(this.haveDetial.includes(newDate)){
+        return true
+      }
+    },
+    isblue () {
+
     }
   },
   mounted () {
@@ -179,7 +203,7 @@ export default {
 }
 </script>
 <style lang="less">
-  .calendar{
+  .calendar-table{
     width: 100%;
     .select{
       display:flex;
@@ -202,17 +226,35 @@ export default {
       }
     }
   .week,.day{
-    width: 100%;
+    margin: 0 auto;
+    padding-left: 10px;
+    width: 730px;
     li{
       float: left;
       width: 14%;
-      line-height: 50px;
+      line-height: 70px;
+      height: 70px;
+      position: relative;
       text-align: center;
+  .point{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background: #efc303;
+    display: block;
+  }
     }
   }
   .day{
-    height: 300px;
+    height: 435px;
     overflow: hidden;
+    li{
+      border: 1px #eef1f6 solid;
+      background: #fff;
+    }
   }
   .other-month{
     color:#999 ;
@@ -221,10 +263,19 @@ export default {
     color: #fff;
     display: inline-block;
     background: #4286ed;
-    border-radius:50%;
-    width:50px;
-    height: 50px;
+    width:100%;
+    height: 70px;
+    line-height: 70px;
   }
+  .li-select{
+    color: #fff;
+    display: inline-block;
+    background: #4286ed;
+    width:100%;
+    height: 70px;
+    line-height: 70px;
+  }
+
   }
 
 </style>
