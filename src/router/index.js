@@ -23,9 +23,9 @@ import ChangePassword from '@/components/user/changePassword'
 import WorkStatistics from '@/components/user/workStatistics'
 import ParentRatingRanking from '@/components/user/parentRatingRanking'
 
-
 import TeacherIndex from '@/components/teacher/teacherIndex'
 import MyTimetable from '@/components/teacher/myTimetable'
+import MyTimetableByMonth from '@/components/teacher/myTimetableByMonth'
 import Naming from '@/components/teacher/Naming'
 import ChooseClass from '@/components/teacher/chooseClass'
 import Commented from '@/components/teacher/commented'
@@ -68,6 +68,7 @@ import CustomerCommunicationRecord from '@/components/teacher/customerCommunicat
 import IntentionalCustomersDetial from '@/components/teacher/intentionalCustomersDetial'
 import CustomerFollowUpStatistics from '@/components/teacher/customerFollowUpStatistics'
 import CustomerAnalysis from '@/components/teacher/customerAnalysis'
+
 import EnrollmentStatistics from '@/components/teacher/enrollmentStatistics'
 import EnrollmentStatistics2 from '@/components/teacher/enrollmentStatistics2'
 import EnrollmentStatistics3 from '@/components/teacher/enrollmentStatistics3'
@@ -187,6 +188,11 @@ export default new Router({
       path: '/teacher/myTimetable',
       name: 'myTimetable',
       component: MyTimetable
+    },
+    {
+      path: '/teacher/myTimetableByMonth',
+      name: 'myTimetableByMonth',
+      component: MyTimetableByMonth
     },
     {
       path: '/teacher/Naming',

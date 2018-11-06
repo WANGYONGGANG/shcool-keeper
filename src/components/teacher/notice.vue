@@ -1,20 +1,18 @@
 <template>
   <div class="notice">
-    <div class="commented-tab">
-      <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
-    </div>
+    <calendar-packing></calendar-packing>
     <div class="timetable-table">
      <div class="empty">还没有通知消息，需要发布一条吗？</div>
     </div>
-    <commented-pop></commented-pop>
     <div class="bottom-btn" @click="goTo(urls.resleaseNotice)">发布通知</div>
   </div>
 </template>
 <script>
-import CommentedPop from '../popup/commentedPop'
+import { api } from "../../../static/js/request-api/request-api.js";
+import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
-    CommentedPop
+    CalendarPacking
   },
   data () {
     return {

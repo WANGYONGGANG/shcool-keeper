@@ -47,6 +47,7 @@ export default {
 </script>
 <style lang="less">
   .mine{
+  padding-bottom:90px;
   .banner{
     width: 100%;
     height: 347px;

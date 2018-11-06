@@ -49,9 +49,6 @@ export default {
     },
     goTo () {
       this.$router.push({path: '/teacher/commentedList'})
-    },
-    showCalendar () {
-      this.$store.state.calendar.isShow = true
     }
   }
 }

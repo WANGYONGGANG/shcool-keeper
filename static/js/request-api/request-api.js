@@ -144,5 +144,21 @@ export   const  api={
     getAllReleaseHomeworkStudentNoSubmit(params){
         return fetchGet(baseUrl+"/releaseHomework/getAllReleaseHomeworkStudentNoSubmit",params)
     },
+    // 发布通知
+    addNotice(params){
+        return fetchGet(baseUrl+'/notice/addNotice',params);
+    },
+    //获取当前登录人员排课计划
+    findMyClassRecordWithWeek(params){
+        return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithWeek',params);
+    },
+    //获取当前登录人员排课计划
+    findAllClassInfo(params){
+        return fetchGet(baseUrl+'/notice/findAllClassInfo',params);
+    },
+     //获取当前登录人员排课计划
+     getMyClassRecord(params){
+        return fetchGet(baseUrl+'/myClassRecord/getMyClassRecord',params);
+    }
    
 }

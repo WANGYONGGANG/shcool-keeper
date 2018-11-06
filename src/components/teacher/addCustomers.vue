@@ -23,7 +23,7 @@
     <keep-alive>
       <component v-bind:is="currentTabComponent"></component>
     </keep-alive>
-    <div class="bottom-btn">
+    <div class="add-customers-bottom-btn">
       <span>上一步</span>
       <span class="next">下一步</span>
     </div>
@@ -75,6 +75,7 @@ export default {
 </script>
 <style lang="less">
 .add-customers{
+  padding-bottom: 67px;
   background: #fff;
   .customers-tit{
    dl{
@@ -110,12 +111,12 @@ export default {
    opacity: 0.5;
  }
 }
-.bottom-btn{
+.add-customers-bottom-btn{
   width: 100%;
   position: fixed;
   height: 80px;
-  background: #fff;
   padding-top: 20px;
+  background: #fff;
   bottom: 0;
   text-align: right;
   border-top: 1px #e0e5ed solid;
