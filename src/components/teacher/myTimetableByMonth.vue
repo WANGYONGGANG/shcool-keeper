@@ -1,15 +1,5 @@
 <template>
 <div class="my-timetable">
-  <div class="month-tit fn-clear">
-    <div class="month-tit-l fn-left">
-      <span>上月</span>
-      <span>2018.11</span>
-      <span>下月</span>
-    </div>
-    <div class="month-tit-r fn-right">
-      <span @click="toClassByWeek">按周</span>
-    </div>
-  </div>
   <calendar-table :date.sync="calendar.date" :haveDetial="calendar.detialDate" :list="calendar.list"></calendar-table>
   <!-- <div class="timetable-tit">
     <span class="tit-l">星期一</span>
@@ -100,13 +90,6 @@ export default {
     subStrClassName(name) {
       return name.substring(0, 8) + "...";
     },
-    //按周查询
-    toClassByWeek() {
-      this.$router.push({
-        path: "/teacher/myTimetable",
-        query: {}
-      });
-    },
     getMyClassRecord() {
       let _self = this;
       let params = new URLSearchParams();
@@ -145,32 +128,11 @@ export default {
 </script>
 <style lang="less">
 .my-timetable {
-.month-tit{
-  height: 86px;
-  background: #fff;
-span {
-  height: 53px;
-  display: inline-block;
-  padding: 0px 30px;
-  font-size: 24px;
-  line-height: 53px;
-  border-radius: 50px;
-  border: 1px #b9babb solid;
-  margin: 17px 10px 0;
-}
-.fn-right {
-  span{
-    background: #eff1f6;
-  }
-}
-}
 
   .timetable-table {
     background: #fff;
     height: 170px;
     border-bottom: 1px solid #494847;
-
-
     .table-l {
       float: left;
       padding-left: 30px;

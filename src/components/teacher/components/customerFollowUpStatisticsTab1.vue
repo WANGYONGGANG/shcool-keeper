@@ -32,7 +32,5 @@ export default {
 </script>
 <style lang="less">
   .tab1{
-
-
   }
 </style>

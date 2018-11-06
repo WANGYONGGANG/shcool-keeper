@@ -1,22 +1,32 @@
 <template>
   <div class="calendar-table">
     <!-- 年份 月份 -->
-    <ul class="select">
-      <li class="year">
-        <!-- 上一年 -->
-        <van-icon name="arrow-left" class="fn-left" @click="pickerLastYear(currentYear,currentMonth)" />
-        <span>{{currentYear}}</span>
-        <!-- 下一年 -->
-        <van-icon name="arrow"  class="fn-right" @click="pickerNextYear(currentYear,currentMonth)" />
-      </li>
-      <li class="month">
-        <!-- 上一个月 -->
-        <van-icon name="arrow-left" class="fn-left" @click="pickerLastMonth(currentYear,currentMonth)" />
-        <span>{{currentMonth}}</span>
-        <!-- 下一个月 -->
-        <van-icon name="arrow" class="fn-right"  @click="pickerNextMonth(currentYear,currentMonth)" />
-      </li>
-    </ul>
+    <!--<ul class="select">-->
+      <!--<li class="year">-->
+        <!--&lt;!&ndash; 上一年 &ndash;&gt;-->
+        <!--<van-icon name="arrow-left" class="fn-left" @click="pickerLastYear(currentYear,currentMonth)" />-->
+        <!--<span>{{currentYear}}</span>-->
+        <!--&lt;!&ndash; 下一年 &ndash;&gt;-->
+        <!--<van-icon name="arrow"  class="fn-right" @click="pickerNextYear(currentYear,currentMonth)" />-->
+      <!--</li>-->
+      <!--<li class="month">-->
+        <!--&lt;!&ndash; 上一个月 &ndash;&gt;-->
+        <!--<van-icon name="arrow-left" class="fn-left" @click="pickerLastMonth(currentYear,currentMonth)" />-->
+        <!--<span>{{currentMonth}}</span>-->
+        <!--&lt;!&ndash; 下一个月 &ndash;&gt;-->
+        <!--<van-icon name="arrow" class="fn-right"  @click="pickerNextMonth(currentYear,currentMonth)" />-->
+      <!--</li>-->
+    <!--</ul>-->
+    <div class="month-tit fn-clear">
+      <div class="month-tit-l fn-left">
+        <span @click="pickerLastMonth(currentYear,currentMonth)" >上月</span>
+        <span @click="showYearMonthPop" >{{currentYear}}.{{currentMonth}}</span>
+        <span @click="pickerNextMonth(currentYear,currentMonth)" >下月</span>
+      </div>
+      <div class="month-tit-r fn-right">
+        <span @click="toClassByWeek">按周</span>
+      </div>
+    </div>
     <!-- 星期 -->
     <ul class="week">
       <li>周日</li>
@@ -29,7 +39,7 @@
     </ul>
     <!-- 日期 -->
     <ul class="day fn-clear">
-      <li v-for="(dayobject ,index) in days" @click="output(dayobject.day,index)">
+      <li v-for="(dayobject ,index) in days" @click="output(dayobject,index)" :class="{'activeli': dayobject.actived}">
         <i v-if="isHaveDetial(dayobject.day)" class="point"></i>
           <!--如果不是本月  改变类名加灰色-->
           <span v-if="dayobject.day.getMonth()+1 != currentMonth" class="other-month" >{{ dayobject.day.getDate() }}</span>
@@ -41,9 +51,17 @@
          </span>
       </li>
     </ul>
+
+    <van-popup v-model="yearMonth.isShow" position="bottom" @click-overlay="closePop">
+      <van-picker :columns="yearMonth.columns" :item-height="70" @change="onChange" />
+    </van-popup>
   </div>
 </template>
 <script>
+  const yearMonthDate = {
+    '2018': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+    '2019': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+  }
 export default {
   props:['date','haveDetial','list'],
   data () {
@@ -55,7 +73,22 @@ export default {
       minYear: 1980,//设置最小可以查看的年份
       maxYear: 2050,//设置最大可以查看的年份
       isSelect:false,
-      days:[]
+      activedNode:null,
+      days:[],
+      yearMonth:{
+        isShow:false,
+        columns: [
+          {
+            values: Object.keys(yearMonthDate),
+            className: 'column1'
+          },
+          {
+            values: yearMonthDate['2018'],
+            className: 'column2',
+            defaultIndex: 2
+          }
+        ]
+      }
     }
   },
   methods: {
@@ -139,7 +172,7 @@ export default {
         d.setDate(d.getDate() - i);
         let dayobject={}; //用一个对象包装Date对象  以便为以后预定功能添加属性
         dayobject.day=d;
-        dayobject.isSelect=false
+        dayobject.actived=false
         this.days.push(dayobject);//将日期放入data 中的days数组 供页面渲染使用
       }
       //其他周
@@ -148,7 +181,7 @@ export default {
         d.setDate(d.getDate() + i);
         let dayobject={};
         dayobject.day=d;
-        dayobject.isSelect = false
+        dayobject.actived=false
         this.days.push(dayobject);
       }
     },
@@ -162,14 +195,14 @@ export default {
       return y+"-"+m+"-"+d
     },
     output (dateObject,index) {
-      let year =dateObject.getFullYear()//获取完整的年份(4位,1970-????)
-      let month =dateObject.getMonth()+1//获取当前月份(0-11,0代表1月)
-      let date =dateObject.getDate()//获取当前日(1-31)
+      let year =dateObject.day.getFullYear()//获取完整的年份(4位,1970-????)
+      let month =dateObject.day.getMonth()+1//获取当前月份(0-11,0代表1月)
+      let date =dateObject.day.getDate()//获取当前日(1-31)
       let newDate = this.formatDate(year,month,date)
       this.$emit('update:date', newDate)
-      if(this.haveDetial.includes(newDate)){
-
-      }
+      this.activedNode && (this.activedNode.actived = undefined);
+      dateObject.actived = !dateObject.actived;
+      this.activedNode = dateObject;
     },
     isHaveDetial(dateObject){
       let year =dateObject.getFullYear()//获取完整的年份(4位,1970-????)
@@ -180,8 +213,21 @@ export default {
         return true
       }
     },
-    isblue () {
-
+    //按周查询
+    toClassByWeek() {
+      this.$router.push({
+        path: "/teacher/myTimetable",
+        query: {}
+      });
+    },
+    showYearMonthPop () {
+      this.yearMonth.isShow = true
+    },
+    closePop () {
+      this.yearMonth.isShow = false
+    },
+    onChange(picker, values) {
+      picker.setColumnValues(1, yearMonthDate[values[0]]);
     }
   },
   mounted () {
@@ -192,7 +238,27 @@ export default {
 <style lang="less">
   .calendar-table{
     width: 100%;
-    .select{
+  .month-tit{
+    height: 86px;
+    background: #fff;
+  span {
+    height: 53px;
+    display: inline-block;
+    padding: 0px 30px;
+    font-size: 24px;
+    line-height: 53px;
+    border-radius: 50px;
+    border: 1px #b9babb solid;
+    margin: 17px 10px 0;
+  }
+  .fn-right {
+  span{
+    background: #eff1f6;
+  }
+  }
+  }
+
+  .select{
       display:flex;
       width:100%;
       line-height: 80px;
@@ -242,6 +308,14 @@ export default {
       border: 1px #eef1f6 solid;
       background: #fff;
     }
+    .activeli span{
+      color: #fff;
+      display: inline-block;
+      background: #4286ed;
+      width:100%;
+      height: 70px;
+      line-height: 70px;
+    }
   }
   .other-month{
     color:#999 ;
@@ -261,6 +335,10 @@ export default {
     width:100%;
     height: 70px;
     line-height: 70px;
+  }
+  .van-picker-column{
+    font-size: 28px;
+    line-height: 80px;
   }
 
   }
