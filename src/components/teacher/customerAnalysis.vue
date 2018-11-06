@@ -15,9 +15,9 @@
 </template>
 <script>
 import BottomBtn from '../general/bottomBtn'
-import TabOne from './customerAnalysisTab1'
-import TabTwo from './customerAnalysisTab2'
-import TabThree from './customerAnalysisTab3'
+import TabOne from './components/customerAnalysisTab1'
+import TabTwo from './components/customerAnalysisTab2'
+import TabThree from './components/customerAnalysisTab3'
 export default {
   components: {
     BottomBtn,

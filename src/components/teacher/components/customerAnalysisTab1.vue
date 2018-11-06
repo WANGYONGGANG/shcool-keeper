@@ -21,8 +21,8 @@
   </div>
 </template>
 <script>
-import CalendarPacking from '../general/calendarPacking'
-import BottomBtn from '../general/bottomBtn'
+import CalendarPacking from '../../general/calendarPacking'
+import BottomBtn from '../../general/bottomBtn'
 export default {
   components: {
     BottomBtn,
