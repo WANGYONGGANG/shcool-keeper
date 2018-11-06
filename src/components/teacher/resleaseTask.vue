@@ -23,6 +23,7 @@
   </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 import CommentedPop from '../popup/commentedPop'
 export default {
   components: {
@@ -30,13 +31,29 @@ export default {
   },
   data () {
     return {
+      allDatas:[],
       urls: {
         studentCompletion: '/teacher/studentCompletion',
         resleaseAssignments: '/teacher/resleaseAssignments'
       }
     }
   },
+  mounted () {
+    this.getAllReleaseHomeworkStudent();
+  },
   methods: {
+    getAllReleaseHomeworkStudent : function () {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('work_id' , 2);
+      api.getAllReleaseHomeworkStudent(param)
+        .then( res => {
+          if( res.data.code == 1 ){
+            console.log(res.data.data);
+            _self.allDatas = res.data.data;
+          }
+        });
+    },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
