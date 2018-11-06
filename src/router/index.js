@@ -68,6 +68,10 @@ import CustomerCommunicationRecord from '@/components/teacher/customerCommunicat
 import IntentionalCustomersDetial from '@/components/teacher/intentionalCustomersDetial'
 import CustomerFollowUpStatistics from '@/components/teacher/customerFollowUpStatistics'
 import CustomerAnalysis from '@/components/teacher/customerAnalysis'
+import CustomerAnalysisTab1 from '@/components/teacher/customerAnalysisTab1'
+import CustomerAnalysisTab2 from '@/components/teacher/customerAnalysisTab2'
+import CustomerAnalysisTab3 from '@/components/teacher/customerAnalysisTab3'
+
 import EnrollmentStatistics from '@/components/teacher/enrollmentStatistics'
 import EnrollmentStatistics2 from '@/components/teacher/enrollmentStatistics2'
 import EnrollmentStatistics3 from '@/components/teacher/enrollmentStatistics3'
@@ -407,6 +411,21 @@ export default new Router({
       path: '/teacher/customerAnalysis',
       name: 'customerAnalysis',
       component: CustomerAnalysis
+    },
+    {
+      path: '/teacher/customerAnalysisTab1',
+      name: 'customerAnalysisTab1',
+      component: CustomerAnalysisTab1
+    },
+    {
+      path: '/teacher/customerAnalysisTab2',
+      name: 'customerAnalysisTab2',
+      component: CustomerAnalysisTab2
+    },
+    {
+      path: '/teacher/customerAnalysisTab3',
+      name: 'customerAnalysisTab3',
+      component: CustomerAnalysisTab3
     },
     {
       path: '/teacher/enrollmentStatistics',
