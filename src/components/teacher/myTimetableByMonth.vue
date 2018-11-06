@@ -1,6 +1,6 @@
 <template>
 <div class="my-timetable">
-  <calendar-table :date.sync="calendar.date" :haveDetial="calendar.detialDate" :list="calendar.list"></calendar-table>
+  <calendar-table :date.sync="calendar.date" :haveDetial="calendar.detialDate" :isShowDetial.sync="calendar.detialCurrentDate"></calendar-table>
   <!-- <div class="timetable-tit">
     <span class="tit-l">星期一</span>
     <span class="tit-r">09-17</span>
@@ -61,6 +61,7 @@ export default {
         //显示小黄点的日期，需传入一个格式为2018-11-10数组
         detialDate:['2018-11-10','2018-11-17'],
         date:'',
+        detialCurrentDate:'',
         list:[{
           time:'13:50-15:20',
           class:'10秋科技馆六年级英语',
@@ -117,12 +118,8 @@ export default {
     }
   },
   computed: {
-    upDate: {
-      get() {
-        return this.$store.state.calendar.date;
-      },
-      set() {}
-    }
+
+
   }
 };
 </script>
