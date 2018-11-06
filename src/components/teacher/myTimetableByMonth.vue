@@ -22,7 +22,7 @@
     <span class="tit-l">星期二</span>
     <span class="tit-r">09-18</span>
   </div> -->
-  <div v-if="true" class="detial-list">
+  <div v-if="calendar.showClassDetil" class="detial-list">
     <dl>
       <dt>13:50-15:20</dt>
       <dd>班级：10秋科技馆六年级英语</dd>
@@ -61,6 +61,7 @@ export default {
         //显示小黄点的日期，需传入一个格式为2018-11-10数组
         detialDate:['2018-11-10','2018-11-17'],
         date:'',
+        showClassDetil:false,
         detialCurrentDate:'',
         list:[{
           time:'13:50-15:20',
@@ -106,26 +107,26 @@ export default {
           console.log(allDatas);
         }
       });
-    },
-    isHaveDetial(dateObject){
-      let year =dateObject.getFullYear()//获取完整的年份(4位,1970-????)
-      let month =dateObject.getMonth()+1//获取当前月份(0-11,0代表1月)
-      let date =dateObject.getDate()//获取当前日(1-31)
-      let newDate = this.formatDate(year,month,date)
-      if(this.haveDetial.includes(newDate)){
-        return true
-      }
     }
   },
   computed: {
 
 
+  },
+  watch:{
+    'calendar.date':function (n,o) {
+      if(this.calendar.detialCurrentDate ===n  && this.calendar.detialDate.includes(n)){
+        this.calendar.showClassDetil = true
+      }else if(!this.calendar.detialDate.includes(n)){
+        this.calendar.showClassDetil = false
+      }
+
+    }
   }
 };
 </script>
 <style lang="less">
 .my-timetable {
-
   .timetable-table {
     background: #fff;
     height: 170px;

@@ -47,7 +47,7 @@
     '2019': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
   }
 export default {
-  props:['date','haveDetial','list'],
+  props:['date','haveDetial','isShowDetial'],
   data () {
     return {
       currentYear:2018,//初始化当天的年份动态取值
@@ -187,6 +187,9 @@ export default {
       this.activedNode && (this.activedNode.actived = undefined);
       dateObject.actived = !dateObject.actived;
       this.activedNode = dateObject;
+      if(this.haveDetial.includes(newDate)){
+        this.$emit('update:isShowDetial', newDate)
+      }
     },
     isHaveDetial(dateObject){
       let year =dateObject.getFullYear()//获取完整的年份(4位,1970-????)
