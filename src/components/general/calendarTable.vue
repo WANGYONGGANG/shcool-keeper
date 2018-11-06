@@ -1,22 +1,6 @@
 <template>
   <div class="calendar-table">
     <!-- 年份 月份 -->
-    <!--<ul class="select">-->
-      <!--<li class="year">-->
-        <!--&lt;!&ndash; 上一年 &ndash;&gt;-->
-        <!--<van-icon name="arrow-left" class="fn-left" @click="pickerLastYear(currentYear,currentMonth)" />-->
-        <!--<span>{{currentYear}}</span>-->
-        <!--&lt;!&ndash; 下一年 &ndash;&gt;-->
-        <!--<van-icon name="arrow"  class="fn-right" @click="pickerNextYear(currentYear,currentMonth)" />-->
-      <!--</li>-->
-      <!--<li class="month">-->
-        <!--&lt;!&ndash; 上一个月 &ndash;&gt;-->
-        <!--<van-icon name="arrow-left" class="fn-left" @click="pickerLastMonth(currentYear,currentMonth)" />-->
-        <!--<span>{{currentMonth}}</span>-->
-        <!--&lt;!&ndash; 下一个月 &ndash;&gt;-->
-        <!--<van-icon name="arrow" class="fn-right"  @click="pickerNextMonth(currentYear,currentMonth)" />-->
-      <!--</li>-->
-    <!--</ul>-->
     <div class="month-tit fn-clear">
       <div class="month-tit-l fn-left">
         <span @click="pickerLastMonth(currentYear,currentMonth)" >上月</span>
@@ -227,7 +211,10 @@ export default {
       this.yearMonth.isShow = false
     },
     onChange(picker, values) {
-      picker.setColumnValues(1, yearMonthDate[values[0]]);
+      this.yearMonth.isShow = false
+      this.currentYear=values[0]
+      this.currentMonth=values[1]
+      this.renderDays(this.formatDate(this.currentYear,this.currentMonth,1));
     }
   },
   mounted () {
