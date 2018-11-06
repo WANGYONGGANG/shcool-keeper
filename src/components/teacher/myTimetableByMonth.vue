@@ -114,7 +114,7 @@ export default {
   },
   watch:{
     'calendar.date':function (n,o) {
-      alert(n)
+      this.$toast(n)
       if(this.calendar.detialCurrentDate ===n  && this.calendar.detialDate.includes(n)){
         this.calendar.showClassDetil = true
       }else if(!this.calendar.detialDate.includes(n)){
