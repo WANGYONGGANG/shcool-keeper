@@ -111,10 +111,10 @@ export default {
   },
   computed: {
 
-
   },
   watch:{
     'calendar.date':function (n,o) {
+      alert(n)
       if(this.calendar.detialCurrentDate ===n  && this.calendar.detialDate.includes(n)){
         this.calendar.showClassDetil = true
       }else if(!this.calendar.detialDate.includes(n)){
