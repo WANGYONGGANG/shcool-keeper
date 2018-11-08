@@ -50,6 +50,19 @@ export default {
     goTo () {
       this.$router.push({path: '/teacher/commentedList'})
     }
+  },
+  computed : {
+    item () {
+      return this.$store.state.commentPopup.item
+    }
+  },
+  watch:{
+    item :{
+      handler(val){
+        //日期快速切换值
+        this.$toast(val)
+      }
+    }
   }
 }
 </script>

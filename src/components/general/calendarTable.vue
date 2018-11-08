@@ -154,8 +154,8 @@ export default {
       for (var i = this.currentWeek; i >= 0; i--) {
         let d = new Date(str);
         d.setDate(d.getDate() - i);
-        let dayobject={}; //用一个对象包装Date对象  以便为以后预定功能添加属性
-        dayobject.day=d;
+        let dayobject={} //用一个对象包装Date对象  以便为以后预定功能添加属性
+        dayobject.day=d
         dayobject.actived=false
         this.days.push(dayobject);//将日期放入data 中的days数组 供页面渲染使用
       }
@@ -163,8 +163,8 @@ export default {
       for (var i = 1; i <= 41 - this.currentWeek; i++) {
         let d = new Date(str);
         d.setDate(d.getDate() + i);
-        let dayobject={};
-        dayobject.day=d;
+        let dayobject={}
+        dayobject.day=d
         dayobject.actived=false
         this.days.push(dayobject);
       }
@@ -173,9 +173,9 @@ export default {
     formatDate: function(year,month,day){
       var y = year;
       var m = month;
-      if(m<10) m = "0" + m;
-      var d = day;
-      if(d<10) d = "0" + d;
+      if(m<10) m = "0" + m
+      var d = day
+      if(d<10) d = "0" + d
       return y+"-"+m+"-"+d
     },
     output (dateObject,index) {
@@ -184,9 +184,9 @@ export default {
       let date =dateObject.day.getDate()//获取当前日(1-31)
       let newDate = this.formatDate(year,month,date)
       this.$emit('update:date', newDate)
-      this.activedNode && (this.activedNode.actived = undefined);
-      dateObject.actived = !dateObject.actived;
-      this.activedNode = dateObject;
+      this.activedNode && (this.activedNode.actived = undefined)
+      dateObject.actived = !dateObject.actived
+      this.activedNode = dateObject
       if(this.haveDetial.includes(newDate)){
         this.$emit('update:isShowDetial', newDate)
       }
@@ -205,7 +205,7 @@ export default {
       this.$router.push({
         path: "/teacher/myTimetable",
         query: {}
-      });
+      })
     },
     showYearMonthPop () {
       this.yearMonth.isShow = true
@@ -217,7 +217,7 @@ export default {
       this.yearMonth.isShow = false
       this.currentYear=values[0]
       this.currentMonth=values[1]
-      this.renderDays(this.formatDate(this.currentYear,this.currentMonth,1));
+      this.renderDays(this.formatDate(this.currentYear,this.currentMonth,1))
     }
   },
   mounted () {

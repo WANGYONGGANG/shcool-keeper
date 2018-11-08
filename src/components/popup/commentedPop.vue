@@ -2,13 +2,7 @@
   <van-popup v-model="isShow" position="bottom" @click-overlay="closePop">
     <dl class="ip-list">
       <dt>日期快速切换</dt>
-      <dd @click="goTo">今天</dd>
-      <dd @click="goTo">昨天</dd>
-      <dd @click="goTo">本周</dd>
-      <dd @click="goTo">最近7天</dd>
-      <dd @click="goTo">最近30天</dd>
-      <dd @click="goTo">本月</dd>
-      <dd @click="goTo">上月</dd>
+      <dd v-for="(item,index) in items"  @click="exportResult(item)">{{item}}</dd>
     </dl>
   </van-popup>
 </template>
@@ -16,11 +10,13 @@
 export default {
   data () {
     return {
+      items:['今天','昨天','本周','最近7天','最近30天','本月','上月']
     }
   },
   methods: {
-    goTo (url) {
+    exportResult (item) {
       this.$store.state.commentPopup.isShow = false
+      this.$store.state.commentPopup.item= item
     },
     closePop () {
       this.$store.state.commentPopup.isShow = false
