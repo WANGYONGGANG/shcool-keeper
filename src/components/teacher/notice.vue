@@ -46,37 +46,6 @@ export default {
 </script>
 <style lang="less">
 .notice{
-.commented-tab{
-  height: 76px;
-  padding-top: 10px;
-  background: #fff;
-  margin-bottom: 10px;
-  padding-left:20px;
-.tab-radius{
-  height: 53px;
-  display: inline-block;
-  padding: 0px 30px;
-  font-size: 24px;
-  line-height: 55px;
-  border-radius: 50px;
-  border: 1px #eff1f6 solid;
-  margin: 8px 10px 0;
-}
-.arrow-down .van-icon{
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-}
-.timetable-tit{
-  height: 80px;
-  color: #494847;
-  font-size: 28px;
-  line-height: 80px;
-  padding: 0 30px;
-.tit-r{
-  float: right;
-}
-}
 .timetable-table{
   background: #fff;
   height: 170px;
