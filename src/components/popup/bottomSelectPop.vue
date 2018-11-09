@@ -1,37 +1,28 @@
 <template>
   <van-popup v-model="isShow" position="bottom" @click-overlay="closePop">
     <dl class="ip-list">
-      <dt>日期快速切换</dt>
-      <dd v-for="(item,index) in items"  @click="exportResult(item)">{{item}}</dd>
+      <dt v-if="title">{{title}}</dt>
+      <dd v-for="(item,index) in lists"  @click="exportResult(item,index)" :class="item===selectItem?'actived':''">{{item}}</dd>
     </dl>
   </van-popup>
 </template>
 <script>
 export default {
-  data () {
+  props:['title','lists','isShow','selectItem'],
+  data(){
     return {
-      items:['今天','昨天','本周','最近7天','最近30天','本月','上月']
-    }
-  },
-  methods: {
-    exportResult (item) {
-      this.$store.state.commentPopup.isShow = false
-      this.$store.state.commentPopup.item= item
-    },
-    closePop () {
-      this.$store.state.commentPopup.isShow = false
+
     }
   },
   mounted () {
   },
-  computed: {
-    isShow: {
-      get () {
-        return this.$store.state.commentPopup.isShow
-      },
-      set () {
-      }
-    }
+  methods: {
+    exportResult (item,index) {
+      this.$emit('update:isShow', false)
+      this.$emit('update:selectItem', item)
+    },
+    closePop () {
+      this.$emit('update:isShow', false)    }
   }
 }
 </script>
@@ -55,6 +46,9 @@ export default {
     text-indent: 15px;
     border-bottom:1px #eef1f6 solid ;
   }
+    .actived{
+      color: #4286ed;
+    }
 
   }
 

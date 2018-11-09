@@ -1,7 +1,10 @@
 <template>
 <div class="naming">
   <div class="naming-tab">
-    {{dataStr}}(周{{nowDayOfWeek}})
+    <div class="naming-tab-l fn-left"><van-icon name="arrow-left" /></div>
+    <div class="naming-tab-m fn-left" ><span @click="showCalendar">{{dataStr}}(周{{nowDayOfWeek}})<span class="arrow-down"><van-icon name="arrow" /></span>
+    </span></div>
+    <div class="naming-tab-r fn-right"><van-icon name="arrow" /></div>
   </div>
   <div class="naming-table" @click="goTo(urls.studentList,data.id)" v-for="(data,index) in allDatas" :key="index">
     <div class="table-l">
@@ -16,14 +19,23 @@
      {{data.realPeopleCount}}/{{data.willPeopleCount}}
     </div>
   </div>
+  <calendar :date.sync="calendar.date" :isVisible.sync="calendar.isVisible"></calendar>
   <div class="quick-schedule" @click="goTo(urls.chooseClass)">快速排课</div>
 </div>
 </template>
 <script>
 import { api } from "../../../static/js/request-api/request-api.js";
+import Calendar from '../general/calendar'
 export default {
+  components: {
+    Calendar
+  },
   data () {
     return {
+      calendar:{
+        isVisible:false,
+        date:'2018-10-30'
+      },
       urls: {
         chooseClass: '/teacher/chooseClass',
         studentList: '/teacher/studentList'
@@ -40,6 +52,10 @@ export default {
     this.getNowDateWeek();
   },
   methods: {
+    showCalendar () {
+      //根据参数显示对应日历弹层
+      this.calendar.isVisible = true
+    },
     goTo (url,id) {
       this.$router.push({path: url,query: {timeable_id: id}})
     },
@@ -77,6 +93,11 @@ export default {
       });
     }
   },
+  watch:{
+    'calendar.date' :function (n,o) {
+      this.$toast(n)
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -85,10 +106,25 @@ export default {
     .naming-tab{
       height: 86px;
       background: #fff;
-      padding-left:20px;
       text-align: center;
       line-height: 86px;
       font-size: 28px;
+  .naming-tab-l,.naming-tab-r{
+    width: 50px;
+    position: relative;
+    top: 5px;
+  }
+      .naming-tab-m{
+        width: 650px;
+        text-align: center;
+      }
+  .arrow-down .van-icon{
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    margin-left: 10px;
+    position: relative;
+    top: 5px;
+  }
     }
 
   .naming-table{

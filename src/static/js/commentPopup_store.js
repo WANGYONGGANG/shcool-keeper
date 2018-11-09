@@ -1,5 +1,6 @@
 export default {
   state: {
-    isShow: false
+    isShow: false,
+    item:''
   }
 }

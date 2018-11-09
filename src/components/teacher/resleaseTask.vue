@@ -58,32 +58,24 @@ export default {
     goTo (url) {
       this.$router.push({path: url})
     }
+  },
+  computed : {
+    item () {
+      return this.$store.state.commentPopup.item
+    }
+  },
+  watch:{
+    item :{
+      handler(val){
+        //日期快速切换值
+        this.$toast(val)
+      }
+    }
   }
 }
 </script>
 <style lang="less">
 .task{
-.commented-tab{
-  height: 76px;
-  padding-top: 10px;
-  background: #fff;
-  margin-bottom: 10px;
-  padding-left:20px;
-.tab-radius{
-  height: 53px;
-  display: inline-block;
-  padding: 0px 30px;
-  font-size: 24px;
-  line-height: 55px;
-  border-radius: 50px;
-  border: 1px #eff1f6 solid;
-  margin: 8px 10px 0;
-}
-.arrow-down .van-icon{
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-}
 .task-table {
   padding: 0 15px;
   background: #fff;

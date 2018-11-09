@@ -2,7 +2,6 @@
   <div>
   <div class="commented-tab">
     <span class="tab-radius" @click="showCalendar(1)" >{{calendar.item1.date}}</span>-<span class="tab-radius" @click="showCalendar(2)">{{calendar.item2.date}}</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
-
   </div>
   <commented-pop></commented-pop>
     <!--每个日历选择按钮都需要调用一个日历组件-->
@@ -47,17 +46,25 @@ export default {
         case 2:
           this.calendar.item2.isVisible = true
           break;
-        case 3:
-          this.calendar.item3.isVisible = true
-          break;
-        case 4:
-          this.calendar.item4.isVisible = true
-          break;
         default:
           Toast('出错了');
       }
     }
   }
+  //回调参数试用方法 哪个页面用到
+//  computed : {
+//    item () {
+//      return this.$store.state.commentPopup.item
+//    }
+//  },
+//  watch:{
+//    item :{
+  //日期快速切换值
+//      handler(val){
+//        this.$toast(val)
+//      }
+//    }
+//  }
 }
 </script>
 <style lang="less">

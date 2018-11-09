@@ -6,9 +6,7 @@
       </van-cell-group>
     </div>
     <div class="class-tab fn-clear">
-      <div class="commented-tab">
-        <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
-      </div>
+      <calendar-packing></calendar-packing>
       <div class="operation">课程</div>
     </div>
     <ul class="average">
@@ -34,17 +32,15 @@
       row-click-color="#edf7ff"
     ></v-table>
     <school-pop></school-pop>
-    <commented-pop></commented-pop>
   </div>
 </template>
 <script>
-import CommentedPop from '../popup/commentedPop'
 import SchoolPop from '../popup/schoolPop'
-
+import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
-    CommentedPop,
-    SchoolPop
+    SchoolPop,
+    CalendarPacking
   },
   data () {
     return {
@@ -81,36 +77,28 @@ export default {
     sortChange(params){
       console.log(params)
     }
+  },
+  computed : {
+    item () {
+      return this.$store.state.commentPopup.item
+    }
+  },
+  watch:{
+    item :{
+      //日期快速切换值
+      handler(val){
+        this.$toast(val)
+      }
+    }
   }
 }
 </script>
 <style lang="less">
 .parent-rating-ranking{
-.commented-tab{
-  height: 58px;
-  background: #fff;
-  margin-bottom: 10px;
-  float: left;
-  padding-left:20px;
-.tab-radius{
-  height: 53px;
-  display: inline-block;
-  padding: 0px 30px;
-  font-size: 24px;
-  line-height: 55px;
-  border-radius: 50px;
-  border: 1px #eff1f6 solid;
-  margin: 8px 10px 0;
-}
-.arrow-down .van-icon{
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-}
   .class-tab{
     background: #fff;
     height: 85px;
-    padding:10px 20px;
+    padding:0 20px 10px;
   .list-search-l{
     float: left;
   }

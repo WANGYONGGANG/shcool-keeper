@@ -119,6 +119,19 @@ export default {
         }]
       })
     }
+  },
+  computed : {
+    item () {
+      return this.$store.state.commentPopup.item
+    }
+  },
+  watch:{
+    item :{
+      //日期快速切换值
+      handler(val){
+        this.$toast(val)
+      }
+    }
   }
 }
 </script>
