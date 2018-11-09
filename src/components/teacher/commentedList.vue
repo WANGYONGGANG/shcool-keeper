@@ -1,8 +1,8 @@
 <template>
   <div class="commented-list">
     <van-cell-group>
-      <van-cell title="上课内容：" is-link to="/teacher/classContent"/>
-      <van-cell title="查看家长回复" value="1" to="/teacher/replyList" is-link />
+      <!-- <van-cell title="上课内容：" is-link to="/teacher/classContent"/> -->
+      <!-- <van-cell title="查看家长回复" value="1" to="/teacher/replyList" is-link /> -->
     </van-cell-group>
 
     <div class="list-box" v-for="data in allDatas">

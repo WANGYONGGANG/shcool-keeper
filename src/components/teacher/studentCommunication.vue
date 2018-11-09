@@ -58,12 +58,12 @@
     </van-tabs>
     <sort-pop></sort-pop>
     <van-popup v-model="filterShow" position="right" class="filter">
-      <dl class="filter-dl">
+      <!-- <dl class="filter-dl">
         <dt>剩余学费(元)</dt>
         <dd>
           <input type="text" placeholder="最低值" /> --- <input type="text" placeholder="最高值" />
         </dd>
-      </dl>
+      </dl> -->
       <dl class="filter-dl"><dt>沟通时间</dt><dd>
         <input type="text" placeholder="开始日期" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束日期" @click="showCalendar(2)" v-model="calendar.item2.date" />
       </dd></dl>
