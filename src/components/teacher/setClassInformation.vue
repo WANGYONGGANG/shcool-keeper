@@ -52,6 +52,10 @@ export default {
 .van-radio__input{
   top: -18px;
 }
+.van-cell__value{
+  -webkit-box-flex:2;
+  flex: 2;
+}
 .bottom-btn{
   height: 100px;
   background: #fff;

@@ -6,7 +6,7 @@
           <div slot="action" @click="onSearch">搜索</div>
         </van-search>
       </div>
-      <div class="operation">筛选</div>
+      <div class="operation" @click="showFilterPop">筛选</div>
     </div>
     <div class="choose-school-zone" @click="showShoolZoneDia">
       <van-cell-group>
@@ -54,21 +54,36 @@
     <div class="bottom-btn">
       点击下一步进行班级信息填写 <span @click="goTo">下一步</span>
     </div>
-    <school-pop></school-pop>
+    <!--选择班级-->
+    <select-pop :lists="filterData.lists" :isShow.sync="filterData.isShow" :selectItem.sync="filterData.selectItem"></select-pop>
+    <!--选择校区-->
+    <select-pop :title="schoolData.title" :lists="schoolData.lists" :isShow.sync="schoolData.isShow" :selectItem.sync="schoolData.selectItem"></select-pop>
+
   </div>
 </template>
 <script>
 import { api } from "../../../static/js/request-api/request-api.js";
-import SchoolPop from '../popup/schoolPop'
+import SelectPop from '../popup/bottomSelectPop'
 export default {
   components: {
-    SchoolPop
+    SelectPop
   },
   data () {
     return {
       value: '',
       radio: '1',
-      allDatas:[]
+      allDatas:[],
+      filterData:{
+        lists:['查看所有班级','只看一对一','只看一对多','只看集体班'],
+        isShow:false,
+        selectItem:'查看所有班级'
+      },
+      schoolData:{
+        title:'选择校区',
+        lists:['潮人部落','金色阳光'],
+        isShow:false,
+        selectItem:'潮人部落'
+      }
     }
   },
   mounted () {
@@ -77,8 +92,11 @@ export default {
   methods: {
     onSearch () {
     },
+    showFilterPop () {
+      this.filterData.isShow=true
+    },
     showShoolZoneDia () {
-      this.$store.state.schoolPopup.isShow = true
+      this.schoolData.isShow=true
     },
      subStrClassName(name) {
       return name.substring(0, 8) + "...";
@@ -102,6 +120,14 @@ export default {
       // console.log(this.radio);
       this.$router.push({path: '/teacher/setClassInformation'})
     }
+  },
+  watch:{
+    'filterData.selectItem':function (n,o) {
+      this.$toast(n)
+    },
+    'schoolData.selectItem':function (n,o) {
+      this.$toast(n)
+    },
   }
 }
 </script>

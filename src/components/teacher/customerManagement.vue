@@ -6,8 +6,8 @@
           <div slot="action" @click="onSearch">搜索</div>
         </van-search>
       </div>
-      <div class="operation">筛选</div>
-      <div class="operation">排序</div>
+      <div class="operation" @click="filterPopShow">筛选</div>
+      <div class="operation" @click="sortPopShow">排序</div>
     </div>
     <div @click="goTo(urls.customerCommunicationRecord)">
       <div class="card-list">
@@ -34,12 +34,79 @@
       <span class="border-right" @click="goTo(urls.addCustomers)">添加客户</span>
       <span @click="goTo(urls.intentionalCustomersList)">客户管理操作</span>
     </div>
+    <van-popup v-model="filterShow" position="right" class="filter">
+      <dl class="filter-dl"><dt>跟进时间</dt><dd>
+        <input type="text" placeholder="开始时间" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束时间" @click="showCalendar(2)" v-model="calendar.item2.date" />
+      </dd></dl>
+      <dl class="filter-dl"><dt>录入时间</dt>
+        <dd>
+          <input type="text" placeholder="开始时间" @click="showCalendar(3)" v-model="calendar.item3.date" /> --- <input type="text" placeholder="结束时间" @click="showCalendar(4)" v-model="calendar.item4.date" />
+        </dd>
+      </dl>
+      <dl class="filter-dl"><dt>沟通时间</dt>
+        <dd>
+          <input type="text" placeholder="开始时间" @click="showCalendar(5)" v-model="calendar.item5.date" /> --- <input type="text" placeholder="结束时间" @click="showCalendar(6)" v-model="calendar.item6.date" />
+        </dd>
+      </dl>
+      <van-cell-group class="class-name">
+        <van-cell title="选择客户状态" is-link  @click="selectCustomerStatePop" />
+        <van-cell title="选择责任人" is-link />
+      </van-cell-group>
+      <div class="filter-btn">
+        <span class="btn-reset" @click="resetFn">重置</span>
+        <span class="btn-submit" @click="submitFn">确定</span>
+      </div>
+    </van-popup>
+    <!--每个日历选择按钮都需要调用一个日历组件-->
+    <calendar :date.sync="calendar.item1.date" :isVisible.sync="calendar.item1.isVisible"></calendar>
+    <calendar :date.sync="calendar.item2.date" :isVisible.sync="calendar.item2.isVisible"></calendar>
+    <calendar :date.sync="calendar.item3.date" :isVisible.sync="calendar.item3.isVisible"></calendar>
+    <calendar :date.sync="calendar.item4.date" :isVisible.sync="calendar.item4.isVisible"></calendar>
+    <calendar :date.sync="calendar.item5.date" :isVisible.sync="calendar.item5.isVisible"></calendar>
+    <calendar :date.sync="calendar.item6.date" :isVisible.sync="calendar.item6.isVisible"></calendar>
+    <!--排序-->
+    <select-pop :title="sortData.title" :lists="sortData.lists" :isShow.sync="sortData.isShow" :selectItem.sync="sortData.selectItem"></select-pop>
+    <!--选择客户状态-->
+    <select-pop :lists="customerData.lists" :isShow.sync="customerData.isShow" :selectItem.sync="customerData.selectItem"></select-pop>
   </div>
 </template>
 <script>
+import SelectPop from '../popup/bottomSelectPop'
+import Calendar from '../general/calendar'
 export default {
-  data () {
+    components: {
+      SelectPop,
+      Calendar
+    },
+    data () {
     return {
+      filterShow:false,
+      calendar:{
+        item1:{
+          isVisible:false,
+          date:''
+        },
+        item2:{
+          isVisible:false,
+          date:''
+        },
+        item3:{
+          isVisible:false,
+          date:''
+        },
+        item4:{
+          isVisible:false,
+          date:''
+        },
+        item5:{
+          isVisible:false,
+          date:''
+        },
+        item6:{
+          isVisible:false,
+          date:''
+        }
+      },
       value: '',
       star: 4,
       urls: {
@@ -47,12 +114,75 @@ export default {
         intentionalCustomersList: '/teacher/intentionalCustomersList',
         customerCommunicationRecord: '/teacher/customerCommunicationRecord',
         intentionalCustomersDetial: '/teacher/intentionalCustomersDetial'
+      },
+      sortData:{
+        title:'排序方式',
+        lists:['按姓名排序','按录入时间排序','按跟进时间排序','按沟通时间排序'],
+        isShow:false,
+        selectItem:'按录入时间排序'
+      },
+      customerData:{
+        lists:['不限','未转化','未知','已上门','有效单','预约试听','未上门'],
+        isShow:false,
+        selectItem:'未知'
       }
     }
   },
   methods: {
+    showCalendar (n) {
+      //根据参数显示对应日历弹层
+      switch(n)
+      {
+        case 1:
+          this.calendar.item1.isVisible = true
+          break;
+        case 2:
+          this.calendar.item2.isVisible = true
+          break;
+        case 3:
+          this.calendar.item3.isVisible = true
+          break;
+        case 4:
+          this.calendar.item4.isVisible = true
+          break;
+        case 5:
+          this.calendar.item5.isVisible = true
+          break;
+        case 6:
+          this.calendar.item6.isVisible = true
+          break;
+        default:
+          Toast('出错了');
+      }
+    },
     goTo (param) {
       this.$router.push({path: param})
+    },
+    sortPopShow () {
+      this.sortData.isShow=true
+    },
+    resetFn (param){
+      this.filterShow = false
+    },
+    submitFn (param) {
+      this.filterShow = false
+    },
+    onSearch () {
+
+    },
+    selectCustomerStatePop () {
+      this.customerData.isShow=true
+    },
+    filterPopShow () {
+      this.filterShow = true
+    }
+  },
+  watch:{
+    'sortData.selectItem':function (n,o) {
+      this.$toast(n)
+    },
+    'customerData.selectItem':function (n,o) {
+      this.$toast(n)
     }
   }
 }
@@ -179,6 +309,110 @@ line-height: 45px;
     border-right:1px #838383 solid ;
   }
 
+}
+.filter{
+  width: 78%;
+  height: 100%;
+.filter-dl{
+  padding:30px 0 0 25px;
+dt{
+  line-height: 45px;
+  font-size: 28px;
+}
+dd{
+  padding:15px 0 0 0;
+input{
+  width: 245px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border: 1px #b9babb solid;
+  border-radius: 2px;
+  font-size: 20px;
+}
+}
+}
+.class-name{
+  margin-top: 100px;
+.van-cell__title{
+  color: #7f8081;
+}
+}
+.filter-btn{
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 80px;
+  font-size: 32px;
+  height: 81px;
+.btn-reset{
+  background: #feffff;
+  display: inline-block;
+  width: 49%;
+  height: 80px;
+  color: #333333;
+  border-top:1px #f1f1f1 solid ;
+}
+.btn-submit{
+  background: #0097ef;
+  width: 49%;
+  display: inline-block;
+  height: 80px;
+  color: #fff;
+  border-top:1px #0097ef solid ;
+}
+}
+.class-back{
+  height: 70px;
+  line-height: 70px;
+  background: #eef1f6;
+  padding-left: 10px;
+.van-icon{
+  position: relative;
+  top: 4px;
+  margin-right: 10px;
+  color: #999;
+}
+}
+.class-search{
+  padding:20px;
+input{
+  width: 90%;
+  height: 60px;
+  text-indent: 15px;
+  font-size: 22px;
+  line-height: 60px;
+  border: 1px #e2e1e1 solid;
+  border-radius: 10px;
+  color: #999;
+
+}
+}
+.filter-cell{
+  overflow-y: scroll;
+  min-height:800px;
+.van-cell{
+  font-size: 24px;
+  height: 70px;
+  padding: 18px 20px;
+  line-height: 32px;
+.van-cell__title{
+  -webkit-box-flex: 6;
+  flex:6;
+}
+.van-radio__input{
+  height: 5em;
+  top:2px;
+  right: 2px;
+  font-size: 30px;
+}
+.van-radio .van-icon-checked{
+  color: #4286ed;
+}
+}
+}
 }
 }
 </style>

@@ -2,8 +2,8 @@
 <div class="naming">
   <div class="naming-tab">
     <div class="naming-tab-l fn-left"><van-icon name="arrow-left" /></div>
-    <div class="naming-tab-m fn-left" @click="showCalendar">{{dataStr}}(周{{nowDayOfWeek}})<span class="arrow-down"><van-icon name="arrow" /></span>
-    </div>
+    <div class="naming-tab-m fn-left" ><span @click="showCalendar">{{dataStr}}(周{{nowDayOfWeek}})<span class="arrow-down"><van-icon name="arrow" /></span>
+    </span></div>
     <div class="naming-tab-r fn-right"><van-icon name="arrow" /></div>
   </div>
   <div class="naming-table" @click="goTo(urls.studentList,data.id)" v-for="(data,index) in allDatas" :key="index">
