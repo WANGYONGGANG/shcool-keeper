@@ -15,6 +15,7 @@ import NetIncome from '@/components/remittance_table/netIncome'
 import Refund from '@/components/remittance_table/Refund'
 
 import ChargeAnal from '@/components/chart/analysis/chargeAnal'
+import CurriculumConsumptionCharge from '@/components/chart/analysis/curriculumConsumptionCharge'
 
 import Mine from '@/components/user/mine'
 import Blank from '@/components/user/blank'
@@ -172,6 +173,11 @@ export default new Router({
       path: '/analysis/chargeAnal',
       name: 'chargeAnal',
       component: ChargeAnal
+    },
+    {
+      path: '/analysis/curriculumConsumptionCharge',
+      name: 'curriculumConsumptionCharge',
+      component: CurriculumConsumptionCharge
     },
     {
       path: '/teacher/teacherIndex',

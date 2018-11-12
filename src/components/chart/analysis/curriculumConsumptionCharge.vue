@@ -1,6 +1,6 @@
 <template>
   <div class="charge-anal">
-    <dl class="charge-anal-title"><dt>收费分析</dt><dd>日期：2018-10-15<span>单位：元</span></dd></dl>
+    <dl class="charge-anal-title"><dt>课消分析</dt><dd>日期：2018-10-15<span>单位：元</span></dd></dl>
     <table class="charge-anal-tab" border="1" cellspacing="0">
       <tr>
         <td :class="[index==0 ? 'active' : '']" @click="change(0)">日报</td>
@@ -12,9 +12,9 @@
   </div>
 </template>
 <script>
-  import day from './components/anal/dayCharge'
-  import month from './components/anal/monthCharge'
-  import year from './components/anal/yearCharge'
+import day from './components/curcon/dayCharge'
+import month from './components/curcon/monthCharge'
+import year from './components/curcon/yearCharge'
 export default {
   components: {
     day,
@@ -139,7 +139,7 @@ export default {
     currentView(){
       return this.arr[this.index];
     }
-  }
+  },
 }
 </script>
 <style lang="less">
