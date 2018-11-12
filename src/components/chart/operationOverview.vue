@@ -1,8 +1,8 @@
 <template>
   <div class="operation-overview">
     <dl class="overview-title"><dt>运营总览</dt><dd>日期：2018-10-15</dd></dl>
-    <div class="chart01" @click="goTo(urls.myTimetable)"><div id="chart01"></div></div>
-    <div class="chart02"><div id="chart02"></div></div>
+    <div class="chart01" @click="goTo(urls.chargeAnal)"><div id="chart01"></div></div>
+    <div class="chart02" @click="goTo(urls.curriculumConsumptionCharge)"><div id="chart02"></div></div>
     <div class="overview-class-tit">
       <van-icon name="more-o" />班级指标
     </div>
@@ -39,7 +39,9 @@ export default {
   data () {
     return {
       urls: {
-        myTimetable: '/analysis/chargeAnal'
+        chargeAnal: '/analysis/chargeAnal',
+        curriculumConsumptionCharge: '/analysis/curriculumConsumptionCharge'
+
       }
     }
   },
