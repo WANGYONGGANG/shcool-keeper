@@ -3,42 +3,60 @@
   <div class="roster-detial-tit">
     17暑假初二英语同步班_补课班级
   </div>
-  <div class="roster-detial-card">
-    <div class="card-id">张跃拢 <span>s121716</span></div>
-    <div class="card-list">
+  <div class="roster-detial-card" v-for="data in classRosterList">
+    <div class="card-id">{{data.studentName}} <span>{{data.studentCode}}</span></div>
+    <div class="card-list" v-for="eachClass in data.classList">
+      <div class="card-list-tit"><i class="point"></i>{{data.className}}</div>
+      <div class="card-list-flag">
+        <span>{{eachClass.createTime}}</span>
+        <span>{{eachClass.classRoomName}}</span>
+        <span>{{eachClass.campusName}}</span></div>
+    </div>
+    
+    <!-- <div class="card-list">
       <div class="card-list-tit"><i class="point"></i>17暑假初二英语同步班_补课班级</div>
       <div class="card-list-flag">
         <span>2017</span>
         <span>暑假班</span>
         <span>潮人部落</span></div>
-    </div>
-    <div class="card-list">
-      <div class="card-list-tit"><i class="point"></i>17暑假初二英语同步班_补课班级</div>
-      <div class="card-list-flag">
-        <span>2017</span>
-        <span>暑假班</span>
-        <span>潮人部落</span></div>
-    </div>
-    <div class="card-list">
-      <div class="card-list-tit"><i class="point"></i>17暑假初二英语同步班_补课班级</div>
-      <div class="card-list-flag">
-        <span>2017</span>
-        <span>暑假班</span>
-        <span>潮人部落</span></div>
-    </div>
+    </div> -->
   </div>
 </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
+      classRosterList:[],
 
     }
   },
-  methods: {
-  },
   mounted () {
+    this.findAllClassRoster();
+  },
+  methods: {
+    findAllClassRoster: function() {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('class_id' ,this.$route.query.id);
+      api.findAllClassRoster(param)
+        .then(res => {
+          console.log(res.data);
+          if (res.status == 200) {
+              console.log(res.data);
+              let code=res.data.code;
+              if(code===1){
+                _self.classRosterList=res.data.data;
+              }
+          } else {
+            
+          }
+        })
+        .catch(error => {
+          
+        });
+    },
   }
 }
 </script>
@@ -52,7 +70,7 @@ export default {
     }
   .roster-detial-card{
     width: 710px;
-    margin: 0 auto;
+    margin: 0 auto 30px;
     background: #fff;
     border-radius: 10px;
     .card-id{
