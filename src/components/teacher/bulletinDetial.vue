@@ -1,20 +1,58 @@
 <template>
   <div class="bulletinDetial">
     <dl>
-      <dt class="title">放暑假</dt>
-      <dd class="subtltle">2018-08-16</dd>
-      <dd class="text">就这样吧，我不不写了</dd>
+      <dt class="title">{{noticeContent.title}}</dt>
+      <dd class="subtltle">{{noticeContent.createTime}}</dd>
+      <dd class="text" v-html="noticeContent.content"></dd>
     </dl>
   </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
+import Router from "vue-router";
 export default {
+    data () {
+    return {
+      noticeContent:{}
+    }
+  },
+   mounted() {
+     this.getAnnouncement();
+
+   },
+   methods:{
+      getAnnouncement: function() {
+      let _self = this;
+      let params ={};
+      params.announcement_id =_self.$route.query.id;
+      api.getAnnouncement(params)
+        .then(res => {
+          console.log(res.data);
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.noticeContent=res.data.data;
+                }
+          } else {
+            let params = { msg: "获取公告错误" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取公告错误" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+   }
 }
 </script>
 <style lang="less">
 .bulletinDetial{
   padding: 20px;
   min-height: 500px;
+  overflow: hidden;
   background: #fff;
   .title{
     font-size: 32px;

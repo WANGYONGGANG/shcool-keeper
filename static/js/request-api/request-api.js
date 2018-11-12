@@ -159,6 +159,27 @@ export   const  api={
      //获取当前登录人员排课计划
      getMyClassRecord(params){
         return fetchGet(baseUrl+'/myClassRecord/getMyClassRecord',params);
-    }
+    },
+      //获取所有公告
+      findAllAnnouncement(params){
+        return fetchGet(baseUrl+'/announcement/findAllAnnouncement',params);
+    },
+      //获取公告明细
+     getAnnouncement(params){
+        return fetchGet(baseUrl+'/announcement/getAnnouncement',params);
+    },
+    //获取今日没有沟通客户
+    getCommunicatingCustomers(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/getCommunicatingCustomers',params);
+    },
+    //获取今日已经沟通客户
+    getTodayAlreadyCommunicatingCustomers(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/getTodayAlreadyCommunicatingCustomers',params);
+    },
+     //获取今日新增客户
+     getNewCustomersToday(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/getNewCustomersToday',params);
+    },
+
    
 }
