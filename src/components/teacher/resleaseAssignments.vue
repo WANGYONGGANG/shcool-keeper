@@ -1,6 +1,7 @@
 <template>
   <div class="reslease-ass">
-    <div class="recipient"><van-cell-group>
+    <div class="recipient">
+    <van-cell-group>
       <van-cell title="接受人" value="内容" is-link />
     </van-cell-group>
     </div>
@@ -30,7 +31,7 @@
       <div class="add-img">添加视频</div>
       <div class="add-img">添加文件</div>
     </div>
-    <div class="list-bottom">提价</div>
+    <div class="list-bottom">提交</div>
   </div>
 </template>
 <script>

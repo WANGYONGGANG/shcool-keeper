@@ -69,6 +69,7 @@ import CustomerCommunicationRecord from '@/components/teacher/customerCommunicat
 import IntentionalCustomersDetial from '@/components/teacher/intentionalCustomersDetial'
 import CustomerFollowUpStatistics from '@/components/teacher/customerFollowUpStatistics'
 import CustomerAnalysis from '@/components/teacher/customerAnalysis'
+import OperationDetails from '@/components/teacher/operationDetails'
 
 import EnrollmentStatistics from '@/components/teacher/enrollmentStatistics'
 import EnrollmentStatistics2 from '@/components/teacher/enrollmentStatistics2'
@@ -434,6 +435,11 @@ export default new Router({
       path: '/teacher/customerContrast',
       name: 'customerContrast',
       component: CustomerContrast
+    },
+    {
+      path: '/teacher/operationDetails',
+      name: 'operationDetails',
+      component: OperationDetails
     }
   ]
 })
