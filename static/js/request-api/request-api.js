@@ -180,6 +180,10 @@ export   const  api={
      getNewCustomersToday(params){
         return fetchGet(baseUrl+'/intentionClientAPI/getNewCustomersToday',params);
     },
+    //获取沟通列表
+    findStudentCommunication(params){
+        return fetchPost(baseUrl+'/studentCommunication/findStudentCommunication',params);
+    },
      //获取沟通明细
      getCommunicationDetail(params){
         return fetchGet(baseUrl+'/studentCommunication/findStudentCommunicationDetail',params);

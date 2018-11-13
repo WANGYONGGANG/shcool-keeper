@@ -1,15 +1,15 @@
 <template>
 <div class="roster-detial">
   <div class="roster-detial-tit">
-    17暑假初二英语同步班_补课班级
+    {{title}}
   </div>
   <div class="roster-detial-card" v-for="data in classRosterList">
     <div class="card-id">{{data.studentName}} <span>{{data.studentCode}}</span></div>
     <div class="card-list" v-for="eachClass in data.classList">
       <div class="card-list-tit"><i class="point"></i>{{data.className}}</div>
       <div class="card-list-flag">
-        <span>{{eachClass.createTime}}</span>
-        <span>{{eachClass.classRoomName}}</span>
+        <span>{{eachClass.yearname}}</span>
+        <span>{{eachClass.accountingName}}</span>
         <span>{{eachClass.campusName}}</span></div>
     </div>
     
@@ -25,12 +25,23 @@
 </template>
 <script>
 import {api} from  '../../../static/js/request-api/request-api.js';
+import Roster from './Roster';
 export default {
   data () {
     return {
       classRosterList:[],
+      title:'哈哈哈',
 
     }
+  },
+  components:{
+       Roster
+   },
+  props: ['parentToChild'],
+  created(){
+      this.title = this.parentToChild
+      console.log(this.parentToChild);
+      console.log(this);
   },
   mounted () {
     this.findAllClassRoster();
