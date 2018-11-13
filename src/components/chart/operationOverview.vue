@@ -7,9 +7,9 @@
       <van-icon name="more-o" />班级指标
     </div>
     <div class="overview-class">
-      <div class="chart03"><div id="chart03"></div><span>满班率</span></div>
-      <div class="chart04"><div id="chart04"></div><span>出勤率</span></div>
-      <div class="chart05"><div id="chart05"></div><span>缴费率</span></div>
+      <div class="chart03" @click="goTo(urls.classIndex)"><div id="chart03"></div><span>满班率</span></div>
+      <div class="chart04" @click="goTo(urls.classIndex)"><div id="chart04"></div><span>出勤率</span></div>
+      <div class="chart05" @click="goTo(urls.classIndex)"><div id="chart05"></div><span>缴费率</span></div>
     </div>
     <div class="overview-class-tit">
       <van-icon name="more-o" />招生情况
@@ -40,8 +40,8 @@ export default {
     return {
       urls: {
         chargeAnal: '/analysis/chargeAnal',
-        curriculumConsumptionCharge: '/analysis/curriculumConsumptionCharge'
-
+        curriculumConsumptionCharge: '/analysis/curriculumConsumptionCharge',
+        classIndex: '/analysis/classIndex'
       }
     }
   },

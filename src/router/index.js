@@ -16,6 +16,7 @@ import Refund from '@/components/remittance_table/Refund'
 
 import ChargeAnal from '@/components/chart/analysis/chargeAnal'
 import CurriculumConsumptionCharge from '@/components/chart/analysis/curriculumConsumptionCharge'
+import ClassIndex from '@/components/chart/analysis/classIndex'
 
 import Mine from '@/components/user/mine'
 import Blank from '@/components/user/blank'
@@ -179,6 +180,11 @@ export default new Router({
       path: '/analysis/curriculumConsumptionCharge',
       name: 'curriculumConsumptionCharge',
       component: CurriculumConsumptionCharge
+    },
+    {
+      path: '/analysis/classIndex',
+      name: 'classIndex',
+      component: ClassIndex
     },
     {
       path: '/teacher/teacherIndex',
