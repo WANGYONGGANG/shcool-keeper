@@ -2,7 +2,7 @@
   <div class="student-completion">
     <van-tabs type="card" v-model="active">
       <van-tab :title='allDatasLen' >
-        <div class="card-list" v-for="data in allDatas">
+        <div class="card-list" v-for="data in allDatas" @click="goTo(urls.operationDetails)">
           <div class="card-list-l">
             <img class="img" src="../../assets/images/user/test.jpg"/>{{data.studentName}}
           </div>
@@ -47,9 +47,14 @@ export default {
       allDatasLen:'全部',
       submitDataLen:'已提交',
       noSubmitDataLen:'未提交',
-      allDatas:[],
+      allDatas:[{
+        studentName:'王紫潼'
+      }],
       submitData:[],
       noSubmitData:[],
+      urls: {
+        operationDetails: '/teacher/operationDetails'
+      }
     }
   },
   //getAllReleaseHomeworkStudent
@@ -59,6 +64,9 @@ export default {
     this.getAllReleaseHomeworkStudentNoSubmit();
   },
   methods: {
+    goTo (param) {
+      this.$router.push({path: param})
+    },
     getAllReleaseHomeworkStudent : function () {
       let _self = this;
       let param = new URLSearchParams();
