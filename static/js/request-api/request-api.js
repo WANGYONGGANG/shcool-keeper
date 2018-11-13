@@ -128,13 +128,20 @@ export   const  api={
         return fetchGet(baseUrl+"/myClassRecord/findMyClassRecord",params)
     },
 
+    
     //获取上课的学员信息，包含评论信息/classEvaluation/findAllClassAndCommentsInTheClass
     findAllClassAndCommentsInTheClass(params){
         return fetchGet(baseUrl+"/classEvaluation/findAllClassAndCommentsInTheClass",params)
     },
+
+    //作业
+    //findReleaseHomework 获取作业列表
+    findReleaseHomework(params){
+        return fetchGet(baseUrl+"/releaseHomework/findReleaseHomework",params)
+    },
     //获取接到作业的全部学员/releaseHomework/ getAllReleaseHomeworkStudent
     getAllReleaseHomeworkStudent(params){
-        return fetchGet(baseUrl+"/releaseHomework/ getAllReleaseHomeworkStudent",params)
+        return fetchGet(baseUrl+"/releaseHomework/getAllReleaseHomeworkStudent",params)
     },
     //获取接到作业的学员并且是没有提交的/releaseHomework/getAllReleaseHomeworkStudentAndSubmit
     getAllReleaseHomeworkStudentAndSubmit(params){
