@@ -1,30 +1,12 @@
 <template>
 <div class="roster">
-  <div class="naming-table" @click="goTo">
+  <div class="naming-table" @click="goTo(data.id)" v-for="data in classList">
     <div class="table-l">
-      <div class="class-tit">17暑假初二英语同步班_补课班级</div>
-      <div class="class-address"><van-icon name="location" />超人部落</div>
+      <div class="class-tit">{{data.className}}</div>
+      <div class="class-address"><van-icon name="location" />{{data.campusName}}</div>
     </div>
     <div class="table-r">
-      <van-icon name="contact" />1
-    </div>
-  </div>
-  <div class="naming-table">
-    <div class="table-l">
-      <div class="class-tit">17暑假初二英语同步班_补课班级</div>
-      <div class="class-address"><van-icon name="location" />超人部落</div>
-    </div>
-    <div class="table-r">
-      <van-icon name="contact" />1
-    </div>
-  </div>
-  <div class="naming-table">
-    <div class="table-l">
-      <div class="class-tit">17暑假初二英语同步班_补课班级</div>
-      <div class="class-address"><van-icon name="location" />超人部落</div>
-    </div>
-    <div class="table-r">
-      <van-icon name="contact" />1
+      <van-icon name="contact" />{{data.currentStudentCount}}
     </div>
   </div>
 </div>
@@ -35,25 +17,29 @@ export default {
   name:'roster',
   data () {
     return {
-      datas:[]
+      datas:[],
+      classList:[]
     }
   },
   mounted () {
-    this.getRosterData();
+    this.findAllClass();
   },
   methods: {
-    goTo () {
-      this.$router.push({path: '/teacher/rosterDetial'})
+    goTo (parame) {
+      this.$router.push({path: '/teacher/rosterDetial',query:{id:parame}})
     },
-    getRosterData : function () {
+    findAllClass : function () {
       let _self = this;
-      let param = new URLSearchParams();
-      param.append('class_plan_id',341);
-      api.getMyClassRoster(param)
+      // let param = new URLSearchParams();
+      // param.append('class_plan_id',341);
+      api.findAllClass(null)
         .then( res => {
-          if( res.code == 1 ){
-            console.log(res);
-          }
+            if (res.status == 200) {
+                  let code=res.data.code;
+                  if(code===1){
+                    _self.classList=res.data.data;
+                  }
+            }
         });
     }
   },

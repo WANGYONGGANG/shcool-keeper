@@ -187,6 +187,19 @@ export   const  api={
      getNewCustomersToday(params){
         return fetchGet(baseUrl+'/intentionClientAPI/getNewCustomersToday',params);
     },
+     //获取沟通明细
+     getCommunicationDetail(params){
+        return fetchGet(baseUrl+'/studentCommunication/findStudentCommunicationDetail',params);
+    },
+     //获取班级列表
+     findAllClass(params){
+        return fetchGet(baseUrl+'/classRoster/findAllClass',params);
+    },
+    //获取班级花名册
+    findAllClassRoster(params){
+        return fetchGet(baseUrl+'/classRoster/findAllClassRoster',params);
+    },
+
 
    
 }

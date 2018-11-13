@@ -109,6 +109,7 @@ export default {
       },
       value: '',
       star: 4,
+      customerList:[],
       urls: {
         addCustomers: '/teacher/addCustomers',
         intentionalCustomersList: '/teacher/intentionalCustomersList',
@@ -128,7 +129,95 @@ export default {
       }
     }
   },
+  mounted:function(){
+     this.initPage();
+  },
   methods: {
+    initPage:function(){
+      let type= this.$route.query.type;
+      if(type==1){
+        this.getNewCustomersToday();
+      }else if(type==2){
+        this.getCommunicatingCustomers();
+      }else if(type==3){
+         this.getTodayAlreadyCommunicatingCustomers();
+      }else if(type==0){
+
+      }
+
+    },
+       //获取今日新增客户
+    getNewCustomersToday: function() {
+      let params ={};
+      let _self = this;
+      api.getNewCustomersToday(null)
+        .then(res => {
+          console.log(res.data);
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  console.log(res.data.data.length);
+                  _self.toDayNewAddCus=res.data.data.length;
+                }
+          } else {
+            let params = { msg: "获取今日新增客户" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取今日新增客户" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+    //获取今日没有沟通客户
+     getCommunicatingCustomers: function() {
+      let params ={};
+      let _self = this;
+      api.getCommunicatingCustomers(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.noCommunicateCus=res.data.data.length;
+                }
+          } else {
+            let params = { msg: "获取今日没有沟通客户" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取今日没有沟通客户" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+    //获取今日已沟通客户错误
+      getTodayAlreadyCommunicatingCustomers: function() {
+      let params ={};
+      let _self = this;
+      api.getTodayAlreadyCommunicatingCustomers(null)
+        .then(res => {
+          console.log(res.data);
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.alreadyCommunicateCus=res.data.data.length;
+                }
+          } else {
+            let params = { msg: "获取今日已经沟通客户错误" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取今日已经沟通客户错误" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
     showCalendar (n) {
       //根据参数显示对应日历弹层
       switch(n)

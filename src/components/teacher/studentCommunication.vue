@@ -11,7 +11,7 @@
           <div class="operation" @click="showFilterDia">筛选</div>
           <div class="operation" @click="showSortDia">排序</div>
         </div>
-        <div @click="goTo(urls.communicationRecord)">
+        <div @click="goTo(urls.communicationRecord)"   v-for="(commentItem,index) in commentDetail">
           <div class="card-list">
             <div class="card-list-l">
               <img class="img" src="../../assets/images/user/test.jpg"/>王梓桐<span class="times">沟通次数：2</span>
@@ -119,6 +119,7 @@
 <script>
 import SortPop from '../popup/sortPop'
 import Calendar from '../general/calendar'
+import { api } from "../../../static/js/request-api/request-api.js";
 export default {
   components: {
     SortPop,
@@ -151,8 +152,12 @@ export default {
       urls: {
         communicationRecord: '/teacher/communicationRecord',
         purchaseDetails: '/teacher/purchaseDetails'
-      }
+      },
+      commentDetail:[],
     }
+  },
+  mounted() {
+    this.getCommunicationDetail();
   },
   methods: {
     onSearch () {
@@ -206,7 +211,27 @@ export default {
         default:
           Toast('出错了');
       }
-    }
+    },
+    // 沟通列表
+    getCommunicationDetail: function() {
+      let params ={};
+      let _self = this;
+      api.getCommunicationDetail(null)
+        .then(res => {
+          console.log(res.data);
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.commentDetail=res.data.data;
+                }
+          } else {
+            
+          }
+        })
+        .catch(error => {
+          
+        });
+    },
   }
 }
 </script>

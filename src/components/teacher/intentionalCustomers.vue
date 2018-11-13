@@ -5,12 +5,12 @@
       <dd>1</dd>
     </dl>
     <van-cell-group>
-      <van-cell title="今日新增客户"    is-link  v-bind:value="toDayNewAddCus"/>
-      <van-cell title="今日待沟通客户"  is-link  v-bind:value="noCommunicateCus" />
-      <van-cell title="今日已沟通客户"  is-link   v-bind:value="alreadyCommunicateCus" />
+      <van-cell title="今日新增客户"    is-link  v-bind:value="toDayNewAddCus" v-on:click="openCustomerList(1)"/>
+      <van-cell title="今日待沟通客户"  is-link  v-bind:value="noCommunicateCus"  v-on:click="openCustomerList(2)"/>
+      <van-cell title="今日已沟通客户"  is-link   v-bind:value="alreadyCommunicateCus" v-on:click="openCustomerList(3)"/>
     </van-cell-group>
     <van-cell-group>
-      <van-cell title="客户管理" is-link to="/teacher/customerManagement" />
+      <van-cell title="客户管理" is-link to="/teacher/customerManagement?type=0" />
       <van-cell title="跟进统计" is-link to="/teacher/customerFollowUpStatistics" />
       <van-cell title="客户分析" is-link to="/teacher/customerAnalysis" />
     </van-cell-group>
@@ -38,6 +38,10 @@ export default {
     this.getNewCustomersToday();
   },
   methods: {
+    //打开客户管理列表
+    openCustomerList:function(type){
+           this.$router.push({ path: "/teacher/customerManagement", query: { type: type } });
+    },
     goTo (url) {
       this.$router.push({path: url})
     },

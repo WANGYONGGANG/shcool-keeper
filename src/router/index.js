@@ -16,6 +16,7 @@ import Refund from '@/components/remittance_table/Refund'
 
 import ChargeAnal from '@/components/chart/analysis/chargeAnal'
 import CurriculumConsumptionCharge from '@/components/chart/analysis/curriculumConsumptionCharge'
+import ClassIndex from '@/components/chart/analysis/classIndex'
 
 import Mine from '@/components/user/mine'
 import Blank from '@/components/user/blank'
@@ -69,6 +70,7 @@ import CustomerCommunicationRecord from '@/components/teacher/customerCommunicat
 import IntentionalCustomersDetial from '@/components/teacher/intentionalCustomersDetial'
 import CustomerFollowUpStatistics from '@/components/teacher/customerFollowUpStatistics'
 import CustomerAnalysis from '@/components/teacher/customerAnalysis'
+import OperationDetails from '@/components/teacher/operationDetails'
 
 import EnrollmentStatistics from '@/components/teacher/enrollmentStatistics'
 import EnrollmentStatistics2 from '@/components/teacher/enrollmentStatistics2'
@@ -178,6 +180,11 @@ export default new Router({
       path: '/analysis/curriculumConsumptionCharge',
       name: 'curriculumConsumptionCharge',
       component: CurriculumConsumptionCharge
+    },
+    {
+      path: '/analysis/classIndex',
+      name: 'classIndex',
+      component: ClassIndex
     },
     {
       path: '/teacher/teacherIndex',
@@ -434,6 +441,11 @@ export default new Router({
       path: '/teacher/customerContrast',
       name: 'customerContrast',
       component: CustomerContrast
+    },
+    {
+      path: '/teacher/operationDetails',
+      name: 'operationDetails',
+      component: OperationDetails
     }
   ]
 })
