@@ -8,7 +8,37 @@
   </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
+  props: ['allDatas'],
+  data () {
+    return {
+      data:[]
+    }
+  },
+  mounted () {
+    console.log(this.allDatas)
+    //this.findReleaseHomework();
+  },
+  methods: {
+    findReleaseHomework : function () {
+      let _self = this;
+      let param = new URLSearchParams();
+
+      param.append('begin_date' , '2018-11-01');
+      param.append('end_date' , '2018-11-31');
+      param.append('pag ' , 1);
+      param.append('rows' , 10);
+
+      api.findReleaseHomework(param)
+        .then( res => {
+          if( res.data.code == 1 ){
+            console.log(res.data.data);
+            _self.allDatas = res.data.data.rows;
+          }
+        });
+    }
+  }  
 }
 </script>
 <style lang="less">

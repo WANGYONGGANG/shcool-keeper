@@ -1,18 +1,18 @@
 <template>
   <div class="task">
     <calendar-packing></calendar-packing>
-    <div class="task-table">
+    <div class="task-table"  v-for="data in allDatas">
       <van-cell-group class="tab-list-item01">
-        <van-cell title="基础舞蹈" is-link to="/teacher/taskDetial"/>
+        <van-cell :title="data.title" is-link :to="{path:'/teacher/taskDetial',query:{id:data.id}}" :childData="data"/>
       </van-cell-group>
-      <div @click="goTo(urls.studentCompletion)">
+      <div @click="goTo(urls.studentCompletion,data.id)">
       <van-cell-group class="tab-list-item02">
-        <van-cell title="17暑初二英语同步班0523班" value="2018-07-0411:28"/>
+        <van-cell :title="data.courseName" :value="data.classPleanDate"/>
       </van-cell-group>
       <div class="tabl-list-item03">
-        <span>已读1/1人</span>
-        <span>已交1人</span>
-        <span>已评0人</span>
+        <span>已读{{data.readCount}}人</span>
+        <span>已交{{data.submitCount}}人</span>
+        <span>已评{{data.comentCount}}人</span>
       </div>
       </div>
     </div>
@@ -23,9 +23,11 @@
 import {api} from  '../../../static/js/request-api/request-api.js';
 import CommentedPop from '../popup/commentedPop'
 import CalendarPacking from '../general/calendarPacking'
+import TaskDetial from './taskDetial'
 export default {
   components: {
-    CalendarPacking
+    CalendarPacking,
+    TaskDetial
   },
   data () {
     return {
@@ -37,26 +39,32 @@ export default {
     }
   },
   mounted () {
-    this.getAllReleaseHomeworkStudent();
+    this.findReleaseHomework();
   },
   methods: {
-    getAllReleaseHomeworkStudent : function () {
+    findReleaseHomework : function () {
       let _self = this;
       let param = new URLSearchParams();
-      param.append('work_id' , 2);
-      api.getAllReleaseHomeworkStudent(param)
+
+      param.append('begin_date' , '2018-11-01');
+      param.append('end_date' , '2018-11-31');
+      param.append('pag ' , 1);
+      param.append('rows' , 10);
+
+      api.findReleaseHomework(param)
         .then( res => {
           if( res.data.code == 1 ){
             console.log(res.data.data);
-            _self.allDatas = res.data.data;
+            _self.allDatas = res.data.data.rows;
           }
         });
     },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
-    goTo (url) {
-      this.$router.push({path: url})
+    goTo (url,param) {
+      this.$router.push({path: url, query: {id: param}});
+      //this.$router.push({path: '/transport/dispatch', query: {paicheNo: obj.paicheNo}})
     }
   },
   computed : {

@@ -64,16 +64,19 @@ export default {
     this.getAllReleaseHomeworkStudentNoSubmit();
   },
   methods: {
+    //获取接到作业的全部学员
     goTo (param) {
       this.$router.push({path: param})
     },
     getAllReleaseHomeworkStudent : function () {
       let _self = this;
       let param = new URLSearchParams();
-      param.append('work_id' , 2);
+      //let id = this.$route.params.id
+      param.append('work_id' , this.$route.query.id);
       api.getAllReleaseHomeworkStudent(param)
         .then( res => {
           if( res.data.code == 1 ){
+            console.log(111);
             console.log(res.data.data);
             _self.allDatas = res.data.data;
             _self.allDatasLen += '(' + _self.allDatas.length + ')';
@@ -84,7 +87,7 @@ export default {
     getAllReleaseHomeworkStudentAndSubmit : function () {
       let _self = this;
       let param = new URLSearchParams();
-      param.append('work_id' , 2);
+      param.append('work_id' , this.$route.query.id);
       api.getAllReleaseHomeworkStudentAndSubmit(param)
         .then( res => {
           if( res.data.code == 1 ){
@@ -98,7 +101,7 @@ export default {
     getAllReleaseHomeworkStudentNoSubmit : function () {
       let _self = this;
       let param = new URLSearchParams();
-      param.append('work_id' , 2);
+      param.append('work_id' , this.$route.query.id);
       api.getAllReleaseHomeworkStudentNoSubmit(param)
         .then( res => {
           if( res.data.code == 1 ){
