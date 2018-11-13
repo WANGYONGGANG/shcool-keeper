@@ -13,6 +13,7 @@
         <div class="qa-user-r fn-left"><dl><dt>王紫潼</dt><dd>2019.07，04 12:17</dd></dl></div>
       </div>
       <div class="qa-text">和军事基地</div>
+      <div class="qa-icon">问<br/>答</div>
     </div>
     <div class="score-box">
       <span class="title">我的点评</span>
@@ -98,6 +99,7 @@
   }
   .question-answer{
     width: 692px;
+    position: relative;
     background: #fff;
     padding-bottom: 30px;
     margin: 0 auto 20px;
@@ -105,11 +107,12 @@
       height:100px;
   .qa-user-l{
     margin-left: 20px;
-    margin-top: 20px;
+    margin-top: 23px;
   }
   .qa-user-r{
     margin-top: 20px;
     margin-left: 10px;
+    line-height: 36px;
   }
   .img{
     width: 60px;
@@ -127,6 +130,19 @@
     margin: 0 auto;
     padding: 15px;
     background: #fffbec;
+  }
+  .qa-icon{
+    position: absolute;
+    right: 20px;
+    top: 0px;
+    width: 40px;
+    padding:10px 0;
+    color: #fff;
+    text-align: center;
+    background: #4286ed;
+    border-bottom-left-radius:20px;
+    border-bottom-right-radius: 20px;
+
   }
   }
   .score-box{
