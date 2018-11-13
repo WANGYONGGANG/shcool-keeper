@@ -3,7 +3,7 @@
     <calendar-packing></calendar-packing>
     <div class="task-table"  v-for="data in allDatas">
       <van-cell-group class="tab-list-item01">
-        <van-cell :title="data.title" is-link :to="{path:'/teacher/taskDetial',query:{id:data.id}}" :childData="data"/>
+        <van-cell :title="data.title" is-link :to="{path:'/teacher/taskDetial',query:{id:data.id}}"/>
       </van-cell-group>
       <div @click="goTo(urls.studentCompletion,data.id)">
       <van-cell-group class="tab-list-item02">
@@ -64,7 +64,6 @@ export default {
     },
     goTo (url,param) {
       this.$router.push({path: url, query: {id: param}});
-      //this.$router.push({path: '/transport/dispatch', query: {paicheNo: obj.paicheNo}})
     }
   },
   computed : {

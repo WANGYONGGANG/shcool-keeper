@@ -1,7 +1,7 @@
 <template>
   <div class="commented">
     <calendar-packing></calendar-packing>
-    <div class="timetable-table" @click="goTo"  v-for="data in Alldatas">
+    <div class="timetable-table" @click="goTo(data.id)"  v-for="data in Alldatas">
       <div class="table-l">
         <div class="class-tit">{{data.className}}</div>
         <div class="class-details"><span class="time"><van-icon name="idcard" />{{data.courseName}}</span></div>
@@ -9,7 +9,7 @@
       </div>
       <div class="table-r">
         点评<br/>
-        <span class="completion">0/2</span>
+        <span class="completion">{{data.evaluationCount}}/{{data.recruitStudentsCount}}</span>
       </div>
     </div>
   </div>
@@ -29,17 +29,23 @@ export default {
     }
   },
   mounted () {
-    this.getAllClassAndCommentsInTheClass();
+    this.findMyClassRecord();
   },
   methods: {
-    //findAllClassAndCommentsInTheClass
-    getAllClassAndCommentsInTheClass () {
+    //findMyClassRecord获取当前登录人的排课计划
+    findMyClassRecord () {
       let _self = this;
       let param = new URLSearchParams();
-      param.append('timeable_id',371);
-      api.findAllClassAndCommentsInTheClass(param).then( res => {
+      
+      param.append('begin_date' , '2018-10-01');
+      param.append('end_date' , '2018-10-31');
+      param.append('pag ' , 1);
+      param.append('rows' , 10);
+
+      api.findMyClassRecord(param).then( res => {
         if( res.data.code == 1 ){
-          _self.Alldatas = res.data.data;
+          console.log(res.data);
+          _self.Alldatas = res.data.data.rows;
           console.log(_self.Alldatas);
           }
       } );
@@ -47,8 +53,8 @@ export default {
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
-    goTo () {
-      this.$router.push({path: '/teacher/commentedList'})
+    goTo (param) {
+      this.$router.push({path: '/teacher/commentedList',query:{id:param}})
     }
   },
   computed : {

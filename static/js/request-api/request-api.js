@@ -16,10 +16,6 @@ export   const  api={
     resetPassword(params){
         return fetchPost(baseUrl+'/user/resetPassword',params)
     },
-    // 获取当前登录人的排课计划
-    findMyClassRecord(params){
-        return fetchGet(baseUrl+'/myClassRecord/findMyClassRecord',params)
-    },
 
     
     // 获取登录用户信息
@@ -128,7 +124,11 @@ export   const  api={
         return fetchGet(baseUrl+"/myClassRecord/findMyClassRecord",params)
     },
 
-    
+    //评论模块
+    //获取当前登录人的排课计划/classEvaluation/findMyClassRecord
+    findMyClassRecord(params){
+        return fetchGet(baseUrl+"/classEvaluation/findMyClassRecord",params)
+    },
     //获取上课的学员信息，包含评论信息/classEvaluation/findAllClassAndCommentsInTheClass
     findAllClassAndCommentsInTheClass(params){
         return fetchGet(baseUrl+"/classEvaluation/findAllClassAndCommentsInTheClass",params)
