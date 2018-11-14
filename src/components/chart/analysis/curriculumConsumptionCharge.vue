@@ -12,9 +12,9 @@
   </div>
 </template>
 <script>
-import day from './components/curcon/dayCharge'
-import month from './components/curcon/monthCharge'
-import year from './components/curcon/yearCharge'
+import day from './components/curcon/day'
+import month from './components/curcon/month'
+import year from './components/curcon/year'
 export default {
   components: {
     day,

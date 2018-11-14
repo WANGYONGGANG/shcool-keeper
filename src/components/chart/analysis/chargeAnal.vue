@@ -12,9 +12,9 @@
   </div>
 </template>
 <script>
-  import day from './components/anal/dayCharge'
-  import month from './components/anal/monthCharge'
-  import year from './components/anal/yearCharge'
+  import day from './components/anal/day'
+  import month from './components/anal/month'
+  import year from './components/anal/year'
 export default {
   components: {
     day,

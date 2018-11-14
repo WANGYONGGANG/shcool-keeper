@@ -1,5 +1,5 @@
 <template>
-  <div class="month-charge">
+  <div class="class-month">
     <div class="day-box01 fn-clear">
       <ul class="day-box01-l">
         <li class="box01-l-item01">收费金额222</li>
@@ -141,7 +141,7 @@ export default {
 }
 </script>
 <style lang="less">
-  .month-charge{
+  .class-month{
   .day-box01{
     border: 1px #ccc solid;
     height: 200px;

@@ -12,9 +12,9 @@
   </div>
 </template>
 <script>
-  import day from './components/class/dayCharge'
-  import month from './components/class/monthCharge'
-  import year from './components/class/yearCharge'
+  import day from './components/class/day'
+  import month from './components/class/month'
+  import year from './components/class/year'
 export default {
   components: {
     day,

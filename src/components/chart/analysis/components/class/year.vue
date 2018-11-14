@@ -1,8 +1,8 @@
 <template>
-  <div class="day-charge">
+  <div class="class-year">
     <div class="day-box01 fn-clear">
       <ul class="day-box01-l">
-        <li class="box01-l-item01">收费金额11</li>
+        <li class="box01-l-item01">收费金额333</li>
         <li class="box01-l-item02">0.00</li>
         <li class="box01-l-item03">0人次</li>
       </ul>
@@ -17,13 +17,23 @@
         <div class="chart02-tit">近七天收费金额趋势分析</div>
         <div id="chart02"></div></div>
     </div>
+    <div class="day-box3-contrast">
+      <div class="fn-clear">
+        <dl class="fn-left">
+          <dt>与去年同期相比，收费金额</dt>
+          <dd><van-icon name="arrow-down" scale="2" /><span class="font50">--%</span></dd>
+        </dl>
+        <div class="fn-right"></div>
+      </div>
+    </div>
     <div class="day-box03">
       <div class="day-box03-tit">校区收费排行榜 <span>top10</span></div>
       <div class="no-data">没有数据</div>
     </div>
     <div class="day-box03">
       <div class="day-box03-tit">招生排行榜 <span>top10</span></div>
-      <div class="no-data">没有数据</div>
+      <div class="no-data">
+      </div>
     </div>
   </div>
 </template>
@@ -141,100 +151,121 @@ export default {
 }
 </script>
 <style lang="less">
-.day-charge{
+  .class-year{
   .day-box01{
     border: 1px #ccc solid;
     height: 200px;
-     width:660px;
+    width:660px;
     margin:30px auto 0;
-    .day-box01-l{
-      padding-left: 30px;
-      float: left;
-      width:250px;
-      height: 200px;
-      border-right:1px #ccc solid;
-      .box01-l-item01{
-        line-height: 80px;
-      }
-.box01-l-item02{
-  line-height: 50px;
-  font-size: 50px;
-  color: #4286ed;
-}
-.box01-l-item03{
-  padding-top: 10px;
-  line-height: 50px;
-  font-size: 24px;
-}
-    }
-.day-box01-r{
-  width: 408px;
-  font-size: 28px;
-  padding-left: 30px;
-  float: right;
+  .day-box01-l{
+    padding-left: 30px;
+    float: left;
+    width:250px;
+    height: 200px;
+    border-right:1px #ccc solid;
+  .box01-l-item01{
+    line-height: 80px;
+  }
+  .box01-l-item02{
+    line-height: 50px;
+    font-size: 50px;
+    color: #4286ed;
+  }
+
+  .box01-l-item03{
+    padding-top: 10px;
+    line-height: 50px;
+    font-size: 24px;
+  }
+  }
+  .day-box01-r{
+    width: 408px;
+    font-size: 28px;
+    padding-left: 30px;
+    float: right;
   .box01-r-item01{
     height: 100px;
     line-height: 100px;
     border-bottom:1px #ccc solid ;
-    span{
-      float: right;
-      padding-right: 20px;
+  span{
+    float: right;
+    padding-right: 20px;
+  }
+  }
+  .box01-r-item02{
+    height: 99px;
+    line-height: 99px;
+    padding-right: 20px;
+  span{
+    float: right;
+  }
+  }
+  .red{
+    color:#f8613d;
+  }
+  .green{
+    color:#33d158;
+  }
+  }
+  }
+  .chart01{
+  #chart01{
+    width: 750px;
+    height: 400px;
+  }
+  }
+
+  .chart02{
+    padding: 30px 0;
+    border-top:1px #ccc solid ;
+  .chart02-tit{
+    line-height: 80px;
+    padding-left: 50px;
+  }
+  #chart02{
+    width: 750px;
+    height: 400px;
+  }
+  }
+  .day-box3-contrast{
+    border-top:2px #eef1f6 solid ;
+     padding:30px;
+    .fn-clear{
+      width: 100%;
+      border: 1px #eef1f6 solid;
+      height: 240px;
+      padding: 30px;
+    .fn-left{
+  .font50{
+    font-size: 40px;
+    color: #42ed45;
+  }
+  dt{
+    padding-bottom: 20px;
+  }
+    }
+
     }
   }
-.box01-r-item02{
-  height: 99px;
-  line-height: 99px;
-  padding-right: 20px;
-span{
-  float: right;
-}
-}
-.red{
-  color:#f8613d;
-}
-.green{
-  color:#33d158;
-}
-}
+  .day-box03{
+    border-top:20px #eef1f6 solid ;
+  .day-box03-tit{
+    line-height:120px;
+    font-size: 32px;
+    text-align: center;
+    border-bottom:1px #eef1f6 solid ;
+  span{
+    font-size: 24px;
+    padding-left: 20px;
+    color: #333333;
   }
-.chart01{
-#chart01{
-  width: 750px;
-  height: 400px;
-}
-}
+  }
+  .no-data{
+    text-align: center;
+    height: 200px;
+    line-height: 200px;
+  }
 
-.chart02{
-  padding: 30px 0;
-  border-top:1px #ccc solid ;
-.chart02-tit{
-  line-height: 80px;
-  padding-left: 50px;
-}
-#chart02{
-  width: 750px;
-  height: 400px;
-}
-}
-.day-box03{
-  border-top:20px #eef1f6 solid ;
-.day-box03-tit{
-  line-height:120px;
-  font-size: 32px;
-  text-align: center;
-  border-bottom:1px #eef1f6 solid ;
-span{
-  font-size: 24px;
-  padding-left: 20px;
-  color: #333333;
-}
-}
-.no-data{
-  text-align: center;
-  height: 200px;
-  line-height: 200px;
-}
-
-}
-}
+  }
+  }
 </style>
