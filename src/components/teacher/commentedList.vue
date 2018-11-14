@@ -11,7 +11,12 @@
         <span class="name">{{data.studentName}}</span>
         <span><van-checkbox v-model="checked"></van-checkbox></span>
       </div>
-      <div class="list-box-r" @click="goTo(data.id)">立即点评<van-icon name="arrow" /></div>
+      <div class="list-box-r" @click="goTo(data.id , tecId)">
+      
+        <span v-if="data.isEvaluation">已经点评</span>
+        <span v-else>立即点评</span>
+      
+      <van-icon name="arrow" /></div>
     </div>
     
     <div class="list-bottom">
@@ -29,21 +34,25 @@ export default {
   data () {
     return {
       checked: false,
+      tecId:0,
       allDatas : [],
     }
   },
   mounted () {
+    this.tecId = this.$route.query.id;
     this.findAllClassAndCommentsInTheClass();
   },
   methods: {
-    goTo (param) {
-      this.$router.push({path: '/teacher/immediatelyCommented',query:{id:param}})
+    goTo (param,param2) {
+      this.$router.push({path: '/teacher/immediatelyCommented',query:{id:param,tecId:param2}})
     },
     //findAllClassAndCommentsInTheClass获取上课的学员信息，包含评论信息
     findAllClassAndCommentsInTheClass : function () {
       let _self = this;
       let param = new URLSearchParams();
-      param.append('timeable_id' , 371);
+
+      param.append('timeable_id' , this.$route.query.id);
+
       api.findAllClassAndCommentsInTheClass(param)
         .then( res => {
           if( res.data.code == 1 ){

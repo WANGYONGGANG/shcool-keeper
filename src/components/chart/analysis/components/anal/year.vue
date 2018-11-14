@@ -1,5 +1,5 @@
 <template>
-  <div class="year-charge">
+  <div class="anal-year">
     <div class="day-box01 fn-clear">
       <ul class="day-box01-l">
         <li class="box01-l-item01">收费金额333</li>
@@ -151,7 +151,7 @@ export default {
 }
 </script>
 <style lang="less">
-  .year-charge{
+  .anal-year{
   .day-box01{
     border: 1px #ccc solid;
     height: 200px;

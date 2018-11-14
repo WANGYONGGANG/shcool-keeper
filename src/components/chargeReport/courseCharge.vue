@@ -1,13 +1,17 @@
 <template>
-<div class="charge">
+<div class="course-charge">
+  <tolltrend-chart></tolltrend-chart>
   <div class="charge-top">
     <div class="charge-top-tab">
-      <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
+      <calendar-packing></calendar-packing>
     </div>
     <div class="charge-top-right">
-      选择列<van-icon name="wap-nav" />
+      筛选<van-icon name="wap-nav" />
     </div>
   </div>
+  <van-cell-group>
+    <van-cell title="收费类型" value="课程收费汇总" arrow-direction="down" is-link />
+  </van-cell-group>
   <div class="charge-table"></div>
     <template>
       <div>
@@ -23,14 +27,15 @@
         ></v-table>
       </div>
     </template>
-  <commented-pop></commented-pop>
 </div>
 </template>
 <script>
-import CommentedPop from '../popup/commentedPop'
+import CalendarPacking from '../general/calendarPacking'
+import tolltrendChart from '../general/tolltrendChart'
 export default {
   components: {
-    CommentedPop
+    CalendarPacking,
+    tolltrendChart
   },
   data () {
     return {
@@ -54,52 +59,49 @@ export default {
     }
   },
   methods: {
-    showCommentedDia () {
-      this.$store.state.commentPopup.isShow = true
+
+  },
+  computed : {
+    item () {
+      return this.$store.state.commentPopup.item
     }
   },
-  created () {
+  watch:{
+    item :{
+      handler(val){
+        //日期快速切换值
+        this.$toast(val)
+      }
+    }
   }
 }
 </script>
 <style lang="less">
-.charge{
-  .charge-top{
-    padding-top: 10px;
-    height: 76px;
-    background: #fff;
-    .charge-top-tab{
-      float: left;
-      width: 500px;
-      margin-bottom: 10px;
-      padding-left:20px;
-    .tab-radius{
-      height: 53px;
-      display: inline-block;
-      padding: 0px 30px;
-      font-size: 24px;
-      line-height: 55px;
-      border-radius: 50px;
-      border: 1px #eff1f6 solid;
-      margin: 8px 10px 0;
-    }
-    .arrow-down .van-icon{
-      -webkit-transform: rotate(90deg);
-      transform: rotate(90deg);
-    }
-    }
-   .charge-top-right{
-     float: right;
-     line-height: 40px;
-     padding-top: 15px;
-     padding-right: 15px;
-     .van-icon{
-       margin-left: 10px;
-       position: relative;
-       top: 5px;
-     }
-   }
-  }
+.course-charge{
+.charge-top{
+  padding-top: 10px;
+  height: 82px;
+  background: #fff;
+.charge-top-tab{
+  float: left;
+  width: 542px;
+  margin-bottom: 10px;
+.commented-tab{
+  padding-top: 0px;
+}
+}
+.charge-top-right{
+  float: right;
+  line-height: 40px;
+  padding-top: 15px;
+  padding-right: 15px;
+.van-icon{
+  margin-left: 10px;
+  position: relative;
+  top: 5px;
+}
+}
+}
   .charge-table{
     overflow: hidden;
     background:#fff;
