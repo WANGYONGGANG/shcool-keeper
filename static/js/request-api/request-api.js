@@ -187,6 +187,10 @@ export   const  api={
      getNewCustomersToday(params){
         return fetchGet(baseUrl+'/intentionClientAPI/getNewCustomersToday',params);
     },
+       //获取意向客户
+       findIntentionClientForStartPage(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/findIntentionClientForStartPage',params);
+    },
      //获取沟通明细
      getCommunicationDetail(params){
         return fetchGet(baseUrl+'/studentCommunication/findStudentCommunicationDetail',params);
