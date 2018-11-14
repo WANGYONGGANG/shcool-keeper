@@ -1,21 +1,14 @@
 <template>
-  <div class="class-year">
-    <div class="day-box01 fn-clear">
-      <ul class="day-box01-l">
-        <li class="box01-l-item01">收费金额333</li>
-        <li class="box01-l-item02">0.00</li>
-        <li class="box01-l-item03">0人次</li>
+  <div class="year-day">
+    <div class="percentage fn-clear bluebg">
+      <ul class="percentage-l fn-left">
+        <li class="l-item01">满班率</li>
+        <li class="l-item02">1.67%</li>
       </ul>
-      <div class="day-box01-r">
-        <div class="box01-r-item01">退费<span>0人次</span><span class="red">0.00</span></div>
-        <div class="box01-r-item02">净额<span class="green">0.00</span></div>
-      </div>
-    </div>
-    <div class="day-box02">
-      <div class="chart01"><div id="chart01"></div></div>
-      <div class="chart02">
-        <div class="chart02-tit">近七天收费金额趋势分析</div>
-        <div id="chart02"></div></div>
+      <ul class="percentage-r fn-right">
+        <li></li>
+        <li>班级数：3</li>
+      </ul>
     </div>
     <div class="day-box3-contrast">
       <div class="fn-clear">
@@ -26,193 +19,366 @@
         <div class="fn-right"></div>
       </div>
     </div>
-    <div class="day-box03">
-      <div class="day-box03-tit">校区收费排行榜 <span>top10</span></div>
-      <div class="no-data">没有数据</div>
+    <div class="day-box02">
+      <div class="chart02">
+        <div class="chart02-tit">近七天满班率趋势分析</div>
+        <div id="chart01"></div></div>
     </div>
     <div class="day-box03">
-      <div class="day-box03-tit">招生排行榜 <span>top10</span></div>
-      <div class="no-data">
+      <van-cell-group>
+        <van-cell title="满班率排行" value="切换至最后五名" />
+      </van-cell-group>
+      <div v-if="true">
+        <dl class="box03-progress">
+          <dt>17暑初二英语同步班0523班（潮人部落）</dt>
+          <dd>
+            <span style="width: 70%">2.00%</span>
+          </dd>
+        </dl>
+        <dl class="box03-progress">
+          <dt>17暑初二英语同步班0523班（潮人部落）</dt>
+          <dd>
+            <span style="width: 70%">2.00%</span>
+          </dd>
+        </dl>
+        <dl class="box03-progress">
+          <dt>17暑初二英语同步班0523班（潮人部落）</dt>
+          <dd>
+            <span style="width: 35%">1.00%</span>
+          </dd>
+        </dl>
       </div>
+      <div v-else class="no-data">没有数据</div>
+    </div>
+
+    <div class="percentage fn-clear orangebg">
+      <ul class="percentage-l fn-left">
+        <li class="l-item01">出勤率</li>
+        <li class="l-item02">1.67%</li>
+      </ul>
+      <ul class="percentage-r fn-right">
+        <li></li>
+        <li>班级数：3</li>
+      </ul>
+    </div>
+    <div class="day-box3-contrast">
+      <div class="fn-clear">
+        <dl class="fn-left">
+          <dt>与去年同期相比，收费金额</dt>
+          <dd><van-icon name="arrow-down" scale="2" /><span class="font50">--%</span></dd>
+        </dl>
+        <div class="fn-right"></div>
+      </div>
+    </div>
+    <div class="day-box02">
+      <div class="chart02">
+        <div class="chart02-tit">近七天出勤率趋势分析</div>
+        <div id="chart02"></div></div>
+    </div>
+    <div class="day-box03">
+      <van-cell-group>
+        <van-cell title="出勤率排行" value="切换至最后五名" />
+      </van-cell-group>
+      <div v-if="true">
+        <dl class="box03-progress">
+          <dt>17暑初二英语同步班0523班（潮人部落）</dt>
+          <dd>
+            <span style="width: 70%">2.00%</span>
+          </dd>
+        </dl>
+        <dl class="box03-progress">
+          <dt>17暑初二英语同步班0523班（潮人部落）</dt>
+          <dd>
+            <span style="width: 70%">2.00%</span>
+          </dd>
+        </dl>
+        <dl class="box03-progress">
+          <dt>17暑初二英语同步班0523班（潮人部落）</dt>
+          <dd>
+            <span style="width: 35%">1.00%</span>
+          </dd>
+        </dl>
+      </div>
+      <div v-else class="no-data">没有数据</div>
+    </div>
+    <div class="percentage fn-clear greenbg">
+      <ul class="percentage-l fn-left">
+        <li class="l-item01">续费率</li>
+        <li class="l-item02">1.67%</li>
+        <li class="l-item03">应续费人数：0</li>
+      </ul>
+      <ul class="percentage-r fn-right">
+        <li></li>
+        <li>班级数：3</li>
+        <li class="item03">已续费人数：0</li>
+      </ul>
+    </div>
+    <div class="day-box3-contrast">
+      <div class="fn-clear">
+        <dl class="fn-left">
+          <dt>与去年同期相比，收费金额</dt>
+          <dd><van-icon name="arrow-down" scale="2" /><span class="font50">--%</span></dd>
+        </dl>
+        <div class="fn-right"></div>
+      </div>
+    </div>
+    <div class="day-box02">
+      <div class="chart02">
+        <div class="chart02-tit">近七天续费率趋势分析</div>
+        <div id="chart03"></div></div>
+    </div>
+    <div class="day-box03">
+      <van-cell-group>
+        <van-cell title="续费率排行" value="切换至最后五名" />
+      </van-cell-group>
+      <div v-if="true">
+        <dl class="box03-progress">
+          <dt>17暑初二英语同步班0523班（潮人部落）</dt>
+          <dd>
+            <span style="width: 70%">2.00%</span>
+          </dd>
+        </dl>
+        <dl class="box03-progress">
+          <dt>17暑初二英语同步班0523班（潮人部落）</dt>
+          <dd>
+            <span style="width: 70%">2.00%</span>
+          </dd>
+        </dl>
+        <dl class="box03-progress">
+          <dt>17暑初二英语同步班0523班（潮人部落）</dt>
+          <dd>
+            <span style="width: 35%">1.00%</span>
+          </dd>
+        </dl>
+      </div>
+      <div v-else class="no-data">没有数据</div>
     </div>
   </div>
 </template>
 <script>
-export default {
-  data () {
-    return {
-    }
-  },
-  mounted () {
-    this.drawLine()
-  },
-  methods: {
-    drawLine () {
-      // 基于准备好的dom，初始化echarts实例
-      let chart01 = this.$echarts.init(document.getElementById('chart01'))
-      let chart02 = this.$echarts.init(document.getElementById('chart02'))
-      chart01.setOption({
-        series: [
-          {
-            name: '访问来源',
-            type: 'pie',
-            radius: ['50%', '70%'],
-            avoidLabelOverlap: false,
-            label: {
-              normal: {
-                show: false,
-                position: 'center'
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: '30',
-                  fontWeight: 'bold'
-                }
+  export default {
+    data () {
+      return {
+      }
+    },
+    mounted () {
+      this.drawLine()
+    },
+    methods: {
+      drawLine () {
+        // 基于准备好的dom，初始化echarts实例
+        let chart01 = this.$echarts.init(document.getElementById('chart01'))
+        let chart02 = this.$echarts.init(document.getElementById('chart02'))
+        let chart03 = this.$echarts.init(document.getElementById('chart03'))
+        // 绘制图表
+        chart01.setOption({
+          title: {
+            text: '收费金额（元）',
+            textStyle: {
+              color: '#fff',
+              fontSize: 26
+            },
+            padding: [10, 0, 0, 30]
+          },
+          xAxis: {
+            boundaryGap: false,
+            data: ['09', '10', '11', '12', '13', '14', '15'],
+            axisLabel: {
+              fontSize: 24 // 刻度标签文字的大小
+            },
+            axisLine: {
+              lineStyle: { // x轴颜色和字体大小
+                color: '#4286ed',
+                opacity: 1
               }
             },
-            labelLine: {
-              normal: {
-                show: false
-              }
+            axisTick: {
+              show: false
             },
-            data: [
-              {value: 335, name: '直接访问'},
-              {value: 310, name: '邮件营销'},
-              {value: 234, name: '联盟广告'},
-              {value: 135, name: '视频广告'},
-              {value: 1548, name: '搜索引擎'}
-            ]
-          }
-        ]
-      })
-      // 绘制图表
-      chart02.setOption({
-        title: {
-          text: '收费金额（元）',
-          textStyle: {
-            color: '#fff',
-            fontSize: 26
-          },
-          padding: [10, 0, 0, 30]
-        },
-        xAxis: {
-          boundaryGap: false,
-          data: ['09', '10', '11', '12', '13', '14', '15'],
-          axisLabel: {
-            fontSize: 24 // 刻度标签文字的大小
-          },
-          axisLine: {
-            lineStyle: { // x轴颜色和字体大小
-              color: '#4286ed',
-              opacity: 1
+            axisPointer: {
+              fontSize: 24,
+              label: {
+                show: true
+              }
             }
           },
-          axisTick: {
+          yAxis: {
             show: false
           },
-          axisPointer: {
-            fontSize: 24,
+          series: [{
+            name: '收费金额',
+            type: 'line',
+            smooth: true,
+            data: [100, 1000, 0, 10, 0, 0, 0],
             label: {
-              show: true
+              color: '#4286ed',
+              fontSize: 24,
+              normal: {
+                show: true,
+                position: 'top'
+              }
+            },
+            symbol: 'circle',
+            symbolSize: 10,
+            itemStyle: { // 折线拐点标志的样式。
+              borderWidth: 3,
+              borderColor: '#6eadf5',
+              color: '#6eadf5'
+            },
+            lineStyle: {
+              color: '#4286ed'
             }
-          }
-        },
-        yAxis: {
-          show: false
-        },
-        series: [{
-          name: '收费金额',
-          type: 'line',
-          smooth: true,
-          data: [100, 1000, 0, 10, 0, 0, 0],
-          label: {
-            color: '#4286ed',
-            fontSize: 24,
-            normal: {
-              show: true,
-              position: 'top'
+          }]
+        })
+        chart02.setOption({
+          title: {
+            text: '收费金额（元）',
+            textStyle: {
+              color: '#fff',
+              fontSize: 26
+            },
+            padding: [10, 0, 0, 30]
+          },
+          xAxis: {
+            boundaryGap: false,
+            data: ['09', '10', '11', '12', '13', '14', '15'],
+            axisLabel: {
+              fontSize: 24 // 刻度标签文字的大小
+            },
+            axisLine: {
+              lineStyle: { // x轴颜色和字体大小
+                color: '#4286ed',
+                opacity: 1
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisPointer: {
+              fontSize: 24,
+              label: {
+                show: true
+              }
             }
           },
-          symbol: 'circle',
-          symbolSize: 10,
-          itemStyle: { // 折线拐点标志的样式。
-            borderWidth: 3,
-            borderColor: '#6eadf5',
-            color: '#6eadf5'
+          yAxis: {
+            show: false
           },
-          lineStyle: {
-            color: '#4286ed'
-          }
-        }]
-      })
+          series: [{
+            name: '收费金额',
+            type: 'line',
+            smooth: true,
+            data: [100, 1000, 0, 10, 0, 0, 0],
+            label: {
+              color: '#4286ed',
+              fontSize: 24,
+              normal: {
+                show: true,
+                position: 'top'
+              }
+            },
+            symbol: 'circle',
+            symbolSize: 10,
+            itemStyle: { // 折线拐点标志的样式。
+              borderWidth: 3,
+              borderColor: '#6eadf5',
+              color: '#6eadf5'
+            },
+            lineStyle: {
+              color: '#4286ed'
+            }
+          }]
+        })
+        chart03.setOption({
+          title: {
+            text: '收费金额（元）',
+            textStyle: {
+              color: '#fff',
+              fontSize: 26
+            },
+            padding: [10, 0, 0, 30]
+          },
+          xAxis: {
+            boundaryGap: false,
+            data: ['09', '10', '11', '12', '13', '14', '15'],
+            axisLabel: {
+              fontSize: 24 // 刻度标签文字的大小
+            },
+            axisLine: {
+              lineStyle: { // x轴颜色和字体大小
+                color: '#4286ed',
+                opacity: 1
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisPointer: {
+              fontSize: 24,
+              label: {
+                show: true
+              }
+            }
+          },
+          yAxis: {
+            show: false
+          },
+          series: [{
+            name: '收费金额',
+            type: 'line',
+            smooth: true,
+            data: [100, 1000, 0, 10, 0, 0, 0],
+            label: {
+              color: '#4286ed',
+              fontSize: 24,
+              normal: {
+                show: true,
+                position: 'top'
+              }
+            },
+            symbol: 'circle',
+            symbolSize: 10,
+            itemStyle: { // 折线拐点标志的样式。
+              borderWidth: 3,
+              borderColor: '#6eadf5',
+              color: '#6eadf5'
+            },
+            lineStyle: {
+              color: '#4286ed'
+            }
+          }]
+        })
+      }
     }
   }
-}
 </script>
 <style lang="less">
-  .class-year{
-  .day-box01{
-    border: 1px #ccc solid;
-    height: 200px;
-    width:660px;
-    margin:30px auto 0;
-  .day-box01-l{
-    padding-left: 30px;
-    float: left;
-    width:250px;
-    height: 200px;
-    border-right:1px #ccc solid;
-  .box01-l-item01{
-    line-height: 80px;
-  }
-  .box01-l-item02{
-    line-height: 50px;
-    font-size: 50px;
-    color: #4286ed;
-  }
-
-  .box01-l-item03{
-    padding-top: 10px;
-    line-height: 50px;
-    font-size: 24px;
+  .year-day{
+  .percentage{
+    border-radius: 10px;
+    width: 92%;
+    margin: 60px auto 20px;
+    color: #fff;
+    padding: 20px;
+  .percentage-l{
+  .l-item02{
+    font-size: 56px;
+    padding-top: 20px;
   }
   }
-  .day-box01-r{
-    width: 408px;
-    font-size: 28px;
-    padding-left: 30px;
-    float: right;
-  .box01-r-item01{
-    height: 100px;
-    line-height: 100px;
-    border-bottom:1px #ccc solid ;
-  span{
-    float: right;
-    padding-right: 20px;
+  .percentage-r .item03{
+    line-height: 45px;
+    padding-top: 102px;
   }
   }
-  .box01-r-item02{
-    height: 99px;
-    line-height: 99px;
-    padding-right: 20px;
-  span{
-    float: right;
+  .bluebg{
+    background: #64a1ff;
   }
+  .orangebg{
+    background: #ffb764;
   }
-  .red{
-    color:#f8613d;
-  }
-  .green{
-    color:#33d158;
-  }
-  }
-  }
-  .chart01{
-  #chart01{
-    width: 750px;
-    height: 400px;
-  }
+  .greenbg{
+    background: #acd467;
   }
 
   .chart02{
@@ -222,42 +388,37 @@ export default {
     line-height: 80px;
     padding-left: 50px;
   }
+  #chart01{
+    width: 750px;
+    height: 400px;
+  }
   #chart02{
     width: 750px;
     height: 400px;
   }
+  #chart03{
+    width: 750px;
+    height: 400px;
   }
-  .day-box3-contrast{
-    border-top:2px #eef1f6 solid ;
-     padding:30px;
-    .fn-clear{
-      width: 100%;
-      border: 1px #eef1f6 solid;
-      height: 240px;
-      padding: 30px;
-    .fn-left{
-  .font50{
-    font-size: 40px;
-    color: #42ed45;
-  }
-  dt{
-    padding-bottom: 20px;
-  }
-    }
-
-    }
   }
   .day-box03{
-    border-top:20px #eef1f6 solid ;
-  .day-box03-tit{
-    line-height:120px;
-    font-size: 32px;
-    text-align: center;
-    border-bottom:1px #eef1f6 solid ;
+    border-top:20px #eef1f6 solid;
+    border-bottom:20px #eef1f6 solid;
+  .box03-progress{
+    width: 92%;
+    padding: 20px 0;
+    margin: 0 auto;
   span{
-    font-size: 24px;
-    padding-left: 20px;
-    color: #333333;
+    display: inline-block;
+    border-radius: 5px;
+    background: #4286ed;
+    height: 50px;
+    width: 70%;
+    margin:10px 0;
+    text-align: right;
+    line-height: 50px;
+    padding-right: 20px;
+    color: #fff;
   }
   }
   .no-data{
@@ -265,7 +426,26 @@ export default {
     height: 200px;
     line-height: 200px;
   }
+  }
+  .day-box3-contrast{
+    border-top:2px #eef1f6 solid ;
+    padding:30px;
+  .fn-clear{
+    width: 100%;
+    border: 1px #eef1f6 solid;
+    height: 240px;
+    padding: 30px;
+  .fn-left{
+  .font50{
+    font-size: 40px;
+    color: #42ed45;
+  }
+  dt{
+    padding-bottom: 20px;
+  }
+  }
 
+  }
   }
   }
 </style>

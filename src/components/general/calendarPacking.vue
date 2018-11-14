@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div class="commented-tab">
+  <div class="commented-tab" ref="calendar">
     <span class="tab-radius" @click="showCalendar(1)" >{{calendar.item1.date}}</span>-<span class="tab-radius" @click="showCalendar(2)">{{calendar.item2.date}}</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
   </div>
   <commented-pop></commented-pop>
@@ -23,11 +23,13 @@ export default {
       calendar:{
         item1:{
           isVisible:false,
-          date:'2018-10-30'
+          //date:'2018-10-30'
+          date:'2018-11-01'    //作业列表页数据所需时间范围
         },
         item2:{
           isVisible:false,
-          date:'2018-11-05'
+          //date:'2018-11-05'
+          date:'2018-11-31'    //作业列表页数据所需时间范围
         }
       }
     }
