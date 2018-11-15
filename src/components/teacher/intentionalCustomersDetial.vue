@@ -2,22 +2,22 @@
   <div class="intentional-customers-detial">
     <div class="detial-tit">基本信息</div>
     <van-cell-group>
-      <van-cell title="姓名" value="Cindy王" />
-      <van-cell title="录入时间" value="2018-06-30 12:24:27" />
-      <van-cell title="性别" value="男" />
-      <van-cell title="公立学校" value="育才" />
-      <van-cell title="手机号码" value="13126782345" />
+      <van-cell title="姓名" v-bind:value="customerObj.name" />
+      <van-cell title="录入时间" v-bind:value="customerObj.createTime" />
+      <van-cell title="性别" v-bind:value="customerObj.sex"/>
+      <van-cell title="公立学校" v-bind:value="customerObj.studentsPublicSchoolName" />
+      <van-cell title="手机号码" v-bind:value="customerObj.mobile" />
     </van-cell-group>
     <div class="detial-tit">招生信息</div>
     <van-cell-group>
-      <van-cell title="招生来源" value="退学转入，预约试听" is-link />
-      <van-cell title="所属校区" value="潮人部落" />
-      <van-cell title="主责任人" value="测试员" />
+      <van-cell title="招生来源" v-bind:value="customerObj.sourceName" is-link />
+      <van-cell title="所属校区" v-bind="customerObj.studentsPublicSchoolName" />
+      <van-cell title="主责任人" v-bind:value="customerObj.adminName" />
       <van-cell title="意向级别">
       <van-rate :count="star" v-model="star" readonly="true" />
       </van-cell>
-      <van-cell title="客户状态" value="转化成功" />
-      <van-cell title="预约试听时间" value="星期四，星期六" />
+      <van-cell title="客户状态" v-bind:value="customerObj.customerStatusName" />
+      <van-cell title="预约试听时间" v-bind:value="customerObj.reservationsDate" />
       <van-cell title="意向课程" value="2018冬季班初一拓..." is-link />
     </van-cell-group>
     <div class="bottom-btn fn-clear">
@@ -27,6 +27,7 @@
   </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
 export default {
   data () {
     return {
@@ -34,13 +35,42 @@ export default {
       urls: {
         customerCommunicationRecord: '/teacher/customerCommunicationRecord',
         addCustomers: '/teacher/addCustomers'
-      }
+      },
+      customerObj:null
     }
+  },
+  mounted:function(){
+      this.getIntentionClientDetail();
   },
   methods: {
     goTo (url) {
       this.$router.push({path: url})
-    }
+    },
+    //获取意向客户明细
+    getIntentionClientDetail: function() {
+      let id= this.$route.query.id;
+      let params ={};
+      params.id =id;      
+      let _self = this;
+      api.getIntentionClientDetail(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.customerObj=res.data.data;
+                }
+          } else {
+            let params = { msg: "获取意向客户明细" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取意向客户明细" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
   }
 }
 </script>

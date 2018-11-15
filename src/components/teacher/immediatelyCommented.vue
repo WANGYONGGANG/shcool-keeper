@@ -5,7 +5,7 @@
       <div class="immediately-title"><van-icon name="pending-payment" />上课详情</div>
       <van-cell-group>
         <van-cell title="学生" :value="stuMessage.studentName" />
-        <van-cell title="班级" :value="stuMessage.courseName" />
+        <van-cell title="班级" :value="stuMessage.className" />
         <van-cell title="老师" :value="stuMessage.classTeacherName" />
       </van-cell-group>
     </div>
@@ -56,33 +56,15 @@ export default {
       value2: 1,
       value3: 2,
       message: '',
-      stuMessage : null,
     }
   },
-  mounted () {
-    this.findAllClassAndCommentsInTheClass();
-    console.log(this.value1);
-  },
-  methods: {
-    //findAllClassAndCommentsInTheClass获取上课的学员信息，包含评论信息
-    findAllClassAndCommentsInTheClass : function () {
-      let _self = this;
-      let param = new URLSearchParams();
-      param.append('timeable_id' , this.$route.query.tecId);
-      api.findAllClassAndCommentsInTheClass(param)
-        .then( res => {
-          if( res.data.code == 1 ){
-            let data = res.data.data;
-            data.forEach(element => {
-              if(element.id === _self.$route.query.id ){
-                _self.stuMessage = element;
-                console.log(element);
-              }
-            });
-          }
-        });
+  computed : {
+    stuMessage () {
+      console.log(this.$store.state.teacherComment.immediatelyCommented);
+        return this.$store.state.teacherComment.immediatelyCommented;
     },
   }
+  
 }
 </script>
 <style lang="less">

@@ -71,11 +71,14 @@ import IntentionalCustomersDetial from '@/components/teacher/intentionalCustomer
 import CustomerFollowUpStatistics from '@/components/teacher/customerFollowUpStatistics'
 import CustomerAnalysis from '@/components/teacher/customerAnalysis'
 import OperationDetails from '@/components/teacher/operationDetails'
+import PublishClass from '@/components/general/publishClass'
+import PublishPeople from '@/components/general/publishPeople'
 
 import EnrollmentStatistics from '@/components/teacher/enrollmentStatistics'
 import EnrollmentStatistics2 from '@/components/teacher/enrollmentStatistics2'
 import EnrollmentStatistics3 from '@/components/teacher/enrollmentStatistics3'
 import CustomerContrast from '@/components/teacher/customerContrast'
+
 Vue.use(Router)
 
 export default new Router({
@@ -446,6 +449,16 @@ export default new Router({
       path: '/teacher/operationDetails',
       name: 'operationDetails',
       component: OperationDetails
+    },
+    {
+      path: '/general/publishClass',
+      name: 'publishClass',
+      component: PublishClass
+    },
+    {
+      path: '/general/publishPeople',
+      name: 'publishPeople',
+      component: PublishPeople
     }
   ]
 })
