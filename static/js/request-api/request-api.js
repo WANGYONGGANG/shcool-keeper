@@ -203,6 +203,12 @@ export   const  api={
     findAllClassRoster(params){
         return fetchGet(baseUrl+'/classRoster/findAllClassRoster',params);
     },
+     //获取意向客户明细
+     getIntentionClientDetail(params){
+        return fetchGet(baseUrl+'intentionClientAPI/getIntentionClientDetail',params);
+    },
+  
+
 
 
    

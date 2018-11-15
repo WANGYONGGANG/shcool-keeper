@@ -18,7 +18,7 @@
         <div class="card-list-r">沟通记录<van-icon name="arrow" /></div>
       </div>
     </div>
-    <div class="management-list" @click="goTo(urls.intentionalCustomersDetial)">
+    <div class="management-list" @click="goTo(urls.intentionalCustomersDetial,{'id':customer.id} )">
       <ul class="management-list-l fn-left">
         <li>主责任人：{{customer.salePersonId}}</li>
         <li>手机号码：{{customer.mobile}}</li>
@@ -275,8 +275,8 @@ export default {
           Toast('出错了');
       }
     },
-    goTo (param) {
-      this.$router.push({path: param})
+    goTo (param,queryParam) {
+      this.$router.push({path: param,query:queryParam});
     },
     sortPopShow () {
       this.sortData.isShow=true
