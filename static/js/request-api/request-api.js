@@ -192,6 +192,10 @@ export   const  api={
     findAllClassRoster(params){
         return fetchGet(baseUrl+'/classRoster/findAllClassRoster',params);
     },
+     //获取班级花名册
+     getMyReport(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/getMyReport',params);
+    },
 
 
    
