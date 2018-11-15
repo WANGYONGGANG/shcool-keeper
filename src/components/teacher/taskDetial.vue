@@ -1,14 +1,20 @@
 <template>
   <div class="taskDetial">
     <dl>
-      <dt class="title">基础舞蹈</dt>
-      <dd class="subtltle"><span><van-icon name="contact" />测试员</span><span><van-icon name="clock" />2018-07-04 11:28</span></dd>
-      <dd class="text">就这样吧，我不不写了</dd>
+      <dt class="title">{{data.title}}</dt>
+      <dd class="subtltle"><span><van-icon name="contact" />{{data.classTeacherName}}</span><span><van-icon name="clock" />{{data.beginTime}}</span></dd>
+      <dd class="text"><van-icon name="arrow" />{{data.content}}</dd>
     </dl>
   </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
+  computed : {
+    data () {
+        return this.$store.state.teacherTask.taskDetial;
+    },
+  }
 }
 </script>
 <style lang="less">

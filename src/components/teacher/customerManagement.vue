@@ -9,19 +9,20 @@
       <div class="operation" @click="filterPopShow">筛选</div>
       <div class="operation" @click="sortPopShow">排序</div>
     </div>
-    <div @click="goTo(urls.customerCommunicationRecord)">
+    <div  v-for="customer in customerList">
+    <div @click="goTo(urls.customerCommunicationRecord)" >
       <div class="card-list">
         <div class="card-list-l">
-          Cindy王
+        {{customer.name}}
         </div>
         <div class="card-list-r">沟通记录<van-icon name="arrow" /></div>
       </div>
     </div>
-    <div class="management-list" @click="goTo(urls.intentionalCustomersDetial)">
+    <div class="management-list" @click="goTo(urls.intentionalCustomersDetial,{'id':customer.id} )">
       <ul class="management-list-l fn-left">
-        <li>主责任人：测试员</li>
-        <li>手机号码：13123678649</li>
-        <li>客户状态：转化成功</li>
+        <li>主责任人：{{customer.salePersonId}}</li>
+        <li>手机号码：{{customer.mobile}}</li>
+        <li>客户状态：{{customer.willStateId}}</li>
         <li>意项级别：<van-rate :count="star" v-model="star"  readonly="true" /></li>
       </ul>
       <div class="management-list-r fn-right">
@@ -29,6 +30,7 @@
           <van-icon name="phone" />
         </span>
       </div>
+    </div>
     </div>
     <div class="bottom-btn">
       <span class="border-right" @click="goTo(urls.addCustomers)">添加客户</span>
@@ -72,6 +74,7 @@
 </template>
 <script>
 import SelectPop from '../popup/bottomSelectPop'
+import { api } from "../../../static/js/request-api/request-api.js";
 import Calendar from '../general/calendar'
 export default {
     components: {
@@ -142,9 +145,37 @@ export default {
       }else if(type==3){
          this.getTodayAlreadyCommunicatingCustomers();
       }else if(type==0){
-
+          this.findIntentionClientForStartPage();
       }
 
+    },
+  //获取意向客户
+    findIntentionClientForStartPage: function() {
+      let params ={};
+      // params.order=desc;
+      params.page =1;
+      params.query_conditions=null;
+      params.rows=10;
+      
+      let _self = this;
+      api.findIntentionClientForStartPage(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.customerList=res.data.data.rows;
+                }
+          } else {
+            let params = { msg: "获取意向客户" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取今日意向客户" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
     },
        //获取今日新增客户
     getNewCustomersToday: function() {
@@ -244,8 +275,8 @@ export default {
           Toast('出错了');
       }
     },
-    goTo (param) {
-      this.$router.push({path: param})
+    goTo (param,queryParam) {
+      this.$router.push({path: param,query:queryParam});
     },
     sortPopShow () {
       this.sortData.isShow=true

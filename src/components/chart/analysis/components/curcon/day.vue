@@ -1,15 +1,14 @@
 <template>
-  <div class="day-charge">
+  <div class="curcon-day">
     <div class="day-box01 fn-clear">
-      <div class="percentage">
-        <ul class="percentage-l">
-          <li>满班率</li>
-          <li>1.67%</li>
-        </ul>
-        <ul class="percentage-r">
-          <li></li>
-          <li>班级数：3</li>
-        </ul>
+      <ul class="day-box01-l">
+        <li class="box01-l-item01">课消金额11</li>
+        <li class="box01-l-item02">0.00</li>
+        <li class="box01-l-item03">0人次</li>
+      </ul>
+      <div class="day-box01-r">
+        <div class="box01-r-item01">退费<span>0人次</span><span class="red">0.00</span></div>
+        <div class="box01-r-item02">净额<span class="green">0.00</span></div>
       </div>
     </div>
     <div class="day-box02">
@@ -19,11 +18,15 @@
         <div id="chart02"></div></div>
     </div>
     <div class="day-box03">
-      <div class="day-box03-tit">校区收费排行榜 <span>top10</span></div>
+      <div class="day-box03-tit">校区课消排行榜 <span>top10</span></div>
       <div class="no-data">没有数据</div>
     </div>
     <div class="day-box03">
-      <div class="day-box03-tit">招生排行榜 <span>top10</span></div>
+      <div class="day-box03-tit">老师课消金额排行榜 <span>top10</span></div>
+      <div class="no-data">没有数据</div>
+    </div>
+    <div class="day-box03">
+      <div class="day-box03-tit">老师评分得分排行榜 <span>top10</span></div>
       <div class="no-data">没有数据</div>
     </div>
   </div>
@@ -142,7 +145,7 @@ export default {
 }
 </script>
 <style lang="less">
-.day-charge{
+.curcon-day{
   .day-box01{
     border: 1px #ccc solid;
     height: 200px;

@@ -1,10 +1,11 @@
 <template>
+<!-- 立即点评页面 -->
   <div class="immediately">
     <div class="class-detial">
       <div class="immediately-title"><van-icon name="pending-payment" />上课详情</div>
       <van-cell-group>
         <van-cell title="学生" :value="stuMessage.studentName" />
-        <van-cell title="班级" :value="stuMessage.courseName" />
+        <van-cell title="班级" :value="stuMessage.className" />
         <van-cell title="老师" :value="stuMessage.classTeacherName" />
       </van-cell-group>
     </div>
@@ -13,17 +14,17 @@
       <dl class="detial-list">
         <dt>随堂作业表现能力</dt>
         <dd class="word"><span>人均：0 </span><span>班评：0</span> <span>星：0/1</span></dd>
-        <dd class="start"><van-rate v-model="value" size="50" color="#f8d304" /></dd>
+        <dd class="start"><van-rate v-model="value1" size="50" color="#f8d304" /></dd>
       </dl>
       <dl class="detial-list">
         <dt>口语表达</dt>
         <dd class="word"><span>人均：0 </span><span>班评：0</span> <span>星：0/1</span></dd>
-        <dd class="start"><van-rate v-model="value" size="50" color="#f8d304" /></dd>
+        <dd class="start"><van-rate v-model="value2" size="50" color="#f8d304" /></dd>
       </dl>
       <dl class="detial-list">
         <dt>课堂表现</dt>
         <dd class="word"><span>人均：0 </span><span>班评：0</span> <span>星：0/1</span></dd>
-        <dd class="start"><van-rate v-model="value" size="50" color="#f8d304" /></dd>
+        <dd class="start"><van-rate v-model="value3" size="50" color="#f8d304" /></dd>
       </dl>
     </div>
     <div class="class-evaluation">
@@ -51,36 +52,19 @@ import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
-      value: 3,
+      value1: 3,
+      value2: 1,
+      value3: 2,
       message: '',
-      stuMessage : null,
     }
   },
-  mounted () {
-    this.findAllClassAndCommentsInTheClass();
-  },
-  methods: {
-    //findAllClassAndCommentsInTheClass获取上课的学员信息，包含评论信息
-    findAllClassAndCommentsInTheClass : function () {
-      let _self = this;
-      let param = new URLSearchParams();
-      param.append('timeable_id' , 371);
-      api.findAllClassAndCommentsInTheClass(param)
-        .then( res => {
-          if( res.data.code == 1 ){
-            console.log(res.data.data);
-            let data = res.data.data;
-            console.log(_self.$route.query.id)
-            data.forEach(element => {
-              if(element.id == _self.$route.query.id ){
-                _self.stuMessage = element;
-                console.log(_self.stuMessage);
-              }
-            });
-          }
-        });
+  computed : {
+    stuMessage () {
+      console.log(this.$store.state.teacherComment.immediatelyCommented);
+        return this.$store.state.teacherComment.immediatelyCommented;
     },
   }
+  
 }
 </script>
 <style lang="less">

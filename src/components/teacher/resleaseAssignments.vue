@@ -2,7 +2,7 @@
   <div class="reslease-ass">
     <div class="recipient">
     <van-cell-group>
-      <van-cell title="接受人" value="内容" is-link />
+      <van-cell title="接受人" value="内容" is-link to="/general/publishClass" />
     </van-cell-group>
     </div>
     <div class="ass-title">
@@ -38,13 +38,22 @@
 export default {
   data () {
     return {
-      message:''
+      message:'',
+      urls:{
+        publishClass:'/general/publishClass'
+      }
+    }
+  },
+  methods: {
+    goTo (url) {
+      this.$router.push({path: url})
     }
   }
 }
 </script>
 <style lang="less">
 .reslease-ass{
+padding-bottom:150px;
 .recipient{
   width: 692px;
   background: #fff;
@@ -65,6 +74,7 @@ export default {
 }
 .class-evaluation{
   width: 692px;
+  padding-bottom: 40px;
   background: #fff;
   margin: 0 auto;
   .van-cell{

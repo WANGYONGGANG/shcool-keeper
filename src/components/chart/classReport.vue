@@ -2,15 +2,16 @@
 <div class="class-report">
   <div class="charge-top">
     <div class="charge-top-tab">
-     开班: <span class="tab-radius">2018-09-01</span>-<span class="tab-radius">2018-09-30</span> <span class="arrow-down" @click="showCommentedDia"><van-icon name="arrow" /></span>
+     开班:
     </div>
+    <calendar-packing></calendar-packing>
     <div class="charge-top-right">
       筛选<van-icon name="wap-nav" />
     </div>
   </div>
   <div class="class-chart">
     <div class="erea">不限区域<van-icon name="arrow" /></div>
-    <div class="set" @click="goTo"><van-icon name="discount" />设置</div>
+    <div class="set" @click="goTo(urls.fullclassRate)"><van-icon name="discount" />设置</div>
     <div id="classChart"></div>
   </div>
   <van-cell-group>
@@ -20,25 +21,27 @@
     <van-cell title="81%-90%" is-link value="0" />
     <van-cell title="91%-100%" is-link value="0" />
   </van-cell-group>
-  <commented-pop></commented-pop>
 </div>
 </template>
 <script>
-import CommentedPop from '../popup/commentedPop'
+  import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
-    CommentedPop
+    CalendarPacking
   },
   data () {
     return {
+      urls:{
+        fullclassRate:'/chart/fullclassRate'
+      }
     }
   },
   mounted () {
     this.drawLine()
   },
   methods: {
-    goTo () {
-      this.$router.push({path: '/chart/fullclassRate'})
+    goTo (url) {
+      this.$router.push({path: url})
     },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
@@ -85,6 +88,19 @@ export default {
         ]
       })
     }
+  },
+  computed : {
+    item () {
+      return this.$store.state.commentPopup.item
+    }
+  },
+  watch:{
+    item :{
+      handler(val){
+        //日期快速切换值
+        this.$toast(val)
+      }
+    }
   }
 }
 </script>
@@ -92,29 +108,19 @@ export default {
 .class-report{
   .charge-top{
     padding-top: 10px;
-    height: 76px;
+    height: 82px;
     background: #fff;
-    .charge-top-tab{
-      float: left;
-      width: 557px;
-      margin-bottom: 10px;
-      padding-left:20px;
-    .tab-radius{
-      height: 53px;
-      display: inline-block;
-      padding: 0px 30px;
-      font-size: 24px;
-      line-height: 55px;
-      border-radius: 50px;
-      border: 1px #eff1f6 solid;
-      margin: 8px 10px 0;
-    }
-    .arrow-down .van-icon{
-      -webkit-transform: rotate(90deg);
-      transform: rotate(90deg);
-    }
-    }
-   .charge-top-right{
+.charge-top-tab{
+  float: left;
+  width: 100px;
+  padding-left: 20px;
+  line-height: 61px;
+}
+.commented-tab{
+  padding-top: 0px;
+  padding-left: 0px;
+float: left;
+} .charge-top-right{
      float: right;
      line-height: 40px;
      padding-top: 15px;

@@ -9,10 +9,10 @@ import EarningReport from '@/components/chart/earningReport'
 import CurriculuConsumption from '@/components/chart/curriculuConsumption'
 import ClassReport from '@/components/chart/classReport'
 import FullclassRate from '@/components/chart/class/fullclassRate'
-import Charge from '@/components/remittance_table/charge'
-import CourseCharge from '@/components/remittance_table/courseCharge'
-import NetIncome from '@/components/remittance_table/netIncome'
-import Refund from '@/components/remittance_table/Refund'
+import Charge from '@/components/chargeReport/charge'
+import CourseCharge from '@/components/chargeReport/courseCharge'
+import NetIncome from '@/components/chargeReport/netIncome'
+import Refund from '@/components/chargeReport/Refund'
 
 import ChargeAnal from '@/components/chart/analysis/chargeAnal'
 import CurriculumConsumptionCharge from '@/components/chart/analysis/curriculumConsumptionCharge'
@@ -71,11 +71,14 @@ import IntentionalCustomersDetial from '@/components/teacher/intentionalCustomer
 import CustomerFollowUpStatistics from '@/components/teacher/customerFollowUpStatistics'
 import CustomerAnalysis from '@/components/teacher/customerAnalysis'
 import OperationDetails from '@/components/teacher/operationDetails'
+import PublishClass from '@/components/general/publishClass'
+import PublishPeople from '@/components/general/publishPeople'
 
 import EnrollmentStatistics from '@/components/teacher/enrollmentStatistics'
 import EnrollmentStatistics2 from '@/components/teacher/enrollmentStatistics2'
 import EnrollmentStatistics3 from '@/components/teacher/enrollmentStatistics3'
 import CustomerContrast from '@/components/teacher/customerContrast'
+
 Vue.use(Router)
 
 export default new Router({
@@ -446,6 +449,16 @@ export default new Router({
       path: '/teacher/operationDetails',
       name: 'operationDetails',
       component: OperationDetails
+    },
+    {
+      path: '/general/publishClass',
+      name: 'publishClass',
+      component: PublishClass
+    },
+    {
+      path: '/general/publishPeople',
+      name: 'publishPeople',
+      component: PublishPeople
     }
   ]
 })

@@ -11,7 +11,12 @@
         <span class="name">{{data.studentName}}</span>
         <span><van-checkbox v-model="checked"></van-checkbox></span>
       </div>
-      <div class="list-box-r" @click="goTo(data.id)">立即点评<van-icon name="arrow" /></div>
+      <div class="list-box-r" @click="goTo();immediatelyCommented(data);">
+      
+        <span v-if="data.isEvaluation">已经点评</span>
+        <span v-else>立即点评</span>
+      
+      <van-icon name="arrow" /></div>
     </div>
     
     <div class="list-bottom">
@@ -36,14 +41,19 @@ export default {
     this.findAllClassAndCommentsInTheClass();
   },
   methods: {
-    goTo (param) {
-      this.$router.push({path: '/teacher/immediatelyCommented',query:{id:param}})
+    immediatelyCommented (data) {
+      this.$store.state.teacherComment.immediatelyCommented = data;
+    },
+    goTo () {
+      this.$router.push({path: '/teacher/immediatelyCommented'})
     },
     //findAllClassAndCommentsInTheClass获取上课的学员信息，包含评论信息
     findAllClassAndCommentsInTheClass : function () {
       let _self = this;
       let param = new URLSearchParams();
-      param.append('timeable_id' , 371);
+
+      param.append('timeable_id' , this.$route.query.id);
+
       api.findAllClassAndCommentsInTheClass(param)
         .then( res => {
           if( res.data.code == 1 ){
@@ -52,7 +62,8 @@ export default {
           }
         });
     },
-  }
+  },
+  
 }
 </script>
 <style lang="less">
