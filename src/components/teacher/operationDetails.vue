@@ -2,24 +2,24 @@
   <div class="operation-details">
     <div class="recipient" @click="goTo(urls.taskDetial)">
         <dl>
-          <dt class="title">基础舞蹈</dt>
-          <dd class="subtltle"><span><van-icon name="contact" />测试员</span><span><van-icon name="clock" />2018-07-04 11:28</span></dd>
-          <dd class="text"><van-icon name="arrow" /></dd>
+          <dt class="title">{{data.title}}</dt>
+          <dd class="subtltle"><span><van-icon name="contact" />{{data.classTeacherName}}</span><span><van-icon name="clock" />{{data.beginTime}}</span></dd>
+          <dd class="text"><van-icon name="arrow" />{{data.content}}</dd>
         </dl>
     </div>
     <div class="question-answer">
       <div class="qa-user fn-clear">
         <div class="qa-user-l fn-left"><img class="img" src="../../assets/images/user/test.jpg"/></div>
-        <div class="qa-user-r fn-left"><dl><dt>王紫潼</dt><dd>2019.07，04 12:17</dd></dl></div>
+        <div class="qa-user-r fn-left"><dl><dt>{{studentMsg.studentName}}</dt><dd>{{studentMsg.answerDatetime}}</dd></dl></div>
       </div>
-      <div class="qa-text">和军事基地</div>
+      <div class="qa-text">{{studentMsg.myAnswer}}</div>
       <div class="qa-icon">问<br/>答</div>
     </div>
     <div class="score-box">
       <span class="title">我的点评</span>
       <van-cell-group>
         <van-field
-          v-model="score"
+          v-model="studentMsg.homeworkScore"
           clearable
           label="分数"
           type="number"
@@ -31,7 +31,7 @@
       <van-cell-group>
         <van-cell title="选择评价模版" />
         <van-field
-          v-model="message"
+          v-model="studentMsg.teacherComment"
           type="textarea"
           placeholder="写点评价吧，您的评价对这位学生会有更大对帮助呦！(500字以内)"
           rows="1"
@@ -49,7 +49,6 @@
   export default {
     data () {
       return {
-        message:'',
         urls: {
           taskDetial: '/teacher/taskDetial'
         }
@@ -58,6 +57,16 @@
     methods: {
       goTo (param) {
         this.$router.push({path: param})
+      }
+    },
+    computed : {
+      data () {
+        console.log(this.$store.state.teacherTask.taskDetial);
+          return this.$store.state.teacherTask.taskDetial;
+      },
+      studentMsg () {
+        console.log(this.$store.state.teacherTask.operationDetails);
+        return this.$store.state.teacherTask.operationDetails;
       }
     }
   }
