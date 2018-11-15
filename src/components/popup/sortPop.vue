@@ -17,11 +17,11 @@ export default {
       items: [
         {
         text:'按姓氏排序',
-        isSelect:true
+        isSelect:false
         },
         {
           text:'按沟通时间排序',
-          isSelect:false
+          isSelect:true
         },
         {
           text:'按跟进时间排序',
