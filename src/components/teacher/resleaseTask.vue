@@ -3,7 +3,7 @@
     <calendar-packing ref="calendar"></calendar-packing>
     <div class="task-table"  v-for="data in allDatas">
       <van-cell-group class="tab-list-item01">
-        <van-cell :title="data.title" is-link :to="{path:'/teacher/taskDetial',query:{id:data.id}}"/>
+        <van-cell :title="data.title" is-link :to="{path:'/teacher/taskDetial'}" :@click="taskDetial(data)"/>
       </van-cell-group>
       <div @click="goTo(urls.studentCompletion,data.id)">
       <van-cell-group class="tab-list-item02">
@@ -42,11 +42,15 @@ export default {
   },
   mounted() {
     console.log(this.$refs.calendar);
+    //获取子组件中日历中获取到的日期数据
     this.date1 = this.$refs.calendar.$el.innerText.substr(0, 10); //2018-11-01
     this.date2 = this.$refs.calendar.$el.innerText.substr(11); //2018-11-31
     this.findReleaseHomework(this.date1, this.date2);
   },
   methods: {
+    taskDetial : function(data){
+      this.$store.state.teacherTask.taskDetial = data;
+    },
     findReleaseHomework: function(date1, date2) {
       let _self = this;
       let param = new URLSearchParams();

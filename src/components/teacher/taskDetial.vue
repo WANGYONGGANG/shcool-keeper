@@ -1,44 +1,20 @@
 <template>
   <div class="taskDetial">
     <dl>
-      <dt class="title">基础舞蹈</dt>
-      <dd class="subtltle"><span><van-icon name="contact" />测试员</span><span><van-icon name="clock" />2018-07-04 11:28</span></dd>
-      <dd class="text">就这样吧，我不不写了</dd>
+      <dt class="title">{{data.title}}</dt>
+      <dd class="subtltle"><span><van-icon name="contact" />{{data.classTeacherName}}</span><span><van-icon name="clock" />{{data.beginTime}}</span></dd>
+      <dd class="text"><van-icon name="arrow" />{{data.content}}</dd>
     </dl>
   </div>
 </template>
 <script>
 import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
-  props: ['allDatas'],
-  data () {
-    return {
-      data:[]
-    }
-  },
-  mounted () {
-    console.log(this.allDatas)
-    //this.findReleaseHomework();
-  },
-  methods: {
-    findReleaseHomework : function () {
-      let _self = this;
-      let param = new URLSearchParams();
-
-      param.append('begin_date' , '2018-11-01');
-      param.append('end_date' , '2018-11-31');
-      param.append('pag ' , 1);
-      param.append('rows' , 10);
-
-      api.findReleaseHomework(param)
-        .then( res => {
-          if( res.data.code == 1 ){
-            console.log(res.data.data);
-            _self.allDatas = res.data.data.rows;
-          }
-        });
-    }
-  }  
+  computed : {
+    data () {
+        return this.$store.state.teacherTask.taskDetial;
+    },
+  }
 }
 </script>
 <style lang="less">

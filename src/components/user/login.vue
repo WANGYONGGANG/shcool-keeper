@@ -35,7 +35,7 @@ export default {
     submitForm:function () {
         let _self = this;
         let loginData = new URLSearchParams();
-         loginData.append('username',this.username)
+        loginData.append('username',this.username)
 				loginData.append('password',this.password)
         api.submitLogin(loginData)
 					.then(res=>{

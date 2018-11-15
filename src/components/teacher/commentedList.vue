@@ -11,7 +11,7 @@
         <span class="name">{{data.studentName}}</span>
         <span><van-checkbox v-model="checked"></van-checkbox></span>
       </div>
-      <div class="list-box-r" @click="goTo(data.id , tecId)">
+      <div class="list-box-r" @click="goTo();immediatelyCommented(data);">
       
         <span v-if="data.isEvaluation">已经点评</span>
         <span v-else>立即点评</span>
@@ -34,17 +34,18 @@ export default {
   data () {
     return {
       checked: false,
-      tecId:0,
       allDatas : [],
     }
   },
   mounted () {
-    this.tecId = this.$route.query.id;
     this.findAllClassAndCommentsInTheClass();
   },
   methods: {
-    goTo (param,param2) {
-      this.$router.push({path: '/teacher/immediatelyCommented',query:{id:param,tecId:param2}})
+    immediatelyCommented (data) {
+      this.$store.state.teacherComment.immediatelyCommented = data;
+    },
+    goTo () {
+      this.$router.push({path: '/teacher/immediatelyCommented'})
     },
     //findAllClassAndCommentsInTheClass获取上课的学员信息，包含评论信息
     findAllClassAndCommentsInTheClass : function () {
@@ -61,7 +62,8 @@ export default {
           }
         });
     },
-  }
+  },
+  
 }
 </script>
 <style lang="less">

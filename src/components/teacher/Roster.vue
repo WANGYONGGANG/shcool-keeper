@@ -2,7 +2,7 @@
 <div class="roster">
   <div class="naming-table" @click="goTo(data.id)" v-for="data in classList">
     <div class="table-l">
-      <div class="class-tit">{{data.className}}</div>
+      <div class="class-tit" :parentToChild="data.className">{{data.className}}</div>
       <div class="class-address"><van-icon name="location" />{{data.campusName}}</div>
     </div>
     <div class="table-r">
@@ -13,14 +13,19 @@
 </template>
 <script>
 import {api} from  '../../../static/js/request-api/request-api.js';
+import rosterDetial from './rosterDetial';
 export default {
   name:'roster',
   data () {
     return {
       datas:[],
-      classList:[]
+      classList:[],
+      parentToChild:''
     }
   },
+  components:{
+       rosterDetial
+   },
   mounted () {
     this.findAllClass();
   },

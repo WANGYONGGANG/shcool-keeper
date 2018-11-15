@@ -9,6 +9,17 @@ import sortStore from '../static/js/sortPopup_store.js'
 Vue.use(vuex)
 
 export default new vuex.Store({
+  state: {
+    //  教师端点评
+    teacherComment: {
+      immediatelyCommented: null
+    },
+    //  教师端作业
+    teacherTask: {
+      operationDetails: null,
+      taskDetial: null
+    }
+  },
   modules: {
     ipPopup: IpPopupStore,
     commentPopup: commentStore,

@@ -31,6 +31,7 @@
 </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 import CalendarPacking from '../general/calendarPacking'
 import BottomBtn from '../general/bottomBtn'
 export default {
@@ -49,10 +50,42 @@ export default {
       }
     }
   },
+   mounted () {
+    this.getCommunicationDetail();
+  },
   methods: {
     goTo (param) {
       this.$router.push({path: param})
-    }
+    },
+    getCommunicationDetail: function() {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('student_id' ,this.$route.query.id);
+      param.append('begin_date' ,'');
+      param.append('end_date' ,'');
+      // let param = {
+      //   'student_id':_self.$route.query.id,
+      //   'begin_date':'',
+      //   'end_date':''
+      //   }
+      api.getCommunicationDetail(param)
+        .then(res => {
+          console.log(res.data);
+          if (res.status == 200) {
+              console.log(res.data);
+              let code=res.data.code;
+              if(code===1){
+                _self.classRosterList=res.data.data;
+              }
+          } else {
+            
+          }
+        })
+        .catch(error => {
+          
+        });
+    },
+
   },
   computed : {
     item () {

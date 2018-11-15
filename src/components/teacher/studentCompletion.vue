@@ -2,7 +2,7 @@
   <div class="student-completion">
     <van-tabs type="card" v-model="active">
       <van-tab :title='allDatasLen' >
-        <div class="card-list" v-for="data in allDatas" @click="goTo(urls.operationDetails)">
+        <div class="card-list" v-for="data in allDatas" @click="goTo(urls.operationDetails);operationDetails(data);">
           <div class="card-list-l">
             <img class="img" src="../../assets/images/user/test.jpg"/>{{data.studentName}}
           </div>
@@ -14,7 +14,7 @@
         </div>
       </van-tab>
       <van-tab :title="submitDataLen">
-        <div class="card-list" v-for="data in submitData">
+        <div class="card-list" v-for="data in submitData" @click="goTo(urls.operationDetails);operationDetails(data);">
           <div class="card-list-l"><img class="img" src="../../assets/images/user/test.jpg"/>{{data.studentName}}
           </div>
           <div class="card-list-r">
@@ -25,7 +25,7 @@
         </div>
       </van-tab>
       <van-tab :title="noSubmitDataLen">
-        <div class="card-list" v-for="data in noSubmitData">
+        <div class="card-list" v-for="data in noSubmitData" @click="goTo(urls.operationDetails);operationDetails(data);">
           <div class="card-list-l"><img class="img" src="../../assets/images/user/test.jpg"/>{{data.studentName}}
           </div>
           <div class="card-list-r">
@@ -48,7 +48,7 @@ export default {
       submitDataLen:'已提交',
       noSubmitDataLen:'未提交',
       allDatas:[{
-        studentName:'王紫潼'
+        // studentName:'王紫潼'
       }],
       submitData:[],
       noSubmitData:[],
@@ -64,6 +64,9 @@ export default {
     this.getAllReleaseHomeworkStudentNoSubmit();
   },
   methods: {
+    operationDetails (param) {
+      this.$store.state.teacherTask.operationDetails = param;
+    },
     //获取接到作业的全部学员
     goTo (param) {
       this.$router.push({path: param})
@@ -76,7 +79,6 @@ export default {
       api.getAllReleaseHomeworkStudent(param)
         .then( res => {
           if( res.data.code == 1 ){
-            console.log(111);
             console.log(res.data.data);
             _self.allDatas = res.data.data;
             _self.allDatasLen += '(' + _self.allDatas.length + ')';

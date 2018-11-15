@@ -11,45 +11,53 @@
           <div class="operation" @click="showFilterDia">筛选</div>
           <div class="operation" @click="showSortDia">排序</div>
         </div>
-        <div @click="goTo(urls.communicationRecord)"   v-for="(commentItem,index) in commentDetail">
-          <div class="card-list">
-            <div class="card-list-l">
-              <img class="img" src="../../assets/images/user/test.jpg"/>王梓桐<span class="times">沟通次数：2</span>
-            </div>
-            <div class="card-list-r"><van-icon name="arrow" /></div>
+        <div v-for="data in commentDetail">
+          <div @click="goTo(urls.communicationRecord,data.id)">
+              <div class="card-list" >
+                <div class="card-list-l">
+                  <img class="img" src="../../assets/images/user/test.jpg"/>{{data.name}}
+                  <span class="times">沟通次数：{{data.talkCount}}</span>
+                </div>
+                <div class="card-list-r"><van-icon name="arrow" /></div>
+              </div>
+              <van-cell-group class="card-list-item">
+                <van-cell title="上次沟通" :value="data.lastDate" />
+                <van-cell title="下次沟通" :value="data.nextDate" />
+                <van-cell title="手机号码" :value="data.mobile" />
+                <van-cell title="剩余学费" value="23,300.00" class="tuition" />
+                <van-cell title="学管师" :value="data.salePersonId" />
+              </van-cell-group>
           </div>
-          <van-cell-group class="card-list-item">
-            <van-cell title="上次沟通" value="2018-07-04" />
-            <van-cell title="下次沟通" value="待定" />
-            <van-cell title="手机号码" value="1300000000" />
-            <van-cell title="剩余学费" value="23,300.00" class="tuition" />
-            <van-cell title="学管师" value="测试员" />
-          </van-cell-group>
-        </div>
-        <div class="card-list-btn">
-          <span>拨号</span>
-          <span @click="goTo(urls.purchaseDetails)">查看购买详情</span>
-        </div>
-        <div @click="goTo(urls.communicationRecord)">
-          <div class="card-list">
-            <div class="card-list-l">
-              <img class="img" src="../../assets/images/user/test.jpg"/>王梓桐<span class="times">沟通次数：2</span>
-            </div>
-            <div class="card-list-r"><van-icon name="arrow" /></div>
+          <div class="card-list-btn">
+              <span>拨号</span>
+              <span @click="goTo(urls.purchaseDetails,data.id)">查看购买详情</span>
           </div>
-          <van-cell-group class="card-list-item">
-            <van-cell title="上次沟通" value="2018-07-04" />
-            <van-cell title="下次沟通" value="待定" />
-            <van-cell title="手机号码" value="1300000000" />
-            <van-cell title="剩余学费" value="23,300.00" class="tuition" />
-            <van-cell title="学管师" value="测试员" />
-          </van-cell-group>
         </div>
-        <div class="card-list-btn">
-          <span>拨号</span>
-          <span @click="goTo(urls.purchaseDetails)">查看购买详情</span>
-        </div>
+        
+        <!-- <div>
+          <div @click="goTo(urls.communicationRecord)">
+            <div class="card-list">
+              <div class="card-list-l">
+                <img class="img" src="../../assets/images/user/test.jpg"/>王梓桐<span class="times">沟通次数：2</span>
+              </div>
+              <div class="card-list-r"><van-icon name="arrow" /></div>
+            </div>
+            <van-cell-group class="card-list-item">
+              <van-cell title="上次沟通" value="2018-07-04" />
+              <van-cell title="下次沟通" value="待定" />
+              <van-cell title="手机号码" value="1300000000" />
+              <van-cell title="剩余学费" value="23,300.00" class="tuition" />
+              <van-cell title="学管师" value="测试员" />
+            </van-cell-group>
+          </div>
+          <div class="card-list-btn">
+              <span>拨号</span>
+              <span @click="goTo(urls.purchaseDetails)">查看购买详情</span>
+          </div>
+        </div> -->
+
       </van-tab>
+
       <van-tab title="待沟通">
         <div class="no-data">
           暂无沟通记录
@@ -160,6 +168,27 @@ export default {
     this.getCommunicationDetail();
   },
   methods: {
+    goTo (url,parame) {
+      this.$router.push({path: url,query:{id:parame}})
+    },
+    // 沟通列表
+    getCommunicationDetail: function() {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('all_or_other' ,false);
+      api.findStudentCommunication(param)
+        .then(res => {
+          if (res.code===1) {
+              _self.commentDetail=res.data;
+              console.log(res.data);
+          } else {
+            
+          }
+        })
+        .catch(error => {
+          
+        });
+    },
     onSearch () {
     },
     showFilterDia () {
@@ -212,26 +241,7 @@ export default {
           Toast('出错了');
       }
     },
-    // 沟通列表
-    getCommunicationDetail: function() {
-      let params ={};
-      let _self = this;
-      api.getCommunicationDetail(null)
-        .then(res => {
-          console.log(res.data);
-          if (res.status == 200) {
-                let code=res.data.code;
-                if(code===1){
-                  _self.commentDetail=res.data.data;
-                }
-          } else {
-            
-          }
-        })
-        .catch(error => {
-          
-        });
-    },
+    
   }
 }
 </script>
