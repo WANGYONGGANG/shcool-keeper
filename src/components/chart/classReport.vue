@@ -11,7 +11,7 @@
   </div>
   <div class="class-chart">
     <div class="erea">不限区域<van-icon name="arrow" /></div>
-    <div class="set" @click="goTo"><van-icon name="discount" />设置</div>
+    <div class="set" @click="goTo(urls.fullclassRate)"><van-icon name="discount" />设置</div>
     <div id="classChart"></div>
   </div>
   <van-cell-group>
@@ -31,14 +31,17 @@ export default {
   },
   data () {
     return {
+      urls:{
+        fullclassRate:'/chart/fullclassRate'
+      }
     }
   },
   mounted () {
     this.drawLine()
   },
   methods: {
-    goTo () {
-      this.$router.push({path: '/chart/fullclassRate'})
+    goTo (url) {
+      this.$router.push({path: url})
     },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true

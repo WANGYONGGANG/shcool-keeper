@@ -45,6 +45,7 @@ export default {
 </script>
 <style lang="less">
 .reslease-ass{
+padding-bottom:150px;
 .recipient{
   width: 692px;
   background: #fff;
@@ -65,6 +66,7 @@ export default {
 }
 .class-evaluation{
   width: 692px;
+  padding-bottom: 40px;
   background: #fff;
   margin: 0 auto;
   .van-cell{
