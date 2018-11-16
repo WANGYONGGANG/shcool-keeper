@@ -1,6 +1,6 @@
 <template>
 <div class="my-timetable">
-  <calendar-table :date.sync="calendar.date" :haveDetial="calendar.detialDate" :isShowDetial.sync="calendar.detialCurrentDate"></calendar-table>
+  <calendar-table :date.sync="calendar.date" :haveDetial="calendar.detialDate" :isShowDetial.sync="calendar.detialCurrentDate"   v-on:updateDate="updateDate"></calendar-table>
   <!-- <div class="timetable-tit">
     <span class="tit-l">星期一</span>
     <span class="tit-r">09-17</span>
@@ -43,7 +43,7 @@
       <van-cell title="上课人数" value="1/1" isLink />
     </van-cell-group>
   </div>
-  <div v-else class="empty">暂无上课班级</div>
+  <div class="empty"  v-if="totalCount==0">暂无上课班级</div>
 </div>
 </template>
 <script>
@@ -57,6 +57,7 @@ export default {
   data() {
     return {
       allDatas: [],
+      totalCount:0,
       calendar:{
         //显示小黄点的日期，需传入一个格式为2018-11-10数组
         detialDate:['2018-11-10','2018-11-17'],
@@ -92,18 +93,36 @@ export default {
     subStrClassName(name) {
       return name.substring(0, 8) + "...";
     },
-    getMyClassRecord() {
+    //更新newDate
+    updateDate(newDate){
+      this.getMyClassRecord(newDate);
+    },
+    getMyClassRecord(newDate) {
       let _self = this;
       let params = new URLSearchParams();
-      params.append("begin_date", "2018-10-01");
-      params.append("end_date", "2018-10-31");
+      let beginDate=null;
+      let endDate=null;
+      if(!newDate){
+        let now=new Date();
+         beginDate=now.format("yyyy-MM-dd");
+         endDate=now.format("yyyy-MM-dd");
+      }else{
+        beginDate=newDate;
+        endDate=newDate;
+      }
+      params.append("begin_date", "2018-10-12");
+      params.append("end_date", "2018-10-12");
+      // params.append("begin_date", beginDate);
+      // params.append("end_date", endDate);
       params.append("page", 1);
       params.append("rows", 10);
       api.findMyClassRecord(params).then(res => {
         // console.log(res);
         if (res.data.code == 1) {
-          var allDatas = res.data.data.rows;
-          _self.allDatas = allDatas;
+           let allDatas = res.data.data.rows;
+           let totalCount=res.data.data.total;
+           _self.totalCount=totalCount;
+           _self.allDatas = allDatas;
           console.log(allDatas);
         }
       });

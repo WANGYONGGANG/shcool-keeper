@@ -50,22 +50,23 @@ export default {
     }
   },
   mounted () {
-    this.getMyClassRecord();
+    this.getMyClassRoster();
   },
   methods: {
     onSearch () {
 
     },
-     getMyClassRecord() {
+     getMyClassRoster() {
       let _self = this;
       let params = {};
-      params.timeable_id=_self.$route.query.timeable_id;
-      api.getMyClassRecord(params).then(res => {
-        console.log(res);
+      params.order=null;
+      params.sort=null;
+      params.student_name=null;
+      params.timeable_id=this.$route.query["timeable_id"];
+      api.getMyClassRoster(params).then(res => {
+        console.log(res.data);
         if (res.data.code == 1) {
-          var allDatas = res.data.data.rows;
-          _self.allDatas = allDatas;
-          // console.log(allDatas);
+          let allDatas = res.data.data;
         }
       });
     },

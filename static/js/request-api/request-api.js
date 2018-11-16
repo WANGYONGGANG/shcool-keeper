@@ -159,7 +159,7 @@ export   const  api={
     findMyClassRecordWithWeek(params){
         return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithWeek',params);
     },
-    //获取当前登录人员排课计划
+    //获取当前校区所有班级
     findAllClassInfo(params){
         return fetchGet(baseUrl+'/notice/findAllClassInfo',params);
     },
@@ -230,7 +230,12 @@ export   const  api={
     //转化统计查询
     reportTalkStatistics(params){
         return fetchGet(baseUrl+'/intentionClientAPI/ReportTalkStatistics',params);
+    },
+    //获取上课的学员信息
+       getMyClassRoster(params){
+        return fetchGet(baseUrl+'/namingAPI/getMyClassRoster',params);
     }
+  
   
 
 
