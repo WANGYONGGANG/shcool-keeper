@@ -2,15 +2,16 @@
   <div class="customer-follow-up">
     <van-tabs type="card">
       <van-tab title="沟通统计">
-        <tab-one></tab-one>
+        <tab-one  v-bind:schoolPartList="schoolPartList"></tab-one>
       </van-tab>
       <van-tab title="转化统计">
-        <tab-two></tab-two>
+        <tab-two v-bind:schoolPartList="schoolPartList"></tab-two>
       </van-tab>
     </van-tabs>
   </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
 import CalendarPacking from '../general/calendarPacking'
 import TabOne from './components/customerFollowUpStatisticsTab1'
 import TabTwo from './components/customerFollowUpStatisticsTab2'
@@ -23,16 +24,44 @@ export default {
   data () {
     return {
       active: 1,
+      schoolPartList:null,
       urls: {
         communicationRecord: '/teacher/communicationRecord',
         purchaseDetails: '/teacher/purchaseDetails'
       }
+ 
     }
+  },
+   mounted:function(){
+    this.refreshDepartment(); 
   },
   methods: {
     goTo (param) {
       this.$router.push({path: param})
-    }
+    },
+    //查询所有校区
+    refreshDepartment: function() {
+      let params ={};      
+      let _self = this;
+      api.refreshDepartment(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.schoolPartList=res.data.data;
+                }
+          } else {
+            let params = { msg: "查询所有校区" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "查询所有校区" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
   }
 }
 </script>
