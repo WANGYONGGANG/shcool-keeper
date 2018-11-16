@@ -25,7 +25,17 @@ export default {
   },
   data () {
     return {
-      Alldatas:[],
+      Alldatas:[
+        //假数据
+        {
+        id:1,
+        className:'17暑假初二英语同步班_补课班级',
+        courseName:'17暑假初二英语同',
+        classPleanDate:'09:00-11:00',
+        evaluationCount:0,
+        recruitStudentsCount:2
+
+      }],
       date1: "",
       date: "",
     }
@@ -40,7 +50,7 @@ export default {
     findMyClassRecord (date1, date2) {
       let _self = this;
       let param = new URLSearchParams();
-      
+
       param.append('begin_date' , date1);//'2018-10-01'
       param.append('end_date' , date2);//'2018-10-31'
       param.append('pag ' , 1);
@@ -145,7 +155,7 @@ export default {
         this.date2 = str1;
       }
       if (val == "上月") {
-        month = month - 1; 
+        month = month - 1;
         if (month == 0) {
           month = 12;
           year = year - 1;
