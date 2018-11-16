@@ -30,6 +30,7 @@
   </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
 import stepOne from '../customers/stepOne'
 import stepTwo from '../customers/stepTwo'
 import stepThree from '../customers/stepThree'
@@ -52,6 +53,7 @@ export default {
     goTo (param) {
       this.$router.push({path: param})
     },
+    
     handleChangeView (component) {
       this.currentTabComponent = component
       if (component === 'stepOne') {
