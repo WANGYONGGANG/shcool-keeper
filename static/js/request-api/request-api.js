@@ -211,6 +211,26 @@ export   const  api={
      getIntentionClientDetail(params){
         return fetchGet(baseUrl+'intentionClientAPI/getIntentionClientDetail',params);
     },
+    //获取学院沟通记录
+    findStudentCommunicationDetail(params){
+            return fetchGet(baseUrl+'/intentionClientAPI/findStudentCommunicationDetail',params);
+        },
+    //获取所有校区
+    refreshDepartment(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/refreshDepartment',params);
+    },
+     //获取招生来源
+     refreshSource(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/refreshSource',params);
+    },
+     //查询沟通统计
+     reportTransformationStatistics(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/ReportTransformationStatistics',params);
+    },
+    //转化统计查询
+    reportTalkStatistics(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/ReportTalkStatistics',params);
+    }
   
 
 

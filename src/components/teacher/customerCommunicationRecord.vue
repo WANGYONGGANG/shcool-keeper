@@ -27,6 +27,7 @@
   </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
 import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
@@ -40,10 +41,40 @@ export default {
       }
     }
   },
+  mounted:function(){
+    this.findStudentCommunicationDetail();
+  },
   methods: {
     goTo (url) {
       this.$router.push({path: url})
-    }
+    },
+    //获取学院沟通记录
+    findStudentCommunicationDetail: function() {
+      let student_id= this.$route.query.studentId;
+      let begin_date=null;
+      let  end_date=null;
+      let params ={};
+      params.student_id =student_id;      
+      let _self = this;
+      api.findStudentCommunicationDetail(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  console.log(res.data.data);
+                }
+          } else {
+            let params = { msg: "获取意向客户明细" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取意向客户明细" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
   },
   computed : {
     item () {
