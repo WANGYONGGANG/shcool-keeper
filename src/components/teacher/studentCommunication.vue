@@ -33,34 +33,33 @@
               <span @click="goTo(urls.purchaseDetails,data.id)">查看购买详情</span>
           </div>
         </div>
-        
-        <!-- <div>
-          <div @click="goTo(urls.communicationRecord)">
-            <div class="card-list">
-              <div class="card-list-l">
-                <img class="img" src="../../assets/images/user/test.jpg"/>王梓桐<span class="times">沟通次数：2</span>
+      </van-tab>
+
+      <van-tab title="待沟通" >
+        <div v-for="data in noComment">
+          <div class="no-data" v-if="!data">
+          暂无沟通记录
+        </div>
+          <div v-if="data" @click="goTo(urls.communicationRecord,data.id)">
+              <div class="card-list" >
+                <div class="card-list-l">
+                  <img class="img" src="../../assets/images/user/test.jpg"/>{{data.name}}
+                  <span class="times">沟通次数：{{data.talkCount}}</span>
+                </div>
+                <div class="card-list-r"><van-icon name="arrow" /></div>
               </div>
-              <div class="card-list-r"><van-icon name="arrow" /></div>
-            </div>
-            <van-cell-group class="card-list-item">
-              <van-cell title="上次沟通" value="2018-07-04" />
-              <van-cell title="下次沟通" value="待定" />
-              <van-cell title="手机号码" value="1300000000" />
-              <van-cell title="剩余学费" value="23,300.00" class="tuition" />
-              <van-cell title="学管师" value="测试员" />
-            </van-cell-group>
+              <van-cell-group class="card-list-item">
+                <van-cell title="上次沟通" :value="data.lastDate" />
+                <van-cell title="下次沟通" :value="data.nextDate" />
+                <van-cell title="手机号码" :value="data.mobile" />
+                <van-cell title="剩余学费" :value="data.AccountBalance" class="tuition" />
+                <van-cell title="学管师" :value="data.salePersonId" />
+              </van-cell-group>
           </div>
           <div class="card-list-btn">
               <span>拨号</span>
-              <span @click="goTo(urls.purchaseDetails)">查看购买详情</span>
+              <span @click="goTo(urls.purchaseDetails,data.id)">查看购买详情</span>
           </div>
-        </div> -->
-
-      </van-tab>
-
-      <van-tab title="待沟通">
-        <div class="no-data">
-          暂无沟通记录
         </div>
       </van-tab>
     </van-tabs>
@@ -163,13 +162,22 @@ export default {
         purchaseDetails: '/teacher/purchaseDetails'
       },
       commentDetail:[],
-      userMes:''
+      userMes:'',
+      noComment:[],
     }
   },
   mounted() {
     // this.sort = this.$refs.calendar.$el.lastDate; 
     // console.log(this.sort);
-    this.getCommunicationDetail();
+    this.filterShow = false;
+    this.getMes('lastDate');
+    this.noCommunication();
+
+    // 获取子组件中获取的日期
+    // this.date1 = this.$refs.calendar.$el.innerText.substr(0, 10); //2018-11-01
+    // this.date2 = this.$refs.calendar.$el.innerText.substr(11); //2018-11-31
+    // this.findReleaseHomework(this.date1, this.date2);
+
   },
   methods: {
     // 接受参数
@@ -178,7 +186,7 @@ export default {
       console.log(p);
     },
     goTo (url,parame) {
-      this.$router.push({path: url,query:{id:parame}})
+      this.$router.push({ path: url, query: { id: parame } })
     },
     // 沟通列表
     getCommunicationDetail: function(data1, p) {
@@ -195,6 +203,30 @@ export default {
         .then(res => {
           if (res.code===1) {
               _self.commentDetail=res.data;
+              console.log(res.data);
+          } else {
+            
+          }
+        })
+        .catch(error => {
+          
+        });
+    },
+    // 未沟通
+    noCommunication: function(data1, p) {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('all_or_other' ,true);
+      if(p){
+        param.append('sort' ,p);
+      }
+      if(data1){
+        param.append('query_content' ,data1);
+      }
+      api.findStudentCommunication(param)
+        .then(res => {
+          if (res.code===1) {
+              _self.noComment=res.data;
               console.log(res.data);
           } else {
             
@@ -327,9 +359,6 @@ export default {
     },
     showClassPop () {
       this.classFilterShow = true
-    },
-    goTo (param) {
-      this.$router.push({path: param})
     },
     resetFn (param){
       if(param === 2){

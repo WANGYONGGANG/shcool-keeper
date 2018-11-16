@@ -51,7 +51,7 @@ export default {
     }
   },
   mounted () {
-    this.items[this.$store.state.sortPopup.index]['isSelect'] = true;
+    this.items[this.$store.state.sortPopup.index]['isSelect'] = false;
   },
   computed: {
     isShow: {
