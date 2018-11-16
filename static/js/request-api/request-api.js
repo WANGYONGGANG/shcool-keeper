@@ -124,9 +124,9 @@ export   const  api={
         return fetchGet(baseUrl+"/myClassRecord/findMyClassRecord",params)
     },
 
-    //评论模块
+    //上课点评 模块
     //获取当前登录人的排课计划/classEvaluation/findMyClassRecord
-    findMyClassRecord(params){
+    classEvaluationFindMyClassRecord(params){
         return fetchGet(baseUrl+"/classEvaluation/findMyClassRecord",params)
     },
     //获取上课的学员信息，包含评论信息/classEvaluation/findAllClassAndCommentsInTheClass
@@ -134,7 +134,7 @@ export   const  api={
         return fetchGet(baseUrl+"/classEvaluation/findAllClassAndCommentsInTheClass",params)
     },
 
-    //作业
+    //作业 模块
     //findReleaseHomework 获取作业列表
     findReleaseHomework(params){
         return fetchGet(baseUrl+"/releaseHomework/findReleaseHomework",params)

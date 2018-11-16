@@ -1,5 +1,5 @@
 <template>
-<!-- 立即点评页面 -->
+<!--上课点评模块3  立即点评页面 -->
   <div class="immediately">
     <div class="class-detial">
       <div class="immediately-title"><van-icon name="pending-payment" />上课详情</div>

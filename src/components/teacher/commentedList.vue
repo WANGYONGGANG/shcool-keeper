@@ -1,4 +1,6 @@
 <template>
+<!-- 上课点评模块2 获取上课的学员信息，包含评论信息 -->
+<!-- http://web.rexuejiewu.com.cn/teacher/commentedList?id=371    该链接中有已评价的学生 -->
   <div class="commented-list">
     <van-cell-group>
       <!-- <van-cell title="上课内容：" is-link to="/teacher/classContent"/> -->

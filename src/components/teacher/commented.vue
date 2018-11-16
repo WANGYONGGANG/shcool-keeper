@@ -1,4 +1,5 @@
 <template>
+<!--上课点评模块1  获取当前登录人的排课计划列表 -->
   <div class="commented">
     <calendar-packing ref="calendar"></calendar-packing>
     <div class="timetable-table" @click="goTo(data.id)"  v-for="data in Alldatas">
@@ -43,11 +44,11 @@ export default {
   mounted () {
     this.date1 = this.$refs.calendar.$el.innerText.substr(0, 10); //2018-11-01
     this.date2 = this.$refs.calendar.$el.innerText.substr(11); //2018-11-31
-    this.findMyClassRecord(this.date1,this.date2);
+    this.classEvaluationFindMyClassRecord(this.date1,this.date2);
   },
   methods: {
-    //findMyClassRecord获取当前登录人的排课计划
-    findMyClassRecord (date1, date2) {
+    //classEvaluationFindMyClassRecord获取当前登录人的排课计划
+    classEvaluationFindMyClassRecord (date1, date2) {
       let _self = this;
       let param = new URLSearchParams();
 
@@ -56,7 +57,7 @@ export default {
       param.append('pag ' , 1);
       param.append('rows' , 10);
 
-      api.findMyClassRecord(param).then( res => {
+      api.classEvaluationFindMyClassRecord(param).then( res => {
         if( res.data.code == 1 ){
           console.log(res.data);
           _self.Alldatas = res.data.data.rows;
@@ -183,7 +184,7 @@ export default {
         this.$toast(val);
         console.log(val);
         this.getDate(val);
-        this.findMyClassRecord(this.date1, this.date2);
+        this.classEvaluationFindMyClassRecord(this.date1, this.date2);
       }
     }
   }
