@@ -223,6 +223,14 @@ export   const  api={
      refreshSource(params){
         return fetchGet(baseUrl+'/intentionClientAPI/refreshSource',params);
     },
+     //查询沟通统计
+     reportTransformationStatistics(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/ReportTransformationStatistics',params);
+    },
+    //转化统计查询
+    reportTalkStatistics(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/ReportTalkStatistics',params);
+    }
   
 
 

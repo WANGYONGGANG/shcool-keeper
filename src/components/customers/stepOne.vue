@@ -42,12 +42,6 @@
         <span><input type="text" class="no-border" /></span>
       </van-cell>
     </van-cell-group>
-    <van-popup v-model="show" position="right  " :overlay="false">
-<van-radio-group v-model="radio" class="group-selected">
-  <van-radio name="1">单选框 1</van-radio>
-  <van-radio name="2">单选框 2</van-radio>
-</van-radio-group>
-</van-popup>
 
   </div>
 </template>

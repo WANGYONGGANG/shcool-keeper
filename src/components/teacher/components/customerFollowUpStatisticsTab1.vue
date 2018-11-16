@@ -14,19 +14,51 @@
   </div>
 </template>
 <script>
+import { api } from "../../../../static/js/request-api/request-api.js";
 import CalendarPacking from '../../general/calendarPacking'
 export default {
   components: {
     CalendarPacking
   },
+  props: ["schoolPartList"],
   data () {
     return {
     }
   },
+  mounted:function(){
+    this.reportTransformationStatistics(); 
+  },
   methods: {
     goTo (param) {
       this.$router.push({path: param})
-    }
+    },
+     //沟通统计
+    reportTransformationStatistics: function() {
+      let params ={};
+      params.begin_date =null;
+      params.student_id=98;
+      params.end_date=null;
+      
+      let _self = this;
+      api.reportTransformationStatistics(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                   console.log(res.data.data);
+                }
+          } else {
+            let params = { msg: "沟通统计" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "沟通统计错误" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
   },
   computed : {
     item () {
