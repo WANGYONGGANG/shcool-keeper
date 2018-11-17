@@ -232,9 +232,13 @@ export   const  api={
         return fetchGet(baseUrl+'/intentionClientAPI/ReportTalkStatistics',params);
     },
     //获取上课的学员信息
-       getMyClassRoster(params){
+    getMyClassRoster(params){
         return fetchGet(baseUrl+'/namingAPI/getMyClassRoster',params);
-    }
+    },  
+    // 获取沟通内容模板
+    findTalkContentTemplate(params){
+        return fetchGet(baseUrl+'/studentCommunication/findTalkContentTemplate',params);
+    },
   
   
 

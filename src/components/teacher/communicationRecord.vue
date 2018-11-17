@@ -1,9 +1,22 @@
 <template>
 <div class="communication-record">
   <div class="charge-top">
-    <calendar-packing></calendar-packing>
+    <calendar-packing ref="calendar"></calendar-packing>
   </div>
-  <div class="timetable-table">
+  <div class="timetable-table" v-for="data in classRosterList">
+    <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
+    <div class="table-l">
+      <div class="class-tit">{{data.talkManName}}</div>
+      <div class="class-details"><span class="time">{{data.talkName}}</span></div>
+      <div class="class-text">{{data.talkContent}}</div>
+      <div class="class-details"> <span class="time">下次跟进： {{data.nextTalkName}}</span></div>
+    </div>
+    <div class="table-r">
+      <span class="completion" @click="goTo(urls.addCommunicationRecord)"><van-icon name="edit-data" color="#4286ed" size="30px"/></span>
+    </div>
+  </div>
+
+  <!-- <div class="timetable-table">
     <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
     <div class="table-l">
       <div class="class-tit">潮人部落</div>
@@ -14,19 +27,8 @@
     <div class="table-r">
       <span class="completion" @click="goTo(urls.addCommunicationRecord)"><van-icon name="edit-data" color="#4286ed" size="30px"/></span>
     </div>
-  </div>
-  <div class="timetable-table">
-    <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
-    <div class="table-l">
-      <div class="class-tit">潮人部落</div>
-      <div class="class-details"><span class="time">7-414:原有一对一53</span></div>
-      <div class="class-text">是是是</div>
-      <div class="class-details"> <span class="time">下次跟进： 电话联系</span></div>
-    </div>
-    <div class="table-r">
-      <span class="completion" @click="goTo(urls.addCommunicationRecord)"><van-icon name="edit-data" color="#4286ed" size="30px"/></span>
-    </div>
-  </div>
+  </div> -->
+
   <bottom-btn :buttonData="buttonData"></bottom-btn>
 </div>
 </template>
@@ -47,32 +49,35 @@ export default {
       buttonData: {
         text: '添加沟通记录',
         url: '/teacher/addCommunicationRecord'
-      }
+      },
+      classRosterList:[]
     }
   },
    mounted () {
      console.log(this.$refs.calendar);
-      this.getCommunicationDetail();
-     console.log(this.$route.query.id);
+      this.date1 = this.$refs.calendar.$el.innerText.substr(0, 10); //2018-11-01
+      this.date2 = this.$refs.calendar.$el.innerText.substr(11); //2018-11-31
+      console.log(this.data2);
+
+      this.getCommunicationDetail(this.date1, this.date2);
   },
   methods: {
     goTo (param) {
       this.$router.push({path: param})
     },
-    getCommunicationDetail: function() {
+    getCommunicationDetail: function(date1, date2) {
       let _self = this;
       let param = new URLSearchParams();
       param.append('student_id' ,this.$route.query.id);
-      param.append('begin_date' ,'');
-      param.append('end_date' ,'');
+      param.append('begin_date' ,date1);
+      param.append('end_date' ,date2);
       api.getCommunicationDetail(param)
         .then(res => {
-          console.log(res.data);
           if (res.status == 200) {
-              console.log(res.data);
               let code=res.data.code;
               if(code===1){
                 _self.classRosterList=res.data.data;
+                console.log(_self.classRosterList);
               }
           } else {
             
@@ -207,7 +212,7 @@ export default {
         this.$toast(val)
         console.log(val);
         this.getDate(val);
-        this.findReleaseHomework(this.date1, this.date2);
+        this.getCommunicationDetail(this.date1, this.date2);
       }
     }
   }

@@ -4,45 +4,48 @@
       <van-checkbox
         v-for="(item, index) in list"
         :key="index"
-        :name="item.name"
+        :name="item.content"
       >
         <dl>
           <dt>{{item.name}}</dt>
-        <dd>{{item.cont}}</dd>
+        <dd>{{item.content}}</dd>
         </dl>
       </van-checkbox>
     </van-checkbox-group>
 
-    <bottom-btn :buttonData="buttonData"></bottom-btn>
+    <div class="bottom-btn"  @click="getCon()">确定</div>
   </div>
 </template>
 <script>
-import BottomBtn from '../general/bottomBtn'
+import { api } from "../../../static/js/request-api/request-api.js";
+// import BottomBtn from '../general/bottomBtn'
 export default {
-  components: {
-    BottomBtn
-  },
+  // components: {
+  //   BottomBtn
+  // },
   data () {
     return {
-      result: ['初次联系', '多次沟通'],
-      list: [
-        {
-          name: '初次联系',
-          cont: '理解学校和课程，狮子等情况'
-        },
-        {
-          name: '原有停机',
-          cont: '原有停机，情况'
-        },
-        {
-          name: '多次沟通',
-          cont: '了解一项课'
-        }
-      ],
-      buttonData: {
-        text: '确定',
-        url: ''
-      }
+      result: [],
+      list: [],
+    }
+  },
+  mounted(){
+    this.findTalkContentTemplate();
+  },
+  methods:{
+    findTalkContentTemplate: function() {
+        let _self = this;
+        api.findTalkContentTemplate().then(res => {
+          if (res.data.code == 1) {
+            _self.list = res.data.data;
+          console.log(_self.list);
+          }
+      });
+    },
+    getCon:function(){
+      // this.$emit('content',this.result[0]);
+        //console.log(this.result);
+        this.$router.push({ path: '/teacher/addCommunicationRecord', query: { con: this.result[0] } })
     }
   }
 }
@@ -75,6 +78,19 @@ export default {
     color: #ccc;
   }
   }
+
+  }
+  .bottom-btn{
+    height: 99px;
+    line-height: 99px;
+    font-size: 32px;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    background: #4286ed;
+    z-index: 100;
 
   }
 </style>
