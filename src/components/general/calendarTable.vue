@@ -183,7 +183,8 @@ export default {
       let month =dateObject.day.getMonth()+1//获取当前月份(0-11,0代表1月)
       let date =dateObject.day.getDate()//获取当前日(1-31)
       let newDate = this.formatDate(year,month,date)
-      this.$emit('update:date', newDate)
+      this.$emit('update:date', newDate);
+      this.$emit('updateDate',newDate);
       this.activedNode && (this.activedNode.actived = undefined)
       dateObject.actived = !dateObject.actived
       this.activedNode = dateObject

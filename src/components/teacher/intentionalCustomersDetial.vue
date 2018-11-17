@@ -18,11 +18,11 @@
       </van-cell>
       <van-cell title="客户状态" v-bind:value="customerObj.customerStatusName" />
       <van-cell title="预约试听时间" v-bind:value="customerObj.reservationsDate" />
-      <van-cell title="意向课程" value="2018冬季班初一拓..." is-link />
+      <van-cell title="意向课程" v-bind:value="customerObj.courseName" is-link />
     </van-cell-group>
     <div class="bottom-btn fn-clear">
       <span class="bottom-btn-item03 fn-right" @click="goTo(urls.addCustomers)">编辑</span>
-      <span class="bottom-btn-item02 fn-right" @click="goTo(urls.customerCommunicationRecord)">沟通记录</span>
+      <span class="bottom-btn-item02 fn-right" @click="goTo(urls.customerCommunicationRecord,{'studentId':customerObj.id} )">沟通记录</span>
     </div>
   </div>
 </template>
@@ -43,8 +43,8 @@ export default {
       this.getIntentionClientDetail();
   },
   methods: {
-    goTo (url) {
-      this.$router.push({path: url})
+    goTo (url,queryParam) {
+      this.$router.push({path: url,query:queryParam})
     },
     //获取意向客户明细
     getIntentionClientDetail: function() {

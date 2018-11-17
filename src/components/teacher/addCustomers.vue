@@ -30,96 +30,97 @@
   </div>
 </template>
 <script>
-import stepOne from '../customers/stepOne'
-import stepTwo from '../customers/stepTwo'
-import stepThree from '../customers/stepThree'
+  import { api } from "../../../static/js/request-api/request-api.js";
+  import stepOne from '../customers/stepOne'
+  import stepTwo from '../customers/stepTwo'
+  import stepThree from '../customers/stepThree'
 
-export default {
-  components: {
-    stepOne,
-    stepTwo,
-    stepThree
-  },
-  data () {
-    return {
-      currentTabComponent: 'stepOne',
-      isOpacity1: false,
-      isOpacity2: true,
-      isOpacity3: true
-    }
-  },
-  methods: {
-    goTo (param) {
-      this.$router.push({path: param})
+  export default {
+    components: {
+      stepOne,
+      stepTwo,
+      stepThree
     },
-    handleChangeView (component) {
-      this.currentTabComponent = component
-      if (component === 'stepOne') {
-        this.isOpacity1 = false
-        this.isOpacity2 = true
-        this.isOpacity3 = true
-      } else if (component === 'stepTwo') {
-        this.isOpacity1 = false
-        this.isOpacity2 = false
-        this.isOpacity3 = true
-      } else if (component === 'stepThree') {
-        this.isOpacity1 = false
-        this.isOpacity2 = false
-        this.isOpacity3 = false
+    data () {
+      return {
+        currentTabComponent: 'stepOne',
+        isOpacity1: false,
+        isOpacity2: true,
+        isOpacity3: true
       }
+    },
+    methods: {
+      goTo (param) {
+        this.$router.push({path: param})
+      },
+      handleChangeView (component) {
+        this.currentTabComponent = component
+        if (component === 'stepOne') {
+          this.isOpacity1 = false
+          this.isOpacity2 = true
+          this.isOpacity3 = true
+        } else if (component === 'stepTwo') {
+          this.isOpacity1 = false
+          this.isOpacity2 = false
+          this.isOpacity3 = true
+        } else if (component === 'stepThree') {
+          this.isOpacity1 = false
+          this.isOpacity2 = false
+          this.isOpacity3 = false
+        }
+      }
+
     }
 
   }
-
-}
 </script>
 <style lang="less">
-.add-customers{
-  padding-bottom: 67px;
-  background: #fff;
+  .add-customers{
+    padding-bottom: 67px;
+    background: #fff;
   .customers-tit{
-   dl{
-     float: left;
-     width: 33%;
-     text-align: center;
-     padding: 20px 0;
-     font-size: 30px;
-     color: #4286ed;
-     border-bottom:2px #4286ed solid ;
-     dt{
-       border-radius: 100%;
-       border: 2px #4286ed solid;
-       text-align: center;
-       margin: 10px auto;
-       width: 44px;
-       height: 44px;
-       span{
-         font-size: 28px;
-         border-radius: 100%;
-         display: inline-block;
-         color: #fff;
-         background: #4286ed;
-         border: 2px #fff solid;
-         width: 40px;
-         height: 40px;
-         text-align: center;
-         line-height: 40px;
-       }
-     }
-   }
- .noselect{
-   opacity: 0.5;
- }
-}
-.add-customers-bottom-btn{
-  width: 100%;
-  position: fixed;
-  height: 80px;
-  padding-top: 20px;
-  background: #fff;
-  bottom: 0;
-  text-align: right;
-  border-top: 1px #e0e5ed solid;
+  dl{
+    float: left;
+    width: 33%;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 30px;
+    color: #4286ed;
+    border-bottom:2px #4286ed solid ;
+  dt{
+    border-radius: 100%;
+    border: 2px #4286ed solid;
+    text-align: center;
+    margin: 10px auto;
+    width: 44px;
+    height: 44px;
+  span{
+    font-size: 28px;
+    border-radius: 100%;
+    display: inline-block;
+    color: #fff;
+    background: #4286ed;
+    border: 2px #fff solid;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+  }
+  }
+  }
+  .noselect{
+    opacity: 0.5;
+  }
+  }
+  .add-customers-bottom-btn{
+    width: 100%;
+    position: fixed;
+    height: 80px;
+    padding-top: 20px;
+    background: #fff;
+    bottom: 0;
+    text-align: right;
+    border-top: 1px #e0e5ed solid;
   span{
     display: inline-block;
     padding: 0 40px;
@@ -136,6 +137,10 @@ export default {
     background: #4286ed;
 
   }
-}
-}
+  }
+  .filter{
+    width: 78%;
+    height: 100%;
+  }
+  }
 </style>

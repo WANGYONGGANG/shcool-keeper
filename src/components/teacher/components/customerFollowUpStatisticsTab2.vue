@@ -20,11 +20,13 @@
   </div>
 </template>
 <script>
+import { api } from "../../../../static/js/request-api/request-api.js";
 import CalendarPacking from '../../general/calendarPacking'
 export default {
   components: {
     CalendarPacking
   },
+  props: ["schoolPartList"],
   data () {
     return {
       active: 1,
@@ -34,10 +36,41 @@ export default {
       }
     }
   },
+  mounted:function(){
+    // this.reportTalkStatistics(); 
+  },
   methods: {
     goTo (param) {
       this.$router.push({path: param})
-    }
+    },
+      //转化统计
+    reportTalkStatistics: function() {
+      let params ={};
+      params.begin_date =null;
+      params.campus_id=null;
+      params.end_date=null;
+      params.primary_owner=true;
+      
+      let _self = this;
+      api.reportTalkStatistics(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                   console.log(res.data.data);
+                }
+          } else {
+            let params = { msg: "沟通统计" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "沟通统计错误" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
   },
   computed : {
     item () {

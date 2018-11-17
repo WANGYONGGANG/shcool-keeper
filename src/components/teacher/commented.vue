@@ -1,4 +1,5 @@
 <template>
+<!--上课点评模块1  获取当前登录人的排课计划列表 -->
   <div class="commented">
     <calendar-packing ref="calendar"></calendar-packing>
     <div class="timetable-table" @click="goTo(data.id)"  v-for="data in Alldatas">
@@ -25,7 +26,17 @@ export default {
   },
   data () {
     return {
-      Alldatas:[],
+      Alldatas:[
+        //假数据
+        {
+        id:1,
+        className:'17暑假初二英语同步班_补课班级',
+        courseName:'17暑假初二英语同',
+        classPleanDate:'09:00-11:00',
+        evaluationCount:0,
+        recruitStudentsCount:2
+
+      }],
       date1: "",
       date: "",
     }
@@ -33,20 +44,20 @@ export default {
   mounted () {
     this.date1 = this.$refs.calendar.$el.innerText.substr(0, 10); //2018-11-01
     this.date2 = this.$refs.calendar.$el.innerText.substr(11); //2018-11-31
-    this.findMyClassRecord(this.date1,this.date2);
+    this.classEvaluationFindMyClassRecord(this.date1,this.date2);
   },
   methods: {
-    //findMyClassRecord获取当前登录人的排课计划
-    findMyClassRecord (date1, date2) {
+    //classEvaluationFindMyClassRecord获取当前登录人的排课计划
+    classEvaluationFindMyClassRecord (date1, date2) {
       let _self = this;
       let param = new URLSearchParams();
-      
+
       param.append('begin_date' , date1);//'2018-10-01'
       param.append('end_date' , date2);//'2018-10-31'
       param.append('pag ' , 1);
       param.append('rows' , 10);
 
-      api.findMyClassRecord(param).then( res => {
+      api.classEvaluationFindMyClassRecord(param).then( res => {
         if( res.data.code == 1 ){
           console.log(res.data);
           _self.Alldatas = res.data.data.rows;
@@ -145,7 +156,7 @@ export default {
         this.date2 = str1;
       }
       if (val == "上月") {
-        month = month - 1; 
+        month = month - 1;
         if (month == 0) {
           month = 12;
           year = year - 1;
@@ -173,7 +184,7 @@ export default {
         this.$toast(val);
         console.log(val);
         this.getDate(val);
-        this.findMyClassRecord(this.date1, this.date2);
+        this.classEvaluationFindMyClassRecord(this.date1, this.date2);
       }
     }
   }

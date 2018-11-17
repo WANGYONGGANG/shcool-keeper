@@ -128,9 +128,20 @@ export   const  api={
         return fetchGet(baseUrl+"/myClassRecord/findMyClassRecord",params)
     },
 
+    //上课点评 模块
+    //获取当前登录人的排课计划/classEvaluation/findMyClassRecord
+    classEvaluationFindMyClassRecord(params){
+        return fetchGet(baseUrl+"/classEvaluation/findMyClassRecord",params)
+    },
     //获取上课的学员信息，包含评论信息/classEvaluation/findAllClassAndCommentsInTheClass
     findAllClassAndCommentsInTheClass(params){
         return fetchGet(baseUrl+"/classEvaluation/findAllClassAndCommentsInTheClass",params)
+    },
+
+    //作业 模块
+    //findReleaseHomework 获取作业列表
+    findReleaseHomework(params){
+        return fetchGet(baseUrl+"/releaseHomework/findReleaseHomework",params)
     },
     //获取接到作业的全部学员/releaseHomework/ getAllReleaseHomeworkStudent
     getAllReleaseHomeworkStudent(params){
@@ -152,7 +163,7 @@ export   const  api={
     findMyClassRecordWithWeek(params){
         return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithWeek',params);
     },
-    //获取当前登录人员排课计划
+    //获取当前校区所有班级
     findAllClassInfo(params){
         return fetchGet(baseUrl+'/notice/findAllClassInfo',params);
     },
@@ -196,6 +207,36 @@ export   const  api={
      getMyReport(params){
         return fetchGet(baseUrl+'/intentionClientAPI/getMyReport',params);
     },
+    //获取学院沟通记录
+    findStudentCommunicationDetail(params){
+            return fetchGet(baseUrl+'/intentionClientAPI/findStudentCommunicationDetail',params);
+        },
+    //获取所有校区
+    refreshDepartment(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/refreshDepartment',params);
+    },
+     //获取招生来源
+     refreshSource(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/refreshSource',params);
+    },
+     //查询沟通统计
+     reportTransformationStatistics(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/ReportTransformationStatistics',params);
+    },
+    //转化统计查询
+    reportTalkStatistics(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/ReportTalkStatistics',params);
+    },
+    //获取上课的学员信息
+    getMyClassRoster(params){
+        return fetchGet(baseUrl+'/namingAPI/getMyClassRoster',params);
+    },  
+    // 获取沟通内容模板
+    findTalkContentTemplate(params){
+        return fetchGet(baseUrl+'/studentCommunication/findTalkContentTemplate',params);
+    },
+  
+  
 
 
    

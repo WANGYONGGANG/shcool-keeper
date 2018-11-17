@@ -2,7 +2,7 @@
   <van-popup v-model="isShow" position="bottom" @click-overlay="closePop">
     <dl class="ip-list">
       <dt>学员沟通排序</dt>
-      <dd v-for="(item, index) in items" @click="clickFn(item, index)" :data-index="index" :class="{ select: item.isSelect }">
+      <dd v-for="(item, index) in items" @click="clickFn(item, index)" :data-index="index" :class="{ select: item.isSelect }" :v-model="item.sort">
         {{item.text}}
         <span v-show="item.isSelect" ><van-icon name="upgrade"/></span>
         <span v-show="item.isSelect" class="fn-right"><van-icon name="success" /></span>
@@ -16,16 +16,19 @@ export default {
     return {
       items: [
         {
-        text:'按姓氏排序',
-        isSelect:true
+          text:'按沟通时间排序',
+          isSelect:true,
+          sort:'lastDate'
         },
         {
-          text:'按沟通时间排序',
-          isSelect:false
+          text:'按姓氏排序',
+          isSelect:false,
+          sort:'name'
         },
         {
           text:'按跟进时间排序',
-          isSelect:false
+          isSelect:false,
+          sort:'nextDate'
         }
       ]
     }
@@ -38,6 +41,8 @@ export default {
         v.isSelect = false
       })
       if(!item.isSelect){
+      //传递参数
+        this.$emit('sort',item.sort);
         item.isSelect = !item.isSelect
       }
     },
@@ -46,7 +51,7 @@ export default {
     }
   },
   mounted () {
-    this.items[this.$store.state.sortPopup.index]['isSelect'] = true
+    this.items[this.$store.state.sortPopup.index]['isSelect'] = false;
   },
   computed: {
     isShow: {

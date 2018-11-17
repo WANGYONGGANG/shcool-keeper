@@ -1,31 +1,52 @@
 <template>
+<!-- 上课点评模块2 获取上课的学员信息，包含评论信息 -->
+<!-- http://web.rexuejiewu.com.cn/teacher/commentedList?id=371    该链接中有已评价的学生 -->
   <div class="commented-list">
     <van-cell-group>
       <!-- <van-cell title="上课内容：" is-link to="/teacher/classContent"/> -->
       <!-- <van-cell title="查看家长回复" value="1" to="/teacher/replyList" is-link /> -->
     </van-cell-group>
 
+    <!--<div class="list-box" v-for="data in allDatas">-->
+      <!--<div class="list-box-l">-->
+        <!--<span class="box-l"><img src="../../assets/images/user/test.jpg"/></span>-->
+        <!--<span class="name">{{data.studentName}}</span>-->
+        <!--<span><van-checkbox v-model="checked"></van-checkbox></span>-->
+      <!--</div>-->
+      <!--<div class="list-box-r" @click="goTo();immediatelyCommented(data);">-->
+
+        <!--<span v-if="data.isEvaluation">已经点评</span>-->
+        <!--<span v-else>立即点评</span>-->
+
+      <!--<van-icon name="arrow" /></div>-->
+    <!--</div>-->
+
     <div class="list-box" v-for="data in allDatas">
-      <div class="list-box-l">
+      <div class="list-box-l" v-if="data.isEvaluation">
+        <span class="box-l fn-left"><img src="../../assets/images/user/test.jpg"/></span>
+        <ul class="box-r fn-left">
+          <li class="name">王紫潼</li>
+          <li class="time">2018.11.16 10.49</li>
+          <li class="detial">
+          孩子本节课表现好，下次继续努力孩子本节课表现好，下次继续努力孩子本节课表现好，下次继续努力孩子本节课表现好，下次继续努力
+        </li>
+        </ul>
+      </div>
+      <div class="list-box-l" v-else>
         <span class="box-l"><img src="../../assets/images/user/test.jpg"/></span>
         <span class="name">{{data.studentName}}</span>
         <span><van-checkbox v-model="checked"></van-checkbox></span>
       </div>
       <div class="list-box-r" @click="goTo();immediatelyCommented(data);">
-      
-        <span v-if="data.isEvaluation">已经点评</span>
-        <span v-else>立即点评</span>
-      
-      <van-icon name="arrow" /></div>
+        <span v-if="!data.isEvaluation">立即点评</span>
+        <van-icon name="arrow" /></div>
     </div>
-    
     <div class="list-bottom">
       <div class="bottom-l">
         <van-checkbox v-model="checked">全选</van-checkbox>
       </div>
       <div class="bottom-r"><span @click="goTo">上课点评（0）</span></div>
     </div>
-
   </div>
 </template>
 <script>
@@ -34,7 +55,15 @@ export default {
   data () {
     return {
       checked: false,
-      allDatas : [],
+      allDatas : [
+        {
+          studentName:'张跃龙'
+        },
+        {
+          isEvaluation:1,
+          studentName:'王紫潼'
+        }
+      ],
     }
   },
   mounted () {
@@ -63,7 +92,7 @@ export default {
         });
     },
   },
-  
+
 }
 </script>
 <style lang="less">
@@ -118,12 +147,28 @@ export default {
   border-radius: 50%;
   margin:23px 10px 0 0;
 
+
 img{
   width: 78px;
   height: 78px;
   border-radius: 50%;
 
 }
+}
+.box-r{
+  width: 563px;
+  .name{
+    font-size: 28px;
+  }
+  .time{
+    font-size: 20px;
+    color: #838383;
+    padding: 15px 0 5px;
+  }
+  .detial{
+    font-size: 22px;
+    line-height: 30px;
+  }
 }
 .name{
   font-size: 26px;

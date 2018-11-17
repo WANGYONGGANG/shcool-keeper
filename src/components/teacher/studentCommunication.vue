@@ -4,7 +4,7 @@
       <van-tab title="全部">
         <div class="list-search">
           <div class="list-search-l">
-            <van-search placeholder="姓名／电话／学号" background="#fff"  show-action >
+            <van-search placeholder="姓名／电话／学号" background="#fff" v-model="userMes"  show-action >
               <div slot="action" @click="onSearch">搜索</div>
             </van-search>
           </div>
@@ -24,7 +24,7 @@
                 <van-cell title="上次沟通" :value="data.lastDate" />
                 <van-cell title="下次沟通" :value="data.nextDate" />
                 <van-cell title="手机号码" :value="data.mobile" />
-                <van-cell title="剩余学费" value="23,300.00" class="tuition" />
+                <van-cell title="剩余学费" :value="data.AccountBalance" class="tuition" />
                 <van-cell title="学管师" :value="data.salePersonId" />
               </van-cell-group>
           </div>
@@ -33,38 +33,37 @@
               <span @click="goTo(urls.purchaseDetails,data.id)">查看购买详情</span>
           </div>
         </div>
-        
-        <!-- <div>
-          <div @click="goTo(urls.communicationRecord)">
-            <div class="card-list">
-              <div class="card-list-l">
-                <img class="img" src="../../assets/images/user/test.jpg"/>王梓桐<span class="times">沟通次数：2</span>
+      </van-tab>
+
+      <van-tab title="待沟通" >
+        <div v-for="data in noComment">
+          <div class="no-data" v-if="!data">
+          暂无沟通记录
+        </div>
+          <div v-if="data" @click="goTo(urls.communicationRecord,data.id)">
+              <div class="card-list" >
+                <div class="card-list-l">
+                  <img class="img" src="../../assets/images/user/test.jpg"/>{{data.name}}
+                  <span class="times">沟通次数：{{data.talkCount}}</span>
+                </div>
+                <div class="card-list-r"><van-icon name="arrow" /></div>
               </div>
-              <div class="card-list-r"><van-icon name="arrow" /></div>
-            </div>
-            <van-cell-group class="card-list-item">
-              <van-cell title="上次沟通" value="2018-07-04" />
-              <van-cell title="下次沟通" value="待定" />
-              <van-cell title="手机号码" value="1300000000" />
-              <van-cell title="剩余学费" value="23,300.00" class="tuition" />
-              <van-cell title="学管师" value="测试员" />
-            </van-cell-group>
+              <van-cell-group class="card-list-item">
+                <van-cell title="上次沟通" :value="data.lastDate" />
+                <van-cell title="下次沟通" :value="data.nextDate" />
+                <van-cell title="手机号码" :value="data.mobile" />
+                <van-cell title="剩余学费" :value="data.AccountBalance" class="tuition" />
+                <van-cell title="学管师" :value="data.salePersonId" />
+              </van-cell-group>
           </div>
           <div class="card-list-btn">
               <span>拨号</span>
-              <span @click="goTo(urls.purchaseDetails)">查看购买详情</span>
+              <span @click="goTo(urls.purchaseDetails,data.id)">查看购买详情</span>
           </div>
-        </div> -->
-
-      </van-tab>
-
-      <van-tab title="待沟通">
-        <div class="no-data">
-          暂无沟通记录
         </div>
       </van-tab>
     </van-tabs>
-    <sort-pop></sort-pop>
+    <sort-pop v-on:sort="getMes"></sort-pop>
     <van-popup v-model="filterShow" position="right" class="filter">
       <!-- <dl class="filter-dl">
         <dt>剩余学费(元)</dt>
@@ -135,6 +134,7 @@ export default {
   },
   data () {
     return {
+      a:'111',
       calendar:{
         item1:{
           isVisible:false,
@@ -162,20 +162,43 @@ export default {
         purchaseDetails: '/teacher/purchaseDetails'
       },
       commentDetail:[],
+      userMes:'',
+      noComment:[],
     }
   },
   mounted() {
-    this.getCommunicationDetail();
+    // this.sort = this.$refs.calendar.$el.lastDate; 
+    // console.log(this.sort);
+    this.filterShow = false;
+    this.getMes('lastDate');
+    this.noCommunication();
+
+    // 获取子组件中获取的日期
+    // this.date1 = this.$refs.calendar.$el.innerText.substr(0, 10); //2018-11-01
+    // this.date2 = this.$refs.calendar.$el.innerText.substr(11); //2018-11-31
+    // this.findReleaseHomework(this.date1, this.date2);
+
   },
   methods: {
+    // 接受参数
+    getMes: function(p){
+      this.getCommunicationDetail('',p);
+      console.log(p);
+    },
     goTo (url,parame) {
-      this.$router.push({path: url,query:{id:parame}})
+      this.$router.push({ path: url, query: { id: parame } })
     },
     // 沟通列表
-    getCommunicationDetail: function() {
+    getCommunicationDetail: function(data1, p) {
       let _self = this;
       let param = new URLSearchParams();
       param.append('all_or_other' ,false);
+      if(p){
+        param.append('sort' ,p);
+      }
+      if(data1){
+        param.append('query_content' ,data1);
+      }
       api.findStudentCommunication(param)
         .then(res => {
           if (res.code===1) {
@@ -189,20 +212,153 @@ export default {
           
         });
     },
+    // 未沟通
+    noCommunication: function(data1, p) {
+      let _self = this;
+      let param = new URLSearchParams();
+      param.append('all_or_other' ,true);
+      if(p){
+        param.append('sort' ,p);
+      }
+      if(data1){
+        param.append('query_content' ,data1);
+      }
+      api.findStudentCommunication(param)
+        .then(res => {
+          if (res.code===1) {
+              _self.noComment=res.data;
+              console.log(res.data);
+          } else {
+            
+          }
+        })
+        .catch(error => {
+          
+        });
+    },
     onSearch () {
+        this.getCommunicationDetail(this.userMes);
+    },
+    timeForMat(count) {
+      // 拼接时间
+      let time1 = new Date();
+      time1.setTime(time1.getTime() - 24 * 60 * 60 * 1000);
+      let Y1 = time1.getFullYear();
+      let M1 =
+        time1.getMonth() + 1 > 10
+          ? time1.getMonth() + 1
+          : "0" + (time1.getMonth() + 1);
+      let D1 = time1.getDate() > 10 ? time1.getDate() : "0" + time1.getDate();
+      let timer1 = Y1 + "-" + M1 + "-" + D1; // 当前时间
+      let time2 = new Date();
+      time2.setTime(time2.getTime() - 24 * 60 * 60 * 1000 * count);
+      let Y2 = time2.getFullYear();
+      let M2 =
+        time2.getMonth() + 1 > 9
+          ? time2.getMonth() + 1
+          : "0" + (time2.getMonth() + 1);
+      let D2 = time2.getDate() > 9 ? time2.getDate() : "0" + time2.getDate();
+      // let timer2 = Y2 + '-' + M2 + '-' + D2 // 之前的7天或者30天 // return { // // t1: timer1, // // t2: timer2 // }
+      this.date1 = Y2 + "-" + M2 + "-" + D2;
+      return Y2 + "-" + M2 + "-" + D2;
+    },
+    format(fmt, date) {
+      var o = {
+        "M+": date.getMonth() + 1, //月份
+        "d+": date.getDate(), //日
+        "h+": date.getHours(), //小时
+        "m+": date.getMinutes(), //分
+        "s+": date.getSeconds(), //秒
+        "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+        S: date.getMilliseconds() //毫秒
+      };
+      if (/(y+)/.test(fmt))
+        fmt = fmt.replace(
+          RegExp.$1,
+          (date.getFullYear() + "").substr(4 - RegExp.$1.length)
+        );
+      for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+          fmt = fmt.replace(
+            RegExp.$1,
+            RegExp.$1.length == 1
+              ? o[k]
+              : ("00" + o[k]).substr(("" + o[k]).length)
+          );
+      return fmt;
+    },
+    getDate(val) {
+      let date = new Date();
+      let seperator = "-";
+      let year = date.getFullYear(); //获取年份
+      let month = date.getMonth() + 1; //获取月份
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      let strDate = date.getDate(); //获取日期
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      let week = date.getDay(); //获取星期
+      if (val == "今天") {
+        this.date1 = year + seperator + month + seperator + strDate;
+        this.date2 = year + seperator + month + seperator + strDate;
+      }
+      if (val == "昨天") {
+        this.date1 = this.timeForMat(0);
+        this.date2 = this.timeForMat(0);
+      }
+      if (val == "本周") {
+        let num = week - 1;
+        date.setDate(date.getDate() - num); //本周第一天
+        let str = this.format("yyyy-MM-dd", date);
+        date.setDate(date.getDate() + 6); //本周最后一天
+        let str1 = this.format("yyyy-MM-dd", date);
+        this.date1 = str;
+        this.date2 = str1;
+      }
+      if (val == "最近7天") {
+        this.timeForMat(6);
+        this.date2 = year + seperator + month + seperator + strDate;
+      }
+      if (val == "最近30天") {
+        this.timeForMat(29);
+        this.date2 = year + seperator + month + seperator + strDate;
+      }
+      if (val == "本月") {
+        date.setDate(1); //本月第一天
+        var str = this.format("yyyy-MM-dd", date);
+        date.setMonth(date.getMonth() + 1); //下个月
+        date.setDate(date.getDate() - 1); //下个月第一天减1得到本月最后一天
+        var str1 = this.format("yyyy-MM-dd", date);
+        this.date1 = str;
+        this.date2 = str1;
+      }
+      if (val == "上月") {
+        month = month - 1; 
+        if (month == 0) {
+          month = 12;
+          year = year - 1;
+        }
+        if (month < 10) {
+          month = "0" + month;
+        }
+        this.date1 = year + "-" + month + "-" + "01"; //上个月的第一天
+        var myDate = new Date(year, month, 0);
+        this.date2 = year + "-" + month + "-" + myDate.getDate(); //上个月的最后一天
+      }
+      console.log(this.date1);
+      console.log(this.date2);
     },
     showFilterDia () {
       this.filterShow = true
     },
     showSortDia () {
       //排序弹出层显示
-      this.$store.state.sortPopup.isShow = true
+      this.$store.state.sortPopup.isShow = true;
     },
     showClassPop () {
       this.classFilterShow = true
-    },
-    goTo (param) {
-      this.$router.push({path: param})
     },
     resetFn (param){
       if(param === 2){

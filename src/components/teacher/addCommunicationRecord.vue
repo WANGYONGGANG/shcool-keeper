@@ -30,17 +30,30 @@
   </div>
 </template>
 <script>
-import BottomBtn from '../general/bottomBtn'
+import BottomBtn from '../general/bottomBtn';
+import CommunicationTemplate from './communicationTemplate'
 export default {
   components: {
-    BottomBtn
+    BottomBtn,
+    CommunicationTemplate
   },
   data () {
     return {
       buttonData: {
         text: '提交',
         url: ''
-      }
+      },
+      radio:'',
+      message:''
+    }
+  },
+  mounted(){
+    this.message = this.$route.query.con;
+  },
+  methods:{
+     // 接受参数
+    getMes: function(p){
+      // console.log(this.$route.query.con);
     }
   }
 }
