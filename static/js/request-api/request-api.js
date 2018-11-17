@@ -235,6 +235,62 @@ export   const  api={
     findTalkContentTemplate(params){
         return fetchGet(baseUrl+'/studentCommunication/findTalkContentTemplate',params);
     },
+     // 获取沟通内容模板
+     findTalkContentTemplate(params){
+        return fetchGet(baseUrl+'/studentCommunication/findTalkContentTemplate',params);
+    },
+     // 获取意向客户
+     findIntentionClientForStartPage(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/findIntentionClientForStartPage',params);
+    },
+    // 获取意向明细
+    getIntentionClientDetail(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/getIntentionClientDetail',params);
+    },
+   // 获取客户状态
+     refreshAdmissionsClientState(params){
+            return fetchGet(baseUrl+'/intentionClientAPI/refreshAdmissionsClientState',params);
+        },
+    // 获取主要责任人
+    refreshSalePerson(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/refreshSalePerson',params);
+    },
+     // 获取主要责任人
+     refreshSalePerson(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/refreshSalePerson',params);
+    },
+    //获取招生来源
+      refreshSource(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/refreshSource',params);
+    },
+     //获取所属校区
+     refreshDepartment(params){
+         return fetchGet(baseUrl+'/intentionClientAPI/refreshDepartment',params);
+     },
+    //获取公立学校
+    refreshStudentsPublicSchool(params){
+          return fetchGet(baseUrl+'/intentionClientAPI/refreshStudentsPublicSchool',params);
+        },
+    //获取所有年级
+    refreshGrade(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/refreshGrade',params);
+      },
+        //获取所有介绍人
+        findAllIntroducer(params){
+            return fetchPost(baseUrl+'/intentionClientAPI/findAllIntroducer',params);
+          },
+    //获取意向课程
+    findAllCourse(params){
+        return fetchPost(baseUrl+'/intentionClientAPI/findAllCourse',params);
+      },
+   //获取本次或者下次沟通方式
+   refreshAdmissionsTalkType(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/refreshAdmissionsTalkType',params);
+      },
+       
+    
+        
+    
   
   
 

@@ -18,8 +18,12 @@ export default {
   },
   methods: {
     exportResult (item,index) {
+      let newItem={};
+      newItem.item=item;
+      newItem.index=index;
       this.$emit('update:isShow', false)
-      this.$emit('update:selectItem', item)
+      this.$emit('update:selectItem', newItem);
+      // this.$emit('showNewDate',item);
     },
     closePop () {
       this.$emit('update:isShow', false)    }

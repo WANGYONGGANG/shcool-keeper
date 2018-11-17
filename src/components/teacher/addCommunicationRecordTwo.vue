@@ -2,12 +2,20 @@
   <div class="add-com-rec">
     <div class="recipient">
       <van-cell-group>
-        <van-cell title="沟通方式" required is-link />
-        <van-cell title="客户状态" value="转化成功" />
+        <van-cell title="沟通方式" is-link required  @click="clickFn('item01')" >
+               {{rightPopDates.item01.selectItem}}
+      </van-cell>
+       <van-cell title="客户状态" is-link required  @click="clickFn('item02')" >
+               {{rightPopDates.item02.selectItem}}
+      </van-cell>
+        <!-- <van-cell title="客户状态" value="转化成功" /> -->
         <van-cell title="意向级别" is-link >
           <van-rate :count="star" v-model="star"  readonly="true" />
         </van-cell>
-        <van-cell title="沟通结果" required is-link />
+        <!-- <van-cell title="沟通结果" required is-link /> -->
+         <van-cell title="沟通结果" is-link required  @click="clickFn('item03')" >
+               {{rightPopDates.item03.selectItem}}
+      </van-cell
         <van-cell title="承诺到访">
           <input type="checkbox">
         </van-cell>
@@ -34,23 +42,153 @@
       </van-cell>
     </van-cell-group>
     <bottom-btn :buttonData="buttonData"></bottom-btn>
+ <right-pop :filterShow.sync="rightPopDates.item01.isShow" :allDatas="rightPopDates.item01.data" :selectItem.sync="rightPopDates.item01.selectItem"></right-pop>
+<right-pop :filterShow.sync="rightPopDates.item02.isShow" :allDatas="rightPopDates.item02.data" :selectItem.sync="rightPopDates.item02.selectItem"></right-pop>
+ <right-pop :filterShow.sync="rightPopDates.item03.isShow" :allDatas="rightPopDates.item03.data" :selectItem.sync="rightPopDates.item03.selectItem"></right-pop>
   </div>
 </template>
 <script>
+import RightPop from '../general/rightPop'
+import { api } from "../../../static/js/request-api/request-api.js";
 import BottomBtn from '../general/bottomBtn'
 export default {
   components: {
-    BottomBtn
+    BottomBtn,
+    RightPop
   },
   data () {
     return {
       star: 4,
+        rightPopDates:{
+          item01:{
+            isShow:false,
+            selectItem:'',
+            data:[{
+              itemName:'潮人部落'
+            },
+              {
+                itemName:'金色阳光'
+              },
+              {
+                itemName:'欢乐大人'
+              }]
+          },
+           item02:{
+            isShow:false,
+            selectItem:'',
+            data:[{
+              itemName:'潮人部落'
+            },
+              {
+                itemName:'金色阳光'
+              },
+              {
+                itemName:'欢乐大人'
+              }]
+          },
+            item03:{
+            isShow:false,
+            selectItem:'',
+            data:[{
+              itemName:'有效沟通'
+            },
+              {
+                itemName:'无效沟通'
+              }]
+          }
+        },
       buttonData: {
         text: '提交',
         url: ''
       }
     }
-  }
+  },
+  mounted:function(){
+    this.refreshAdmissionsTalkType();
+    this.refreshAdmissionsClientState();
+  },
+   methods: {
+      clickFn (n){
+        this.rightPopDates[n].isShow = true
+      },
+       //获取客户状态
+    refreshAdmissionsClientState: function() {
+      let _self = this;
+      api.refreshAdmissionsClientState(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  // _self.recordList=res.data.data;
+                  let responsibleList=res.data.data;
+                  let newResponsibleList=[];
+                  for(let i=0;i<responsibleList.length;i++){
+                    let newObj={};
+                    newObj.itemName=responsibleList[i].name;
+                    newResponsibleList.push(newObj);
+                  }
+                  this.rightPopDates.item02.data=newResponsibleList;
+                  this.rightPopDates.item02.selectItem=responsibleList[0].name;
+                }
+          } else {
+            let params = { msg: "获取沟通方式" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取沟通方式" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+    //获取沟通方式
+    refreshAdmissionsTalkType: function() {
+      let _self = this;
+      api.refreshAdmissionsTalkType(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  // _self.recordList=res.data.data;
+                  let responsibleList=res.data.data;
+                  let newResponsibleList=[];
+                  for(let i=0;i<responsibleList.length;i++){
+                    let newObj={};
+                    newObj.itemName=responsibleList[i].name;
+                    newResponsibleList.push(newObj);
+                  }
+                  this.rightPopDates.item01.data=newResponsibleList;
+                  this.rightPopDates.item01.selectItem=responsibleList[0].name;
+                }
+          } else {
+            let params = { msg: "获取沟通方式" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取沟通方式" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+
+    },
+     watch:{
+      'this.rightPopDates.item01.selectItem':function(newval,oldval){
+        this.$toast(newval)
+      },
+      'this.rightPopDates.item02.selectItem':function(newval,oldval){
+        this.$toast(newval)
+      },
+      'this.rightPopDates.item04.selectItem':function(newval,oldval){
+        this.$toast(newval)
+      },
+      'this.rightPopDates.item05.selectItem':function(newval,oldval){
+        this.$toast(newval)
+      }
+    }
 }
 </script>
 <style lang="less">

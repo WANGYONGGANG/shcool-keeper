@@ -153,8 +153,7 @@ export default {
           result=res.data;
         }
         if (result.code == 1) {
-          // console.log(result.data.rows);
-          _self.allDatas = result.data.rows;
+          _self.allDatas = result.data;
           _self.totalCount=result.data.total;
 
         }

@@ -20,9 +20,9 @@
     </div>
     <div class="management-list" @click="goTo(urls.intentionalCustomersDetial,{'id':customer.id} )">
       <ul class="management-list-l fn-left">
-        <li>主责任人：{{customer.salePersonId}}</li>
+        <li>主责任人：{{customer.adminName}}</li>
         <li>手机号码：{{customer.mobile}}</li>
-        <li>客户状态：{{customer.willStateId}}</li>
+        <li>客户状态：{{customer.customerStatusName}}</li>
         <li>意项级别：<van-rate :count="star" v-model="star"  readonly="true" /></li>
       </ul>
       <div class="management-list-r fn-right">
@@ -52,7 +52,7 @@
       </dl>
       <van-cell-group class="class-name">
         <van-cell title="选择客户状态" is-link  @click="selectCustomerStatePop" />
-        <van-cell title="选择责任人" is-link />
+        <van-cell title="选择责任人" is-link  @click="Responsible"/>
       </van-cell-group>
       <div class="filter-btn">
         <span class="btn-reset" @click="resetFn">重置</span>
@@ -70,6 +70,8 @@
     <select-pop :title="sortData.title" :lists="sortData.lists" :isShow.sync="sortData.isShow" :selectItem.sync="sortData.selectItem"></select-pop>
     <!--选择客户状态-->
     <select-pop :lists="customerData.lists" :isShow.sync="customerData.isShow" :selectItem.sync="customerData.selectItem"></select-pop>
+        <!--选择客户状态-->
+    <select-pop :lists="ResponsibleList.lists" :isShow.sync="ResponsibleList.isShow" :selectItem.sync="ResponsibleList.selectItem"></select-pop>
   </div>
 </template>
 <script>
@@ -84,6 +86,7 @@ export default {
     data () {
     return {
       filterShow:false,
+      defaultSort:name,
       calendar:{
         item1:{
           isVisible:false,
@@ -129,11 +132,18 @@ export default {
         lists:['不限','未转化','未知','已上门','有效单','预约试听','未上门'],
         isShow:false,
         selectItem:'未知'
+      },
+       ResponsibleList:{
+        lists:['测试'],
+        isShow:false,
+        selectItem:'未知'
       }
     }
   },
   mounted:function(){
      this.initPage();
+     this.refreshAdmissionsClientState();
+     this.refreshSalePerson();
   },
   methods: {
     initPage:function(){
@@ -154,11 +164,12 @@ export default {
       let params ={};
       // params.order=desc;
       params.page =1;
-      params.query_conditions=null;
+      params.query_conditions=this.value;
       params.rows=10;
+      params.sort=this.defaultSort;
       
       let _self = this;
-      api.findIntentionClientForStartPage(null)
+      api.findIntentionClientForStartPage(params)
         .then(res => {
           if (res.status == 200) {
                 let code=res.data.code;
@@ -249,6 +260,63 @@ export default {
           // GlobalVue.$emit("blackBg", null);
         });
     },
+     //获取自定义客户状态
+      refreshAdmissionsClientState: function() {
+      let params ={};
+      let _self = this;
+      api.refreshAdmissionsClientState(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  let customerStatusList=res.data.data;
+                  let newCustomerStatusList=[];
+                  for(let i=0;i<customerStatusList.length;i++){
+                    newCustomerStatusList.push(customerStatusList[i].name);
+                  }
+                  this.customerData.lists=newCustomerStatusList;
+                  console.log(newCustomerStatusList);
+                }
+          } else {
+            let params = { msg: "获取自定义客户状态错误" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取自定义客户状态错误" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+      //获取自定义客户状态
+      refreshSalePerson: function() {
+      let params ={};
+      let _self = this;
+      api.refreshSalePerson(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  let responsibleList=res.data.data;
+                  let newResponsibleList=[];
+                  for(let i=0;i<responsibleList.length;i++){
+                    newResponsibleList.push(responsibleList[i].name);
+                  }
+                  this.ResponsibleList.lists=newResponsibleList;
+                }
+          } else {
+            let params = { msg: "获取主责任人" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取主责任人" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
     showCalendar (n) {
       //根据参数显示对应日历弹层
       switch(n)
@@ -282,26 +350,53 @@ export default {
       this.sortData.isShow=true
     },
     resetFn (param){
+      this.calendar.item1.date="";
+      this.calendar.item2.date="";
+      this.calendar.item3.date="";
+      this.calendar.item4.date="";
+      this.calendar.item5.date="";
+      this.calendar.item6.date="";
       this.filterShow = false
     },
     submitFn (param) {
       this.filterShow = false
     },
     onSearch () {
+      let value=this.value;
+      this.initPage();
 
     },
     selectCustomerStatePop () {
-      this.customerData.isShow=true
+      this.customerData.isShow=true;
+    },
+    //选择主要责任人
+    Responsible(){
+      this.ResponsibleList.isShow=true;
     },
     filterPopShow () {
-      this.filterShow = true
+      this.filterShow = true;
     }
   },
   watch:{
     'sortData.selectItem':function (n,o) {
+      if(n=="按姓名排序"){
+        this.defaultSort="name";
+      }else if(n=="按跟进时间排序"){
+        this.defaultSort="nextDate";
+      }else if(n=="按沟通时间排序"){
+        this.defaultSort="lastDate";
+      }else if(n=="按录入时间排序"){
+        this.defaultSort="createTime";
+      }
       this.$toast(n)
+      this.initPage();
     },
     'customerData.selectItem':function (n,o) {
+        console.log(n);
+      this.$toast(n)
+    },
+    'ResponsibleList.selectItem':function (n,o) {
+        console.log(n);
       this.$toast(n)
     }
   }

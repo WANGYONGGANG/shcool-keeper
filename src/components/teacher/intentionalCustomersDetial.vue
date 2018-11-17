@@ -4,7 +4,7 @@
     <van-cell-group>
       <van-cell title="姓名" v-bind:value="customerObj.name" />
       <van-cell title="录入时间" v-bind:value="customerObj.createTime" />
-      <van-cell title="性别" v-bind:value="customerObj.sex"/>
+      <van-cell title="性别" v-bind:value="sexToSexName(customerObj.sex)"/>
       <van-cell title="公立学校" v-bind:value="customerObj.studentsPublicSchoolName" />
       <van-cell title="手机号码" v-bind:value="customerObj.mobile" />
     </van-cell-group>
@@ -45,6 +45,16 @@ export default {
   methods: {
     goTo (url,queryParam) {
       this.$router.push({path: url,query:queryParam})
+    },
+    sexToSexName:function(sex){
+      if(sex=="1"){
+        return "未知";
+      }else if(sex=="2"){
+        return "男";
+      }else if(sex=="3"){
+        return "女";
+      }
+
     },
     //获取意向客户明细
     getIntentionClientDetail: function() {

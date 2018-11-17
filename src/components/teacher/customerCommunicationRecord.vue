@@ -1,17 +1,20 @@
 <template>
   <div class="customer-communication-record">
     <calendar-packing></calendar-packing>
-      <ul class="record-list">
+      <ul class="record-list" v-for="record in recordList">
         <li class="record-list-item01">
           <span class="list-item01-l"><img class="img" src="../../assets/images/user/test.jpg"/></span>
-          <span class="list-item01-m">内置管理员<br/><i class="time">2018-07-16 20:09:56</i></span>
-          <span class="list-item01-r">无效沟通<i class="edit"><van-icon name="edit" /></i></span>
+          <span class="list-item01-m">{{record.studentName}}<br/><i class="time">{{record.createTime}}</i></span>
+          <span class="list-item01-r">{{record.talkName}}<i class="edit"><van-icon name="edit" /></i></span>
         </li>
-        <li class="record-list-item02">已回收客户重新分配：主责任人</li>
-        <li class="record-list-item03">下次跟进：2018-07-16</li>
-        <li class="record-list-item03">到访日期：2018-07-27</li>
+        <li class="record-list-item02">{{record.talkContent}}</li>
+        <li class="record-list-item03">下次跟进：{{record.nextTalkDate}}</li>
+        <li class="record-list-item03">到访日期：{{record.nextVisitDate}}</li>
+        <!-- <li class="record-list-item04">是否到访<van-switch v-model="checked" size="25px" /><span>实到访日：{{record.visitedDate}}</span></li> -->
+         <li class="record-list-item04">是否到访:{{booleanToYes(record.visited)}}<span>实到访日：{{record.visitedDate}}</span></li>
+        <li class="record-list-item05">{{record.clientStateName}}</li>
       </ul>
-    <ul class="record-list">
+    <!-- <ul class="record-list">
       <li class="record-list-item01">
         <span class="list-item01-l"></span>
         <span class="list-item01-m">内置管理员<br/><i class="time">2018-07-16 20:09:56</i></span>
@@ -21,7 +24,7 @@
       <li class="record-list-item03">到访日期：2018-07-27</li>
       <li class="record-list-item04">是否到访<van-switch v-model="checked" size="25px" /><span>实到访日：2018-07-04 17:00</span></li>
       <li class="record-list-item05">待审核</li>
-    </ul>
+    </ul> -->
     <commented-pop></commented-pop>
     <div class="bottom-btn" @click="goTo(urls.addCommunicationRecordTwo)">添加沟通记录</div>
   </div>
@@ -36,6 +39,7 @@ export default {
   data () {
     return {
       checked: true,
+      recordList:[],
       urls: {
         addCommunicationRecordTwo: '/teacher/addCommunicationRecordTwo'
       }
@@ -48,20 +52,29 @@ export default {
     goTo (url) {
       this.$router.push({path: url})
     },
+    booleanToYes:function(isVisited){
+      if(isVisited){
+        return "是";
+      }else{
+        return "否";
+      }
+
+    },
     //获取学院沟通记录
     findStudentCommunicationDetail: function() {
       let student_id= this.$route.query.studentId;
       let begin_date=null;
       let  end_date=null;
       let params ={};
-      params.student_id =student_id;      
+      // params.student_id =student_id;   
+      params.student_id =98;     
       let _self = this;
       api.findStudentCommunicationDetail(params)
         .then(res => {
           if (res.status == 200) {
                 let code=res.data.code;
                 if(code===1){
-                  console.log(res.data.data);
+                  _self.recordList=res.data.data;
                 }
           } else {
             let params = { msg: "获取意向客户明细" };
