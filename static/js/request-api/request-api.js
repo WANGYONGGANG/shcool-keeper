@@ -16,6 +16,10 @@ export   const  api={
     resetPassword(params){
         return fetchPost(baseUrl+'/user/resetPassword',params)
     },
+    // 获取当前登录人的排课计划
+    findMyClassRecord(params){
+        return fetchGet(baseUrl+'/myClassRecord/findMyClassRecord',params)
+    },
 
     
     // 获取登录用户信息
@@ -124,24 +128,13 @@ export   const  api={
         return fetchGet(baseUrl+"/myClassRecord/findMyClassRecord",params)
     },
 
-    //评论模块
-    //获取当前登录人的排课计划/classEvaluation/findMyClassRecord
-    findMyClassRecord(params){
-        return fetchGet(baseUrl+"/classEvaluation/findMyClassRecord",params)
-    },
     //获取上课的学员信息，包含评论信息/classEvaluation/findAllClassAndCommentsInTheClass
     findAllClassAndCommentsInTheClass(params){
         return fetchGet(baseUrl+"/classEvaluation/findAllClassAndCommentsInTheClass",params)
     },
-
-    //作业
-    //findReleaseHomework 获取作业列表
-    findReleaseHomework(params){
-        return fetchGet(baseUrl+"/releaseHomework/findReleaseHomework",params)
-    },
     //获取接到作业的全部学员/releaseHomework/ getAllReleaseHomeworkStudent
     getAllReleaseHomeworkStudent(params){
-        return fetchGet(baseUrl+"/releaseHomework/getAllReleaseHomeworkStudent",params)
+        return fetchGet(baseUrl+"/releaseHomework/ getAllReleaseHomeworkStudent",params)
     },
     //获取接到作业的学员并且是没有提交的/releaseHomework/getAllReleaseHomeworkStudentAndSubmit
     getAllReleaseHomeworkStudentAndSubmit(params){
@@ -187,14 +180,6 @@ export   const  api={
      getNewCustomersToday(params){
         return fetchGet(baseUrl+'/intentionClientAPI/getNewCustomersToday',params);
     },
-    //获取沟通列表
-    findStudentCommunication(params){
-        return fetchPost(baseUrl+'/studentCommunication/findStudentCommunication',params);
-    },
-       //获取意向客户
-       findIntentionClientForStartPage(params){
-        return fetchGet(baseUrl+'/intentionClientAPI/findIntentionClientForStartPage',params);
-    },
      //获取沟通明细
      getCommunicationDetail(params){
         return fetchGet(baseUrl+'/studentCommunication/findStudentCommunicationDetail',params);
@@ -207,12 +192,10 @@ export   const  api={
     findAllClassRoster(params){
         return fetchGet(baseUrl+'/classRoster/findAllClassRoster',params);
     },
-     //获取意向客户明细
-     getIntentionClientDetail(params){
-        return fetchGet(baseUrl+'intentionClientAPI/getIntentionClientDetail',params);
+     //
+     getMyReport(params){
+        return fetchGet(baseUrl+'/intentionClientAPI/getMyReport',params);
     },
-  
-
 
 
    
