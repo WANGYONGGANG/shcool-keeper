@@ -292,6 +292,14 @@ export   const  api={
     findAllCourse(params){
         return fetchPost(baseUrl+'/intentionClientAPI/findAllCourse',params);
       },
+         //删除意向客户
+         deleteIntentionClient(params){
+        return fetchPost(baseUrl+'/intentionClientAPI/deleteIntentionClient',params);
+      },
+        //转正式
+        transformToRegular(params){
+            return fetchPost(baseUrl+'/intentionClientAPI/transformToRegular',params);
+          },
    //获取本次或者下次沟通方式
    refreshAdmissionsTalkType(params){
         return fetchGet(baseUrl+'/intentionClientAPI/refreshAdmissionsTalkType',params);
@@ -312,6 +320,18 @@ export   const  api={
                      findAllStudent(params){
                     return fetchGet(baseUrl+'/namingAPI/findAllStudent',params);
                   },
+                      //招生来源
+                      ReportCustomerAnalysisForSourceway(params){
+                        return fetchGet(baseUrl+'/intentionClientAPI/ReportCustomerAnalysisForSourceway',params);
+                      },
+                     //漏斗
+                     ReportCustomerAnalysisForState(params){
+                        return fetchGet(baseUrl+'/intentionClientAPI/ReportCustomerAnalysisForState',params);
+                      },
+                       //意向级别
+                       ReportCustomerAnalysisForWillLevel(params){
+                        return fetchGet(baseUrl+'/intentionClientAPI/ReportCustomerAnalysisForWillLevel',params);
+                      },
            
    
        

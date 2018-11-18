@@ -3,16 +3,16 @@
     <div class="class-tab">
       <calendar-packing></calendar-packing>
     </div>
-    <van-cell-group class="card-list-item">
-      <van-cell title="选择校区" is-link class="line65"/>
-    </van-cell-group>
+       <van-cell title="选择校区"  is-link class="line65"  @click="sortPopShow">
+          {{sortData.selectItem.item}}
+      </van-cell>
     <div class="chart02">
       <div id="chart02"></div>
     </div>
     <van-cell-group class="card-list-item">
-      <van-cell title="未指定" value="1" />
-      <van-cell title="原有测试无效资源" value="0" />
-      <van-cell title="原有转化成功" value="0" />
+      <van-cell v-bind:title="resource.name" v-bind:value="resource.sum"  v-for="resource in   resourceList" />
+      <!-- <van-cell title="原有测试无效资源" value="0" /> -->
+      <!-- <van-cell title="原有转化成功" value="0" />
       <van-cell title="原有在线咨询" value="0" />
       <van-cell title="原有上门" value="0" />
       <van-cell title="原有来电咨询" value="0" />
@@ -24,17 +24,21 @@
       <van-cell title="未上门" value="0" />
       <van-cell title="预约试听" value="0" />
       <van-cell title="有效单" value="0" />
-      <van-cell title="已上门" value="0" />
+      <van-cell title="已上门" value="0" /> -->
     </van-cell-group>
     <bottom-btn :buttonData="buttonData2"></bottom-btn>
+        <select-pop :title="sortData.title" :lists="sortData.lists" :isShow.sync="sortData.isShow" :selectItem.sync="sortData.selectItem"></select-pop>
   </div>
 </template>
 <script>
+import { api } from "../../../../static/js/request-api/request-api.js";
 import CalendarPacking from '../../general/calendarPacking'
 import BottomBtn from '../../general/bottomBtn'
+import SelectPop from '../../popup/bottomSelectPop'
 export default {
   components: {
     BottomBtn,
+        SelectPop,
     CalendarPacking
   },
   data () {
@@ -42,17 +46,88 @@ export default {
       buttonData2: {
         text: '查看详情',
         url: '/teacher/customerContrast'
-      }
+      },
+        schoolPartList:null,
+        resourceList:null,
+        sortData:{
+        title:'排序方式',
+        lists:['选择校区'],
+        isShow:false,
+        selectItem:''
+      },
     }
   },
   mounted () {
     this.drawLine()
+        this.refreshDepartment();
+        this.ReportCustomerAnalysisForState();
   },
   methods: {
     changeTab (index, title) {
       if (title === '意向级别') {
         this.drawLine()
       }
+    },
+          //销售漏斗
+    ReportCustomerAnalysisForState: function(campus_ids) {
+      let params ={};      
+      params.begin_date="2018-07-01";
+      params.campus_ids="[8,9,10]";
+      params.end_date="2018-11-30";
+      let _self = this;
+      api.ReportCustomerAnalysisForState(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  this.resourceList=res.data.data;
+                  console.log(res.data.data);
+                }
+          } else {
+            let params = { msg: "查询所有校区" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "查询所有校区" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+      initDate(){
+      let schoolPartList=this.schoolPartList;
+       for(let i=0;i<schoolPartList.length;i++){
+         this.sortData.lists.push(schoolPartList[i].name);
+       }
+       this.sortData.selectItem.item=schoolPartList[0].name;
+    },
+         //查询所有校区
+    refreshDepartment: function() {
+      let params ={};      
+      let _self = this;
+      api.refreshDepartment(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.schoolPartList=res.data.data;
+                  _self.initDate();
+                }
+          } else {
+            let params = { msg: "查询所有校区" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "查询所有校区" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+    sortPopShow(param){
+         this.sortData.isShow=true;
     },
     goTo (param) {
       this.$router.push({path: param})
@@ -126,6 +201,10 @@ export default {
     }
   },
   watch:{
+       'sortData.selectItem':function (n,o) {
+       this.$toast(n.item);
+       this.reportTransformationStatistics(this.schoolPartList[n.index].id);
+    },
     item :{
       //日期快速切换值
       handler(val){

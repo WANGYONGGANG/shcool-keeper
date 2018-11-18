@@ -10,12 +10,12 @@
       </van-cell>
         <!-- <van-cell title="客户状态" value="转化成功" /> -->
         <van-cell title="意向级别" is-link >
-          <van-rate :count="star" v-model="star"  readonly="true" />
+          <van-rate :count="star" v-model="star" />
         </van-cell>
         <!-- <van-cell title="沟通结果" required is-link /> -->
          <van-cell title="沟通结果" is-link required  @click="clickFn('item03')" >
                {{rightPopDates.item03.selectItem}}
-      </van-cell
+      </van-cell>
         <van-cell title="承诺到访">
           <input type="checkbox">
         </van-cell>
@@ -25,7 +25,7 @@
       <van-cell-group>
         <van-cell title="沟通内容" required value="选择模版" to="/teacher/communicationTemplate" is-link />
         <van-field
-          v-model="message"
+          v-model="message1"
           type="textarea"
           placeholder="请输入沟通内容（必填，限300字）"
           rows="1"
@@ -33,18 +33,26 @@
       </van-cell-group>
     </div>
     <van-cell-group class="next">
-      <van-cell title="下次跟进类型" value="请选择" is-link />
-      <van-cell title="下次跟进时间" required>
+      <van-cell title="下次沟通类型" value="请选择" is-link  @click="clickFn('item04')"> {{rightPopDates.item04.selectItem}}</van-cell>
+        <van-cell title="下次沟通时间" > <van-field
+          v-model="message2"
+          type="textarea"
+          placeholder="输入下次沟通时间"
+          rows="1"
+        /></van-cell>
+       
+      <!-- <van-cell title="下次沟通时间" required>
         <van-radio-group v-model="radio" class="next-time">
           <van-radio name="1">选择时间</van-radio>
           <van-radio name="2">时间待定</van-radio>
         </van-radio-group>
-      </van-cell>
+      </van-cell> -->
     </van-cell-group>
-    <bottom-btn :buttonData="buttonData"></bottom-btn>
- <right-pop :filterShow.sync="rightPopDates.item01.isShow" :allDatas="rightPopDates.item01.data" :selectItem.sync="rightPopDates.item01.selectItem"></right-pop>
+    <bottom-btn :buttonData="buttonData"  v-on:click="addRecord"></bottom-btn>
+ <right-pop :filterShow.sync="rightPopDates.item01.isShow" :allDatas="rightPopDates.item01.data" :selectItem.sync="rightPopDates.item01.selectItem" :selectID.sync="rightPopDates.item01.selectID"></right-pop>
 <right-pop :filterShow.sync="rightPopDates.item02.isShow" :allDatas="rightPopDates.item02.data" :selectItem.sync="rightPopDates.item02.selectItem"></right-pop>
  <right-pop :filterShow.sync="rightPopDates.item03.isShow" :allDatas="rightPopDates.item03.data" :selectItem.sync="rightPopDates.item03.selectItem"></right-pop>
+  <right-pop :filterShow.sync="rightPopDates.item04.isShow" :allDatas="rightPopDates.item04.data" :selectItem.sync="rightPopDates.item04.selectItem"></right-pop>
   </div>
 </template>
 <script>
@@ -59,18 +67,31 @@ export default {
   data () {
     return {
       star: 4,
+      message1:'sdfsdf',
+      message2:'',
         rightPopDates:{
           item01:{
             isShow:false,
             selectItem:'',
+            selectID: 1,
             data:[{
-              itemName:'潮人部落'
+              itemName:'潮人部落',
             },
               {
                 itemName:'金色阳光'
               },
               {
                 itemName:'欢乐大人'
+              }]
+          },
+            item04:{
+            isShow:false,
+            selectItem:'',
+            data:[{
+              itemName:'准确时间'
+            },
+              {
+                itemName:'待定'
               }]
           },
            item02:{
@@ -106,11 +127,15 @@ export default {
   mounted:function(){
     this.refreshAdmissionsTalkType();
     this.refreshAdmissionsClientState();
+    alert('111')
   },
    methods: {
       clickFn (n){
         this.rightPopDates[n].isShow = true
       },
+    addRecord:function(){
+
+    },
        //获取客户状态
     refreshAdmissionsClientState: function() {
       let _self = this;
@@ -130,6 +155,7 @@ export default {
                   this.rightPopDates.item02.data=newResponsibleList;
                   this.rightPopDates.item02.selectItem=responsibleList[0].name;
                 }
+                console.log(this.rightPopDates)
           } else {
             let params = { msg: "获取沟通方式" };
             // GlobalVue.$emit("alert", params);
@@ -156,10 +182,12 @@ export default {
                   for(let i=0;i<responsibleList.length;i++){
                     let newObj={};
                     newObj.itemName=responsibleList[i].name;
+                    newObj.id=responsibleList[i].id;
                     newResponsibleList.push(newObj);
                   }
                   this.rightPopDates.item01.data=newResponsibleList;
                   this.rightPopDates.item01.selectItem=responsibleList[0].name;
+                   this.rightPopDates.item01.selectID=responsibleList[0].id;
                 }
           } else {
             let params = { msg: "获取沟通方式" };
@@ -177,8 +205,18 @@ export default {
     },
      watch:{
       'this.rightPopDates.item01.selectItem':function(newval,oldval){
+        alert('111')
+        console.log("**********");
+        
         this.$toast(newval)
       },
+       'this.rightPopDates.item01.selectID':{
+         handler(n,o){
+           alert('222')
+           this.$toast(n)
+         },
+         deep:true
+       },
       'this.rightPopDates.item02.selectItem':function(newval,oldval){
         this.$toast(newval)
       },

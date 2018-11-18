@@ -23,7 +23,7 @@
         <li>主责任人：{{customer.adminName}}</li>
         <li>手机号码：{{customer.mobile}}</li>
         <li>客户状态：{{customer.customerStatusName}}</li>
-        <li>意项级别：<van-rate :count="star" v-model="star"  readonly="true" /></li>
+        <li>意项级别：<van-rate :count="customer.willLevel" v-model="star"  readonly="true" /></li>
       </ul>
       <div class="management-list-r fn-right">
         <span>

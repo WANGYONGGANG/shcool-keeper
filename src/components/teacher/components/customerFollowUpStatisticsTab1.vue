@@ -50,7 +50,7 @@ export default {
     }
   },
   mounted:function(){
-    this.reportTransformationStatistics(); 
+    this.reportTalkStatistics(); 
     this.refreshDepartment();
   
   },
@@ -93,14 +93,15 @@ export default {
         });
     },
      //沟通统计
-    reportTransformationStatistics: function(campus_id) {
+    reportTalkStatistics: function(campus_id) {
       let params ={};
       params.begin_date =null;
-      params.campus_id=campus_id;
+      params.campus_id=10;
       params.end_date=null;
+      params.primary_owner=false;
       
       let _self = this;
-      api.reportTransformationStatistics(params)
+      api.reportTalkStatistics(params)
         .then(res => {
           if (res.status == 200) {
                 let code=res.data.code;

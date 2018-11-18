@@ -52,7 +52,7 @@ export default {
     }
   },
   mounted:function(){
-    // this.reportTalkStatistics(); 
+    this.ReportTransformationStatistics(); 
     this.refreshDepartment();
   },
   methods: {
@@ -97,9 +97,9 @@ export default {
       //转化统计
     ReportTransformationStatistics: function(campus_id) {
       let params ={};
-      params.begin_date =null;
-      params.campus_id=campus_id;
-      params.end_date=null;      
+      params.begin_date ="2018-07-01";
+      params.campus_id=4;
+      params.end_date="2018-11-30";      
       let _self = this;
       api.ReportTransformationStatistics(params)
         .then(res => {
@@ -137,6 +137,7 @@ export default {
     item :{
       //日期快速切换值
       handler(val){
+        console.log(val);
         this.$toast(val)
       }
     }
