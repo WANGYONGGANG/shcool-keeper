@@ -79,7 +79,7 @@
           <input type="text" placeholder="开始日期" @click="showCalendar(3)" v-model="calendar.item3.date" /> --- <input type="text" placeholder="结束日期" @click="showCalendar(4)" v-model="calendar.item4.date" />
         </dd></dl>
       <van-cell-group class="class-name">
-        <van-cell title="班级名称" is-link  @click="showClassPop" />
+        <van-cell :title="className" is-link  @click="showClassPop" />
       </van-cell-group>
       <div class="filter-btn">
         <span class="btn-reset" @click="resetFn">重置</span>
@@ -88,32 +88,20 @@
     </van-popup>
     <van-popup v-model="classFilterShow" position="right" class="filter">
       <div class="class-back" @click="goBack"><van-icon name="arrow-left" />选择班级</div>
-      <div class="class-search"><input type="text" placeholder="请输入名称" /></div>
+      <div class="class-search"><input type="text" placeholder="请输入名称" @input="search"/></div>
       <van-radio-group v-model="radio">
         <van-cell-group class="filter-cell">
-          <van-cell title="01-美术01-启蒙涂鸦_试听班级" clickable @click="radio = '1'">
-            <van-radio name="1" />
+          <van-cell v-for="data in list"  :title="data.className" clickable>
+            <van-radio :name="data.id" />
           </van-cell>
-          <van-cell title="01-数学111_试听班级" clickable @click="radio = '2'">
-          <van-radio name="2" />
-        </van-cell>
-          <van-cell title="01-数学111_试听班级" clickable @click="radio = '3'">
-            <van-radio name="3" />
-          </van-cell>
-          <van-cell title="01-数学111_试听班级" clickable @click="radio = '4'">
-            <van-radio name="4" />
-          </van-cell>
-          <van-cell title="01-数学111_试听班级" clickable @click="radio = '5'">
-            <van-radio name="5" />
-          </van-cell>
-          <van-cell title="01-数学111_试听班级" clickable @click="radio = '6'">
-            <van-radio name="6" />
-          </van-cell>
+          <!-- <van-cell :title="data.className" clickable @click="radio = '2'">
+            <van-radio name="2" />
+          </van-cell> -->
         </van-cell-group>
       </van-radio-group>
       <div class="filter-btn">
-        <span class="btn-reset" @click="resetFn(2)">重置</span>
-        <span class="btn-submit" @click="submitFn(2)">确定</span>
+        <span class="btn-reset" @click="resetFn()">重置</span>
+        <span class="btn-submit" @click="submitFn()">确定</span>
       </div>
     </van-popup>
     <!--每个日历选择按钮都需要调用一个日历组件-->
@@ -153,7 +141,7 @@ export default {
           date:''
         },
       },
-      radio:'1',
+      radio:'',
       filterShow:false,
       classFilterShow:false,
       active: 1,
@@ -164,10 +152,12 @@ export default {
       commentDetail:[],
       userMes:'',
       noComment:[],
+      list:[],
+      className:'班级名称'
     }
   },
   mounted() {
-    // this.sort = this.$refs.calendar.$el.lastDate; 
+    // this.sort = this.$refs.calendar.$el.lastDate;
     // console.log(this.sort);
     this.filterShow = false;
     this.getMes('lastDate');
@@ -205,11 +195,11 @@ export default {
               _self.commentDetail=res.data;
               console.log(res.data);
           } else {
-            
+
           }
         })
         .catch(error => {
-          
+
         });
     },
     // 未沟通
@@ -229,11 +219,11 @@ export default {
               _self.noComment=res.data;
               console.log(res.data);
           } else {
-            
+
           }
         })
         .catch(error => {
-          
+
         });
     },
     onSearch () {
@@ -335,7 +325,7 @@ export default {
         this.date2 = str1;
       }
       if (val == "上月") {
-        month = month - 1; 
+        month = month - 1;
         if (month == 0) {
           month = 12;
           year = year - 1;
@@ -361,18 +351,48 @@ export default {
       this.classFilterShow = true
     },
     resetFn (param){
-      if(param === 2){
-        this.classFilterShow = false
-      }else{
+      if(this.classFilterShow){
+        this.classFilterShow = false;
+
+      }else {
+        this.classFilterShow = false;
         this.filterShow = false
       }
     },
+    search (value) {
+        let _self = this;
+        let param = new URLSearchParams();
+        param.append('className' ,value.target.value);
+        api.findAllGrade(param).then(res => {
+          console.log(res.data);
+          if (res.data.code == 1) {
+            _self.list = res.data.data;
+          }
+      });
+      console.log(value.target.value)  //todo 关键词搜索用
+
+    },
     submitFn (param) {
-      if(param === 2){
-        this.classFilterShow = false
-      }else{
+//      if(param === 2){
+//        this.classFilterShow = false
+//      }else{
+//        this.filterShow = false
+//      }
+
+      if(this.classFilterShow){
+        this.classFilterShow = false;
+
+      }else {
+        this.classFilterShow = false;
         this.filterShow = false
       }
+      for(var i=0;i<this.list.length;i++){
+          if(this.list[i].id == this.radio){
+              this.className = this.list[i].className
+          }
+          
+      }
+
     },
     goBack () {
       this.classFilterShow = false
@@ -397,7 +417,7 @@ export default {
           Toast('出错了');
       }
     },
-    
+
   }
 }
 </script>

@@ -2,9 +2,9 @@
   <div class="communication-template">
     <van-checkbox-group v-model="result">
       <van-checkbox
-        v-for="(item, index) in list"
-        :key="index"
-        :name="item.content"
+        v-for="(item,index) in list"
+        :key="item.id"
+        :name="item"
       >
         <dl>
           <dt>{{item.name}}</dt>
@@ -27,10 +27,20 @@ export default {
     return {
       result: [],
       list: [],
+
     }
   },
   mounted(){
-    this.findTalkContentTemplate();
+      if(this.$route.query.type == 1){
+          //todo 沟通类型接口
+        this.findTalkType();
+      }else if(this.$route.query.type == 2){
+          //todo 沟通结果接口
+      }else if(this.$route.query.type == 3){
+        this.findTalkContentTemplate();
+      }else if(this.$route.query.type == 4){
+          //todo 跟进类型接口
+      }
   },
   methods:{
     findTalkContentTemplate: function() {
@@ -38,19 +48,28 @@ export default {
         api.findTalkContentTemplate().then(res => {
           if (res.data.code == 1) {
             _self.list = res.data.data;
-          console.log(_self.list);
+          }
+      });
+    },
+    findTalkType: function() {
+        let _self = this;
+        api.findTalkType().then(res => {
+          if (res.data.code == 1) {
+            _self.list = res.data.data;
           }
       });
     },
     getCon:function(){
       // this.$emit('content',this.result[0]);
-        //console.log(this.result);
-        this.$router.push({ path: '/teacher/addCommunicationRecord', query: { con: this.result[0] } })
+        console.log(this.result.name);
+//        this.$router.push({ path: '/teacher/addCommunicationRecord', query: { con: this.result[0] } })
+
+        this.$router.push({ name: 'addCommunicationRecord', params: { con: this.result,type : this.$route.query.type}});
     }
   }
 }
 </script>
-<style lang="less">
+<style lang="less" rel="stylesheet/less">
   .communication-template{
   .van-checkbox__icon, .van-checkbox__label{
     margin-left: 30px;

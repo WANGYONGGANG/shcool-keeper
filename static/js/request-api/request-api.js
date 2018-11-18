@@ -290,7 +290,16 @@ export   const  api={
    //获取本次或者下次沟通方式
    refreshAdmissionsTalkType(params){
         return fetchGet(baseUrl+'/intentionClientAPI/refreshAdmissionsTalkType',params);
-      },
+      },     
+    // 获取沟通类型
+    findTalkType(params){
+        return fetchGet(baseUrl+'/studentCommunication/findTalkType',params);
+    },
+    // 取获班级
+    findAllGrade(params){
+        return fetchGet(baseUrl+'/studentCommunication/findAllGrade',params);
+    },
+
        
     
         

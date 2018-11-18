@@ -2,15 +2,15 @@
   <div class="add-com-rec">
     <div class="recipient">
       <van-cell-group>
-        <van-cell title="沟通类型" required value="请选择" is-link />
-        <van-cell title="沟通结果" required value="请选择" is-link />
+        <van-cell title="沟通类型" required  v-model="talkType" to="/teacher/communicationTemplate?type=1" is-link />
+        <van-cell title="沟通结果" required v-model="talkResult" to="/teacher/communicationTemplate?type=2" is-link />
       </van-cell-group>
     </div>
     <div class="class-evaluation">
       <van-cell-group>
-        <van-cell title="沟通内容" required value="选择模版" to="/teacher/communicationTemplate" is-link />
+        <van-cell title="沟通内容" required value="请选择" to="/teacher/communicationTemplate?type=3" is-link />
         <van-field
-          v-model="message"
+          v-model="talkConent"
           type="textarea"
           placeholder="请输入沟通内容（必填，限300字）"
           rows="1"
@@ -18,7 +18,7 @@
       </van-cell-group>
     </div>
     <van-cell-group class="next">
-      <van-cell title="下次跟进类型" value="请选择" is-link />
+      <van-cell title="下次跟进类型" v-model="followType" to="/teacher/communicationTemplate?type=4" is-link />
       <van-cell title="下次跟进时间">
         <van-radio-group v-model="radio" class="next-time">
           <van-radio name="1">选择时间</van-radio>
@@ -44,11 +44,32 @@ export default {
         url: ''
       },
       radio:'',
-      message:''
+      talkType:'请选择',
+      talkResult:'请选择',
+      talkConent:'请选择',
+      followType:'请选择',
     }
   },
   mounted(){
-    this.message = this.$route.query.con;
+//      window.history.back(function () {
+//        console.log('back')
+//      });
+//    this.message = this.$route.query.con;
+
+    if(this.$route.params.type){
+        if(this.$route.params.type == 1){
+          console.log(this.$route.params.con[0].content);
+            this.talkType = this.$route.params.con[0].content;
+        }else if(this.$route.params.type == 2){
+
+        }else if(this.$route.params.type == 3){
+          this.talkConent = this.$route.params.con[0].content;
+        }else if(this.$route.params.type == 4){
+          // this.talkConent = this.$route.params.con[0].content;
+        }
+    }
+//    this.message = this.$route.params.con;
+
   },
   methods:{
      // 接受参数
@@ -58,7 +79,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" rel="stylesheet/less">
   .add-com-rec{
   .recipient{
     width: 100%;
