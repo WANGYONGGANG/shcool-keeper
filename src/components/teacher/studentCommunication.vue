@@ -199,7 +199,7 @@ export default {
       if(data1){
         param.append('query_content' ,data1);
       }
-      api.findStudentCommunication(param)
+      api.findStudentCommunicationDetail(param)
         .then(res => {
           if (res.code===1) {
               _self.commentDetail=res.data;
@@ -223,7 +223,7 @@ export default {
       if(data1){
         param.append('query_content' ,data1);
       }
-      api.findStudentCommunication(param)
+      api.findStudentCommunicationDetail(param)
         .then(res => {
           if (res.code===1) {
               _self.noComment=res.data;
