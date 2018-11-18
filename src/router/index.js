@@ -78,6 +78,7 @@ import EnrollmentStatistics from '@/components/teacher/enrollmentStatistics'
 import EnrollmentStatistics2 from '@/components/teacher/enrollmentStatistics2'
 import EnrollmentStatistics3 from '@/components/teacher/enrollmentStatistics3'
 import CustomerContrast from '@/components/teacher/customerContrast'
+import addStu from '@/components/teacher/addStu'
 
 Vue.use(Router)
 
@@ -454,6 +455,11 @@ export default new Router({
       path: '/general/publishClass',
       name: 'publishClass',
       component: PublishClass
+    },
+    {
+      path: '/teacher/addStu',
+      name: 'addStu',
+      component: addStu
     },
     {
       path: '/general/publishPeople',

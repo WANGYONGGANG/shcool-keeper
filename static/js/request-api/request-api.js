@@ -283,6 +283,11 @@ export   const  api={
         findAllIntroducer(params){
             return fetchPost(baseUrl+'/intentionClientAPI/findAllIntroducer',params);
           },
+
+          //学员加入到课表
+          addStudentForClassPlean(params){
+            return fetchPost(baseUrl+'/namingAPI/addStudentForClassPlean',params);
+          },
     //获取意向课程
     findAllCourse(params){
         return fetchPost(baseUrl+'/intentionClientAPI/findAllCourse',params);
@@ -299,6 +304,15 @@ export   const  api={
            findMyClassRecordWithMonth(params){
             return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithMonth',params);
           },
+                 //学员列表
+                 getMyClassRoster(params){
+                    return fetchGet(baseUrl+'/namingAPI/getMyClassRoster',params);
+                  },
+                     //学员列表
+                     findAllStudent(params){
+                    return fetchGet(baseUrl+'/namingAPI/findAllStudent',params);
+                  },
+           
    
        
     

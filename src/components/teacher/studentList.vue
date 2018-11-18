@@ -11,7 +11,7 @@
         </van-search>
       </div>
       <div class="operation">排序</div>
-      <div class="operation">添加学员</div>
+      <div class="operation" v-on:click="addStu">添加学员</div>
     </div>
     <div class="list-table">
       <v-table
@@ -60,6 +60,13 @@ export default {
   methods: {
     onSearch () {
       this.getMyClassRoster();
+    },
+    addStu(){
+      let timeable_id=this.$route.query["timeable_id"];
+       this.$router.push({
+        path: "/teacher/addStu",
+        query: {timeable_id:timeable_id}
+      });
     },
     initData:function(){
         this.beginTime=this.$route.query["beginTime"];
