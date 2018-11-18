@@ -5,7 +5,7 @@
     <span class="tit-l">星期一</span>
     <span class="tit-r">09-17</span>
   </div> -->
-  <div class="timetable-table" v-for="(data,index) in allDatas" :key="index">
+  <!-- <div class="timetable-table" v-for="(data,index) in allDatas" :key="index">
     <div class="table-l">
       <div class="class-tit">{{data.className}}</div>
       <div class="class-address"><van-icon name="location" />{{data.classRoomName}}</div>
@@ -17,19 +17,19 @@
       <br/>
       <span class="completion">{{data.realPeopleCount}}/{{data.willPeopleCount}}</span>
     </div>
-  </div>
+  </div> -->
   <!-- <div class="timetable-tit">
     <span class="tit-l">星期二</span>
     <span class="tit-r">09-18</span>
   </div> -->
-  <div v-if="calendar.showClassDetil" class="detial-list">
+  <div class="detial-list"   v-for="(data,index) in allDatas" :key="index">
     <dl>
-      <dt>13:50-15:20</dt>
-      <dd>班级：10秋科技馆六年级英语</dd>
-      <dd>校区：临邑新概念</dd>
-      <dd>教室：科技馆000</dd>
-      <dd>状态：已上课</dd>
-      <dd>内容：第三单元</dd>
+      <dt>{{data.beginTime}}-{{data.endTime}}</dt>
+      <dd>班级：{{data.className}}</dd>
+      <dd>校区：{{data.campusName}}</dd>
+      <dd>教室：{{data.classRoomName}}</dd>
+      <dd>状态：{{data.stateId}}</dd>
+      <dd>内容：{{data.courseName}}</dd>
     </dl>
     <!--<dl>-->
     <!--<dt>{{list.time}}</dt>-->
@@ -40,10 +40,10 @@
     <!--<dd>内容：{{list.content}}</dd>-->
     <!--</dl>-->
     <van-cell-group>
-      <van-cell title="上课人数" value="1/1" isLink />
+      <van-cell title="上课人数" v-bind:value="data.realPeopleCount+'/'+data.willPeopleCount" isLink />
     </van-cell-group>
   </div>
-  <div class="empty"  v-if="totalCount==0">暂无上课班级</div>
+  <div class="empty"  v-if="!allDatas">暂无上课班级</div>
 </div>
 </template>
 <script>
@@ -83,7 +83,8 @@ export default {
     };
   },
   mounted() {
-    this.getMyClassRecord();
+    this.findMyClassRecordWithDay();
+    this.findMyClassRecordWithMonth();
   },
   methods: {
     //findMyClassRecord
@@ -95,9 +96,22 @@ export default {
     },
     //更新newDate
     updateDate(newDate){
-      this.getMyClassRecord(newDate);
+      this.findMyClassRecordWithDay(newDate);
     },
-    getMyClassRecord(newDate) {
+    //获取排课详细
+     getMyClassRecord(id) {
+      let _self = this;
+      let params = new URLSearchParams();
+      params.append("timeable_id",id);
+
+      api.getMyClassRecord(params).then(res => {
+        // console.log(res);
+        if (res.data.code == 1) {
+          console.log(res.data.data);
+        }
+      });
+    },
+    findMyClassRecordWithMonth(newDate) {
       let _self = this;
       let params = new URLSearchParams();
       let beginDate=null;
@@ -110,18 +124,43 @@ export default {
         beginDate=newDate;
         endDate=newDate;
       }
-      params.append("begin_date", "2018-10-12");
-      params.append("end_date", "2018-10-12");
-      // params.append("begin_date", beginDate);
-      // params.append("end_date", endDate);
-      params.append("page", 1);
-      params.append("rows", 10);
-      api.findMyClassRecord(params).then(res => {
+
+      params.append("current_day",beginDate);
+      api.findMyClassRecordWithMonth(params).then(res => {
         // console.log(res);
         if (res.data.code == 1) {
-           let allDatas = res.data.data.rows;
-           let totalCount=res.data.data.total;
-           _self.totalCount=totalCount;
+           let allDatas = res.data.data;
+           this.calendar.detialDate=allDatas;
+          //  _self.allDatas = allDatas;
+          console.log(allDatas);
+        }
+      });
+    },
+    findMyClassRecordWithDay(newDate) {
+      let _self = this;
+      let params = new URLSearchParams();
+      let beginDate=null;
+      let endDate=null;
+      if(!newDate){
+        let now=new Date();
+         beginDate=now.format("yyyy-MM-dd");
+         endDate=now.format("yyyy-MM-dd");
+      }else{
+        beginDate=newDate;
+        endDate=newDate;
+      }
+      // params.append("begin_date", "2018-10-12");
+      params.append("current_day",beginDate);
+      // params.append("begin_date", beginDate);
+      // params.append("end_date", endDate);
+      // params.append("page", 1);
+      // params.append("rows", 10);
+      api.findMyClassRecordWithDay(params).then(res => {
+        // console.log(res);
+        if (res.data.code == 1) {
+           let allDatas = res.data.data;
+          //  let totalCount=res.data.data;
+          //  _self.totalCount=totalCount;
            _self.allDatas = allDatas;
           console.log(allDatas);
         }

@@ -127,24 +127,29 @@ export default {
     findMyClassRecordWithWeek(nowWeek) {
       let beginDate;
       let endDate;
+      let week_type=1;
       if (nowWeek==-1) {
         beginDate = this.getAllDateFromNow(-7);
         endDate = this.getWeekEndDate(-7);
+        week_type=2;
       } else if (nowWeek == 0) {
         beginDate = this.getAllDateFromNow(0);
         endDate = this.getWeekEndDate(0);
+        week_type=1;
       } else {
           beginDate = this.getAllDateFromNow(7);
           endDate = this.getWeekEndDate(7);
+          week_type=3;
       }
       let _self = this;
       let params = new URLSearchParams();
-      params.append("begin_date", "2018-09-01");
-      params.append("end_date", "2018-10-31");
+      // params.append("begin_date", "2018-09-01");
+      // params.append("end_date", "2018-10-31");
       // params.append("begin_date", beginDate);
       // params.append("end_date",endDate);
-      params.append("page", 1);
-      params.append("rows", 10);
+      // params.append("page", 1);
+      // params.append("rows", 10);
+      params.append("week_type", week_type);
       api.findMyClassRecordWithWeek(params).then(res => {
         let result
         if(res.data.constructor==String){

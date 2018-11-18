@@ -227,10 +227,14 @@ export   const  api={
      reportTransformationStatistics(params){
         return fetchGet(baseUrl+'/intentionClientAPI/ReportTransformationStatistics',params);
     },
-    //转化统计查询
+    //沟通统计查询
     reportTalkStatistics(params){
         return fetchGet(baseUrl+'/intentionClientAPI/ReportTalkStatistics',params);
     },
+    //转化统计查询
+    ReportTransformationStatistics(params){
+            return fetchGet(baseUrl+'/intentionClientAPI/ReportTransformationStatistics',params);
+        },
     //获取上课的学员信息
     getMyClassRoster(params){
         return fetchGet(baseUrl+'/namingAPI/getMyClassRoster',params);
@@ -283,6 +287,11 @@ export   const  api={
         findAllIntroducer(params){
             return fetchPost(baseUrl+'/intentionClientAPI/findAllIntroducer',params);
           },
+
+          //学员加入到课表
+          addStudentForClassPlean(params){
+            return fetchPost(baseUrl+'/namingAPI/addStudentForClassPlean',params);
+          },
     //获取意向课程
     findAllCourse(params){
         return fetchPost(baseUrl+'/intentionClientAPI/findAllCourse',params);
@@ -300,6 +309,24 @@ export   const  api={
         return fetchGet(baseUrl+'/studentCommunication/findAllGrade',params);
     },
 
+        //获取我的课表
+        findMyClassRecordWithDay(params){
+            return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithDay',params);
+        },
+           //按月显示我的课表
+           findMyClassRecordWithMonth(params){
+            return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithMonth',params);
+          },
+                 //学员列表
+                 getMyClassRoster(params){
+                    return fetchGet(baseUrl+'/namingAPI/getMyClassRoster',params);
+                  },
+                     //学员列表
+                     findAllStudent(params){
+                    return fetchGet(baseUrl+'/namingAPI/findAllStudent',params);
+                  },
+           
+   
        
     
         

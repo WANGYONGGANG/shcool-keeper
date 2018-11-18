@@ -379,25 +379,25 @@ export default {
   },
   watch:{
     'sortData.selectItem':function (n,o) {
-      if(n=="按姓名排序"){
+      if(n.item=="按姓名排序"){
         this.defaultSort="name";
-      }else if(n=="按跟进时间排序"){
+      }else if(n.item=="按跟进时间排序"){
         this.defaultSort="nextDate";
-      }else if(n=="按沟通时间排序"){
+      }else if(n.item=="按沟通时间排序"){
         this.defaultSort="lastDate";
-      }else if(n=="按录入时间排序"){
+      }else if(n.item=="按录入时间排序"){
         this.defaultSort="createTime";
       }
-      this.$toast(n)
+      this.$toast(n.item)
       this.initPage();
     },
     'customerData.selectItem':function (n,o) {
         console.log(n);
-      this.$toast(n)
+      this.$toast(n.item)
     },
     'ResponsibleList.selectItem':function (n,o) {
         console.log(n);
-      this.$toast(n)
+      this.$toast(n.item)
     }
   }
 }

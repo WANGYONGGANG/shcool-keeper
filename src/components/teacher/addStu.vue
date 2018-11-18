@@ -2,27 +2,20 @@
   <div class="choose-class">
     <div class="class-tab">
       <div class="list-search-l">
-        <van-search placeholder="输入班级名称" background="#fff"  show-action v-model="className">
+        <van-search placeholder="输入学生姓名，学号，电话" background="#fff"  show-action v-model="studentName">
           <div slot="action" @click="onSearch">搜索</div>
         </van-search>
       </div>
-      <div class="operation" @click="showFilterPop">筛选</div>
-    </div>
-    <div class="choose-school-zone" @click="showShoolZoneDia">
-      <van-cell-group>
-        <van-cell title="选择校区" is-link > {{schoolData.selectItem.item}}</van-cell>
-      </van-cell-group>
     </div>
     <van-radio-group v-model="radio">
     <div class="class-list"  @click="radio = index" v-for="(data,index) in allDatas" :key="index">
     <div class="class-list-l">
-        <van-radio v-bind:name=index />
+        <van-radio v-bind:name=data.id />
     </div>
     <div class="class-list-r">
       <dl>
-        <dt>{{data.className}}<span class="num">{{data.currentStudentCount}}/{{data.recruitStudentsCount}}</span></dt>
-        <dd><van-icon name="location" />{{data.campusName}}</dd>
-        <dd class="last-item"><van-icon name="contact" />{{data.headerteacherName}}<span><van-icon name="idcard" />{{subStrClassName(data.couseName)}}</span></dd>
+        <dt>学员姓名：{{subStrClassName(data.name)}}<span class="num">学员编号：{{data.code}}</span></dt>
+         <dt>学员电话：{{subStrClassName(data.mobile)}}<span class="num">登录名：{{data.userName}}</span></dt>
       </dl>
     </div>
   </div>
@@ -52,27 +45,34 @@
     </div> -->
     </van-radio-group>
     <div class="bottom-btn">
-      点击下一步进行班级信息填写 <span @click="goTo">下一步</span>
+      <span @click="goTo">仅上这节课</span><span @click="goTo">加入此班</span>
     </div>
     <!--选择班级-->
     <select-pop :lists="filterData.lists" :isShow.sync="filterData.isShow" :selectItem.sync="filterData.selectItem"></select-pop>
     <!--选择校区-->
     <select-pop :title="schoolData.title" :lists="schoolData.lists" :isShow.sync="schoolData.isShow" :selectItem.sync="schoolData.selectItem"></select-pop>
-
+  <attention v-if="showAttentionAlert" v-bind:attentionText="attentionText"
+                          style="z-index:600;"></attention>
   </div>
 </template>
 <script>
 import { api } from "../../../static/js/request-api/request-api.js";
-import SelectPop from '../popup/bottomSelectPop'
+import SelectPop from '../popup/bottomSelectPop';
+import attention from '../teacher/attention'
 export default {
   components: {
-    SelectPop
+    SelectPop,
+    attention
   },
   data () {
     return {
       value: '',
       radio: '1',
+      attentionText: "加入成功",
       allDatas:[],
+      studentName:"",
+      showAttentionAlert:false,
+      selectedId:null,
       className:"",
       filterData:{
         lists:['查看所有班级','只看一对一','只看一对多','只看集体班'],
@@ -88,11 +88,12 @@ export default {
     }
   },
   mounted () {
-    this.findAllClassInfo();
-    this.refreshDepartment();
+    this.findAllStudent();
+
   },
   methods: {
     onSearch () {
+      this.findAllStudent();
     },
     showFilterPop () {
       this.filterData.isShow=true
@@ -101,40 +102,47 @@ export default {
       this.schoolData.isShow=true
     },
      subStrClassName(name) {
-      return name.substring(0, 8) + "...";
+       if(name){
+              return name.substring(0, 8) + "...";
+       }
+    
     },
-     refreshDepartment() {
+    findAllStudent() {
       let _self = this;
-      api.refreshDepartment(null).then(res => {
+      let params ={};
+      params.page=1;
+      params.rows=10;
+      params.student_info=_self.studentName;
+      // params.append("timeable_id",this.$route.query["timeable_id"]);
+      api.findAllStudent(params).then(res => {
         // console.log(res);
         if (res.data.code == 1) {
-          var allDatas = res.data.data;
-          let schoolPartList=allDatas;
-       for(let i=0;i<schoolPartList.length;i++){
-         this.schoolData.lists.push(schoolPartList[i].name);
-       }
-        this.schoolData.selectItem.item=schoolPartList[0].name;
+          var allDatas = res.data.data.rows;
+          _self.allDatas = allDatas;
         }
       });
     },
-    findAllClassInfo() {
+      addStudentForClassPlean() {
       let _self = this;
-      let params = new URLSearchParams();
-      params.append("class_name",this.className);
-      // params.append("page", 1);
-      // params.append("rows", 10);
-      api.findAllClassInfo(params).then(res => {
-        // console.log(res);
-        if (res.data.code == 1) {
-          var allDatas = res.data.data;
-          _self.allDatas = allDatas;
-          // console.log(allDatas);
+      let params =new URLSearchParams();
+
+      params.append("timeable_id",this.$route.query["timeable_id"]);
+      params.append('studentIDs',"["+this.radio+"]");
+      api.addStudentForClassPlean(params).then(res => {
+        console.log(res);
+        if (res.code == 1) {
+          // var allDatas = res.data.data.rows;
+          // _self.allDatas = allDatas;
+          _self.showAttentionAlert=true;
+          setTimeout(function(){
+            _self.showAttentionAlert=false;
+          },2000)
         }
       });
     },
     goTo () {
-      // console.log(this.radio);
-      this.$router.push({path: '/teacher/setClassInformation'})
+      this.addStudentForClassPlean();
+      // this.$router.push({path: '/teacher/setClassInformation'})
     }
   },
   watch:{
@@ -227,7 +235,7 @@ export default {
   float: left;
 width:600px;
 dt{
-  font-size: 32px;
+  font-size: 24px;
   line-height: 64px;
 span{
   float: right;

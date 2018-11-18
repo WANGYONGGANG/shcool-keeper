@@ -6,7 +6,7 @@
     </span></div>
     <div class="naming-tab-r fn-right"><van-icon name="arrow" /></div>
   </div>
-  <div class="naming-table" @click="goTo(urls.studentList,data.id)" v-for="(data,index) in allDatas" :key="index">
+  <div class="naming-table" @click="goTo(urls.studentList,data.id,data.beginTime,data.endTime,data.courseName)" v-for="(data,index) in allDatas" :key="index">
     <div class="table-l">
       <div class="class-tit">{{data.className}}</div>
       <div class="class-address"><van-icon name="location" />{{data.classRoomName}}</div>
@@ -48,7 +48,7 @@ export default {
     }
   },
  mounted() {
-    this.getMyClassRecord();
+    this.findMyClassRecordWithDay();
     this.getNowDateWeek();
   },
   methods: {
@@ -56,8 +56,8 @@ export default {
       //根据参数显示对应日历弹层
       this.calendar.isVisible = true
     },
-    goTo (url,id) {
-      this.$router.push({path: url,query: {timeable_id: id}})
+    goTo (url,id,beginTime,endTime,courseName) {
+      this.$router.push({path: url,query: {timeable_id: id,beginTime:beginTime,endTime:beginTime,courseName:courseName}})
     },
      subStr(time) {
       return time.substring(10, 20);
@@ -65,8 +65,11 @@ export default {
     subStrClassName(name) {
       return name.substring(0, 8) + "...";
     },
-    getNowDateWeek(){
-     let now = new Date(); //当前日期
+    getNowDateWeek(n){
+    let now=new Date();
+      if(n){
+        now = new Date(n); //当前日期
+     }
      let nowDayOfWeek = now.getDay(); //今天本周的第几天
      let weekArray = new Array("日", "一", "二", "三", "四", "五", "六");
      let nowWeek = weekArray[new Date().getDay()];
@@ -76,17 +79,24 @@ export default {
      this.nowMonth=nowMonth;
      this.dataStr=nowMonth+"月"+now.getDate()+"日";
     },
-    getMyClassRecord() {
+    findMyClassRecordWithDay(newDate) {
       let _self = this;
       let params = new URLSearchParams();
-      params.append("begin_date", "2018-10-01");
-      params.append("end_date", "2018-10-31");
-      params.append("page", 1);
+      // params.append("begin_date", "2018-10-01");
+      // params.append("end_date", "2018-10-31");
+      // params.append("page", 1);
       params.append("rows", 10);
-      api.findMyClassRecord(params).then(res => {
+      if(!newDate){
+        let now=new Date();
+         newDate=now.format("yyyy-MM-dd");
+      }else{
+        newDate=newDate;
+      }
+       params.append("current_day",newDate);
+      api.findMyClassRecordWithDay(params).then(res => {
         // console.log(res);
         if (res.data.code == 1) {
-          var allDatas = res.data.data.rows;
+          var allDatas = res.data.data;
           _self.allDatas = allDatas;
           console.log(allDatas);
         }
@@ -95,6 +105,8 @@ export default {
   },
   watch:{
     'calendar.date' :function (n,o) {
+      this.findMyClassRecordWithDay(n);
+      this.getNowDateWeek(n);
       this.$toast(n)
     }
   }
