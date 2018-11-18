@@ -191,6 +191,10 @@ export   const  api={
      getNewCustomersToday(params){
         return fetchGet(baseUrl+'/intentionClientAPI/getNewCustomersToday',params);
     },
+    //获取沟通明细
+    findStudentCommunicationDetailStu(params){
+        return fetchPost(baseUrl+'/studentCommunication/findStudentCommunication',params);
+    },
      //获取沟通明细
      getCommunicationDetail(params){
         return fetchGet(baseUrl+'/studentCommunication/findStudentCommunicationDetail',params);
@@ -303,11 +307,20 @@ export   const  api={
    //获取本次或者下次沟通方式
    refreshAdmissionsTalkType(params){
         return fetchGet(baseUrl+'/intentionClientAPI/refreshAdmissionsTalkType',params);
-      },
-         //获取我的课表
-         findMyClassRecordWithDay(params){
-    return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithDay',params);
-  },
+      },     
+    // 获取沟通类型
+    findTalkType(params){
+        return fetchGet(baseUrl+'/studentCommunication/findTalkType',params);
+    },
+    // 取获班级
+    findAllGrade(params){
+        return fetchGet(baseUrl+'/studentCommunication/findAllGrade',params);
+    },
+
+        //获取我的课表
+        findMyClassRecordWithDay(params){
+            return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithDay',params);
+        },
            //按月显示我的课表
            findMyClassRecordWithMonth(params){
             return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithMonth',params);
