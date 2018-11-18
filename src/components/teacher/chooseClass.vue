@@ -2,7 +2,7 @@
   <div class="choose-class">
     <div class="class-tab">
       <div class="list-search-l">
-        <van-search placeholder="输入班级名称" background="#fff"  show-action v-model="value">
+        <van-search placeholder="输入班级名称" background="#fff"  show-action v-model="className">
           <div slot="action" @click="onSearch">搜索</div>
         </van-search>
       </div>
@@ -10,7 +10,7 @@
     </div>
     <div class="choose-school-zone" @click="showShoolZoneDia">
       <van-cell-group>
-        <van-cell title="选择校区" value="潮人部落" is-link />
+        <van-cell title="选择校区" is-link > {{schoolData.selectItem.item}}</van-cell>
       </van-cell-group>
     </div>
     <van-radio-group v-model="radio">
@@ -73,6 +73,7 @@ export default {
       value: '',
       radio: '1',
       allDatas:[],
+      className:"",
       filterData:{
         lists:['查看所有班级','只看一对一','只看一对多','只看集体班'],
         isShow:false,
@@ -80,14 +81,15 @@ export default {
       },
       schoolData:{
         title:'选择校区',
-        lists:['潮人部落','金色阳光'],
+        lists:[],
         isShow:false,
-        selectItem:'潮人部落'
+        selectItem:{item:""}
       }
     }
   },
   mounted () {
     this.findAllClassInfo();
+    this.refreshDepartment();
   },
   methods: {
     onSearch () {
@@ -101,16 +103,30 @@ export default {
      subStrClassName(name) {
       return name.substring(0, 8) + "...";
     },
+     refreshDepartment() {
+      let _self = this;
+      api.refreshDepartment(null).then(res => {
+        // console.log(res);
+        if (res.data.code == 1) {
+          var allDatas = res.data.data;
+          let schoolPartList=allDatas;
+       for(let i=0;i<schoolPartList.length;i++){
+         this.schoolData.lists.push(schoolPartList[i].name);
+       }
+        this.schoolData.selectItem.item=schoolPartList[0].name;
+        }
+      });
+    },
     findAllClassInfo() {
       let _self = this;
       let params = new URLSearchParams();
-      params.append("class_name",2 );
+      params.append("class_name",this.className);
       // params.append("page", 1);
       // params.append("rows", 10);
       api.findAllClassInfo(params).then(res => {
         // console.log(res);
         if (res.data.code == 1) {
-          var allDatas = res.data.data.rows;
+          var allDatas = res.data.data;
           _self.allDatas = allDatas;
           // console.log(allDatas);
         }
@@ -123,10 +139,11 @@ export default {
   },
   watch:{
     'filterData.selectItem':function (n,o) {
-      this.$toast(n)
+      this.$toast(n.item)
     },
     'schoolData.selectItem':function (n,o) {
-      this.$toast(n)
+      this.findAllClassInfo();
+      this.$toast(n.item)
     },
   }
 }

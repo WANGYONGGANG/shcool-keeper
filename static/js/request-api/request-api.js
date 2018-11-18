@@ -223,10 +223,14 @@ export   const  api={
      reportTransformationStatistics(params){
         return fetchGet(baseUrl+'/intentionClientAPI/ReportTransformationStatistics',params);
     },
-    //转化统计查询
+    //沟通统计查询
     reportTalkStatistics(params){
         return fetchGet(baseUrl+'/intentionClientAPI/ReportTalkStatistics',params);
     },
+    //转化统计查询
+    ReportTransformationStatistics(params){
+            return fetchGet(baseUrl+'/intentionClientAPI/ReportTransformationStatistics',params);
+        },
     //获取上课的学员信息
     getMyClassRoster(params){
         return fetchGet(baseUrl+'/namingAPI/getMyClassRoster',params);
@@ -287,6 +291,15 @@ export   const  api={
    refreshAdmissionsTalkType(params){
         return fetchGet(baseUrl+'/intentionClientAPI/refreshAdmissionsTalkType',params);
       },
+         //获取我的课表
+         findMyClassRecordWithDay(params){
+    return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithDay',params);
+  },
+           //按月显示我的课表
+           findMyClassRecordWithMonth(params){
+            return fetchGet(baseUrl+'/myClassRecord/findMyClassRecordWithMonth',params);
+          },
+   
        
     
         
