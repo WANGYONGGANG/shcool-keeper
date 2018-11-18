@@ -1,6 +1,6 @@
 <template>
   <div class="customer-communication-record">
-    <calendar-packing></calendar-packing>
+    <calendar-packing v-on:updateDate=updateDate></calendar-packing>
       <ul class="record-list" v-for="record in recordList">
         <li class="record-list-item01">
           <span class="list-item01-l"><img class="img" src="../../assets/images/user/test.jpg"/></span>
@@ -31,14 +31,18 @@
 </template>
 <script>
 import { api } from "../../../static/js/request-api/request-api.js";
+import CommentedPop from '../popup/commentedPop'
 import CalendarPacking from '../general/calendarPacking'
 export default {
   components: {
-    CalendarPacking
+    CalendarPacking,
+    CommentedPop
   },
   data () {
     return {
       checked: true,
+      begin_date:null,
+      end_date:null,
       recordList:[],
       urls: {
         addCommunicationRecordTwo: '/teacher/addCommunicationRecordTwo'
@@ -60,13 +64,20 @@ export default {
       }
 
     },
+    updateDate:function(beginDate,endDate){
+      this.begin_date=beginDate;
+      this.end_date=endDate;
+      this.findStudentCommunicationDetail();
+    },
     //获取学院沟通记录
     findStudentCommunicationDetail: function() {
       let student_id= this.$route.query.studentId;
-      let begin_date=null;
-      let  end_date=null;
+      let begin_date=this.begin_date;
+      let  end_date=this.end_date;
       let params ={};
       // params.student_id =student_id;   
+      params.begin_date=begin_date;
+      params.end_date=end_date;
       params.student_id =98;     
       let _self = this;
       api.findStudentCommunicationDetail(params)

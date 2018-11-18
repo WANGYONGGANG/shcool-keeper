@@ -1,7 +1,7 @@
 <template>
   <div class="tab2">
     <div class="class-tab">
-      <calendar-packing></calendar-packing>
+      <calendar-packing v-on:updateDate=updateDate  v-bind:begin_date="begin_date"  v-bind:end_date="end_date" v-if="showCalendar" ></calendar-packing>
     </div>
         <van-cell title="选择校区"  is-link class="line65"  @click="sortPopShow">
           {{sortData.selectItem.item}}
@@ -18,7 +18,7 @@
           <th width="20%">比例</th>
         </tr>
         <tr v-for="resource in  resourceList">
-          <td class="name"><van-rate :count="resource.WillLevel" v-model="star"  readonly="true" /></td>
+          <td class="name"><van-rate :count="resource.WillLevel" v-model="star"  readonly=true /></td>
           <td>{{resource.sum}}</td>
           <td>{{resource.Rate}}%</td>
         </tr>
@@ -28,7 +28,7 @@
           <td>16.67%</td>
         </tr>
         <tr>
-          <td class="name"><van-rate :count="star" v-model="star"  readonly="true" /></td>
+          <td class="name"><van-rate :count="star" v-model="star"  readonly=true /></td>
           <td>4</td>
           <td>16.67%</td>
         </tr> -->
@@ -45,7 +45,7 @@ import SelectPop from '../../popup/bottomSelectPop'
 export default {
   components: {
     BottomBtn,
-        SelectPop,
+    SelectPop,
     CalendarPacking
   },
   data () {
@@ -55,6 +55,12 @@ export default {
         text: '查看详情',
         url: '/teacher/enrollmentStatistics'
       },
+      showCalendar:false,
+      // begin_date:"2018-07-01",
+      // end_date:"2018-11-30",
+        begin_date:null,
+      end_date:null,
+      campus_ids:null,
       resourceList:[],
         sortData:{
         title:'排序方式',
@@ -70,15 +76,69 @@ export default {
     }
   },
   mounted () {
-    this.drawLine()
-        this.refreshDepartment();
-        this.ReportCustomerAnalysisForWillLevel();
+    this.initDateWeek();
+    this.refreshDepartment();
+    this.ReportCustomerAnalysisForWillLevel();
   },
   methods: {
     goTo (param) {
       this.$router.push({path: param})
     },
-      initDate(){
+    updateDate:function(beginDate,endDate){
+      this.begin_date=beginDate;
+      this.end_date=endDate;
+      this.ReportCustomerAnalysisForWillLevel();
+    },
+    initDateWeek:function(){
+          this.begin_date = this.getAllDateFromNow(0);
+          this.end_date = this.getWeekEndDate(0);
+          this.showCalendar=true;
+    },
+     formatDate(date) {
+      var myyear = date.getFullYear();
+      var mymonth = date.getMonth() + 1;
+      var myweekday = date.getDate();
+
+      if (mymonth < 10) {
+        mymonth = "0" + mymonth;
+      }
+      if (myweekday < 10) {
+        myweekday = "0" + myweekday;
+      }
+      return myyear + "-" + mymonth + "-" + myweekday;
+    },
+     //获取本周开始日期
+    getAllDateFromNow(index) {
+      var now = new Date(); //当前日期
+      var nowDayOfWeek = now.getDay(); //今天本周的第几天
+      var nowDay = now.getDate(); //当前日
+      var nowMonth = now.getMonth(); //当前月
+      var nowYear = now.getFullYear(); //当前年
+      if (nowDayOfWeek == 0) {
+        nowDayOfWeek = 7;
+      }
+      var weekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek+index+1);
+
+      return this.formatDate(weekStartDate);
+    },
+    getWeekEndDate(index) {
+      var now = new Date(); //当前日期
+      var nowDayOfWeek = now.getDay(); //今天本周的第几天
+      var nowDay = now.getDate(); //当前日
+      var nowMonth = now.getMonth(); //当前月
+      var nowYear = now.getFullYear(); //当前年
+      if (nowDayOfWeek == 0) {
+        nowDayOfWeek = 7;
+      }
+      var weekEndDate = new Date(
+        nowYear,
+        nowMonth,
+        nowDay + (7 - nowDayOfWeek+index)
+      );
+      return this.formatDate(weekEndDate);
+    },
+    //初始化数据
+    initDate(){
       let schoolPartList=this.schoolPartList;
        for(let i=0;i<schoolPartList.length;i++){
          this.sortData.lists.push(schoolPartList[i].name);
@@ -86,34 +146,44 @@ export default {
        this.sortData.selectItem.item=schoolPartList[0].name;
     },
 
-            //查询招生来源
-    ReportCustomerAnalysisForWillLevel: function(campus_ids) {
+  //查询意向级别
+    ReportCustomerAnalysisForWillLevel: function() {
       let params ={};      
-      params.begin_date="2018-07-01";
-      params.campus_ids="[8,9,10]";
-      params.end_date="2018-11-30";
+      params.begin_date=this.begin_date;
+      if(this.campus_ids){
+        this.campus_ids="["+this.campus_ids+"]";
+      }
+      params.campus_ids=this.campus_ids;
+      params.end_date=this.end_date;
       let _self = this;
       api.ReportCustomerAnalysisForWillLevel(params)
         .then(res => {
           if (res.status == 200) {
                 let code=res.data.code;
                 if(code===1){
-                  this.resourceList=res.data.data;
-                  console.log(res.data.data);
+                 let resourceList=this.resourceList=res.data.data;
+                 let newResourceList=[];
+                  for(let i=0;i<resourceList.length;i++){
+                    let resourceObj={};
+                    resourceObj.value=resourceList[i].Rate;
+                    resourceObj.name=resourceList[i].name;
+                    newResourceList.push(resourceObj);
+                  }
+                  this.drawLine(newResourceList);
                 }
           } else {
-            let params = { msg: "查询所有校区" };
+            let params = { msg: "查询意向级别" };
             // GlobalVue.$emit("alert", params);
             // GlobalVue.$emit("blackBg", null);
           }
         })
         .catch(error => {
-          let params = { msg: "查询所有校区" };
+          let params = { msg: "查询意向级别" };
           // GlobalVue.$emit("alert", params);
           // GlobalVue.$emit("blackBg", null);
         });
     },
-         //查询所有校区
+   //查询所有校区
     refreshDepartment: function() {
       let params ={};      
       let _self = this;
@@ -137,13 +207,16 @@ export default {
           // GlobalVue.$emit("blackBg", null);
         });
     },
-        sortPopShow(param){
+    sortPopShow(param){
          this.sortData.isShow=true;
     },
-    drawLine () {
+    drawLine (newResourceList) {
       let chart01 = this.$echarts.init(document.getElementById('chart01'))
       chart01.setOption({
-        color: ['#00a0f4'],
+         tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+      },
         series: [
           {
             name: '满班率',
@@ -170,9 +243,7 @@ export default {
                 show: false
               }
             },
-            data: [
-              {value: 335}
-            ]
+            data:newResourceList
           }
         ]
       })
@@ -186,7 +257,13 @@ export default {
   watch:{
        'sortData.selectItem':function (n,o) {
        this.$toast(n.item);
-       this.reportTransformationStatistics(this.schoolPartList[n.index].id);
+       if(n.index==0){
+           this.ReportCustomerAnalysisForWillLevel(null);
+       }else{
+              this.campus_ids=this.schoolPartList[n.index-1].id;
+              this.ReportCustomerAnalysisForWillLevel();
+       }
+ 
     },
     item :{
       //日期快速切换值

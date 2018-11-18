@@ -1,7 +1,7 @@
 <template>
   <div class="tab3">
     <div class="class-tab">
-      <calendar-packing></calendar-packing>
+        <calendar-packing v-on:updateDate=updateDate  v-bind:begin_date="begin_date"  v-bind:end_date="end_date" v-if="showCalendar" ></calendar-packing>
     </div>
        <van-cell title="选择校区"  is-link class="line65"  @click="sortPopShow">
           {{sortData.selectItem.item}}
@@ -27,7 +27,7 @@
       <van-cell title="已上门" value="0" /> -->
     </van-cell-group>
     <bottom-btn :buttonData="buttonData2"></bottom-btn>
-        <select-pop :title="sortData.title" :lists="sortData.lists" :isShow.sync="sortData.isShow" :selectItem.sync="sortData.selectItem"></select-pop>
+    <select-pop :title="sortData.title" :lists="sortData.lists" :isShow.sync="sortData.isShow" :selectItem.sync="sortData.selectItem"></select-pop>
   </div>
 </template>
 <script>
@@ -47,6 +47,10 @@ export default {
         text: '查看详情',
         url: '/teacher/customerContrast'
       },
+       begin_date:null,
+      end_date:null,
+            campus_ids:null,
+      showCalendar:false,
         schoolPartList:null,
         resourceList:null,
         sortData:{
@@ -58,7 +62,7 @@ export default {
     }
   },
   mounted () {
-    this.drawLine()
+        this.initDateWeek();
         this.refreshDepartment();
         this.ReportCustomerAnalysisForState();
   },
@@ -68,19 +72,92 @@ export default {
         this.drawLine()
       }
     },
-          //销售漏斗
+     updateDate:function(beginDate,endDate){
+      this.begin_date=beginDate;
+      this.end_date=endDate;
+      this.ReportCustomerAnalysisForState();
+    },
+      initDate(){
+      let schoolPartList=this.schoolPartList;
+       for(let i=0;i<schoolPartList.length;i++){
+         this.sortData.lists.push(schoolPartList[i].name);
+       }
+       this.sortData.selectItem.item=schoolPartList[0].name;
+    },
+     initDateWeek:function(){
+          this.begin_date = this.getAllDateFromNow(0);
+          this.end_date = this.getWeekEndDate(0);
+          this.showCalendar=true;
+    },
+     formatDate(date) {
+      var myyear = date.getFullYear();
+      var mymonth = date.getMonth() + 1;
+      var myweekday = date.getDate();
+
+      if (mymonth < 10) {
+        mymonth = "0" + mymonth;
+      }
+      if (myweekday < 10) {
+        myweekday = "0" + myweekday;
+      }
+      return myyear + "-" + mymonth + "-" + myweekday;
+    },
+     //获取本周开始日期
+    getAllDateFromNow(index) {
+      var now = new Date(); //当前日期
+      var nowDayOfWeek = now.getDay(); //今天本周的第几天
+      var nowDay = now.getDate(); //当前日
+      var nowMonth = now.getMonth(); //当前月
+      var nowYear = now.getFullYear(); //当前年
+      if (nowDayOfWeek == 0) {
+        nowDayOfWeek = 7;
+      }
+      var weekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek+index+1);
+
+      return this.formatDate(weekStartDate);
+    },
+    getWeekEndDate(index) {
+      var now = new Date(); //当前日期
+      var nowDayOfWeek = now.getDay(); //今天本周的第几天
+      var nowDay = now.getDate(); //当前日
+      var nowMonth = now.getMonth(); //当前月
+      var nowYear = now.getFullYear(); //当前年
+      if (nowDayOfWeek == 0) {
+        nowDayOfWeek = 7;
+      }
+      var weekEndDate = new Date(
+        nowYear,
+        nowMonth,
+        nowDay + (7 - nowDayOfWeek+index)
+      );
+      return this.formatDate(weekEndDate);
+    },
+    //销售漏斗
     ReportCustomerAnalysisForState: function(campus_ids) {
       let params ={};      
-      params.begin_date="2018-07-01";
-      params.campus_ids="[8,9,10]";
-      params.end_date="2018-11-30";
+      // params.begin_date="2018-07-01";
+      // params.campus_ids="[8,9,10]";
+      // params.end_date="2018-11-30";
+       params.begin_date=this.begin_date;
+      if(this.campus_ids){
+        this.campus_ids="["+this.campus_ids+"]";
+      }
+      params.campus_ids=this.campus_ids;
+      params.end_date=this.end_date;
       let _self = this;
       api.ReportCustomerAnalysisForState(params)
         .then(res => {
           if (res.status == 200) {
                 let code=res.data.code;
                 if(code===1){
-                  this.resourceList=res.data.data;
+                  let resourceList=this.resourceList=res.data.data;
+                  let newResourceNameList=[];
+                  let newResourceSumList=[];
+                  for(let i=0;i<resourceList.length;i++){
+                       newResourceNameList.push(resourceList[i].name);
+                       newResourceSumList.push(resourceList[i].sum);
+                  }
+                  this.drawLine(newResourceNameList,newResourceSumList);
                   console.log(res.data.data);
                 }
           } else {
@@ -102,7 +179,7 @@ export default {
        }
        this.sortData.selectItem.item=schoolPartList[0].name;
     },
-         //查询所有校区
+    //查询所有校区
     refreshDepartment: function() {
       let params ={};      
       let _self = this;
@@ -132,66 +209,44 @@ export default {
     goTo (param) {
       this.$router.push({path: param})
     },
-    drawLine () {
+    drawLine (newResourceNameList,newResourceSumList) {
       let chart02 = this.$echarts.init(document.getElementById('chart02'))
       chart02.setOption({
-        title: {
-          text: '收费金额（元）',
-          textStyle: {
-            color: '#fff',
-            fontSize: 26
-          },
-          padding: [10, 0, 0, 30]
-        },
-        xAxis: {
-          boundaryGap: false,
-          data: ['09', '10', '11', '12', '13', '14', '15'],
-          axisLabel: {
-            fontSize: 24 // 刻度标签文字的大小
-          },
-          axisLine: {
-            lineStyle: { // x轴颜色和字体大小
-              color: '#fff',
-              opacity: 1
+         color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data :newResourceNameList,
+            axisTick: {
+                alignWithLabel: true
             }
-          },
-          axisTick: {
-            show: false
-          },
-          axisPointer: {
-            fontSize: 24,
-            label: {
-              show: true
-            }
-          }
-        },
-        yAxis: {
-          show: false
-        },
-        series: [{
-          name: '收费金额',
-          type: 'line',
-          smooth: true,
-          data: [100, 1000, 0, 10, 0, 0, 0],
-          label: {
-            color: '#fff',
-            fontSize: 24,
-            normal: {
-              show: true,
-              position: 'top'
-            }
-          },
-          symbol: 'circle',
-          symbolSize: 10,
-          itemStyle: { // 折线拐点标志的样式。
-            borderWidth: 3,
-            borderColor: '#6eadf5',
-            color: '#6eadf5'
-          },
-          lineStyle: {
-            color: '#fff'
-          }
-        }]
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'直接访问',
+            type:'bar',
+            barWidth: '20%',
+            data:newResourceSumList 
+        }
+    ]
       })
     }
   },
@@ -203,7 +258,8 @@ export default {
   watch:{
        'sortData.selectItem':function (n,o) {
        this.$toast(n.item);
-       this.reportTransformationStatistics(this.schoolPartList[n.index].id);
+        this.campus_ids=this.schoolPartList[n.index-1].id;
+       this.ReportCustomerAnalysisForState();
     },
     item :{
       //日期快速切换值

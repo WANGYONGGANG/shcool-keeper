@@ -1,7 +1,7 @@
 <template>
   <div class="tab1">
     <div class="class-tab">
-      <calendar-packing></calendar-packing>
+       <calendar-packing v-on:updateDate=updateDate  v-bind:begin_date="begin_date"  v-bind:end_date="end_date" v-if="showCalendar" ></calendar-packing>
       <div class="operation">筛选</div>
     </div>
      <van-cell title="选择校区"  is-link class="line65"  @click="sortPopShow">
@@ -38,6 +38,9 @@ export default {
         text: '查看详情',
         url: '/teacher/enrollmentStatistics'
       },
+      begin_date:null,
+      end_date:null,
+      showCalendar:false,
       resourceList:[],
         schoolPartList:null,
         sortData:{
@@ -49,12 +52,18 @@ export default {
     }
   },
   mounted () {
+        this.initDateWeek();
         this.refreshDepartment();
         this.ReportCustomerAnalysisForSourceway();
   },
   methods: {
     goTo (param) {
       this.$router.push({path: param})
+    },
+    updateDate:function(beginDate,endDate){
+      this.begin_date=beginDate;
+      this.end_date=endDate;
+      this.ReportCustomerAnalysisForSourceway();
     },
       initDate(){
       let schoolPartList=this.schoolPartList;
@@ -63,12 +72,66 @@ export default {
        }
        this.sortData.selectItem.item=schoolPartList[0].name;
     },
-            //查询招生来源
-    ReportCustomerAnalysisForSourceway: function(campus_ids) {
+     initDateWeek:function(){
+          this.begin_date = this.getAllDateFromNow(0);
+          this.end_date = this.getWeekEndDate(0);
+          this.showCalendar=true;
+    },
+     formatDate(date) {
+      var myyear = date.getFullYear();
+      var mymonth = date.getMonth() + 1;
+      var myweekday = date.getDate();
+
+      if (mymonth < 10) {
+        mymonth = "0" + mymonth;
+      }
+      if (myweekday < 10) {
+        myweekday = "0" + myweekday;
+      }
+      return myyear + "-" + mymonth + "-" + myweekday;
+    },
+     //获取本周开始日期
+    getAllDateFromNow(index) {
+      var now = new Date(); //当前日期
+      var nowDayOfWeek = now.getDay(); //今天本周的第几天
+      var nowDay = now.getDate(); //当前日
+      var nowMonth = now.getMonth(); //当前月
+      var nowYear = now.getFullYear(); //当前年
+      if (nowDayOfWeek == 0) {
+        nowDayOfWeek = 7;
+      }
+      var weekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek+index+1);
+
+      return this.formatDate(weekStartDate);
+    },
+    getWeekEndDate(index) {
+      var now = new Date(); //当前日期
+      var nowDayOfWeek = now.getDay(); //今天本周的第几天
+      var nowDay = now.getDate(); //当前日
+      var nowMonth = now.getMonth(); //当前月
+      var nowYear = now.getFullYear(); //当前年
+      if (nowDayOfWeek == 0) {
+        nowDayOfWeek = 7;
+      }
+      var weekEndDate = new Date(
+        nowYear,
+        nowMonth,
+        nowDay + (7 - nowDayOfWeek+index)
+      );
+      return this.formatDate(weekEndDate);
+    },
+    //查询招生来源
+    ReportCustomerAnalysisForSourceway: function() {
       let params ={};      
-      params.begin_date="2018-07-01";
-      params.campus_ids="[8,9,10]";
-      params.end_date="2018-11-30";
+       params.begin_date=this.begin_date;
+      if(this.campus_ids){
+        this.campus_ids="["+this.campus_ids+"]";
+      }
+      params.campus_ids=this.campus_ids;
+      params.end_date=this.end_date;
+      // params.campus_ids="[8,9,10]";
+      //   params.begin_date="2018-07-01";
+      // params.end_date="2018-11-30";
       params.source_type_id=1;
 
       let _self = this;
@@ -128,7 +191,8 @@ export default {
   watch:{
        'sortData.selectItem':function (n,o) {
        this.$toast(n.item);
-       this.ReportCustomerAnalysisForSourceway(this.schoolPartList[n.index].id);
+        this.campus_ids=this.schoolPartList[n.index-1].id;
+       this.ReportCustomerAnalysisForSourceway();
     },
     item :{
       //日期快速切换值
