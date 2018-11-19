@@ -22,7 +22,7 @@
       <van-cell class="address">
         <van-cell title="家庭住址" />
         <van-field
-          v-model="message"
+          v-model="address"
           type="textarea"
           placeholder="输入家庭住址"
           rows="1"
@@ -41,6 +41,7 @@
     },
     data () {
       return {
+          address:null,
         rightPopDates:{
           item01:{
             isShow:false,

@@ -24,8 +24,8 @@
       <component v-bind:is="currentTabComponent"></component>
     </keep-alive>
     <div class="add-customers-bottom-btn">
-      <span>上一步</span>
-      <span class="next">下一步</span>
+      <span v-on:click="lastStep">上一步</span>
+      <span class="next"  v-on:click="nextStep">下一步</span>
     </div>
   </div>
 </template>
@@ -53,6 +53,34 @@
       goTo (param) {
         this.$router.push({path: param})
       },
+      //下一步
+      nextStep(param){
+        if(!this.isOpacity1){
+           this.isOpacity1 = true;
+          this.isOpacity2 = false;
+          this.isOpacity3 = true;
+           this.currentTabComponent ="stepTwo";
+        }else if(!this.isOpacity2){
+          this.isOpacity1 = true;
+          this.isOpacity2 = true;
+          this.isOpacity3 = false;
+           this.currentTabComponent ="stepThree";
+        }      
+      },
+      lastStep(param){
+        if(!this.isOpacity3){
+           this.isOpacity1 = true;
+           this.isOpacity2 = false;
+           this.isOpacity3 = true;
+            this.currentTabComponent ="stepTwo";
+        }else if(!this.isOpacity2){
+          this.isOpacity1 = false;
+          this.isOpacity2 = true;
+          this.isOpacity3 = true;
+           this.currentTabComponent ="stepOne";
+        }
+
+      },
       handleChangeView (component) {
         this.currentTabComponent = component
         if (component === 'stepOne') {
@@ -60,12 +88,12 @@
           this.isOpacity2 = true
           this.isOpacity3 = true
         } else if (component === 'stepTwo') {
-          this.isOpacity1 = false
+          this.isOpacity1 = true
           this.isOpacity2 = false
           this.isOpacity3 = true
         } else if (component === 'stepThree') {
-          this.isOpacity1 = false
-          this.isOpacity2 = false
+          this.isOpacity1 = true
+          this.isOpacity2 = true
           this.isOpacity3 = false
         }
       }

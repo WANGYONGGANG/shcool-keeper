@@ -1,6 +1,6 @@
 <template>
   <div class="customer-contrast">
-    <van-cell-group class="card-list-item" v-for="resource in resourceList">
+    <van-cell-group class="card-list-item" v-for="(resource,index) in resourceList" v-bind:key="index">
       <van-cell    v-bind:title="resource.campus_name"  v-bind:value="resource.sum+'人'" />
       <van-cell>
         <div class="progress"></div>
