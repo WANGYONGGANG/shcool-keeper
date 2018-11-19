@@ -9,7 +9,7 @@
                {{rightPopDates.item02.selectItem}}
       </van-cell>
         <!-- <van-cell title="客户状态" value="转化成功" /> -->
-        <van-cell title="意向级别" is-link >
+        <van-cell title="意向级别" is-link   @click="clickFn('item05')">
           <van-rate :count="star" v-model="star" />
         </van-cell>
         <!-- <van-cell title="沟通结果" required is-link /> -->
@@ -48,114 +48,149 @@
         </van-radio-group>
       </van-cell> -->
     </van-cell-group>
-    <bottom-btn :buttonData="buttonData"  v-on:click="addRecord"></bottom-btn>
+  <bottom-btn :buttonData="buttonData"  v-on:click="addRecord"></bottom-btn>
  <right-pop :filterShow.sync="rightPopDates.item01.isShow" :allDatas="rightPopDates.item01.data" :selectItem.sync="rightPopDates.item01.selectItem" :selectID.sync="rightPopDates.item01.selectID"></right-pop>
-<right-pop :filterShow.sync="rightPopDates.item02.isShow" :allDatas="rightPopDates.item02.data" :selectItem.sync="rightPopDates.item02.selectItem"></right-pop>
- <right-pop :filterShow.sync="rightPopDates.item03.isShow" :allDatas="rightPopDates.item03.data" :selectItem.sync="rightPopDates.item03.selectItem"></right-pop>
-  <right-pop :filterShow.sync="rightPopDates.item04.isShow" :allDatas="rightPopDates.item04.data" :selectItem.sync="rightPopDates.item04.selectItem"></right-pop>
+ <right-pop :filterShow.sync="rightPopDates.item02.isShow" :allDatas="rightPopDates.item02.data" :selectItem.sync="rightPopDates.item02.selectItem"  :selectID.sync="rightPopDates.item02.selectID"></right-pop>
+ <right-pop :filterShow.sync="rightPopDates.item03.isShow" :allDatas="rightPopDates.item03.data" :selectItem.sync="rightPopDates.item03.selectItem"  :selectID.sync="rightPopDates.item03.selectID"></right-pop>
+ <right-pop :filterShow.sync="rightPopDates.item04.isShow" :allDatas="rightPopDates.item04.data" :selectItem.sync="rightPopDates.item04.selectItem"  :selectID.sync="rightPopDates.item04.selectID"></right-pop>
+<right-pop :filterShow.sync="rightPopDates.item05.isShow" :allDatas="rightPopDates.item05.data" :selectItem.sync="rightPopDates.item05.selectItem"  :selectID.sync="rightPopDates.item05.selectID"></right-pop>
   </div>
 </template>
 <script>
-import RightPop from '../general/rightPop'
+import RightPop from "../general/rightPop";
 import { api } from "../../../static/js/request-api/request-api.js";
-import BottomBtn from '../general/bottomBtn'
+import BottomBtn from "../general/bottomBtn";
 export default {
   components: {
     BottomBtn,
     RightPop
   },
-  data () {
+  data() {
     return {
       star: 4,
-      message1:'sdfsdf',
-      message2:'',
-        rightPopDates:{
-          item01:{
-            isShow:false,
-            selectItem:'',
-            selectID: 1,
-            data:[{
-              itemName:'潮人部落',
+      message1: "sdfsdf",
+      message2: "",
+      rightPopDates: {
+        item01: {
+          isShow: false,
+          selectItem: "",
+          selectID: 0,
+          data: [
+            {
+              itemName: "潮人部落"
             },
-              {
-                itemName:'金色阳光'
-              },
-              {
-                itemName:'欢乐大人'
-              }]
-          },
-            item04:{
-            isShow:false,
-            selectItem:'',
-            data:[{
-              itemName:'准确时间'
-            },
-              {
-                itemName:'待定'
-              }]
-          },
-           item02:{
-            isShow:false,
-            selectItem:'',
-            data:[{
-              itemName:'潮人部落'
-            },
-              {
-                itemName:'金色阳光'
-              },
-              {
-                itemName:'欢乐大人'
-              }]
-          },
-            item03:{
-            isShow:false,
-            selectItem:'',
-            data:[{
-              itemName:'有效沟通'
-            },
-              {
-                itemName:'无效沟通'
-              }]
-          }
+            {
+              itemName: "欢乐大人"
+            }
+          ]
         },
+        item04: {
+          isShow: false,
+          selectItem: "",
+          selectID: 0,
+          data: [
+            {
+              itemName: "准确时间"
+            },
+            {
+              itemName: "待定"
+            }
+          ]
+        },
+        item05: {
+          isShow: false,
+          selectItem: "",
+          selectID: 3,
+          data: [
+            {
+              itemName: "0",
+              id:0
+            },
+             {
+              itemName: "1",
+              id:1
+            },
+            {
+              itemName: "2",
+              id:2
+            },
+             {
+              itemName: "3",
+              id:3
+            },
+             {
+              itemName: "4",
+              id:4
+            },
+              {
+              itemName: "5",
+              id:5
+            },
+          ]
+        },
+        item02: {
+          isShow: false,
+          selectItem: "",
+          selectID: 0,
+          data: [
+            {
+              itemName: "潮人部落"
+            },
+            {
+              itemName: "欢乐大人"
+            }
+          ]
+        },
+        item03: {
+          isShow: false,
+          selectItem: "",
+          selectID: 0,
+          data: [
+            {
+              itemName: "有效沟通"
+            },
+            {
+              itemName: "无效沟通"
+            }
+          ]
+        }
+      },
       buttonData: {
-        text: '提交',
-        url: ''
+        text: "提交",
+        url: ""
       }
-    }
+    };
   },
-  mounted:function(){
+  mounted: function() {
     this.refreshAdmissionsTalkType();
     this.refreshAdmissionsClientState();
-    alert('111')
   },
-   methods: {
-      clickFn (n){
-        this.rightPopDates[n].isShow = true
-      },
-    addRecord:function(){
-
+  methods: {
+    clickFn(n) {
+      this.rightPopDates[n].isShow = true;
     },
-       //获取客户状态
+    addRecord: function() {},
+    //获取客户状态
     refreshAdmissionsClientState: function() {
       let _self = this;
-      api.refreshAdmissionsClientState(null)
+      api
+        .refreshAdmissionsClientState(null)
         .then(res => {
           if (res.status == 200) {
-                let code=res.data.code;
-                if(code===1){
-                  // _self.recordList=res.data.data;
-                  let responsibleList=res.data.data;
-                  let newResponsibleList=[];
-                  for(let i=0;i<responsibleList.length;i++){
-                    let newObj={};
-                    newObj.itemName=responsibleList[i].name;
-                    newResponsibleList.push(newObj);
-                  }
-                  this.rightPopDates.item02.data=newResponsibleList;
-                  this.rightPopDates.item02.selectItem=responsibleList[0].name;
-                }
-                console.log(this.rightPopDates)
+            let code = res.data.code;
+            if (code === 1) {
+              // _self.recordList=res.data.data;
+              let responsibleList = res.data.data;
+              let newResponsibleList = [];
+              for (let i = 0; i < responsibleList.length; i++) {
+                let newObj = {};
+                newObj.itemName = responsibleList[i].name;
+                newResponsibleList.push(newObj);
+              }
+              this.rightPopDates.item02.data = newResponsibleList;
+              this.rightPopDates.item02.selectItem = responsibleList[0].name;
+            }
+            console.log(this.rightPopDates);
           } else {
             let params = { msg: "获取沟通方式" };
             // GlobalVue.$emit("alert", params);
@@ -171,24 +206,25 @@ export default {
     //获取沟通方式
     refreshAdmissionsTalkType: function() {
       let _self = this;
-      api.refreshAdmissionsTalkType(null)
+      api
+        .refreshAdmissionsTalkType(null)
         .then(res => {
           if (res.status == 200) {
-                let code=res.data.code;
-                if(code===1){
-                  // _self.recordList=res.data.data;
-                  let responsibleList=res.data.data;
-                  let newResponsibleList=[];
-                  for(let i=0;i<responsibleList.length;i++){
-                    let newObj={};
-                    newObj.itemName=responsibleList[i].name;
-                    newObj.id=responsibleList[i].id;
-                    newResponsibleList.push(newObj);
-                  }
-                  this.rightPopDates.item01.data=newResponsibleList;
-                  this.rightPopDates.item01.selectItem=responsibleList[0].name;
-                   this.rightPopDates.item01.selectID=responsibleList[0].id;
-                }
+            let code = res.data.code;
+            if (code === 1) {
+              // _self.recordList=res.data.data;
+              let responsibleList = res.data.data;
+              let newResponsibleList = [];
+              for (let i = 0; i < responsibleList.length; i++) {
+                let newObj = {};
+                newObj.itemName = responsibleList[i].name;
+                newObj.id = responsibleList[i].id;
+                newResponsibleList.push(newObj);
+              }
+              this.rightPopDates.item01.data = newResponsibleList;
+              this.rightPopDates.item01.selectItem = responsibleList[0].name;
+              this.rightPopDates.item01.selectID = responsibleList[0].id;
+            }
           } else {
             let params = { msg: "获取沟通方式" };
             // GlobalVue.$emit("alert", params);
@@ -200,93 +236,91 @@ export default {
           // GlobalVue.$emit("alert", params);
           // GlobalVue.$emit("blackBg", null);
         });
-    },
-
-    },
-     watch:{
-      'this.rightPopDates.item01.selectItem':function(newval,oldval){
-        alert('111')
-        console.log("**********");
-        
-        this.$toast(newval)
-      },
-       'this.rightPopDates.item01.selectID':{
-         handler(n,o){
-           alert('222')
-           this.$toast(n)
-         },
-         deep:true
-       },
-      'this.rightPopDates.item02.selectItem':function(newval,oldval){
-        this.$toast(newval)
-      },
-      'this.rightPopDates.item04.selectItem':function(newval,oldval){
-        this.$toast(newval)
-      },
-      'this.rightPopDates.item05.selectItem':function(newval,oldval){
-        this.$toast(newval)
-      }
     }
-}
+  },
+  watch: {
+    "rightPopDates.item01.selectItem": function(newval, oldval) {
+      this.$toast(newval);
+    },
+    "rightPopDates.item01.selectID":function(newval, oldval) {
+      this.rightPopDates.item01.selectID=newval;
+    },
+    "rightPopDates.item02.selectItem": function(newval, oldval) {
+      this.$toast(newval);
+    },
+    "rightPopDates.item02.selectID":function(newval, oldval) {
+      this.rightPopDates.item02.selectID=newval;
+    },
+    "rightPopDates.item04.selectItem": function(newval, oldval) {
+      this.$toast(newval);
+    },
+    "rightPopDates.item04.selectID":function(newval, oldval) {
+      this.rightPopDates.item04.selectID=newval;
+    },
+    "rightPopDates.item05.selectItem": function(newval, oldval) {
+      this.$toast(newval);
+    },
+     "rightPopDates.item05.selectID":function(newval, oldval) {
+      this.rightPopDates.item05.selectID=newval;
+    },
+  }
+};
 </script>
 <style lang="less">
-  .add-com-rec{
-  .recipient{
+.add-com-rec {
+  .recipient {
     width: 100%;
     background: #fff;
     margin: 0 auto;
-  .van-cell__right-icon{
-    position: relative;
-    top: 3px;
+    .van-cell__right-icon {
+      position: relative;
+      top: 3px;
+    }
+    .van-cell__value {
+      color: #ccc;
+    }
   }
-  .van-cell__value{
-    color:#ccc;
-
-  }
-  }
-  .ass-title{
+  .ass-title {
     width: 100%;
     background: #fff;
     margin: 20px auto;
-  .van-field__control{
-    text-align: right;
+    .van-field__control {
+      text-align: right;
+    }
   }
-  }
-  .class-evaluation{
+  .class-evaluation {
     width: 100%;
     background: #fff;
     padding-bottom: 20px;
     margin: 20px auto 0;
-  .van-cell__value{
-    color:#ccc;
+    .van-cell__value {
+      color: #ccc;
+    }
+    .van-field {
+      line-height: 40px;
+      height: 300px;
+      width: 95%;
+      margin: 0 auto;
+      border: 1px #e0e5ed solid;
+    }
+    .van-field--min-height .van-field__control {
+      min-height: 300px;
+    }
   }
-  .van-field{
-    line-height: 40px;
-    height: 300px;
-    width:95%;
-    margin: 0 auto;
-    border: 1px #e0e5ed solid;
-  }
-  .van-field--min-height .van-field__control{
-    min-height: 300px;
-  }
-
-  }
-  .next{
+  .next {
     margin-top: 20px;
-  .van-cell__value{
-    color:#ccc;
-  }
-  .next-time{
-    .van-radio{
-      float: right;
-    margin-left:20px;
-    .van-radio__input{
-      top:-14px;
+    .van-cell__value {
+      color: #ccc;
     }
+    .next-time {
+      .van-radio {
+        float: right;
+        margin-left: 20px;
+        .van-radio__input {
+          top: -14px;
+        }
+      }
     }
   }
-  }
-
-  }
+}
 </style>

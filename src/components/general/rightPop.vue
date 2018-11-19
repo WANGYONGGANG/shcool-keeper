@@ -1,5 +1,5 @@
 <template>
-  <van-popup v-model="filterShow" position="right" class="filter">
+  <van-popup v-model="filterShow" position="right" class="filter" >
     <ul class="right-pop">
       <li v-for="data in allDatas" @click="chooseFn(data.itemName,data.id)">
         {{ data.itemName }}
@@ -23,10 +23,9 @@
       showCommentedDia () {
       },
       chooseFn (v,id) {
-        this.$emit('update:filterShow', false)
-        this.$emit('update:selectItem', v)
-  
-             this.$emit('update:selectID', id)
+        this.$emit('update:filterShow', false);
+        this.$emit('update:selectItem', v);
+        this.$emit('update:selectID', id);
       }
     },
     mounted () {
