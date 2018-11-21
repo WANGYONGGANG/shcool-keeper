@@ -349,6 +349,14 @@ export const api = {
     ReportCustomerAnalysisForWillLevel(params) {
         return fetchGet(baseUrl + '/intentionClientAPI/ReportCustomerAnalysisForWillLevel', params);
     },
+    //增加客户沟通记录
+    addCommunicatingCustomers(params) {
+        return fetchPost(baseUrl + '/intentionClientAPI/addCommunicatingCustomers', params);
+    },
+    //选择承诺到访类型
+        refreshAdmissionsVisitType(params) {
+            return fetchGet(baseUrl + '/intentionClientAPI/refreshAdmissionsVisitType', params);
+        },
 
 
 

@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     goTo (url) {
-      this.$router.push({path: url})
+      this.$router.push({path: url,query:{id: this.$route.query.studentId}})
     },
     booleanToYes:function(isVisited){
       if(isVisited){
