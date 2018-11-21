@@ -1,44 +1,156 @@
 <template>
   <div class="intentional-customers-list">
     <div class="customers-list-tit"><input class="in-cu-input" type="checkbox">全选</div>
+    <div  v-for="customer in customerList">
     <div @click="goTo(urls.communicationRecord)">
       <div class="card-list">
         <div class="card-list-l">
-          <input class="in-cu-input" type="checkbox"> Cindy王
+          <input class="in-cu-input" type="checkbox" v-bind:value="customer.id"  v-model="checkedid">{{customer.name}}
         </div>
       </div>
     </div>
     <div class="management-list">
-      <ul class="management-list-l fn-left">
-        <li>主责任人：测试员</li>
-        <li>手机号码：13123678649</li>
-        <li>客户状态：转化成功</li>
-        <li>意项级别：<van-rate :count="star" v-model="star"  readonly="true" /></li>
+      <ul class="management-list-l fn-left" >
+        <li>主责任人：{{customer.adminName}}</li>
+        <li>手机号码：{{customer.mobile}}</li>
+        <li>客户状态：{{customer.customerStatusName}}</li>
+        <li>意项级别：<van-rate :count="customer.willLevel" v-model="star"  readonly="true" /></li>
       </ul>
     </div>
+    </div>
     <div class="bottom-btn">
-      <span>删除</span>
-      <span>转为正式学员</span>
-      <span>取消转化</span>
-      <span>修改</span>
+      <span v-on:click="deleteStu">删除</span>
+      <span v-on:click="conversion">转为正式学员</span>
+      <span v-on:click="cancelConversion">取消转化</span>
+      <span v-on:click="updateConversion">修改</span>
   </div>
+    <attention v-if="showAttentionAlert" v-bind:attentionText="attentionText"
+                          style="z-index:600;"></attention>
   </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
+import attention from '../teacher/attention'
 export default {
   data () {
     return {
       value: '',
       star: 4,
+      showAttentionAlert:false,
+      checkedid:[],
+      attentionText:"成功",
+      customerList:[],
       urls: {
         addCustomers: '/teacher/addCustomers'
       }
     }
   },
+   components: {  
+       attention
+  },
+   mounted:function(){
+   this.findIntentionClientForStartPage();
+  },
   methods: {
     goTo (param) {
       this.$router.push({path: param})
-    }
+    },
+    deleteIntentionClient:function(){
+      let params =new URLSearchParams();
+      params.append('id',this.checkedid);
+      let _self = this;
+      api.deleteIntentionClient(params)
+        .then(res => {
+          if (res.status == 200) {
+              let code=res.data.code;
+                 _self.showAttentionAlert=true;
+              setTimeout(function(){
+              _self.showAttentionAlert=false;
+          },2000)
+              this.findIntentionClientForStartPage();
+          } else {
+            let params = { msg: "删除意向客户" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "删除意向客户" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+      transformToRegular:function(){
+      let params =new URLSearchParams();
+      params.append('id',this.checkedid);
+      let _self = this;
+      api.transformToRegular(params)
+        .then(res => {
+          if (res.status == 200) {
+              let code=res.data.code;
+              _self.showAttentionAlert=true;
+               setTimeout(function(){
+              _self.showAttentionAlert=false;
+          },2000)
+              this.findIntentionClientForStartPage();
+          } else {
+            
+             _self.attentionText=res.message;
+             _self.showAttentionAlert=true;
+               setTimeout(function(){
+              _self.showAttentionAlert=false;
+          },2000)
+          }
+        })
+        .catch(error => {
+             _self.attentionText="错误";
+             _self.showAttentionAlert=true;
+               setTimeout(function(){
+              _self.showAttentionAlert=false;
+          },2000)
+        });
+    },
+    deleteStu:function(){
+      this.deleteIntentionClient();
+    },
+    conversion:function(){
+      this.transformToRegular();
+    },
+    cancelConversion:function(){
+
+    },
+    updateConversion:function(){
+
+    },
+     //获取意向客户
+    findIntentionClientForStartPage: function() {
+      let params ={};
+      // params.order=desc;
+      params.page =1;
+      params.query_conditions=this.value;
+      params.rows=10;
+      params.sort=this.defaultSort;
+      
+      let _self = this;
+      api.findIntentionClientForStartPage(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.customerList=res.data.data.rows;
+                }
+          } else {
+            let params = { msg: "获取意向客户" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取今日意向客户" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
   }
 }
 </script>

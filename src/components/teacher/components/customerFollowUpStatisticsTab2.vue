@@ -1,7 +1,7 @@
 <template>
   <div class="tab2">
     <div class="card-tit">
-      <calendar-packing></calendar-packing>
+      <calendar-packing  v-on:updateDate=updateDate></calendar-packing>
       <span class="fuzeren"><input type="checkbox" />主负责人</span>
     </div>
     <van-cell-group class="card-list-item"> 
@@ -38,6 +38,9 @@ export default {
     return {
       schoolPartList:null,
       campusObjList:[{campusName:'',conversion:0,intentionClientCount:0,sellerCode:0,sellerName:'',transformationCount:0,transformationMonery:0}],
+      begin_date:"2018-07-01",
+      end_date:"2018-11-30",
+      campus_id:null,
       active: 1,
         sortData:{
         title:'排序方式',
@@ -52,7 +55,7 @@ export default {
     }
   },
   mounted:function(){
-    // this.reportTalkStatistics(); 
+    this.ReportTransformationStatistics(); 
     this.refreshDepartment();
   },
   methods: {
@@ -66,6 +69,11 @@ export default {
          this.sortData.lists.push(schoolPartList[i].name);
        }
        this.sortData.selectItem.item=schoolPartList[0].name;
+    },
+     updateDate:function(beginDate,endDate){
+      this.begin_date=beginDate;
+      this.end_date=endDate;
+      this.ReportTransformationStatistics();
     },
     sortPopShow(param){
          this.sortData.isShow=true;
@@ -97,9 +105,12 @@ export default {
       //转化统计
     ReportTransformationStatistics: function(campus_id) {
       let params ={};
-      params.begin_date =null;
-      params.campus_id=campus_id;
-      params.end_date=null;      
+      params.begin_date =this.begin_date;
+      params.campus_id=this.campus_id;
+      params.end_date=this.end_date;  
+      // params.begin_date ="2018-07-01";
+      // params.campus_id=4;
+      // params.end_date="2018-11-30";      
       let _self = this;
       api.ReportTransformationStatistics(params)
         .then(res => {
@@ -132,11 +143,13 @@ export default {
   watch:{
      'sortData.selectItem':function (n,o) {
        this.$toast(n.item);
-       this.ReportTransformationStatistics(this.schoolPartList[n.index].id);
+        this.campus_id=this.schoolPartList[n.index-1].id;
+       this.ReportTransformationStatistics();
     },
     item :{
       //日期快速切换值
       handler(val){
+        console.log(val);
         this.$toast(val)
       }
     }

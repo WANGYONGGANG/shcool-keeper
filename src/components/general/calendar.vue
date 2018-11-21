@@ -170,7 +170,8 @@ export default {
       let date =dateObject.getDate()//获取当前日(1-31)
       let newDate = this.formatDate(year,month,date)
       this.$emit('update:isVisible', false)
-      this.$emit('update:date', newDate)
+      this.$emit('update:date', newDate);
+      this.$emit('updateDate', newDate);
     }
   },
   mounted () {

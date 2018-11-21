@@ -1,7 +1,7 @@
 <template>
-  <van-popup v-model="filterShow" position="right" class="filter">
+  <van-popup v-model="filterShow" position="right" class="filter" >
     <ul class="right-pop">
-      <li v-for="data in allDatas" @click="chooseFn(data.itemName)">
+      <li v-for="data in allDatas" @click="chooseFn(data.itemName,data.id)">
         {{ data.itemName }}
       </li>
     </ul>
@@ -14,7 +14,7 @@
 </template>
 <script>
   export default {
-    props:['allDatas','filterShow','selectItem'],
+    props:['allDatas','filterShow','selectItem','selectID',],
     data () {
       return {
       }
@@ -22,9 +22,10 @@
     methods: {
       showCommentedDia () {
       },
-      chooseFn (v) {
-        this.$emit('update:filterShow', false)
-        this.$emit('update:selectItem', v)
+      chooseFn (v,id) {
+        this.$emit('update:filterShow', false);
+        this.$emit('update:selectItem', v);
+        this.$emit('update:selectID', id);
       }
     },
     mounted () {

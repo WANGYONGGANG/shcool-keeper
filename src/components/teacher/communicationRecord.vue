@@ -1,9 +1,9 @@
 <template>
 <div class="communication-record">
   <div class="charge-top">
-    <calendar-packing ref="calendar"></calendar-packing>
+   <calendar-packing v-on:updateDate=updateDate  v-bind:begin_date="begin_date"  v-bind:end_date="end_date" v-if="showCalendar" ></calendar-packing>
   </div>
-  <div class="timetable-table" v-for="data in classRosterList">
+  <div class="timetable-table" v-for="(data, index) in classRosterList" v-bind:key="index">
     <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
     <div class="table-l">
       <div class="class-tit">{{data.talkManName}}</div>
@@ -46,6 +46,9 @@ export default {
       urls: {
         addCommunicationRecord: '/teacher/addCommunicationRecord'
       },
+      begin_date:null,
+      end_date:null,
+      showCalendar:false,
       buttonData: {
         text: '添加沟通记录',
         url: '/teacher/addCommunicationRecord'

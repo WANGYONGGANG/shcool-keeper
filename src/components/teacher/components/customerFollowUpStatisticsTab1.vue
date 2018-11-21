@@ -1,7 +1,7 @@
 <template>
   <div class="tab1">
     <div class="card-tit">
-      <calendar-packing></calendar-packing>
+      <calendar-packing v-on:updateDate=updateDate></calendar-packing>
       <span class="fuzeren"><input type="checkbox" />主负责人</span>
     </div>
         <van-cell-group class="card-list-item">
@@ -40,6 +40,9 @@ export default {
   data () {
     return {
   schoolPartList:null,
+  begin_date:"2018-07-01",
+  end_date:"2018-11-30",
+  campus_id:null,
   campusObjList:[{completeness:0,intentionClientCount:0,talkedCount:0,willTalkCount:0,communication:0,ineffectiveCommunication:0}],
   sortData:{
         title:'排序方式',
@@ -50,7 +53,7 @@ export default {
     }
   },
   mounted:function(){
-    this.reportTransformationStatistics(); 
+    this.reportTalkStatistics(); 
     this.refreshDepartment();
   
   },
@@ -64,6 +67,11 @@ export default {
     },
     goTo (param) {
       this.$router.push({path: param})
+    },
+    updateDate:function(beginDate,endDate){
+      this.begin_date=beginDate;
+      this.end_date=endDate;
+      this.reportTalkStatistics();
     },
     sortPopShow(param){
          this.sortData.isShow=true;
@@ -93,14 +101,18 @@ export default {
         });
     },
      //沟通统计
-    reportTransformationStatistics: function(campus_id) {
+    reportTalkStatistics: function() {
       let params ={};
-      params.begin_date =null;
-      params.campus_id=campus_id;
-      params.end_date=null;
+      params.begin_date =this.begin_date;
+      // params.campus_id=10;
+       params.campus_id=this.campus_id;
+      params.end_date=this.end_date;
+      // params.begin_date ="2018-07-01";
+      // params.end_date="2018-11-30";   
+      params.primary_owner=false;
       
       let _self = this;
-      api.reportTransformationStatistics(params)
+      api.reportTalkStatistics(params)
         .then(res => {
           if (res.status == 200) {
                 let code=res.data.code;
@@ -130,7 +142,8 @@ export default {
   watch:{
      'sortData.selectItem':function (n,o) {
        this.$toast(n.item);
-       this.reportTransformationStatistics(this.schoolPartList[n.index].id);
+       this.campus_id=this.schoolPartList[n.index-1].id;
+       this.reportTalkStatistics();
     },
     item :{
       //日期快速切换值
