@@ -57,7 +57,7 @@ export default {
       ],
       popData:{
         filterShow:false,
-        selectId:0 //columnData 数组元素的下标
+        selectId:[ 0 ] //默认选中的项
       }
 
     }

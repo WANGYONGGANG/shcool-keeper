@@ -75,25 +75,26 @@ export default {
           isSelect:false,
           id:8
         }
-      ]
+      ],
+      temporaryIDs:this.selectId
     }
   },
   methods: {
     resetFn(){
-      this.filterShow = false
-    },
-    submitFn(){
-      this.filterShow = false
-    },
-    clickFn(item,index){
-      this.$emit('update:filterShow', false)
-      this.$emit('update:selectId', item.id)
-      this.filterShow = false
       this.columnData.map(function (v,k) {
         v.isSelect = false
       })
+    },
+    submitFn(){
+      this.$emit('update:selectId', this.temporaryIDs)
+      this.$emit('update:filterShow', false)
+    },
+    clickFn(item,index){
+      //点击的时候不把选中的信息传给父组件，在确定时再传，需要暂时存放
+      this.temporaryIDs.push(item.id)
       if(!item.isSelect){
-        item.isSelect=!item.isSelect
+        //传递参数
+        item.isSelect = !item.isSelect
       }
     }
   },
