@@ -77,8 +77,9 @@ export default {
       }
     },
     'popData.selectId':function (n,o) {
-      //显示选中的元素的id 数组元素的下标
-      this.$toast(n)
+      //n 为获取到选中的元素id集合
+      console.log('选中的列'+n)
+      this.$toast('请在console中查看选中的元素id集合 ')
     }
   }
 }

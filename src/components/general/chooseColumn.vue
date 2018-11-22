@@ -73,10 +73,11 @@ export default {
         {
           text:'从他人结转',
           isSelect:false,
-          id:8
+          id:9
         }
       ],
-      temporaryIDs:this.selectId
+      //设置一个暂时存放的组数，确定时回传给父组件
+      temporaryIDs:[0]
     }
   },
   methods: {
