@@ -8,7 +8,7 @@
     </ul>
     <div class="filter-btn">
       <span class="btn-reset" @click="resetFn()">重置</span>
-      <span class="btn-submit" @click="submitFn1()">确定</span>
+      <span class="btn-submit" @click="submitFn()">确定</span>
     </div>
   </van-popup>
 </template>
