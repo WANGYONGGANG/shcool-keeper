@@ -354,7 +354,7 @@ export const api = {
         return fetchPost(baseUrl + '/intentionClientAPI/addCommunicatingCustomers', params);
     },
     //选择承诺到访类型
-        refreshAdmissionsVisitType(params) {
+    refreshAdmissionsVisitType(params) {
             return fetchGet(baseUrl + '/intentionClientAPI/refreshAdmissionsVisitType', params);
         },
 

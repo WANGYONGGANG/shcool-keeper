@@ -1,6 +1,6 @@
 <template>
   <div class="customer-communication-record">
-    <calendar-packing v-on:updateDate=updateDate></calendar-packing>
+    <calendar-packing v-on:updateDate="updateDate"   v-bind:begin_date="begin_date"  v-bind:end_date="end_date"></calendar-packing>
       <ul class="record-list" v-for="record in recordList">
         <li class="record-list-item01">
           <span class="list-item01-l"><img class="img" src="../../assets/images/user/test.jpg"/></span>
@@ -41,8 +41,8 @@ export default {
   data () {
     return {
       checked: true,
-      begin_date:null,
-      end_date:null,
+      begin_date:"2018-11-01",
+      end_date:"2018-11-31",
       recordList:[],
       urls: {
         addCommunicationRecordTwo: '/teacher/addCommunicationRecordTwo'

@@ -24,8 +24,7 @@
       <span v-on:click="cancelConversion">取消转化</span>
       <span v-on:click="updateConversion">修改</span>
   </div>
-    <attention v-if="showAttentionAlert" v-bind:attentionText="attentionText"
-                          style="z-index:600;"></attention>
+  <attention v-if="showAttentionAlert" v-bind:attentionText="attentionText" style="z-index:600;"></attention>
   </div>
 </template>
 <script>
@@ -63,7 +62,7 @@ export default {
         .then(res => {
           if (res.status == 200) {
               let code=res.data.code;
-                 _self.showAttentionAlert=true;
+            _self.showAttentionAlert=true;
               setTimeout(function(){
               _self.showAttentionAlert=false;
           },2000)
@@ -92,7 +91,7 @@ export default {
                setTimeout(function(){
               _self.showAttentionAlert=false;
           },2000)
-              this.findIntentionClientForStartPage();
+            this.findIntentionClientForStartPage();
           } else {
             
              _self.attentionText=res.message;

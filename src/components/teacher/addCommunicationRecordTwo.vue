@@ -19,7 +19,7 @@
         <van-cell title="承诺到访">
           <input type="checkbox" class="promise"   value="1" v-model="isVisit">
         </van-cell>
-        <div class="promise-button"><div class="promise-button-in"    @click="showVsitDate">{{nextVisitDate}}</div><div class="promise-button-in"  @click="clickFn('item06')">{{rightPopDates.item02.selectItem}}</div></div>
+        <div class="promise-button"><div class="promise-button-in"    @click="showVsitDate">{{nextVisitDate}}</div><div class="promise-button-in"  @click="clickFn('item06')">{{rightPopDates.item06.selectItem}}</div></div>
       </van-cell-group>
     </div>
     <div class="class-evaluation">
@@ -61,17 +61,21 @@
 <right-pop :filterShow.sync="rightPopDates.item06.isShow" :allDatas="rightPopDates.item06.data" :selectItem.sync="rightPopDates.item06.selectItem"  :selectID.sync="rightPopDates.item06.selectID"></right-pop>
  <calendar :date.sync="calendar.date" :isVisible.sync="calendar.isVisible"></calendar>
 <calendar :date.sync="visitDate.date" :isVisible.sync="visitDate.isVisible"></calendar>
+<attention v-if="showAttentionAlert" v-bind:attentionText="attentionText" style="z-index:600;"></attention>
   </div>
 </template>
 <script>
 import RightPop from "../general/rightPop";
 import { api } from "../../../static/js/request-api/request-api.js";
+import Router from "vue-router";
 import Calendar from '../general/calendar'
 import BottomBtn from "../general/bottomBtn";
+import attention from '../teacher/attention'
 export default {
   components: {
     BottomBtn,
     Calendar,
+    attention,
     RightPop
   },
   data() {
@@ -84,6 +88,8 @@ export default {
         isVisible:false,
         date:'2018-10-30'
       },
+      showAttentionAlert:false,
+      attentionText:"提交成功",
       nextTalkDate:new Date().format("yyyy-MM-dd"),
       nextVisitDate:"选择到访日期",
       nextVisitType:"选择到访类型",
@@ -200,6 +206,8 @@ export default {
   mounted: function() {
     this.refreshAdmissionsTalkType();
     this.refreshAdmissionsClientState();
+    //查询承诺到访类型
+    this.refreshAdmissionsVisitType();
   },
   methods: {
     clickFn(n) {
@@ -249,7 +257,7 @@ export default {
           // GlobalVue.$emit("blackBg", null);
         });
     },
-       //选择承诺到访类型
+    //选择承诺到访类型
     refreshAdmissionsVisitType: function() {
       let _self = this;
       api.refreshAdmissionsVisitType(null)
@@ -258,19 +266,25 @@ export default {
             let code = res.data.code;
             if (code === 1) {
               let responsibleList = res.data.data;   
-              console.log(responsibleList);         
+              let newResponsibleList = [];
+              for (let i = 0; i < responsibleList.length; i++) {
+                let newObj = {};
+                newObj.itemName = responsibleList[i].name;
+                newObj.id = responsibleList[i].id;
+                newResponsibleList.push(newObj);
+              }
               this.rightPopDates.item06.data = newResponsibleList;
               this.rightPopDates.item06.selectItem = responsibleList[0].name;
               this.rightPopDates.item06.selectID = responsibleList[0].id;
             }
           } else {
-            let params = { msg: "获取沟通方式" };
+            let params = { msg: "获取承诺到访类型" };
             // GlobalVue.$emit("alert", params);
             // GlobalVue.$emit("blackBg", null);
           }
         })
         .catch(error => {
-          let params = { msg: "获取沟通方式" };
+          let params = { msg: "获取承诺到访类型" };
           // GlobalVue.$emit("alert", params);
           // GlobalVue.$emit("blackBg", null);
         });
@@ -285,17 +299,36 @@ export default {
        callLog.intentionLevel=this.rightPopDates.item05.selectID;
        callLog.talkResultStateId=this.rightPopDates.item03.selectID;
        callLog.isVisit=this.isVisit;
-       callLog.talkContent-this.talkContent;
+       callLog.talkContent=this.talkContent;
        callLog.nextMode=this.rightPopDates.item04.selectID;
        callLog.nextTalkDate=this.nextTalkDate;
-       callLog.intentionClientId=this.$route.query.studentId;
+       callLog.intentionClientId=_self.$route.query.id;
+       callLog.nextVisitDate=this.nextVisitDate;
+       callLog.visitTypeId=this.rightPopDates.item06.selectID;
+       callLog.visited=false;
+       if(callLog.nextVisitDate=="选择到访日期"){
+            _self.alertMessage("请选择到访日期");
+            return;
+       };
+      if(callLog.nextVisitDate=="选择到访日期"){
+            _self.alertMessage("请选择到访日期");
+            return;
+       };
+        if(callLog.talkContent==""){
+            _self.alertMessage("沟通内容为空");
+            return;
+       };
       api.addCommunicatingCustomers(callLog)
         .then(res => {
-          if (res.status == 200) {
-            let code = res.data.code;
-            if (code === 1) {
-              console.log(res.data.data);
-            }
+          if (res.code == 1) {
+             _self.showAttentionAlert=true;
+               setTimeout(function(){
+              _self.showAttentionAlert=false;
+              _self.$router.push({
+               path: "/teacher/customerCommunicationRecord",
+               query: { studentId: _self.$route.query.id}
+              });
+          },2000)
           } else {
             let params = { msg: "增加客户沟通记录" };
             // GlobalVue.$emit("alert", params);
@@ -307,6 +340,15 @@ export default {
           // GlobalVue.$emit("alert", params);
           // GlobalVue.$emit("blackBg", null);
         });
+    },
+    //弹出层提示 
+    alertMessage:function(alertMessage){
+          let _self=this;
+         _self.attentionText=alertMessage;
+          _self.showAttentionAlert=true;
+               setTimeout(function(){
+              _self.showAttentionAlert=false;
+          },2000)
     },
     //获取沟通方式
     refreshAdmissionsTalkType: function() {

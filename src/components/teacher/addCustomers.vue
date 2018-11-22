@@ -57,22 +57,23 @@
       nextStep(param){
         if(!this.isOpacity1){
            this.isOpacity1 = true;
-          this.isOpacity2 = false;
-          this.isOpacity3 = true;
+           this.isOpacity2 = false;
+           this.isOpacity3 = true;
            this.currentTabComponent ="stepTwo";
         }else if(!this.isOpacity2){
           this.isOpacity1 = true;
           this.isOpacity2 = true;
           this.isOpacity3 = false;
-           this.currentTabComponent ="stepThree";
+          this.currentTabComponent ="stepThree";
         }      
       },
+      //上一步 
       lastStep(param){
         if(!this.isOpacity3){
            this.isOpacity1 = true;
            this.isOpacity2 = false;
            this.isOpacity3 = true;
-            this.currentTabComponent ="stepTwo";
+           this.currentTabComponent ="stepTwo";
         }else if(!this.isOpacity2){
           this.isOpacity1 = false;
           this.isOpacity2 = true;

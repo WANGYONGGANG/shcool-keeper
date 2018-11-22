@@ -41,7 +41,7 @@ export default {
   watch: {
     calendar: {
       handler(val) {
-        console.log("val");
+        // console.log("val");
         //  this.$toast(val)
       },
       deep: true

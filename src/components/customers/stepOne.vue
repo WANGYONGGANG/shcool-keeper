@@ -73,6 +73,7 @@
           item01:{
             isShow:false,
             selectItem:'',
+            selectID: 0,
             data:[{
               itemName:'潮人部落'
             },
@@ -99,12 +100,16 @@
           item03:{
             isShow:false,
             selectItem:'',
-            data:[{
-              itemName:'男'
+            data:[
+              {
+              itemName:'男',
+              id:'1'
             },
               {
-                itemName:'女'
-              }]
+                itemName:'女',
+                id:"2"
+              }
+              ]
           },
           item04:{
             isShow:false,
@@ -142,6 +147,12 @@
       this.refreshStudentsPublicSchool();
       this.refreshGrade();
     },
+    activated(){
+      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+    },
+    deactivated(){
+     console.log("deactivated");
+    },
     methods: {
       goTo (url) {
         this.$router.push({path: url})
@@ -165,10 +176,12 @@
                   for(let i=0;i<responsibleList.length;i++){
                     let newObj={};
                     newObj.itemName=responsibleList[i].name;
+                    newObj.id = responsibleList[i].id;
                     newResponsibleList.push(newObj);
                   }
                   this.rightPopDates.item01.data=newResponsibleList;
                   this.rightPopDates.item01.selectItem=responsibleList[0].name;
+                  this.rightPopDates.item01.selectID = responsibleList[0].id;
                 }
           } else {
             let params = { msg: "获取招生来源" };
@@ -196,10 +209,12 @@
                   for(let i=0;i<responsibleList.length;i++){
                     let newObj={};
                     newObj.itemName=responsibleList[i].name;
+                    newObj.id = responsibleList[i].id;
                     newResponsibleList.push(newObj);
                   }
                   this.rightPopDates.item04.data=newResponsibleList;
                   this.rightPopDates.item04.selectItem=responsibleList[0].name;
+                  this.rightPopDates.item04.selectID = responsibleList[0].id;
                 }
           } else {
             let params = { msg: "获取公立学校" };
@@ -227,10 +242,12 @@
                   for(let i=0;i<responsibleList.length;i++){
                     let newObj={};
                     newObj.itemName=responsibleList[i].text;
+                    newObj.id = responsibleList[i].id;
                     newResponsibleList.push(newObj);
                   }
                   this.rightPopDates.item05.data=newResponsibleList;
                   this.rightPopDates.item05.selectItem=responsibleList[0].text;
+                  this.rightPopDates.item05.selectID = responsibleList[0].value;
                 }
           } else {
             let params = { msg: "获取年级" };
@@ -260,9 +277,11 @@
                   for(let i=0;i<responsibleList.length;i++){
                     let newObj={};
                     newObj.itemName=responsibleList[i].name;
+                    newObj.id = responsibleList[i].id;
                     newResponsibleList.push(newObj);
                   }
                   this.rightPopDates.item02.data=newResponsibleList;
+                  this.rightPopDates.item02.selectID = responsibleList[0].id;
                   this.rightPopDates.item02.selectItem=responsibleList[0].name;
                 }
           } else {
@@ -279,18 +298,36 @@
     },
     },
     watch:{
+      'this.rightPopDates.item01.selectItem':function(newval,oldval){
+        this.$toast(newval)
+      },
+      "rightPopDates.item01.selectID":function(newval, oldval) {
+       this.rightPopDates.item01.selectID=newval;
+       },
       'this.rightPopDates.item02.selectItem':function(newval,oldval){
         this.$toast(newval)
       },
+      "rightPopDates.item02.selectID":function(newval, oldval) {
+       this.rightPopDates.item02.selectID=newval;
+       },
       'this.rightPopDates.item03.selectItem':function(newval,oldval){
         this.$toast(newval)
       },
+       "rightPopDates.item03.selectID":function(newval, oldval) {
+       this.rightPopDates.item03.selectID=newval;
+       },
       'this.rightPopDates.item04.selectItem':function(newval,oldval){
         this.$toast(newval)
       },
+      "rightPopDates.item04.selectID":function(newval, oldval) {
+       this.rightPopDates.item04.selectID=newval;
+       },
       'this.rightPopDates.item05.selectItem':function(newval,oldval){
         this.$toast(newval)
-      }
+      },
+      "rightPopDates.item05.selectID":function(newval, oldval) {
+       this.rightPopDates.item05.selectID=newval;
+       },
     }
   }
 </script>

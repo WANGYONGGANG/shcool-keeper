@@ -1,7 +1,7 @@
 <template>
   <div class="tab1">
     <div class="class-tab">
-       <calendar-packing v-on:updateDate=updateDate  v-bind:begin_date="begin_date"  v-bind:end_date="end_date" v-if="showCalendar" ></calendar-packing>
+       <calendar-packing v-on:updateDate="updateDate"  v-bind:begin_date="begin_date"  v-bind:end_date="end_date" v-if="showCalendar" ></calendar-packing>
       <div class="operation">筛选</div>
     </div>
      <van-cell title="选择校区"  is-link class="line65"  @click="sortPopShow">
