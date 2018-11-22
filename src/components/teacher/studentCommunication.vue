@@ -82,8 +82,8 @@
         <van-cell :title="className" is-link  @click="showClassPop" />
       </van-cell-group>
       <div class="filter-btn">
-        <span class="btn-reset" @click="resetFn">重置</span>
-        <span class="btn-submit" @click="submitFn">确定</span>
+        <span class="btn-reset" @click="resetFn()">重置</span>
+        <span class="btn-submit" @click="submitFn1()">确定</span>
       </div>
     </van-popup>
     <van-popup v-model="classFilterShow" position="right" class="filter">
@@ -378,6 +378,23 @@ export default {
 //      }else{
 //        this.filterShow = false
 //      }
+
+      if(this.classFilterShow){
+        this.classFilterShow = false;
+
+      }else {
+        this.classFilterShow = false;
+        this.filterShow = false
+      }
+      for(var i=0;i<this.list.length;i++){
+          if(this.list[i].id == this.radio){
+              this.className = this.list[i].className
+          }
+          
+      }
+
+    },
+    submitFn1 (param) {
 
       if(this.classFilterShow){
         this.classFilterShow = false;

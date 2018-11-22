@@ -6,6 +6,7 @@ import Login from '@/components/user/login'
 import OperationOverview from '@/components/chart/operationOverview'
 import ChargeReport from '@/components/chart/chargeReport'
 import EarningReport from '@/components/chart/earningReport'
+import EarningReportDetial from '@/components/chart/earningReportDetial'
 import CurriculuConsumption from '@/components/chart/curriculuConsumption'
 import ClassReport from '@/components/chart/classReport'
 import FullclassRate from '@/components/chart/class/fullclassRate'
@@ -144,6 +145,12 @@ export default new Router({
       path: '/chart/earningReport',
       name: 'earningReport',
       component: EarningReport
+    },
+
+    {
+      path: '/chart/earningReportDetial',
+      name: 'earningReportDetial',
+      component: EarningReportDetial
     },
     {
       path: '/chart/classReport',
