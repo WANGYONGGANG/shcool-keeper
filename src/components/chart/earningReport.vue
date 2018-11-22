@@ -5,11 +5,11 @@
       <calendar-packing></calendar-packing>
     </div>
     <div class="charge-top-right">
-      选择列<van-icon name="wap-nav" />
+      <span @click="showPop">排序</span>
     </div>
   </div>
   <van-search placeholder="请输入老师姓名" background="#fff" class="earning-search" v-model="value" />
-  <div class="timetable-table">
+  <div class="timetable-table" @click="goTo(urls.earningReportDetial)">
     <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
     <div class="table-l">
       <div class="class-tit">潮人部落</div>
@@ -21,22 +21,62 @@
       <span class="completion">评分</span>
     </div>
   </div>
-
+  <sort-pop :title="popData.title" :items.sync="popData.items" :isShow.sync="popData.isShow" :selectId.sync="popData.selectId" ></sort-pop>
 </div>
 </template>
 <script>
+  import SortPop from '../popup/sortPopPublish'
   import CalendarPacking from '../general/calendarPacking'
-export default {
+  export default {
   components: {
-    CalendarPacking
+    CalendarPacking,
+    SortPop
   },
   data () {
   return{
+    urls:{
+      earningReportDetial:'/chart/earningReportDetial'
+    },
+    popData:{
+      isShow:false,
+      title:'排序方式',
+      selectId:0,
+      items: [
+        {
+          text:'按班级个数排序',
+          isSelect:true,
+          id:0
 
+        },
+        {
+          text:'按课消金额排序',
+          isSelect:false,
+          id:1
+
+        },
+        {
+          text:'按人数排序',
+          isSelect:false,
+          id:2
+
+        },
+        {
+          text:'按好评率排序',
+          isSelect:false,
+          id:3
+
+        }
+      ]
+    }
   }
   },
   methods: {
-
+    goTo (url) {
+      this.$router.push({path: url})
+    },
+    showPop(){
+      this.popData.isShow = true
+    }
   },
   computed : {
     item () {
@@ -49,7 +89,10 @@ export default {
         //日期快速切换值
         this.$toast(val)
       }
-    }
+    },
+    'popData.selectId':function (n,o) {
+      this.$toast('排序方式选择'+n)
+  }
   }
 }
 </script>
@@ -70,8 +113,8 @@ export default {
    .charge-top-right{
      float: right;
      line-height: 40px;
-     padding-top: 15px;
-     padding-right: 15px;
+     padding-top: 10px;
+     padding-right: 30px;
      .van-icon{
        margin-left: 10px;
        position: relative;

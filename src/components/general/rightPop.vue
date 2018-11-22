@@ -31,20 +31,6 @@
     mounted () {
 
     }
-    //回调参数试用方法 哪个页面用到
-//  computed : {
-//    item () {
-//      return this.$store.state.commentPopup.item
-//    }
-//  },
-//  watch:{
-//    item :{
-    //日期快速切换值
-//      handler(val){
-//        this.$toast(val)
-//      }
-//    }
-//  }
   }
 </script>
 <style lang="less">
