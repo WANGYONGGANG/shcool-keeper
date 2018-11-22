@@ -4,7 +4,7 @@
     <div class="charge-top-tab">
       <calendar-packing></calendar-packing>
     </div>
-    <div class="charge-top-right">
+    <div class="charge-top-right" @click="showPop">
       选择列<van-icon name="wap-nav" />
     </div>
   </div>
@@ -23,13 +23,16 @@
         ></v-table>
       </div>
     </template>
+  <choose-column :filterShow.sync="popData.filterShow" :selectId.sync="popData.selectId"></choose-column>
 </div>
 </template>
 <script>
 import CalendarPacking from '../general/calendarPacking'
+import ChooseColumn from '../general/chooseColumn'
 export default {
   components: {
-    CalendarPacking
+    CalendarPacking,
+    ChooseColumn
   },
   data () {
     return {
@@ -49,11 +52,17 @@ export default {
         {field: 'xinzeng', title: '新增', width: 150, titleAlign: 'center', columnAlign: 'center'},
         {field: 'buqianjiao', title: '补欠交', width: 150, titleAlign: 'center', columnAlign: 'center'},
         {field: 'xiaoshou', title: '销售', width: 150, titleAlign: 'center', columnAlign: 'center'}
-      ]
+      ],
+      popData:{
+        filterShow:false,
+        selectId:0 //columnData 数组元素的下标
+      }
     }
   },
   methods: {
-
+    showPop (){
+      this.popData.filterShow = true
+    }
   },
   computed : {
     item () {
@@ -66,6 +75,10 @@ export default {
         //日期快速切换值
         this.$toast(val)
       }
+    },
+    'popData.selectId':function (n,o) {
+      //显示选中的元素的id 数组元素的下标
+      this.$toast(n)
     }
   }
 }
@@ -74,7 +87,7 @@ export default {
 .charge{
   .charge-top{
     padding-top: 10px;
-    height: 76px;
+    height: 85px;
     background: #fff;
     .charge-top-tab{
       float: left;
