@@ -4,7 +4,7 @@
       <van-cell title="选择要展示的列"  />
     </van-cell-group>
     <ul class="column">
-      <li v-for="(item,index) in columnData" @click="clickFn(item,index)" key="index">{{item}}</li>
+      <li v-for="(item,index) in columnData" @click="clickFn(item,index)" key="index" :class="{ select: item.isSelect }">{{item.text}}</li>
     </ul>
     <div class="filter-btn">
       <span class="btn-reset" @click="resetFn()">重置</span>
@@ -17,8 +17,64 @@ export default {
   props: ['filterShow','columnData','selectId'],
   data () {
     return {
-//      columnData:[
-//        '新增', '续费', '扩科', '转介绍', '连报','多期', '补欠交', '销售', '预存', '从他人结转'
+//      columnData: [
+//        {
+//          text:'新增',
+//          isSelect:true,
+//          id:0
+//
+//        },
+//        {
+//          text:'续费',
+//          isSelect:false,
+//          id:1
+//
+//        },
+//        {
+//          text:'扩科',
+//          isSelect:false,
+//          id:2
+//
+//        },
+//        {
+//          text:'转介绍',
+//          isSelect:false,
+//          id:3
+//        },
+//        {
+//          text:'连报',
+//          isSelect:false,
+//          id:4
+//        },
+//        {
+//          text:'多期',
+//          isSelect:false,
+//          id:6
+//        }
+//        ,
+//        {
+//          text:'补欠交',
+//          isSelect:false,
+//          id:6
+//        }
+//        ,
+//        {
+//          text:'销售',
+//          isSelect:false,
+//          id:7
+//        }
+//        ,
+//        {
+//          text:'预存',
+//          isSelect:false,
+//          id:8
+//        }
+//        ,
+//        {
+//          text:'从他人结转',
+//          isSelect:false,
+//          id:8
+//        }
 //      ]
     }
   },
@@ -31,8 +87,14 @@ export default {
     },
     clickFn(item,index){
       this.$emit('update:filterShow', false)
-      this.$emit('update:selectItem', index)
+      this.$emit('update:selectId', item.id)
       this.filterShow = false
+      this.columnData.map(function (v,k) {
+        v.isSelect = false
+      })
+      if(!item.isSelect){
+        item.isSelect=!item.isSelect
+      }
     }
   },
   mounted () {
@@ -51,6 +113,9 @@ export default {
     text-align: center;
     line-height: 60px;
     margin: 15px 0 0 15px;
+  }
+  .select{
+    color: #4286ed;
   }
   }
   .filter-btn{

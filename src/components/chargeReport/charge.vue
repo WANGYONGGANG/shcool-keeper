@@ -58,9 +58,65 @@ export default {
       popData:{
         filterShow:false,
         selectId:0, //columnData 数组元素的下标
-        columnData:[
-        '新增', '续费', '扩科', '转介绍', '连报','多期', '补欠交', '销售', '预存', '从他人结转'
-      ]
+        columnData: [
+          {
+            text:'新增',
+            isSelect:true,
+            id:0
+
+          },
+          {
+            text:'续费',
+            isSelect:false,
+            id:1
+
+          },
+          {
+            text:'扩科',
+            isSelect:false,
+            id:2
+
+          },
+          {
+            text:'转介绍',
+            isSelect:false,
+            id:3
+          },
+          {
+            text:'连报',
+            isSelect:false,
+            id:4
+          },
+          {
+            text:'多期',
+            isSelect:false,
+            id:6
+          }
+          ,
+          {
+            text:'补欠交',
+            isSelect:false,
+            id:6
+          }
+          ,
+          {
+            text:'销售',
+            isSelect:false,
+            id:7
+          }
+          ,
+          {
+            text:'预存',
+            isSelect:false,
+            id:8
+          }
+          ,
+          {
+            text:'从他人结转',
+            isSelect:false,
+            id:8
+          }
+        ]
       }
 
     }
@@ -85,7 +141,7 @@ export default {
     },
     'popData.selectId':function (n,o) {
       //显示选中的元素的id 数组元素的下标
-      this.$toast(val)
+      this.$toast(n)
     }
   }
 }
