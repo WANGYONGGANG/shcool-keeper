@@ -42,6 +42,7 @@ export default {
   methods: {
     goTo (url) {
       this.$router.push({path: url})
+
     },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
@@ -148,6 +149,7 @@ float: left;
    left: 300px;
    top: 40px;
    color: #fff;
+   z-index: 100000;
    font-size: 28px;
  .van-icon{
    position: relative;
@@ -160,6 +162,7 @@ float: left;
    position: absolute;
    right:30px;
    top: 40px;
+   z-index: 100000;
    color: #fff;
  .van-icon{
    position: relative;
