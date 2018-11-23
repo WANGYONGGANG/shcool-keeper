@@ -21,12 +21,12 @@
       </dl>
     </div>
     <keep-alive>
-      <component v-bind:is="currentTabComponent"></component>
+      <component v-bind:is="currentTabComponent"  v-on:lastStep="lastStep"  v-on:nextStep="nextStep" v-bind:cusObj="cusObj"></component>
     </keep-alive>
-    <div class="add-customers-bottom-btn">
+    <!-- <div class="add-customers-bottom-btn">
       <span v-on:click="lastStep">上一步</span>
       <span class="next"  v-on:click="nextStep">下一步</span>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -44,6 +44,7 @@
     data () {
       return {
         currentTabComponent: 'stepOne',
+        cusObj:{},
         isOpacity1: false,
         isOpacity2: true,
         isOpacity3: true
@@ -55,6 +56,8 @@
       },
       //下一步
       nextStep(param){
+        console.log(param);
+        this.cusObj=param;
         if(!this.isOpacity1){
            this.isOpacity1 = true;
            this.isOpacity2 = false;

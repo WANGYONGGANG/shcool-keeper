@@ -53,12 +53,12 @@
     </van-cell-group>
   <!-- <bottom-btn :buttonData="buttonData"  v-on:click="addRecord"></bottom-btn> -->
   <div class="bottom-btn" @click="addRecord">{{buttonData.text}}</div>
- <right-pop :filterShow.sync="rightPopDates.item01.isShow" :allDatas="rightPopDates.item01.data" :selectItem.sync="rightPopDates.item01.selectItem" :selectID.sync="rightPopDates.item01.selectID"></right-pop>
- <right-pop :filterShow.sync="rightPopDates.item02.isShow" :allDatas="rightPopDates.item02.data" :selectItem.sync="rightPopDates.item02.selectItem"  :selectID.sync="rightPopDates.item02.selectID"></right-pop>
- <right-pop :filterShow.sync="rightPopDates.item03.isShow" :allDatas="rightPopDates.item03.data" :selectItem.sync="rightPopDates.item03.selectItem"  :selectID.sync="rightPopDates.item03.selectID"></right-pop>
- <right-pop :filterShow.sync="rightPopDates.item04.isShow" :allDatas="rightPopDates.item04.data" :selectItem.sync="rightPopDates.item04.selectItem"  :selectID.sync="rightPopDates.item04.selectID"></right-pop>
-<right-pop :filterShow.sync="rightPopDates.item05.isShow" :allDatas="rightPopDates.item05.data" :selectItem.sync="rightPopDates.item05.selectItem"  :selectID.sync="rightPopDates.item05.selectID"></right-pop>
-<right-pop :filterShow.sync="rightPopDates.item06.isShow" :allDatas="rightPopDates.item06.data" :selectItem.sync="rightPopDates.item06.selectItem"  :selectID.sync="rightPopDates.item06.selectID"></right-pop>
+ <right-pop  class="add-height"  :filterShow.sync="rightPopDates.item01.isShow" :allDatas="rightPopDates.item01.data" :selectItem.sync="rightPopDates.item01.selectItem" :selectID.sync="rightPopDates.item01.selectID"></right-pop>
+ <right-pop  class="add-height"  :filterShow.sync="rightPopDates.item02.isShow" :allDatas="rightPopDates.item02.data" :selectItem.sync="rightPopDates.item02.selectItem"  :selectID.sync="rightPopDates.item02.selectID"></right-pop>
+ <right-pop class="add-height"  :filterShow.sync="rightPopDates.item03.isShow" :allDatas="rightPopDates.item03.data" :selectItem.sync="rightPopDates.item03.selectItem"  :selectID.sync="rightPopDates.item03.selectID"></right-pop>
+ <right-pop  class="add-height"  :filterShow.sync="rightPopDates.item04.isShow" :allDatas="rightPopDates.item04.data" :selectItem.sync="rightPopDates.item04.selectItem"  :selectID.sync="rightPopDates.item04.selectID"></right-pop>
+<right-pop class="add-height"   :filterShow.sync="rightPopDates.item05.isShow" :allDatas="rightPopDates.item05.data" :selectItem.sync="rightPopDates.item05.selectItem"  :selectID.sync="rightPopDates.item05.selectID"></right-pop>
+<right-pop  class="add-height"  :filterShow.sync="rightPopDates.item06.isShow" :allDatas="rightPopDates.item06.data" :selectItem.sync="rightPopDates.item06.selectItem"  :selectID.sync="rightPopDates.item06.selectID"></right-pop>
  <calendar :date.sync="calendar.date" :isVisible.sync="calendar.isVisible"></calendar>
 <calendar :date.sync="visitDate.date" :isVisible.sync="visitDate.isVisible"></calendar>
 <attention v-if="showAttentionAlert" v-bind:attentionText="attentionText" style="z-index:600;"></attention>
@@ -389,7 +389,7 @@ export default {
     "rightPopDates.item01.selectItem": function(newval, oldval) {
       this.$toast(newval);
     },
-     'calendar.date' :function (n,o) {
+    'calendar.date' :function (n,o) {
       this.nextTalkDate=n;
       this.$toast(n)
     },
@@ -428,6 +428,9 @@ export default {
 };
 </script>
 <style lang="less">
+.add-height{
+  height: 100%;
+}
 .promise-button{
   width: 750px;
   display: flex;

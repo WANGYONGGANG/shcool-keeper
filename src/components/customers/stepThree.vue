@@ -16,10 +16,13 @@
       <van-cell title="副责任人" is-link   @click="clickFn('item04')" >
           {{rightPopDates.item04.selectItem}}
     </van-cell>
-      <van-cell title="介绍人" is-link required   @click="clickFn('item05')">
+      <van-cell title="介绍人" is-link   @click="clickFn('item05')">
           {{rightPopDates.item05.selectItem}}
     </van-cell>
     </van-cell-group>
+    <van-popup v-model="rightPopDates.item02.isShow"  position="right" style="height:100%;">
+     <intentionCourse></intentionCourse>
+    </van-popup>
     <!-- <van-cell-group>
       <van-cell title="母亲电话">
         <span><input type="text" class="no-border" /></span>
@@ -44,21 +47,29 @@
       </van-cell>
     </van-cell-group> -->
     <right-pop :filterShow.sync="rightPopDates.item01.isShow" :allDatas="rightPopDates.item01.data" :selectItem.sync="rightPopDates.item01.selectItem"></right-pop>
-    <right-pop :filterShow.sync="rightPopDates.item02.isShow" :selectItem.sync="rightPopDates.item02.selectItem" :allDatas="rightPopDates.item02.data"></right-pop>
+    <!-- <right-pop :filterShow.sync="rightPopDates.item02.isShow" :selectItem.sync="rightPopDates.item02.selectItem" :allDatas="rightPopDates.item02.data"></right-pop> -->
     <right-pop :filterShow.sync="rightPopDates.item03.isShow" :selectItem.sync="rightPopDates.item03.selectItem" :allDatas="rightPopDates.item03.data"></right-pop>
     <right-pop :filterShow.sync="rightPopDates.item04.isShow" :selectItem.sync="rightPopDates.item04.selectItem" :allDatas="rightPopDates.item04.data"></right-pop>
     <right-pop :filterShow.sync="rightPopDates.item05.isShow" :selectItem.sync="rightPopDates.item05.selectItem" :allDatas="rightPopDates.item05.data"></right-pop>
+     <div class="add-customers-bottom-btn">
+      <span v-on:click="lastStep">上一步</span>
+      <span class="next"  v-on:click="nextStep">下一步</span>
+    </div>
   </div>
 </template>
 <script>
   import RightPop from '../general/rightPop'
   import { api } from "../../../static/js/request-api/request-api.js";
+  import intentionCourse from '@/components/teacher/intentionCourse'
 export default {
    components: {
-      RightPop
+      RightPop,
+      intentionCourse
     },
+  props: ["cusObj"],
   data () {
     return{
+         course:{isShow:false},
          rightPopDates:{
           item01:{
             isShow:false,
@@ -142,6 +153,13 @@ export default {
   methods: {
     goTo (url) {
       this.$router.push({path: url})
+    },
+    //上一步
+    lastStep(){
+         this.$emit('lastStep',null);
+    },
+    nextStep(){
+       this.$emit('nextStep',null);
     },
     clickFn (n){
         this.rightPopDates[n].isShow = true
@@ -290,6 +308,7 @@ export default {
 .van-cell-group{
   border-bottom:20px #eef1f6 solid;
 }
+
 .van-cell__value{
 .no-border{
   border: none;
