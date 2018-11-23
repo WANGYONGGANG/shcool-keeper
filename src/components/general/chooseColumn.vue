@@ -77,7 +77,7 @@ export default {
         }
       ],
       //设置一个暂时存放的组数，确定时回传给父组件
-      temporaryIDs:[0]
+      temporaryIDs:[]
     }
   },
   methods: {
@@ -87,16 +87,20 @@ export default {
       })
     },
     submitFn(){
-      this.$emit('update:selectId', this.temporaryIDs)
+      //先将所有选中过的元素放入一个数组集合，在提交时将当前选中的isSelect＝true过滤出来
+      let selectItems=this.temporaryIDs.filter(item => item.isSelect)
+      //将选中的元素中id值集合起来
+      let selectIds=[]
+       selectItems.forEach(function (item,index,arry) {
+         selectIds.push(item.id)
+      })
+      this.$emit('update:selectId', selectIds)
       this.$emit('update:filterShow', false)
     },
     clickFn(item,index){
-      //点击的时候不把选中的信息传给父组件，在确定时再传，需要暂时存放
-      this.temporaryIDs.push(item.id)
-      if(!item.isSelect){
-        //传递参数
-        item.isSelect = !item.isSelect
-      }
+      //先将所有选中过的元素放入一个数组集合，在提交时将当前选中的过滤出来
+      this.temporaryIDs.push(item)
+      item.isSelect = !item.isSelect
     }
   },
   mounted () {
