@@ -5,7 +5,7 @@
     <div class="charge-top-tab">
       <calendar-packing></calendar-packing>
     </div>
-    <div class="charge-top-right">
+    <div class="charge-top-right"  @click="showFilter">
       筛选<van-icon name="wap-nav" />
     </div>
   </div>
@@ -24,15 +24,22 @@
         ></v-table>
       </div>
     </template>
+
+  <chart-filter :filterShow1.sync="filterShow1"></chart-filter>
+
 </div>
 </template>
 <script>
   import CalendarPacking from '../general/calendarPacking'
 import tolltrendChart from '../general/tolltrendChart'
-export default {
+  import ChartFilter from '../general/chartFilter'
+
+  export default {
   components: {
     CalendarPacking,
-    tolltrendChart
+    tolltrendChart,
+    ChartFilter
+
   },
   data () {
     return {
@@ -52,13 +59,16 @@ export default {
         {field: 'xinzeng', title: '新增', width: 150, titleAlign: 'center', columnAlign: 'center'},
         {field: 'buqianjiao', title: '补欠交', width: 150, titleAlign: 'center', columnAlign: 'center'},
         {field: 'xiaoshou', title: '销售', width: 150, titleAlign: 'center', columnAlign: 'center'}
-      ]
+      ],
+      filterShow1:false
     }
   },
   mounted () {
   },
   methods: {
-
+    showFilter (){
+      this.filterShow1=true
+    }
   },
   computed : {
     item () {

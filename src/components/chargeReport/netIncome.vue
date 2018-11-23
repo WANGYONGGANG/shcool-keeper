@@ -4,9 +4,6 @@
     <div class="charge-top-tab">
       <calendar-packing></calendar-packing>
     </div>
-    <div class="charge-top-right">
-      选择列<van-icon name="wap-nav" />
-    </div>
   </div>
   <div class="charge-table"></div>
     <template>

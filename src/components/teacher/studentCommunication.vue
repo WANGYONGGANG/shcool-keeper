@@ -390,7 +390,7 @@ export default {
           if(this.list[i].id == this.radio){
               this.className = this.list[i].className
           }
-          
+
       }
 
     },
@@ -407,7 +407,7 @@ export default {
           if(this.list[i].id == this.radio){
               this.className = this.list[i].className
           }
-          
+
       }
 
     },
