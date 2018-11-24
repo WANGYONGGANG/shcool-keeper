@@ -10,7 +10,7 @@
     </div>
   </div>
   <van-cell-group>
-    <van-cell title="收费类型" value="课程收费汇总" arrow-direction="down" is-link />
+    <van-cell title="收费类型" value="课程收费汇总" arrow-direction="down" is-link  @click="showSortPop"/>
   </van-cell-group>
   <div class="charge-table"></div>
     <template>
@@ -28,20 +28,54 @@
       </div>
     </template>
 <chart-filter :filterShow1.sync="filterShow1"></chart-filter>
+<sort-pop :title="popData.title" :items.sync="popData.items" :isShow.sync="popData.isShow" :selectId.sync="popData.selectId" ></sort-pop>
+
 </div>
 </template>
 <script>
 import CalendarPacking from '../general/calendarPacking'
 import tolltrendChart from '../general/tolltrendChart'
 import ChartFilter from '../general/chartFilter'
+import sortPop from '../popup/sortPopPublish'
 export default {
   components: {
     CalendarPacking,
     tolltrendChart,
-    ChartFilter
+    ChartFilter,
+    sortPop
   },
   data () {
     return {
+      popData:{
+        isShow:false,
+        selectId:0,
+        items: [
+          {
+            text:'课程收费汇总',
+            isSelect:true,
+            id:0
+
+          },
+          {
+            text:'新增',
+            isSelect:false,
+            id:1
+
+          },
+          {
+            text:'续费',
+            isSelect:false,
+            id:2
+
+          },
+          {
+            text:'扩科',
+            isSelect:true,
+            id:3
+
+          }
+        ]
+      },
       tableData: [
         {'name': '潮人部落', 'shishoujiner': '0.00', 'zhuanjieshao': '0.00', 'lianbao': '0.00', 'yucun': '0.00', 'zhuanjie': '0.00', 'duoqi': '0.00', 'vxufei': '0.00', 'kuoke': '0.00', 'xinzeng': '0.00', 'buqianjiao': '0.00', 'xiaoshou': '0.00'}
       ],
@@ -65,6 +99,9 @@ export default {
   methods: {
     showFilter (){
       this.filterShow1=true
+    },
+    showSortPop(){
+      this.popData.isShow=true
     }
   },
   computed : {

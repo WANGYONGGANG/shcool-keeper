@@ -24,7 +24,6 @@
         ></v-table>
       </div>
     </template>
-
   <chart-filter :filterShow1.sync="filterShow1"></chart-filter>
 
 </div>
@@ -122,7 +121,9 @@ import tolltrendChart from '../general/tolltrendChart'
       float: left;
     }
   }
-
+.filter{
+  width: 78%;
+}
 }
 
 </style>

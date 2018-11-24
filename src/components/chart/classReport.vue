@@ -5,7 +5,7 @@
      开班:
     </div>
     <calendar-packing></calendar-packing>
-    <div class="charge-top-right">
+    <div class="charge-top-right" @click="showFilter">
       筛选<van-icon name="wap-nav" />
     </div>
   </div>
@@ -22,17 +22,21 @@
     <van-cell title="91%-100%" is-link value="0" @click="goTo(urls.classReportListDetial)" />
   </van-cell-group>
 
-
+  <chart-filter :filterShow1.sync="filterShow1"></chart-filter>
 </div>
 </template>
 <script>
   import CalendarPacking from '../general/calendarPacking'
-export default {
+  import ChartFilter from '../general/chartFilterOther'
+
+  export default {
   components: {
-    CalendarPacking
+    CalendarPacking,
+    ChartFilter
   },
   data () {
     return {
+      filterShow1:false,
       urls:{
         fullclassRate:'/chart/fullclassRate',
         classReportListDetial:'/chart/classReportListDetial'
@@ -47,8 +51,8 @@ export default {
       this.$router.push({path: url})
 
     },
-    showCommentedDia () {
-      this.$store.state.commentPopup.isShow = true
+    showFilter (){
+      this.filterShow1=true
     },
     drawLine () {
       // 基于准备好的dom，初始化echarts实例
@@ -152,7 +156,7 @@ float: left;
    left: 300px;
    top: 40px;
    color: #fff;
-   z-index: 100000;
+   z-index: 1500;
    font-size: 28px;
  .van-icon{
    position: relative;
@@ -165,7 +169,7 @@ float: left;
    position: absolute;
    right:30px;
    top: 40px;
-   z-index: 100000;
+   z-index: 1500;
    color: #fff;
  .van-icon{
    position: relative;
@@ -174,6 +178,9 @@ float: left;
    margin-right: 10px;
  }
  }
+}
+.filter{
+  width: 78%;
 }
 }
 

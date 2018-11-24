@@ -2,7 +2,7 @@
   <div class="all">
   <van-popup v-model="filterShow1" position="right" class="filter">
     <div class="filter-main">
-    <van-cell class="group01" @click="showCurriculumPop">
+    <van-cell class="group01" @click="goTo(urls.deputyOwner)">
       <van-cell is-link />
       <template slot="title">
         <span class="custom-text">{{allDatas.group01.title}}</span>
@@ -17,30 +17,14 @@
         </li>
       </ul>
     </div>
+      <ul class="group02-checkbox"><li><input type="checkbox"/>包含已结业班级</li>
+        <li><input type="checkbox"/>包含试听及补课班级</li></ul>
     </div>
     <div class="filter-btn">
       <span class="btn-reset" @click="resetFn1()">重置</span>
       <span class="btn-submit" @click="submitFn1()">确定</span>
     </div>
   </van-popup>
-   <van-popup v-model="filterShow2" position="right" class="filter">
-      <div class="class-back"><van-icon name="arrow-left" @click="goBack" />选择课程</div>
-      <div class="class-search"><input type="text" placeholder="请输入名称" @input="search"/></div>
-     <van-checkbox-group v-model="result">
-       <van-checkbox
-         v-for="(item, index) in list"
-         :key="index"
-         :name="item"
-       >
-        {{ item }}
-       </van-checkbox>
-
-     </van-checkbox-group>
-      <div class="filter-btn">
-        <span class="btn-reset" @click="resetFn2()">重置</span>
-        <span class="btn-submit" @click="submitFn2()">确定</span>
-      </div>
-    </van-popup>
   </div>
 </template>
 <script>
@@ -48,11 +32,9 @@
     props: ['filterShow1'],
     data () {
       return {
-        list: ['01-美术01-启蒙涂鸦_试听班级', '01-数学111_试听班级2', '01-数学111_试听班级3'],
-        result: [],
         allDatas:{
           group01:{
-            title:'课程'
+            title:'讲师'
           },
           group02:[
             {
@@ -311,33 +293,27 @@
             },
           ]
         },
-        filterShow2:false
+        urls:{
+          deputyOwner:'/teacher/deputyOwner',
+        }
       }
     },
     methods: {
-      search (value) {
-
+      goTo (url) {
+        this.$router.push({path: url})
       },
       resetFn1(){
       },
       submitFn1(){
         this.$emit('update:filterShow1', false)
       },
-      resetFn2(){
-        this.filterShow2 = false
-      },
-      submitFn2(){
-        this.filterShow2 = false
-      },
-      goBack () {
-        this.filterShow2 = false
-      },
+
       clickFn(v,k,faterIndex){
         //先将所有选中过的元素放入一个数组集合，在提交时将当前选中的过滤出来
         v.isSelect = !v.isSelect
       },
-      showCurriculumPop(){
-        this.filterShow2 = true
+      showCurriculum(){
+
       }
     },
     mounted () {
@@ -370,6 +346,7 @@
         padding-left: 30px;
       }
     }
+
  .group-list{
    padding-bottom:20px;
    li{
@@ -387,6 +364,20 @@
     color: #fff;
   }
     }
+  }
+  .group02-checkbox{
+  li{
+    font-size: 26px;
+    border-top:1px #f1f1f1 solid ;
+    line-height: 60px;
+    input{
+      width: 25px;
+      height: 25px;
+      position: relative;
+      top: 4px;
+      margin: 0 15px 0 30px;
+    }
+  }
   }
   .filter-btn{
     position: fixed;
@@ -417,44 +408,6 @@
   }
 
 
-  .class-back{
-    height: 70px;
-    line-height: 70px;
-    background: #eef1f6;
-    padding-left: 10px;
-  .van-icon{
-    position: relative;
-    top: 4px;
-    margin-right: 10px;
-    color: #999;
-  }
-  }
-  .class-search{
-    padding:20px;
-  input{
-    width: 90%;
-    height: 60px;
-    text-indent: 15px;
-    font-size: 22px;
-    line-height: 60px;
-    border: 1px #e2e1e1 solid;
-    border-radius: 10px;
-    color: #999;
-
-  }
-  }
-  .van-checkbox{
-    line-height: 70px;
-    .van-checkbox__icon{
-    margin:0 15px 0 30px;
-      i{
-        width: 32px;
-        height: 32px;
-        line-height: 32px;
-        font-size: 22px;
-      }
-    }
-  }
 
   }
 </style>
