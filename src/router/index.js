@@ -24,6 +24,7 @@ import Blank from '@/components/user/blank'
 import UserIndex from '@/components/user/userIndex'
 import ChangePassword from '@/components/user/changePassword'
 import WorkStatistics from '@/components/user/workStatistics'
+import WorkStatisticsDetial from '@/components/user/workStatisticsDetial'
 import ParentRatingRanking from '@/components/user/parentRatingRanking'
 
 import TeacherIndex from '@/components/teacher/teacherIndex'
@@ -130,6 +131,11 @@ export default new Router({
       path: '/user/workStatistics',
       name: 'workStatistics',
       component: WorkStatistics
+    },
+    {
+      path: '/user/workStatisticsDetial',
+      name: 'workStatisticsDetial',
+      component: WorkStatisticsDetial
     },
     {
       path: '/user/parentRatingRanking',
