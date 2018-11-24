@@ -1,10 +1,9 @@
 <template>
   <div class="all">
-
   <van-popup v-model="filterShow1" position="right" class="filter">
     <div class="filter-main">
-    <van-cell class="group01">
-      <van-cell is-link @click="showCurriculumPop"/>
+    <van-cell class="group01" @click="showCurriculumPop">
+      <van-cell is-link />
       <template slot="title">
         <span class="custom-text">{{allDatas.group01.title}}</span>
       </template>
@@ -27,28 +26,38 @@
    <van-popup v-model="filterShow2" position="right" class="filter">
       <div class="class-back"><van-icon name="arrow-left" @click="goBack" />选择课程</div>
       <div class="class-search"><input type="text" placeholder="请输入名称" @input="search"/></div>
-      <van-radio-group v-model="radio">
-        <van-cell-group class="filter-cell">
-          <van-cell title="01-美术01-启蒙涂鸦_试听班级" clickable @click="radio = '1'">
-            <van-radio name="1" />
-          </van-cell>
-          <van-cell title="01-数学111_试听班级" clickable @click="radio = '2'">
-            <van-radio name="2" />
-          </van-cell>
-          <van-cell title="01-数学111_试听班级" clickable @click="radio = '3'">
-            <van-radio name="3" />
-          </van-cell>
-          <van-cell title="01-数学111_试听班级" clickable @click="radio = '4'">
-            <van-radio name="4" />
-          </van-cell>
-          <van-cell title="01-数学111_试听班级" clickable @click="radio = '5'">
-            <van-radio name="5" />
-          </van-cell>
-          <van-cell title="01-数学111_试听班级" clickable @click="radio = '6'">
-            <van-radio name="6" />
-          </van-cell>
-        </van-cell-group>
-      </van-radio-group>
+     <van-checkbox-group v-model="result">
+       <van-checkbox
+         v-for="(item, index) in list"
+         :key="index"
+         :name="item"
+       >
+        {{ item }}
+       </van-checkbox>
+
+     </van-checkbox-group>
+      <!--<van-radio-group v-model="radio">-->
+        <!--<van-cell-group class="filter-cell">-->
+          <!--<van-cell title="01-美术01-启蒙涂鸦_试听班级" clickable @click="radio = '1'">-->
+            <!--<van-radio name="1" />-->
+          <!--</van-cell>-->
+          <!--<van-cell title="01-数学111_试听班级" clickable @click="radio = '2'">-->
+            <!--<van-radio name="2" />-->
+          <!--</van-cell>-->
+          <!--<van-cell title="01-数学111_试听班级" clickable @click="radio = '3'">-->
+            <!--<van-radio name="3" />-->
+          <!--</van-cell>-->
+          <!--<van-cell title="01-数学111_试听班级" clickable @click="radio = '4'">-->
+            <!--<van-radio name="4" />-->
+          <!--</van-cell>-->
+          <!--<van-cell title="01-数学111_试听班级" clickable @click="radio = '5'">-->
+            <!--<van-radio name="5" />-->
+          <!--</van-cell>-->
+          <!--<van-cell title="01-数学111_试听班级" clickable @click="radio = '6'">-->
+            <!--<van-radio name="6" />-->
+          <!--</van-cell>-->
+        <!--</van-cell-group>-->
+      <!--</van-radio-group>-->
       <div class="filter-btn">
         <span class="btn-reset" @click="resetFn2()">重置</span>
         <span class="btn-submit" @click="submitFn2()">确定</span>
@@ -62,8 +71,8 @@
     data () {
       return {
         radio:'',
-        //设置一个暂时存放的组数，确定时回传给父组件
-        temporaryIDs:[],
+        list: ['01-美术01-启蒙涂鸦_试听班级', '01-数学111_试听班级2', '01-数学111_试听班级3'],
+        result: [],
         allDatas:{
           group01:{
             title:'课程'
@@ -329,28 +338,19 @@
       }
     },
     methods: {
-      resetFn1(){
-//        this.columnData.map(function (v,k) {
-//          v.isSelect = false
-//        })
-      },
-      submitFn2(){
+      search (value) {
 
-        //先将所有选中过的元素放入一个数组集合，在提交时将当前选中的isSelect＝true过滤出来
-//        let selectItems=this.temporaryIDs.filter(item => item.isSelect)
-        //将选中的元素中id值集合起来
-//        let selectIds=[]
-//        selectItems.forEach(function (item,index,arry) {
-//          selectIds.push(item.id)
-//        })
-//        this.$emit('update:selectId', selectIds)
-//        this.$emit('update:filterShow', false)
       },
       resetFn1(){
-
+      },
+      submitFn1(){
+        this.$emit('update:filterShow1', false)
+      },
+      resetFn2(){
+        this.filterShow2 = false
       },
       submitFn2(){
-
+        this.filterShow2 = false
       },
       goBack () {
         this.filterShow2 = false
@@ -466,28 +466,17 @@
 
   }
   }
-  .filter-cell{
-    overflow-y: scroll;
-    min-height:800px;
-  .van-cell{
-    font-size: 24px;
-    height: 70px;
-    padding: 18px 20px;
-    line-height: 32px;
-  .van-cell__title{
-    -webkit-box-flex: 6;
-    flex:6;
-  }
-  .van-radio__input{
-    height: 5em;
-    top:2px;
-    right: 2px;
-    font-size: 30px;
-  }
-  .van-radio .van-icon-checked{
-    color: #4286ed;
-  }
-  }
+  .van-checkbox{
+    line-height: 70px;
+    .van-checkbox__icon{
+    margin:0 15px 0 30px;
+      i{
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        font-size: 22px;
+      }
+    }
   }
 
   }

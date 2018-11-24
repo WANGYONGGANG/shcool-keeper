@@ -10,17 +10,19 @@
     </div>
   </div>
   <div class="class-chart">
-    <div class="erea">不限区域<van-icon name="arrow" /></div>
+    <div class="erea">不限校区<van-icon name="arrow" /></div>
     <div class="set" @click="goTo(urls.fullclassRate)"><van-icon name="discount" />设置</div>
     <div id="classChart"></div>
   </div>
   <van-cell-group>
     <van-cell title="满班率" value="班级数"  />
-    <van-cell title="0%-50%" is-link value="0" />
-    <van-cell title="52%-80%" is-link value="0" />
-    <van-cell title="81%-90%" is-link value="0" />
-    <van-cell title="91%-100%" is-link value="0" />
+    <van-cell title="0%-50%" is-link value="0" @click="goTo(urls.classReportListDetial)" />
+    <van-cell title="52%-80%" is-link value="0" @click="goTo(urls.classReportListDetial)" />
+    <van-cell title="81%-90%" is-link value="0" @click="goTo(urls.classReportListDetial)" />
+    <van-cell title="91%-100%" is-link value="0" @click="goTo(urls.classReportListDetial)" />
   </van-cell-group>
+
+
 </div>
 </template>
 <script>
@@ -32,7 +34,8 @@ export default {
   data () {
     return {
       urls:{
-        fullclassRate:'/chart/fullclassRate'
+        fullclassRate:'/chart/fullclassRate',
+        classReportListDetial:'/chart/classReportListDetial'
       }
     }
   },
