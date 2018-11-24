@@ -24,6 +24,7 @@ import Blank from '@/components/user/blank'
 import UserIndex from '@/components/user/userIndex'
 import ChangePassword from '@/components/user/changePassword'
 import WorkStatistics from '@/components/user/workStatistics'
+import WorkStatisticsDetial from '@/components/user/workStatisticsDetial'
 import ParentRatingRanking from '@/components/user/parentRatingRanking'
 
 import TeacherIndex from '@/components/teacher/teacherIndex'
@@ -66,6 +67,10 @@ import SelectStudents from '@/components/teacher/selectStudents'
 import MakeUpClass from '@/components/teacher/makeUpClass'
 import CustomerManagement from '@/components/teacher/customerManagement'
 import AddCustomers from '@/components/teacher/addCustomers'
+import ChiefOwner from '@/components/customers/chiefOwner'
+import DeputyOwner from '@/components/customers/deputyOwner'
+import Introducer from '@/components/customers/introducer'
+
 import IntentionalCustomersList from '@/components/teacher/intentionalCustomersList'
 import CustomerCommunicationRecord from '@/components/teacher/customerCommunicationRecord'
 import IntentionalCustomersDetial from '@/components/teacher/intentionalCustomersDetial'
@@ -126,6 +131,11 @@ export default new Router({
       path: '/user/workStatistics',
       name: 'workStatistics',
       component: WorkStatistics
+    },
+    {
+      path: '/user/workStatisticsDetial',
+      name: 'workStatisticsDetial',
+      component: WorkStatisticsDetial
     },
     {
       path: '/user/parentRatingRanking',
@@ -408,6 +418,21 @@ export default new Router({
       path: '/teacher/addCustomers',
       name: 'addCustomers',
       component: AddCustomers
+    },
+    {
+      path: '/teacher/chiefOwner',
+      name: 'chiefOwner',
+      component: ChiefOwner
+    },
+    {
+      path: '/teacher/deputyOwner',
+      name: 'deputyOwner',
+      component: DeputyOwner
+    },
+    {
+      path: '/teacher/introducer',
+      name: 'introducer',
+      component: Introducer
     },
     {
       path: '/teacher/intentionalCustomersList',

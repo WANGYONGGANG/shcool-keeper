@@ -9,14 +9,14 @@
     </van-cell>
   </van-cell-group>
     <van-cell-group>
-      <van-cell title="试听预约时间" is-link />
-      <van-cell title="主责任人" is-link   @click="clickFn('item03')" >
+      <van-cell title="试听预约时间" is-link @click="showListen" />
+      <van-cell title="主责任人" is-link   @click="goTo(urls.chiefOwner)" >
           {{rightPopDates.item03.selectItem}}
     </van-cell>
-      <van-cell title="副责任人" is-link   @click="clickFn('item04')" >
+      <van-cell title="副责任人" is-link   @click="goTo(urls.deputyOwner)"  >
           {{rightPopDates.item04.selectItem}}
     </van-cell>
-      <van-cell title="介绍人" is-link   @click="clickFn('item05')">
+      <van-cell title="介绍人" is-link   @click="goTo(urls.introducer)">
           {{rightPopDates.item05.selectItem}}
     </van-cell>
     </van-cell-group>
@@ -55,6 +55,33 @@
       <span v-on:click="lastStep">上一步</span>
       <span class="next"  v-on:click="nextStep">下一步</span>
     </div>
+    <van-popup v-model="listenShow" position="bottom" class="listen">
+      <div class="listen-tit">试听预约时间</div>
+      <dl class="listen-list">
+        <dt>星期</dt>
+        <dd>
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td class="select">一</td>
+            <td>二</td>
+            <td>三</td>
+            <td>四</td>
+            <td>五</td>
+            <td>六</td>
+            <td>日</td></tr></table>
+        </dd>
+      </dl>
+      <dl class="listen-list">
+        <dt>时间</dt>
+        <dd>
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td>上午</td>
+            <td>下午</td>
+            <td>晚上</td>
+          </tr></table>
+        </dd>
+      </dl>
+      <div class="listen-btn">确定</div>
+    </van-popup>
   </div>
 </template>
 <script>
@@ -69,6 +96,8 @@ export default {
   props: ["cusObj"],
   data () {
     return{
+          //视听预约弹窗
+         listenShow:false,
          course:{isShow:false},
          rightPopDates:{
           item01:{
@@ -141,7 +170,12 @@ export default {
 
             ]
           },
-         }
+         },
+      urls:{
+        chiefOwner: '/teacher/chiefOwner',
+        deputyOwner:'/teacher/deputyOwner',
+        introducer:'/teacher/introducer'
+      }
     }
   },
   mounted () {
@@ -151,6 +185,9 @@ export default {
     this.refreshSalePersonAssistant();
   },
   methods: {
+    showListen(){
+      this.listenShow=true
+    },
     goTo (url) {
       this.$router.push({path: url})
     },
@@ -332,6 +369,51 @@ export default {
 }
 .van-field--min-height .van-field__control{
   min-height: 100px;
+}
+}
+.listen{
+  background: #fff;
+  width: 100%;
+.listen-tit{
+    text-align: center;
+  line-height: 45px;
+  padding-top: 10px;
+
+  }
+.listen-list{
+width:95%;
+margin:20px auto 0;
+  dt{
+    font-size: 22px;
+    color: #7b7474;
+    text-align: left;
+  }
+  dd{
+  padding:10px 0;
+    table{
+      width: 100%;
+    }
+    td{
+      border:1px #bbbaba solid;
+      color: #141414;
+      text-align: center;
+      line-height: 60px;
+    }
+    td.select{
+      background: #4286ed;
+      color: #fff;
+    }
+  }
+}
+.listen-btn{
+  width: 100%;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+  color: #fff;
+  background: #4286ed;
+  font-size: 28px;
+  margin-top: 20px;
 }
 }
 }

@@ -1,9 +1,9 @@
 <template>
 <div class="work-statistics">
   <van-cell-group class="card-list-item">
-    <van-cell title="已上课时" value="详情" is-link class="line65" />
+    <van-cell title="已上课时" value="详情" is-link class="line65"  @click="goTo"/>
   </van-cell-group>
-  <dl class="work-statistics-list">
+  <dl class="work-statistics-list" @click="goTo">
     <dt>上课率</dt>
     <dd class="num">{{attendance.attendance_ratio}}</dd>
     <dd class="progress"></dd>
@@ -14,9 +14,9 @@
     </dd>
   </dl>
   <van-cell-group class="card-list-item">
-    <van-cell title="学生出勤" value="详情" is-link class="line65" />
+    <van-cell title="学生出勤" value="详情" is-link class="line65" @click="goTo" />
   </van-cell-group>
-  <dl class="work-statistics-list">
+  <dl class="work-statistics-list" @click="goTo">
     <dt>出勤率</dt>
     <dd class="num">{{comment.comment_ratio}}</dd>
     <dd class="progress"></dd>
@@ -27,9 +27,9 @@
     </dd>
   </dl>
   <van-cell-group class="card-list-item">
-    <van-cell title="课程评价" value="详情" is-link class="line65" />
+    <van-cell title="课程评价" value="详情" is-link class="line65" @click="goTo" />
   </van-cell-group>
-  <dl class="work-statistics-list">
+  <dl class="work-statistics-list" @click="goTo">
     <dt>评价率</dt>
     <dd class="num">{{course.course_ratio}}</dd>
     <dd class="progress"></dd>
@@ -38,7 +38,13 @@
         <van-cell :title=course.real_count :value=course.total_count  class="line30"/>
       </van-cell-group>
     </dd>
-  </dl>
+     </dl>
+    <div class="naming-tab">
+      <div class="naming-tab-l fn-left"><van-icon name="arrow-left" /></div>
+      <div class="naming-tab-m fn-left" ><span @click="showCalendar">2018年11月</span>
+    </div>
+      <div class="naming-tab-r fn-right"><van-icon name="arrow" /></div>
+    </div>
 </div>
 </template>
 <script>
@@ -76,11 +82,15 @@ export default {
 				});
   },
   methods: {
+    goTo () {
+      this.$router.push({path: '/user/workStatisticsDetial'})
+    },
   }
 }
 </script>
 <style lang="less">
   .work-statistics{
+  padding-bottom:100px;
   .van-cell-group{
     background-color: transparent;
   }
@@ -129,6 +139,32 @@ export default {
     margin: 20px auto;
   }
   }
+  .naming-tab{
+    height: 86px;
+    background: #fff;
+    text-align: center;
+    line-height: 86px;
+    position: fixed;
+    bottom: 0;
+    font-size: 28px;
+  .naming-tab-l,.naming-tab-r{
+    width: 50px;
+    position: relative;
+    top: 5px;
+  }
+  .naming-tab-m{
+    width: 650px;
+    text-align: center;
+  }
+  .arrow-down .van-icon{
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    margin-left: 10px;
+    position: relative;
+    top: 5px;
+  }
+  }
+
   }
 
 </style>
