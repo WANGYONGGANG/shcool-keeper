@@ -356,8 +356,11 @@ export const api = {
     //选择承诺到访类型
     refreshAdmissionsVisitType(params) {
             return fetchGet(baseUrl + '/intentionClientAPI/refreshAdmissionsVisitType', params);
-        },
-
+    },
+    //教师端工作统计
+    getWorkStatistics(params) {
+            return fetchPost(baseUrl + '/user/getWorkStatistics', params);
+    },
 
 
 

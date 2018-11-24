@@ -25,13 +25,14 @@
     <van-cell title="电子推荐卡" icon="edit-data" is-link to="" />
   </van-cell-group>
   <van-cell-group>
-    <van-cell title="退出登陆" icon="edit-data" is-link to="" />
+    <van-cell title="退出登陆" icon="edit-data" is-link to=""  @click="loginOut"/>
   </van-cell-group>
   <btm-tobbar></btm-tobbar>
 </div>
 </template>
 <script>
 import BtmTobbar from '../general/tabbar'
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   components: {
     BtmTobbar
@@ -42,6 +43,21 @@ export default {
     }
   },
   methods: {
+    loginOut:function(){
+      // console.log('11')
+      api.loginOut()
+					.then(res=>{
+            console.log(res)
+            this.$toast(res.data.message);
+            if(res.data.code == 1){
+              console.log('22')
+              	this.$router.push({path: "/user/login"});
+            }
+				},()=>{
+					// alert('请输入用户名或密码');
+				});
+      
+    }
   }
 }
 </script>

@@ -5,11 +5,11 @@
   </van-cell-group>
   <dl class="work-statistics-list">
     <dt>上课率</dt>
-    <dd class="num">0</dd>
+    <dd class="num">{{attendance.attendance_ratio}}</dd>
     <dd class="progress"></dd>
     <dd>
       <van-cell-group>
-        <van-cell title="已上：0节" value="共计：0节"  class="line30"/>
+        <van-cell :title=attendance.already_in_class :value=attendance.total_class  class="line30"/>
       </van-cell-group>
     </dd>
   </dl>
@@ -18,11 +18,11 @@
   </van-cell-group>
   <dl class="work-statistics-list">
     <dt>出勤率</dt>
-    <dd class="num">0</dd>
+    <dd class="num">{{comment.comment_ratio}}</dd>
     <dd class="progress"></dd>
     <dd>
       <van-cell-group>
-        <van-cell title="实到：0节" value="报到：0节"  class="line30"/>
+        <van-cell :title=comment.sign_in_count :value=comment.total_count  class="line30"/>
       </van-cell-group>
     </dd>
   </dl>
@@ -31,22 +31,49 @@
   </van-cell-group>
   <dl class="work-statistics-list">
     <dt>评价率</dt>
-    <dd class="num">0</dd>
+    <dd class="num">{{course.course_ratio}}</dd>
     <dd class="progress"></dd>
     <dd>
       <van-cell-group>
-        <van-cell title="已评价：0人" value="应评价：0人"  class="line30"/>
+        <van-cell :title=course.real_count :value=course.total_count  class="line30"/>
       </van-cell-group>
     </dd>
   </dl>
 </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
-
+      attendance:'',
+      comment:'',
+      course:''
     }
+  },
+  mounted(){
+    var date = new Date();
+    var month=date.getMonth()+1
+    var timeData=date.getFullYear()+'-'+month+'-'+date.getDate()
+    let params = new URLSearchParams();
+      params.append("current_month", timeData);
+     api.getWorkStatistics(params)
+					.then(res=>{
+            //已上课时
+            this.attendance=res.data.attendance
+            this.attendance.already_in_class="已上："+this.attendance.already_in_class+'节'
+            this.attendance.total_class="共计："+this.attendance.total_class+'节'
+            //学生出勤
+            this.comment=res.data.comment
+            this.comment.total_count='应到：'+this.comment.total_count+'人'
+            this.comment.sign_in_count='实到：'+this.comment.sign_in_count+'人'
+            //课程评价
+            this.course=res.data.course
+            this.course.real_count='已评价：'+this.course.real_count+'人'
+            this.course.total_count='已评价：'+this.course.total_count+'人'
+				},()=>{
+          
+				});
   },
   methods: {
   }
