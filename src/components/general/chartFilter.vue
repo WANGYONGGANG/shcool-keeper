@@ -445,15 +445,15 @@
   }
   .van-checkbox{
     line-height: 70px;
-    .van-checkbox__icon{
-    margin:0 15px 0 30px;
-      i{
-        width: 32px;
-        height: 32px;
-        line-height: 32px;
-        font-size: 22px;
-      }
-    }
+  .van-checkbox__icon{
+    margin:0 8px 0 30px;
+  i{
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 16px;
+  }
+  }
   }
 
   }
