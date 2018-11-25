@@ -1,18 +1,18 @@
 <template>
 <div class="course-charge">
   <tolltrend-chart></tolltrend-chart>
-  <div class="charge-top">
+  <div class="charge-top fn-clear">
     <div class="charge-top-tab">
       <calendar-packing></calendar-packing>
     </div>
-    <div class="charge-top-right" @click="showFilter">
-      筛选<van-icon name="wap-nav" />
+    <div class="charge-top-right">
+      <span @click="showFilter">筛选<van-icon name="wap-nav" /></span>
     </div>
   </div>
   <van-cell-group>
     <van-cell title="收费类型" value="课程收费汇总" arrow-direction="down" is-link  @click="showSortPop"/>
   </van-cell-group>
-  <div class="charge-table"></div>
+
     <template>
       <div>
         <v-table
@@ -27,7 +27,7 @@
         ></v-table>
       </div>
     </template>
-<chart-filter :filterShow1.sync="filterShow1"></chart-filter>
+<chart-filter :filterShow1.sync="filterShow"></chart-filter>
 <sort-pop :title="popData.title" :items.sync="popData.items" :isShow.sync="popData.isShow" :selectId.sync="popData.selectId" ></sort-pop>
 
 </div>
@@ -70,7 +70,7 @@ export default {
           },
           {
             text:'扩科',
-            isSelect:true,
+            isSelect:false,
             id:3
 
           }
@@ -93,14 +93,15 @@ export default {
         {field: 'buqianjiao', title: '补欠交', width: 150, titleAlign: 'center', columnAlign: 'center'},
         {field: 'xiaoshou', title: '销售', width: 150, titleAlign: 'center', columnAlign: 'center'}
       ],
-      filterShow1:false
+      filterShow:false
     }
   },
   methods: {
     showFilter (){
-      this.filterShow1=true
+      this.filterShow=true
     },
     showSortPop(){
+      this.filterShow=false
       this.popData.isShow=true
     }
   },
@@ -123,7 +124,8 @@ export default {
 .course-charge{
 .charge-top{
   padding-top: 10px;
-  height: 82px;
+  height: 110px;
+  overflow: hidden;
   background: #fff;
 .charge-top-tab{
   float: left;
