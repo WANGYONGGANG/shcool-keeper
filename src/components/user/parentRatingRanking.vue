@@ -135,7 +135,7 @@ export default {
     font-size: 24px;
     background: #eff1f6;
     border-radius: 35px;
-    margin: 15px 5px 0 0;
+    margin: 34px 5px 0 0;
   }
   }
   .choose-school-zone{

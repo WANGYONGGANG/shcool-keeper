@@ -236,7 +236,7 @@
   }
   }
   }
-  
+
   .filter {
     width: 78%;
     height: 100%;
