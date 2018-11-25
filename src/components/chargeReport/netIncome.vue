@@ -5,21 +5,30 @@
       <calendar-packing></calendar-packing>
     </div>
   </div>
-  <div class="charge-table"></div>
-    <template>
-      <div>
-        <v-table
-          :width="750"
-          :columns="columns"
-          :table-data="tableData"
-          :title-row-height="120"
-          :row-height="100"
-          even-bg-color="#f4f4f4"
-          row-hover-color="#eee"
-          row-click-color="#edf7ff"
-        ></v-table>
-      </div>
-    </template>
+  <div class="charge-table">
+    <table class="table-top">
+      <tr class="title">
+        <th class="w300">校区</th>
+        <th class="w150">实收金额 <icon name="sort" scale="2"/></th>
+        <th class="w100">退费金额 <icon name="sort" scale="2"/></th>
+        <th class="w150">净收金额 <icon name="sort" scale="2"/></th>
+      </tr>
+      <tr>
+        <td class="w300">潮人部落</td>
+        <td class="w150">0.00</td>
+        <td class="w100">0.00</td>
+        <td class="w150">0.00</td>
+      </tr>
+    </table>
+    <table class="table-bottom">
+      <tr>
+        <td class="w300">合计</td>
+        <td class="w150 red">0</td>
+        <td class="w100 red">0.00</td>
+        <td class="w150 red">0.00</td>
+      </tr>
+    </table>
+  </div>
 </div>
 </template>
 <script>
@@ -30,23 +39,6 @@ export default {
   },
   data () {
     return {
-      tableData: [
-        {'name': '潮人部落', 'shishoujiner': '0.00', 'zhuanjieshao': '0.00', 'lianbao': '0.00', 'yucun': '0.00', 'zhuanjie': '0.00', 'duoqi': '0.00', 'vxufei': '0.00', 'kuoke': '0.00', 'xinzeng': '0.00', 'buqianjiao': '0.00', 'xiaoshou': '0.00'}
-      ],
-      columns: [
-        {field: 'name', title: '校区', width: 200, titleAlign: 'center', columnAlign: 'center', isFrozen: true},
-        {field: 'shishoujiner', title: '实收金额', width: 150, titleAlign: 'center', columnAlign: 'center'},
-        {field: 'zhuanjieshao', title: '转介绍', width: 150, titleAlign: 'center', columnAlign: 'center'},
-        {field: 'lianbao', title: '连报', width: 150, titleAlign: 'center', columnAlign: 'center'},
-        {field: 'yucun', title: '预存', width: 150, titleAlign: 'center', columnAlign: 'center'},
-        {field: 'zhuanjie', title: '从他人转接的费用', width: 150, titleAlign: 'center', columnAlign: 'center'},
-        {field: 'duoqi', title: '多期', width: 150, titleAlign: 'center', columnAlign: 'center'},
-        {field: 'xufei', title: '续费', width: 150, titleAlign: 'center', columnAlign: 'center'},
-        {field: 'kuoke', title: '扩科', width: 150, titleAlign: 'center', columnAlign: 'center'},
-        {field: 'xinzeng', title: '新增', width: 150, titleAlign: 'center', columnAlign: 'center'},
-        {field: 'buqianjiao', title: '补欠交', width: 150, titleAlign: 'center', columnAlign: 'center'},
-        {field: 'xiaoshou', title: '销售', width: 150, titleAlign: 'center', columnAlign: 'center'}
-      ]
     }
   },
   methods: {
@@ -105,7 +97,49 @@ export default {
       float: left;
     }
   }
+.charge-table{
+  width:100%;
+.w300{
+  width: 210px;
+  padding-left: 30px;
+}
+.w150{
+  width: 180px;
+}
+.w100{
+  width: 180px;
+}
+.table-top{
+th{
+  border-bottom:2px #d2d5da solid ;
+  border-top:15px #eef1f6 solid ;
+  background: #fff;
+  line-height: 80px;
+}
+td{
+  background: #fff;
+  line-height: 80px;
+}
+.fa-icon{
+  position: relative;
+  top: 6px;
+  color: #d4d1d1;
+}
 
+}
+.table-bottom{
+  position: fixed;
+  bottom: 0;
+td{
+  border-top:2px #d2d5da solid ;
+  background: #fff;
+  line-height: 80px;
+}
+.red{
+  color: #fb6555;
+}
+}
+}
 }
 
 </style>
