@@ -88,7 +88,7 @@ import tolltrendChart from '../general/tolltrendChart'
 .charge{
   .charge-top{
     padding-top: 10px;
-    height: 76px;
+    height: 88px;
     background: #fff;
 .charge-top-tab{
   float: left;
