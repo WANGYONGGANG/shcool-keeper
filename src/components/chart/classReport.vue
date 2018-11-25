@@ -39,8 +39,8 @@
 
     </van-checkbox-group>
     <div class="filter-btn">
-      <span class="btn-reset" @click="resetFn2()">重置</span>
-      <span class="btn-submit" @click="submitFn2()">确定</span>
+      <span class="btn-reset" @click="resetFn()">取消</span>
+      <span class="btn-submit" @click="submitFn()">确定(0/1)</span>
     </div>
   </van-popup>
   <chart-filter :filterShow1.sync="filterShow1"></chart-filter>
@@ -83,10 +83,10 @@
     showFilter (){
       this.filterShow1=true
     },
-    resetFn2(){
+    resetFn(){
 
     },
-    submitFn2(){
+    submitFn(){
       this.filterShow2=false
     },
     drawLine () {
