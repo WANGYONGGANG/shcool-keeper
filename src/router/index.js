@@ -13,6 +13,8 @@ import ClassReportListDetial from '@/components/chart/classReportListDetial'
 
 import FullclassRate from '@/components/chart/fullclassRate'
 import Charge from '@/components/chargeReport/charge'
+import ChargeDetial from '@/components/chargeReport/chargeDetial'
+
 import CourseCharge from '@/components/chargeReport/courseCharge'
 import NetIncome from '@/components/chargeReport/netIncome'
 import Refund from '@/components/chargeReport/Refund'
@@ -189,6 +191,11 @@ export default new Router({
       path: '/chargeReport/charge',
       name: 'charge',
       component: Charge
+    },
+    {
+      path: '/chargeReport/chargeDetial',
+      name: 'chargeDetial',
+      component: ChargeDetial
     },
     {
       path: '/chargeReport/courseCharge',

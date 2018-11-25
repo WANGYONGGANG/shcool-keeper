@@ -15,7 +15,7 @@
           <th class="w200">校区</th>
         </tr>
         <tr>
-          <td class="w200" @click="goTo(urls.chargeDetial)">潮人部落<van-icon name="arrow" /></td>
+          <td class="w200" @click="goTo(urls.ne)">潮人部落<van-icon name="arrow" /></td>
         </tr>
       </table>
       <table class="table-bottom">
@@ -31,30 +31,30 @@
             <th class="w150">退费金额</th>
             <th class="w150">转介绍</th>
             <th class="w150">连报</th>
-            <th class="w150">预存</th>
-            <th class="w300">从他人结转的费用</th>
-            <th class="w150">多期</th>
-            <th class="w150">续费</th>
-            <th class="w150">扩科</th>
-            <th class="w150">其他</th>
-            <th class="w150">新增</th>
-            <th class="w150">补欠交</th>
-            <th class="w150">销售</th>
+            <th class="w150"></th>
+            <th class="w300"></th>
+            <th class="w150"></th>
+            <th class="w150"></th>
+            <th class="w150"></th>
+            <th class="w150"></th>
+            <th class="w150"></th>
+            <th class="w150"></th>
+            <th class="w150"></th>
 
           </tr>
           <tr>
             <td class="w150">0.00</td>
             <td class="w150">0.00</td>
             <td class="w150">0.00</td>
-            <td class="w150">0.00</td>
-            <td class="w300">0.00</td>
-            <td class="w150">0.00</td>
-            <td class="w150">0.00</td>
-            <td class="w150">0.00</td>
-            <td class="w150">0.00</td>
-            <td class="w150">0.00</td>
-            <td class="w150">0.00</td>
-            <td class="w150">0.00</td>
+            <td class="w150"></td>
+            <td class="w300"></td>
+            <td class="w150"></td>
+            <td class="w150"></td>
+            <td class="w150"></td>
+            <td class="w150"></td>
+            <td class="w150"></td>
+            <td class="w150"></td>
+            <td class="w150"></td>
           </tr>
         </table>
         <table class="table-bottom">
@@ -62,15 +62,15 @@
             <td class="w150 red">0.00</td>
             <td class="w150 red">0.00</td>
             <td class="w150 red">0.00</td>
-            <td class="w150 red">0.00</td>
-            <td class="w300 red">0.00</td>
-            <td class="w150 red">0.00</td>
-            <td class="w150 red">0.00</td>
-            <td class="w150 red">0.00</td>
-            <td class="w150 red">0.00</td>
-            <td class="w150 red">0.00</td>
-            <td class="w150 red">0.00</td>
-            <td class="w150 red">0.00</td>
+            <td class="w150 red"></td>
+            <td class="w300 red"></td>
+            <td class="w150 red"></td>
+            <td class="w150 red"></td>
+            <td class="w150 red"></td>
+            <td class="w150 red"></td>
+            <td class="w150 red"></td>
+            <td class="w150 red"></td>
+            <td class="w150 red"></td>
           </tr>
         </table>
       </div>
@@ -96,7 +96,7 @@ export default {
         selectId:[ 0 ] //默认选中的项
       },
       urls:{
-        chargeDetial:'/chargeReport/chargeDetial'
+
       }
 
     }
@@ -192,6 +192,11 @@ td{
 
 
 }
+.table-bottom{
+td{
+  border-right:1px #d2d5da solid ;
+}
+}
 }
 .table-r{
   width: 550px;
@@ -200,6 +205,7 @@ td{
   overflow-x: visible ;
   width: 1950px;
 }
+
 }
 
 
@@ -229,7 +235,6 @@ td{
   border-top:2px #d2d5da solid ;
   background: #fff;
   line-height: 80px;
-  border-right:1px #d2d5da solid ;
 }
 .red{
   color: #fb6555;
