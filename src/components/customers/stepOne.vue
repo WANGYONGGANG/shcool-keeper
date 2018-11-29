@@ -226,7 +226,7 @@
               _self.showAttentionAlert=false;
           },2000)
     },
-      clickFn (n){
+    clickFn (n){
         this.rightPopDates[n].isShow = true
       },
     //获取招生来源

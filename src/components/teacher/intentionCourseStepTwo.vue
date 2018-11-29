@@ -9,8 +9,10 @@
     </div>
     <div class="course-all">
       <div class="course-prop" v-if="showProps">
-        <div><span>不限</span></div>
-        <div v-for="(item,index) in courseItemList"  v-bind:key="index"><span>{{item.value}}</span></div>
+        <div v-on:click="selectedItem(null,null,$event)"><span  class="selected-item">不限</span></div>
+        <div v-for="(item,index) in courseItemList"  v-bind:key="index" v-on:click="selectedItem(item.id,item.type,$event)">
+          <span>{{item.value}}</span>
+        </div>
       </div>
      <div class="course-list">
        <div  v-on:click="openInitDate(0)"><span>年份</span></div>
@@ -24,6 +26,7 @@
 </template>
 <script>
 import { api } from "../../../static/js/request-api/request-api.js";
+import $ from "jquery";
 import CalendarPacking from "../general/calendarPacking";
 export default {
   components: {
@@ -32,14 +35,19 @@ export default {
   data() {
     return {
       courseYear:[
-        {id:0,value:"2018"}, {id:0,value:"2017"}, {id:0,value:"2016"}, {id:0,value:"2015"}
+        {id:0,value:"2018",type:0}, {id:0,value:"2017",type:0}, {id:0,value:"2016",type:0}, {id:0,value:"2015",type:0}
       ],
+      accounting_id:null,
+      campus_id:null,
+      class_type_id:null,
+      course_name:null,
+      period_id:null,
+      year_id:null,
+
       showProps:false,
       courseName:null,
       selectedValue:0,
-      courseItemList:[
-
-      ]
+      courseItemList:[]
     };
   },
    mounted () {
@@ -49,14 +57,28 @@ export default {
     goTo(url) {
       this.$router.push({ path: url });
     },
-    openInitDate:function(selectedValue){
-      // this.selectedValue=selectedValue;
-      if(!this.showProps){
-        this.showProps=true;
-      }else{
+    //弹出类型选择
+    selectedItem(id,type,event){
+          let _self=this;
+          let el = event.currentTarget;
+          //阻止事件冒泡
+         event.stopPropagation();
+         $(".course-prop").find("span").removeClass("selected-item");
+         $(el).find("span").addClass("selected-item");
+         if(type==0){
+           _self.year_id=id;
+         }else if(type==1){
+           _self.period_id=id;
+         }else if(type==2){
+          _self.class_type_id=id;
+         }else if(type==3){
+          _self.accounting_id=id;
+         }
         this.showProps=false;
-        return;
-      }
+        
+    },
+    openInitDate:function(selectedValue){
+      let _self=this;
       switch(selectedValue){
       case 0:
           this.courseItemList=this.courseYear;
@@ -72,10 +94,24 @@ export default {
          break;
       default:
           this.courseItemList=this.courseYear;
+      };
+      if(selectedValue==this.selectedValue){
+      if(!this.showProps){
+        this.showProps=true;
+      }else{
+        this.showProps=false;
+        return;
       }
+    }else{
+      this.showProps=false;
+      setTimeout(function(){
+      _self.showProps=true;
+      },200);
+    }
+      this.selectedValue=selectedValue;
     },
     onSearch(){
-
+        this.findAllCourse();
     },
      //获取所属期段
       refreshCurriculumPeriod: function() {
@@ -93,6 +129,7 @@ export default {
                     let newObj={};
                     newObj.value=responsibleList[i].name;
                     newObj.id=responsibleList[i].id;
+                    newObj.type=1;
                     newResponsibleList.push(newObj);
                   }
                   this.courseItemList=newResponsibleList;
@@ -125,6 +162,7 @@ export default {
                     let newObj={};
                     newObj.value=responsibleList[i].name;
                     newObj.id=responsibleList[i].id;
+                    newObj.type=2;
                     newResponsibleList.push(newObj);
                   }
                   this.courseItemList=newResponsibleList;
@@ -137,6 +175,46 @@ export default {
         })
         .catch(error => {
           let params = { msg: "获取所属班型" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+      //获取意向课程
+      findAllCourse: function() {
+      let _self = this;
+      let params = new URLSearchParams();
+      params.append("accounting_id", _self.accounting_id);
+      params.append("campus_id", _self.campus_id);
+      params.append("class_type_id",_self.class_type_id);
+      params.append("course_name", _self.course_name);
+      params.append("period_id", _self.period_id);
+      // params.append("year_id",_self.year_id);
+       params.append("year_id",2);
+      api.findAllCourse(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  console.log(res.data.data);
+
+                  // let responsibleList=res.data.data;
+                  // let newResponsibleList=[];
+                  // for(let i=0;i<responsibleList.length;i++){
+                  //   let newObj={};
+                  //   newObj.value=responsibleList[i].name;
+                  //   newObj.id=responsibleList[i].id;
+                  //   newResponsibleList.push(newObj);
+                  // }
+                  // this.courseItemList=newResponsibleList;
+                }
+          } else {
+            let params = { msg: "获取意向课程" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取意向课程" };
           // GlobalVue.$emit("alert", params);
           // GlobalVue.$emit("blackBg", null);
         });
@@ -157,6 +235,7 @@ export default {
                     let newObj={};
                     newObj.value=responsibleList[i].name;
                     newObj.id=responsibleList[i].id;
+                    newObj.type=3;
                     newResponsibleList.push(newObj);
                   }
                   this.courseItemList=newResponsibleList;
@@ -191,6 +270,13 @@ export default {
     position: absolute;
     top:74px;
     z-index: 600;
+    .selected-item{
+      background-color: #4286ed;
+      border-radius: 30px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: inline-block;
+    }
     div{
       height: 60px;
       text-align: center;
