@@ -85,6 +85,7 @@ import PublishClass from '@/components/general/publishClass'
 import PublishPeople from '@/components/general/publishPeople'
 
 import intentionCourse from '@/components/teacher/intentionCourse'
+import intentionCourseStepTwo from '@/components/teacher/intentionCourseStepTwo'
 import EnrollmentStatistics from '@/components/teacher/enrollmentStatistics'
 import EnrollmentStatistics2 from '@/components/teacher/enrollmentStatistics2'
 import EnrollmentStatistics3 from '@/components/teacher/enrollmentStatistics3'
@@ -110,6 +111,11 @@ export default new Router({
       path: '/intentionCourse',
       name: 'intentionCourse',
       component: intentionCourse
+    },
+    {
+      path: '/intentionCourseStepTwo',
+      name: 'intentionCourseStepTwo',
+      component: intentionCourseStepTwo
     },
     {
       path: '/user/blank',

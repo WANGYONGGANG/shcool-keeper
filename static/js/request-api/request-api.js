@@ -361,7 +361,18 @@ export const api = {
     getWorkStatistics(params) {
             return fetchPost(baseUrl + '/user/getWorkStatistics', params);
     },
-
+    //意向课程所属科目
+    refreshCurriculumAccounting(params) {
+            return fetchGet(baseUrl + '/intentionClientAPI/refreshCurriculumAccounting', params);
+    },
+    //课程所属班型
+    refreshCurriculumClassType(params) {
+        return fetchGet(baseUrl + '/intentionClientAPI/refreshCurriculumClassType', params);
+  },
+      //课程所属期段
+      refreshCurriculumPeriod(params) {
+        return fetchGet(baseUrl + '/intentionClientAPI/refreshCurriculumPeriod', params);
+  },
 
 
 
