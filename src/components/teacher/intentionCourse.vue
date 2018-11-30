@@ -12,14 +12,14 @@
      <van-cell title="意向班级" is-link   @click="clickFn('item03')">
        {{rightPopDates.item03.selectItem}}
     </van-cell>
+        </div>
       <div class="button">
         <div v-on:click="addNewCourse"><span>添加课程</span></div><div v-on:click="submitNewCourse"><span>确认</span></div>
       </div>
       <right-pop :filterShow.sync="rightPopDates.item04.isShow" :selectItem.sync="rightPopDates.item04.selectItem" :allDatas="rightPopDates.item04.data"  :selectID.sync="rightPopDates.item04.selectID"></right-pop>
       <van-popup v-model="rightPopDates.item02.isShow"  position="right" style="height:100%;">
         <intentionCourseStepTwo  v-bind:selectID="rightPopDates.item04.selectID"  v-on:addCourse="addCourse"></intentionCourseStepTwo>
-      </van-popup>
-    </div>
+    </van-popup>
       </div>
 </template>
 <script>
