@@ -20,7 +20,7 @@
        <div v-on:click="openInitDate(2)"><span>类型</span></div>
        <div v-on:click="openInitDate(3)"><span>科目</span></div>
       </div>
-      <van-cell title="校区"></van-cell>
+      <van-cell    v-bind:title="course.courseName"    v-for="(course,index) in courseList" :key="index"  v-on:click="addCourse(course)"></van-cell>
     </div>
     </div>
 </template>
@@ -32,6 +32,7 @@ export default {
   components: {
     CalendarPacking
   },
+  props: ["selectID"],
   data() {
     return {
       courseYear:[
@@ -43,7 +44,7 @@ export default {
       course_name:null,
       period_id:null,
       year_id:null,
-
+      courseList:[],
       showProps:false,
       courseName:null,
       selectedValue:0,
@@ -56,6 +57,9 @@ export default {
   methods: {
     goTo(url) {
       this.$router.push({ path: url });
+    },
+    addCourse:function(courseObj){
+      this.$emit("addCourse", courseObj);
     },
     //弹出类型选择
     selectedItem(id,type,event){
@@ -183,20 +187,27 @@ export default {
       findAllCourse: function() {
       let _self = this;
       let params = new URLSearchParams();
-      params.append("accounting_id", _self.accounting_id);
-      params.append("campus_id", _self.campus_id);
-      params.append("class_type_id",_self.class_type_id);
-      params.append("course_name", _self.course_name);
-      params.append("period_id", _self.period_id);
-      // params.append("year_id",_self.year_id);
+      // params.append("accounting_id", _self.accounting_id);
+      // params.append("campus_id", _self.selectID);
+      params.append("campus_id", 10);
+      if(_self.class_type_id){
+          params.append("class_type_id",_self.class_type_id);
+      };
+      if(_self.course_name){
+          params.append("course_name",_self.course_name);
+      };
+       if(_self.period_id){
+          params.append("period_id",_self.period_id);
+      };
+      //  if(_self.year_id){
+      //     params.append("year_id",_self.year_id);
+      // };
        params.append("year_id",2);
       api.findAllCourse(params)
         .then(res => {
-          if (res.status == 200) {
-                let code=res.data.code;
-                if(code===1){
-                  console.log(res.data.data);
-
+          if (res.code ==1) {
+                  console.log(res.data);
+                  _self.courseList=res.data;
                   // let responsibleList=res.data.data;
                   // let newResponsibleList=[];
                   // for(let i=0;i<responsibleList.length;i++){
@@ -206,7 +217,7 @@ export default {
                   //   newResponsibleList.push(newObj);
                   // }
                   // this.courseItemList=newResponsibleList;
-                }
+                
           } else {
             let params = { msg: "获取意向课程" };
             // GlobalVue.$emit("alert", params);

@@ -88,7 +88,7 @@
   import RightPop from '../general/rightPop'
   import { api } from "../../../static/js/request-api/request-api.js";
   import intentionCourse from '@/components/teacher/intentionCourse'
-export default {
+  export default {
    components: {
       RightPop,
       intentionCourse

@@ -369,9 +369,13 @@ export const api = {
     refreshCurriculumClassType(params) {
         return fetchGet(baseUrl + '/intentionClientAPI/refreshCurriculumClassType', params);
   },
-      //课程所属期段
+    //课程所属期段
       refreshCurriculumPeriod(params) {
         return fetchGet(baseUrl + '/intentionClientAPI/refreshCurriculumPeriod', params);
+  },
+     //增加意向客户所以班级
+     intentionClientAPIFindAllClass(params) {
+        return fetchPost(baseUrl + '/intentionClientAPI/findAllClass', params);
   },
 
 

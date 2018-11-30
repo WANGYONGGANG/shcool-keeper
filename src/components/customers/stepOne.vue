@@ -238,8 +238,6 @@
           if (res.status == 200) {
                 let code=res.data.code;
                 if(code===1){
-                  console.log(res.data.data);
-
                   let responsibleList=res.data.data;
                   let newResponsibleList=[];
                   for(let i=0;i<responsibleList.length;i++){
