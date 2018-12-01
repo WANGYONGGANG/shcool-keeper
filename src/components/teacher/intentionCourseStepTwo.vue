@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       courseYear:[
-        {id:0,value:"2018"}, {id:0,value:"2017"}, {id:0,value:"2016"}, {id:0,value:"2015"}
+        {id:0,value:"2018"}, {id:0,value:"2017"}, {id:0,value:"2016"}, {id:0,value:"2015"},{id:0,value:"2014"}
       ],
       showProps:false,
       courseName:null,
@@ -50,13 +50,22 @@ export default {
       this.$router.push({ path: url });
     },
     openInitDate:function(selectedValue){
-      // this.selectedValue=selectedValue;
-      if(!this.showProps){
+      let _self=this;
+     if(this.selectedValue==selectedValue){
+         if(!this.showProps){
         this.showProps=true;
       }else{
         this.showProps=false;
         return;
       }
+     }else{
+       this.showProps=false;
+       setTimeout(function(){
+         _self.showProps=true;
+       },100)
+     }
+     
+      this.selectedValue=selectedValue;
       switch(selectedValue){
       case 0:
           this.courseItemList=this.courseYear;
@@ -190,6 +199,7 @@ export default {
     background: #fff;
     position: absolute;
     top:74px;
+    overflow-y: auto;
     z-index: 600;
     div{
       height: 60px;
