@@ -12,10 +12,12 @@
      <van-cell title="意向班级" is-link   @click="clickFn('item03')">
        {{rightPopDates.item03.selectItem}}
     </van-cell>
-        </div>
+    <div class="inside"></div>
+     </div>
       <div class="button">
         <div v-on:click="addNewCourse"><span>添加课程</span></div><div v-on:click="submitNewCourse"><span>确认</span></div>
       </div>
+      <right-pop :filterShow.sync="rightPopDates.item03.isShow" :selectItem.sync="rightPopDates.item03.selectItem" :allDatas="rightPopDates.item03.data"  :selectID.sync="rightPopDates.item03.selectID"></right-pop>
       <right-pop :filterShow.sync="rightPopDates.item04.isShow" :selectItem.sync="rightPopDates.item04.selectItem" :allDatas="rightPopDates.item04.data"  :selectID.sync="rightPopDates.item04.selectID"></right-pop>
       <van-popup v-model="rightPopDates.item02.isShow"  position="right" style="height:100%;">
         <intentionCourseStepTwo  v-bind:selectID="rightPopDates.item04.selectID"  v-on:addCourse="addCourse"></intentionCourseStepTwo>
@@ -96,16 +98,23 @@ export default {
     //添加课程id
     addCourse(courseObj){
          this.selectedCourseName=courseObj.courseName;
+         this.rightPopDates.item02.selectID=courseObj.id;
          this.rightPopDates.item02.isShow=false;
     },
     //添加课程
     addNewCourse(){
-         $(".course-item").clone().insertAfter(".course-item");
+         $(".course-item").clone(true).insertAfter(".course-item");
      
     },
     //确认意向课程
     submitNewCourse(){
+     let classId=this.rightPopDates.item03.selectID;
+     let courseId=this.rightPopDates.item02.selectID;
 
+    //  let clientCourses ={};
+    //  clientCourses.classId=classId;
+    //  clientCourses.courseId=courseId;
+     this.$emit("addNewCourse",classId,courseId,this.selectedCourseName);
     },
     //获取班级
       intentionClientAPIFindAllClass: function(course_id) {
@@ -162,6 +171,8 @@ export default {
                   this.rightPopDates.item04.data=newResponsibleList;
                   this.rightPopDates.item04.selectItem=responsibleList[0].name;
                   this.rightPopDates.item04.selectID = responsibleList[0].id;
+                  // console.log(responsibleList[0].id);
+                  // this.intentionClientAPIFindAllClass(responsibleList[0].id);
                 }
           } else {
             let params = { msg: "获取公立学校" };
@@ -177,12 +188,18 @@ export default {
           },
         },
   watch:{
-        'rightPopDates.item04.selectItem':function(newval,oldval){
+      'rightPopDates.item04.selectItem':function(newval,oldval){
         this.$toast(newval)|""
       },
       "rightPopDates.item04.selectID":function(newval, oldval) {
        this.rightPopDates.item04.selectID=newval;
        this.intentionClientAPIFindAllClass(newval);
+       },
+      'rightPopDates.item03.selectItem':function(newval,oldval){
+        this.$toast(newval)|""
+      },
+      "rightPopDates.item03.selectID":function(newval, oldval) {
+       this.rightPopDates.item03.selectID=newval;
        },
 
       }
@@ -191,6 +208,11 @@ export default {
 <style lang="less">
   .course{
     width: 750px;
+    .inside{
+      height: 20px;
+      width: 100%;
+      background: #4286ed;
+    }
     .button{
       height: 85px;
       width: 750px;
