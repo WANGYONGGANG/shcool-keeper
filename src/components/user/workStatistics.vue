@@ -6,7 +6,9 @@
   <dl class="work-statistics-list" @click="goTo">
     <dt>上课率</dt>
     <dd class="num">{{attendance.attendance_ratio}}</dd>
-    <dd class="progress"></dd>
+    <dd class="progress">
+      <span :style="{ width: attendance.attendance_ratio+'%'}"></span>
+    </dd>
     <dd>
       <van-cell-group>
         <van-cell :title=attendance.already_in_class :value=attendance.total_class  class="line30"/>
@@ -19,7 +21,9 @@
   <dl class="work-statistics-list" @click="goTo">
     <dt>出勤率</dt>
     <dd class="num">{{comment.comment_ratio}}</dd>
-    <dd class="progress"></dd>
+    <dd class="progress">
+      <span :style="{ width: attendance.attendance_ratio+'%'}"></span>
+    </dd>
     <dd>
       <van-cell-group>
         <van-cell :title=comment.sign_in_count :value=comment.total_count  class="line30"/>
@@ -32,7 +36,9 @@
   <dl class="work-statistics-list" @click="goTo">
     <dt>评价率</dt>
     <dd class="num">{{course.course_ratio}}</dd>
-    <dd class="progress"></dd>
+    <dd class="progress">
+      <span :style="{ width: attendance.attendance_ratio+'%'}"></span>
+    </dd>
     <dd>
       <van-cell-group>
         <van-cell :title=course.real_count :value=course.total_count  class="line30"/>
@@ -40,10 +46,10 @@
     </dd>
      </dl>
     <div class="naming-tab">
-      <div class="naming-tab-l fn-left"><van-icon name="arrow-left" /></div>
-      <div class="naming-tab-m fn-left" ><span @click="showCalendar">2018年11月</span>
-    </div>
-      <div class="naming-tab-r fn-right"><van-icon name="arrow" /></div>
+      <div class="naming-tab-l fn-left" @click='lessTime'><van-icon name="arrow-left" /></div>
+      <!--<div class="naming-tab-m fn-left" ><span @click="showCalendar">2018年11月</span>-->
+      <div class="naming-tab-m fn-left" ><span>{{timeData}}</span></div>
+      <div class="naming-tab-r fn-right" @click='addTime'><van-icon name="arrow" /></div>
     </div>
 </div>
 </template>
@@ -54,16 +60,26 @@ export default {
     return {
       attendance:'',
       comment:'',
-      course:''
+      course:'',
+      timeData:'',
+      year:'',
+      month:'',
     }
   },
   mounted(){
     var date = new Date();
-    var month=date.getMonth()+1
-    var timeData=date.getFullYear()+'-'+month+'-'+date.getDate()
-    let params = new URLSearchParams();
+    this.month=date.getMonth()+1
+    this.year=date.getFullYear()
+    this.timeData=this.year+'-'+this.month
+    
+    this.getClass()
+  },
+  methods: {
+    getClass(){
+      var timeData=this.timeData+'-'+new Date().getDate()
+      let params = new URLSearchParams();
       params.append("current_month", timeData);
-     api.getWorkStatistics(params)
+      api.getWorkStatistics(params)
 					.then(res=>{
             //已上课时
             this.attendance=res.data.attendance
@@ -80,10 +96,46 @@ export default {
 				},()=>{
           
 				});
-  },
-  methods: {
+    },
+
+
+
+    //前一个月
+    lessTime(){
+      if(this.month==1){
+        this.month=12
+        this.year=this.year-1
+      }else{
+        this.month=this.month-1
+      }      
+      this.timeData=this.year+'-'+this.month
+      this.getClass()
+      // timeData=this.timeData+'-'+new Date().getDate()
+    },
+    // //后一个月
+    addTime(){
+      console.log(new Date().getFullYear())
+      if(this.year==new Date().getFullYear()){
+        if(this.month==new Date().getMonth()+1){
+            this.$toast('已是当前月');
+        }else{
+          this.month=this.month+1
+        }
+      }else{
+         if(this.month==12){
+          this.month=1
+          this.year=this.year+1
+        }else{
+          this.month=this.month+1
+        }  
+      }
+      this.timeData=this.year+'-'+this.month
+      this.getClass()
+      // timeData=this.timeData+'-'+new Date().getDate()
+    },
+
     goTo () {
-      this.$router.push({path: '/user/workStatisticsDetial'})
+      this.$router.push({path: '/user/workStatisticsDetial',query:{time:this.timeData}})
     },
   }
 }
@@ -135,10 +187,18 @@ export default {
     width: 90%;
     height: 10px;
     border-radius: 40px;
-    background: #4286ed;
+    background: #eee;
     margin: 20px auto;
+    span{
+      border-radius: 40px;
+      display:inline-block;
+      background-color:#4286ed;
+      height:100%;
+      vertical-align:top
+    }
   }
   }
+  
   .naming-tab{
     height: 86px;
     background: #fff;

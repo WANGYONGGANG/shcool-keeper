@@ -1,8 +1,10 @@
 <template>
   <div class="parent-rating-ranking">
-    <div class="choose-school-zone" @click="showShoolZoneDia">
+    <div class="choose-school-zone" >
       <van-cell-group>
-        <van-cell title="选择校区" value="潮人部落" is-link />
+       <van-cell title="选择校区"  is-link class="line65"  @click="sortPopShow">
+          {{sortData.selectItem.item}}
+      </van-cell>
       </van-cell-group>
     </div>
     <div class="class-tab fn-clear">
@@ -31,19 +33,23 @@
       row-hover-color="#eee"
       row-click-color="#edf7ff"
     ></v-table>
-    <school-pop></school-pop>
+    <select-pop :title="sortData.title" :lists="sortData.lists" :isShow.sync="sortData.isShow" :selectItem.sync="sortData.selectItem"></select-pop>
   </div>
 </template>
 <script>
+  import {api} from  '../../../static/js/request-api/request-api.js';
 import SchoolPop from '../popup/schoolPop'
 import CalendarPacking from '../general/calendarPacking'
+import SelectPop from '../popup/bottomSelectPop'
 export default {
   components: {
     SchoolPop,
-    CalendarPacking
+    CalendarPacking,
+    SelectPop
   },
   data () {
     return {
+      schoolPartList:null,
       value: '',
       urls: {
         examinationResult: '/teacher/examinationResult'
@@ -56,12 +62,54 @@ export default {
         {field: 'name', title: '课程', width: 450, titleAlign: 'left', columnAlign: 'left', orderBy: 'asc'},
         {field: 'average', title: '平均分', width: 150, titleAlign: 'center', columnAlign: 'center', orderBy: 'asc'},
         {field: 'rank', title: '排名', width: 150, titleAlign: 'center', columnAlign: 'center'}
-        ]
+        ],
+     sortData:{
+        title:'排序方式',
+        lists:['选择校区'],
+        isShow:false,
+        selectItem:''
+      },
     }
   },
   mounted () {
+    this.refreshDepartment();
   },
   methods: {
+    initDate(){
+      let schoolPartList=this.schoolPartList;
+       for(let i=0;i<schoolPartList.length;i++){
+         this.sortData.lists.push(schoolPartList[i].name);
+       }
+       this.sortData.selectItem.item=schoolPartList[0].name;
+    },
+      //查询所有校区
+    refreshDepartment: function() {
+      let params ={};      
+      let _self = this;
+      api.refreshDepartment(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.schoolPartList=res.data.data;
+                  _self.initDate();
+                }
+          } else {
+            let params = { msg: "查询所有校区" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "查询所有校区" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+
+     sortPopShow(param){
+         this.sortData.isShow=true;
+    },
     onSearch () {
     },
     showCommentedDia () {

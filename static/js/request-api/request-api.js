@@ -377,7 +377,10 @@ export const api = {
      intentionClientAPIFindAllClass(params) {
         return fetchPost(baseUrl + '/intentionClientAPI/findAllClass', params);
   },
-
+     //工作统计明细
+     getWorkStatisticsDetail(params) {
+        return fetchPost(baseUrl + '/user/getWorkStatisticsDetail', params);
+    },
 
 
 
