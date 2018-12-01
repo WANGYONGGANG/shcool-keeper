@@ -137,8 +137,21 @@ export default {
           setTimeout(function(){
             _self.showAttentionAlert=false;
           },2000)
+        }else{
+           _self.attentionText=res.message;
+           _self.showAttentionAlert=true;
+          setTimeout(function(){
+            _self.showAttentionAlert=false;
+          },2000)
         }
-      });
+      })
+       .catch(error => {
+          _self.attentionText="已存在或者错误";
+           _self.showAttentionAlert=true;
+          setTimeout(function(){
+            _self.showAttentionAlert=false;
+          },2000)
+        });
     },
     goTo () {
       this.addStudentForClassPlean();

@@ -42,7 +42,7 @@ export default {
       endTime:"",
       studentName:"",
       tableData: [
-             {"name":"赵伟","chuqin":"156*****1987","jifei":"钢琴、书法、唱歌","shiting":"上海市黄浦区金陵东路569号17楼","queqin":""}
+            //  {"name":"赵伟","chuqin":"156*****1987","jifei":"钢琴、书法、唱歌","shiting":"上海市黄浦区金陵东路569号17楼","queqin":""}
       ],
       columns: [
         {field: 'name', title: '姓名', width: 160, titleAlign: 'center', columnAlign: 'center'},
@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     onSearch () {
+      this.tableData=[];
       this.getMyClassRoster();
     },
     addStu(){
@@ -109,9 +110,21 @@ export default {
             for(let i=0;i<allDatas.length;i++){
                let stu={};
                stu.name=allDatas[i].studentName;
-               stu.chuqin=allDatas[i].isAttendance;
-               stu.jifei=allDatas[i].periodType;
-               stu.shiting=allDatas[i].isTry;
+               let isAttendance="是";
+               if(allDatas[i].isAttendance){
+                 isAttendance="是";
+               }else{
+                 isAttendance="否";
+               }
+               stu.chuqin=isAttendance;
+               stu.jifei=allDatas[i].realPeriodCount;
+               let isTry="是";
+               if(allDatas[i].isTry){
+                 isTry="是";
+               }else{
+                 isTry="否";
+               }
+               stu.shiting=isTry;
                stu.queqin=allDatas[i].absentId;
                _self.tableData.push(stu);
             }

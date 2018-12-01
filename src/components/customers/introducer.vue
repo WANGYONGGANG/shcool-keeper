@@ -1,7 +1,7 @@
 <template>
   <div class="introducer">
     <div class="list-search">
-        <van-search placeholder="输入介绍人姓名/学号/手机号" background="#fff" v-model="value"  show-action >
+        <van-search placeholder="输入介绍人姓名/学号/手机号" background="#fff" v-model="query_content"  show-action >
           <div slot="action" @click="onSearch">搜索</div>
         </van-search>
     </div>
@@ -11,29 +11,39 @@
           <th>学号</th>
           <th  class="txt-right">手机号</th>
       </tr>
-        <tr>
-        <td  class="txt-left">000</td>
-        <td>s12599</td>
-        <td class="txt-right">152****0474</td>
+        <tr v-for="(item,index) in responsibleList" v-bind:key="index"  v-on:click="selectedItem(item.id,item.code)">
+        <td  class="txt-left">{{item.name}}</td>
+        <td>{{item.code}}</td>
+        <td class="txt-right">{{item.mobile}}</td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td  class="txt-left">000</td>
           <td>s12599</td>
           <td  class="txt-right">152****0474</td>
-        </tr>
+        </tr> -->
       </table>
 
   </div>
 </template>
 <script>
+  import { api } from "../../../static/js/request-api/request-api.js";
   export default {
     data () {
       return {
-        value:'',
-        isOpen:false
+        query_content:'',
+        responsibleList:[],
+        isOpen:false,
+          rightPopDates:{
+          item03:{
+            isShow:false,
+            selectItem:'',
+            data:[{itemName:'1'},{itemName:'5'}]
+          },
+          }
       }
     },
     mounted () {
+      this.findAllIntroducer();
     },
     methods: {
       goTo (url) {
@@ -41,6 +51,49 @@
       },
       clickFn(){
         this.isOpen=true
+      },
+      onSearch(){
+        this.findAllIntroducer();
+      },
+      //介绍人选择
+      selectedItem(id,code){
+        console.log("&&&&&&&&&&&&&&&&"+id+"&&&&&&&&&&&&"+code);
+        this.$emit('selectedIntroducer',id,code);
+      },
+      //查询所有介绍人
+      findAllIntroducer(){
+      let _self = this;
+      let params={};
+      params.query_content=_self.query_content;
+      api.findAllIntroducer(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  console.log(res.data.data);
+
+                  _self.responsibleList=res.data.data;
+                  // let newResponsibleList=[];
+                  // for(let i=0;i<responsibleList.length;i++){
+                  //   let newObj={};
+                  //   newObj.itemName=responsibleList[i].name;
+                  //   newResponsibleList.push(newObj);
+                  // }
+                  // this.rightPopDates.item03.data=newResponsibleList;
+                  // this.rightPopDates.item03.selectItem=responsibleList[0].name;
+                }
+          } else {
+            let params = { msg: "获取所有介绍人" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取所有介绍人" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+
       },
       goBack(){
         this.isOpen=false
