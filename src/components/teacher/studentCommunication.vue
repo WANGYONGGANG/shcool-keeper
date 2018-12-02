@@ -15,7 +15,7 @@
           <div @click="goTo(urls.communicationRecord,data.id)">
               <div class="card-list" >
                 <div class="card-list-l">
-                  <img class="img" src="../../assets/images/user/test.jpg"/>{{data.name}}
+                  <img class="img" :src="data.userPic"/>{{data.name}}
                   <span class="times">沟通次数：{{data.talkCount}}</span>
                 </div>
                 <div class="card-list-r"><van-icon name="arrow" /></div>
@@ -179,7 +179,7 @@ export default {
       this.$router.push({ path: url, query: { id: parame } })
     },
     // 沟通列表
-    getCommunicationDetail: function(data1, p) {
+    getCommunicationDetail: function(data1, p,filterRules) {
       let _self = this;
       let param = new URLSearchParams();
       param.append('all_or_other' ,false);
@@ -188,6 +188,9 @@ export default {
       }
       if(data1){
         param.append('query_content' ,data1);
+      }
+      if(filterRules){
+        param.append('filterRules' ,filterRules);
       }
       api.findStudentCommunicationDetailStu(param)
         .then(res => {
@@ -407,8 +410,8 @@ export default {
           if(this.list[i].id == this.radio){
               this.className = this.list[i].className
           }
-
       }
+      // this.getCommunicationDetail();
 
     },
     goBack () {
@@ -669,9 +672,13 @@ export default {
       height: 70px;
       padding: 18px 20px;
       line-height: 32px;
+
       .van-cell__title{
         -webkit-box-flex: 6;
         flex:6;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
   .van-radio__input{
     height: 5em;
