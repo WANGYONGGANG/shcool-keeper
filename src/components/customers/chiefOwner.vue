@@ -30,11 +30,13 @@
         value:'',
         isOpen:false,
         responsibleList:[],
+        schoolList:[],
         name:""
       }
     },
     mounted () {
       this.refreshSalePerson();
+      this.refreshDepartment();
     },
     methods: {
       onSearch(){
@@ -49,6 +51,29 @@
       clickFn(){
         this.isOpen=true
       },
+     //查询所有校区
+      refreshDepartment: function() {
+      let _self = this;
+      api.refreshDepartment(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.schoolList=res.data.data;
+                  // _self.responsibleList=res.data.data;
+                }
+          } else {
+            let params = { msg: "获取主要责任人" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取主要责任人" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
         //获取主要责任人
       refreshSalePerson: function() {
       let _self = this;

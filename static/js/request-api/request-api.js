@@ -333,6 +333,10 @@ export const api = {
     findAllStudent(params) {
         return fetchGet(baseUrl + '/namingAPI/findAllStudent', params);
     },
+     //上课点名
+     classBeginAndNaming(params) {
+        return fetchPost(baseUrl + '/namingAPI/classBeginAndNaming', params);
+    },
     //招生来源
     ReportCustomerAnalysisForSourceway(params) {
         return fetchGet(baseUrl + '/intentionClientAPI/ReportCustomerAnalysisForSourceway', params);
@@ -381,6 +385,27 @@ export const api = {
     addIntentionClient(params) {
         return fetchPost(baseUrl + '/intentionClientAPI/addIntentionClient', params);
   },
+    //校长端满班率报表
+    QueryFullClassRand(params) {
+        return fetchGet(baseUrl + '/principalAPI/QueryFullClassRand', params);
+  },
+    //明细
+    QueryFullClassRandOfDetail(params) {
+        return fetchGet(baseUrl + '/principalAPI/QueryFullClassRandOfDetail', params);
+  },
+    //增加分组
+    addReportFullClassRandGroup(params) {
+        return fetchPost(baseUrl + '/principalAPI/addReportFullClassRandGroup', params);
+  },
+    //删除分组
+    deleteReportFullClassRandGroup(params) {
+        return fetchGet(baseUrl + '/principalAPI/deleteReportFullClassRandGroup', params);
+  },
+   //获取分组
+   findAllClassRandGroup(params) {
+    return fetchGet(baseUrl + '/principalAPI/findAllClassRandGroup', params);
+},
+
 
 
 

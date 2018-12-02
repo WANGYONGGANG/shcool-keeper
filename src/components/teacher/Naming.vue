@@ -20,7 +20,7 @@
     </div>
   </div>
   <calendar :date.sync="calendar.date" :isVisible.sync="calendar.isVisible"></calendar>
-  <div class="quick-schedule" @click="goTo(urls.chooseClass)">快速排课</div>
+  <!-- <div class="quick-schedule" @click="goTo(urls.chooseClass)">快速排课</div> -->
 </div>
 </template>
 <script>
