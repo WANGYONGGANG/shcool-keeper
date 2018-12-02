@@ -267,6 +267,10 @@ export const api = {
     refreshSalePerson(params) {
         return fetchGet(baseUrl + '/intentionClientAPI/refreshSalePerson', params);
     },
+     // 获取缺勤原因
+     findAllValidReasonsForLeave(params) {
+        return fetchGet(baseUrl + '/namingAPI/findAllValidReasonsForLeave', params);
+    },
     //获取招生来源
     refreshSource(params) {
         return fetchGet(baseUrl + '/intentionClientAPI/refreshSource', params);

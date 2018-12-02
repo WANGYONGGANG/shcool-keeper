@@ -14,7 +14,7 @@
       <div class="operation" v-on:click="addStu">添加学员</div>
     </div>
     <div class="list-table">
-      <div class="checked-item">
+      <!-- <div class="checked-item">
         <ul>
           <li>
             <input type="checkbox" id="categoryAll" class="item-selected" v-on:click="allChecked">
@@ -28,44 +28,248 @@
               v-bind:value="JSONTOstringify(item)"
             >
           </li>
-          <!-- <li><input type="checkbox" name="category"  class="item-selected"/></li> -->
         </ul>
+      </div>-->
+      <div
+        class="v-table-views v-table-class"
+        style="width: 750px; overflow: visible; background-color: rgb(255, 255, 255);"
+      >
+        <!---->
+        <div class="v-table-rightview" style="width: 750px;">
+          <div
+            class="v-table-header v-table-title-class"
+            style="width: 749px; background-color: rgb(255, 255, 255);"
+          >
+            <div class="v-table-header-inner" style="display: block;">
+              <table border="0" cellspacing="0" cellpadding="0" class="v-table-htable">
+                <tbody>
+                  <tr class="v-table-header-row">
+                    <td class>
+                      <div
+                        class="v-table-title-cell horizontal-border"
+                        style="width: 160px; height: 100px; text-align: center;"
+                      >
+                        <span class="table-title">
+                          <span>姓名</span>
+                          <!---->
+                          <!---->
+                        </span>
+                      </div>
+                    </td>
+                    <td class>
+                      <div
+                        class="v-table-title-cell horizontal-border"
+                        style="width: 130px; height: 100px; text-align: center;"
+                      >
+                        <span class="table-title">
+                          <span>出勤</span>
+                          <input type="checkbox" id="categoryAll1" class="item-selected" v-on:click="allCheckedChuqin">
+                          <!---->
+                          <!---->
+                        </span>
+                      </div>
+                    </td>
+                    <td class>
+                      <div
+                        class="v-table-title-cell horizontal-border"
+                        style="width: 200px; height: 100px; text-align: center;"
+                      >
+                        <span class="table-title">
+                          <span>计费（小时）</span>
+                           <input type="checkbox" id="categoryAll2" class="item-selected" v-on:click="allCheckedJifei">
+                          <!---->
+                          <!---->
+                        </span>
+                      </div>
+                    </td>
+                    <td class>
+                      <div
+                        class="v-table-title-cell horizontal-border"
+                        style="width: 130px; height: 100px; text-align: center;"
+                      >
+                        <span class="table-title">
+                          <span>试听</span>
+                          <input type="checkbox" id="categoryAll3" class="item-selected" v-on:click="allCheckedShiting">
+                          <!---->
+                          <!---->
+                        </span>
+                      </div>
+                    </td>
+                    <td class>
+                      <div
+                        class="v-table-title-cell horizontal-border"
+                        style="width: 130px; height: 100px; text-align: center;"
+                      >
+                        <span class="table-title">
+                          <span>缺勤原因</span>
+                          <!---->
+                          <!---->
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div
+            class="v-table-body v-table-body-class v-table-rightview-special-border v-scrollbar-wrap" v-for="(item,index) in tableData" v-bind:key="index"
+            style="width: 750px;">
+            <div class="v-checkbox-group">
+              <table cellspacing="0" cellpadding="0" border="0" class="v-table-btable">
+                <tbody>
+                  <tr class="v-table-row">
+                    <td colspan rowspan class>
+                      <div v-on:click="openStuItem($event)"
+                        title
+                        class="v-table-body-cell horizontal-border"
+                        style="width: 160px; height: 100px; line-height: 100px; text-align: center;"
+                      >
+                        <span>{{item.name}}</span>
+                      </div>
+                    </td>
+                    <td colspan rowspan class>
+                      <div
+                        title
+                        class="v-table-body-cell horizontal-border"
+                        style="width: 130px; height: 100px; line-height: 100px; text-align: center;">
+                          <input  type="checkbox" name="category1" class="item-selected" v-model="chuqinIds" v-bind:value="item.id">
+                      </div>
+                    </td>
+                    <td colspan rowspan class>
+                      <div
+                        title
+                        class="v-table-body-cell horizontal-border"
+                        style="width: 200px; height: 100px; line-height: 100px; text-align: center;"
+                      >
+                        <span>{{item.jifei}}</span>
+                          <input  type="checkbox" name="category2" class="item-selected" v-model="jifeiIds" v-bind:value="item.id">
+                      </div>
+                    </td>
+                    <td colspan rowspan class>
+                      <div
+                        title
+                        class="v-table-body-cell horizontal-border"
+                        style="width: 130px; height: 100px; line-height: 100px; text-align: left;"
+                      >
+                         <input  type="checkbox" name="category3" class="item-selected" v-model="shitingIds" v-bind:value="item.id">
+                      </div>
+                    </td>
+                    <td colspan rowspan class style="position:relative;">
+                      <div
+                        title
+                        class="v-table-body-cell horizontal-border"
+                        style="width: 130px; height: 100px; line-height: 100px; text-align: left;" @click="selectCustomerStatePop($event)"
+                      >
+                        <span>.....</span>
+                      </div>
+                      <div class="yuanyin-list"  v-show="false">
+                        <ul>
+                          <li v-for="(item,index) in customerDataList" v-bind:key="index" @click="selectedQueqin(item.id,item.name,$event)">{{item.name}}</li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr style="text-align:right;" v-show="false"><td style="width: 130px; height: 100px;"></td><td style="width: 130px; height: 100px;"></td><td  style="width: 130px; height: 100px;"></td><td class="seleced-yuanyin"></td></tr>
+                   <tr class="v-table-row v-table-row1" v-show="false">
+                    <td colspan rowspan class>
+                      <div   v-on:click="deleteStu(item.id,$event)"
+                        title
+                        class="v-table-body-cell horizontal-border"
+                        style="width: 160px; height: 100px; line-height: 100px; text-align: center;"
+                      >
+                        <span>移除学员</span>
+                      </div>
+                    </td>
+                    <td colspan rowspan class>
+                      <div
+                        title
+                        class="v-table-body-cell horizontal-border"
+                        style="width: 130px; height: 100px; line-height: 100px; text-align: center;">
+                          <!-- <input  type="checkbox" name="category1" class="item-selected" v-model="chuqinIds" v-bind:value="item.id"> -->
+                      </div>
+                    </td>
+                    <td colspan rowspan class>
+                      <div
+                        title
+                        class="v-table-body-cell horizontal-border"
+                        style="width: 200px; height: 100px; line-height: 100px; text-align: center;"
+                      >
+                        <span>{{item.queqin}}0次缺勤</span>
+                          <!-- <input  type="checkbox" name="category2" class="item-selected" v-model="jifeiIds" v-bind:value="item.id"> -->
+                      </div>
+                    </td>
+      
+                    <td colspan rowspan class>
+                      <div
+                        title
+                        class="v-table-body-cell horizontal-border"
+                        style="width: 230px; height: 100px; line-height: 100px; text-align: left;"
+                      >
+                        <span>电话：{{item.studentMobile}}</span>
+                      </div>
+                    </td>
+                  </tr>                 
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <!---->
+        <!---->
+        <div class="v-table-drag-line" style="display: none;"></div>
       </div>
-      <v-table
+      <!-- <v-table
         :width="720"
         :title-row-height="100"
         :row-height="100"
         :columns="columns"
         :table-data="tableData"
         :show-vertical-border="false"
-      ></v-table>
+      ></v-table>-->
     </div>
     <ul class="bottom-btn fn-clear">
-      <li class="bottom-btn-item01">共1人
-        <br>计费：0
+      <li class="bottom-btn-item01">共{{allDatas.length}}人
+        <br>计费：{{jifeiIds.length}}
       </li>
-      <li class="bottom-btn-item01">出勤：0
-        <br>试听：0
+      <li class="bottom-btn-item01">出勤：{{chuqinIds.length}}
+        <br>试听：{{shitingIds.length}}
       </li>
       <li class="bottom-btn-item03">
         <span @click="classBeginAndNaming">点名上课</span>
       </li>
     </ul>
+    <attention v-if="showAttentionAlert" v-bind:attentionText="attentionText" style="z-index:600;"></attention>
+    <!-- <select-pop :lists="customerData.lists" :isShow.sync="customerData.isShow" :selectItem.sync="customerData.selectItem"></select-pop> -->
   </div>
 </template>
 <script>
 import { api } from "../../../static/js/request-api/request-api.js";
+import SelectPop from '../popup/bottomSelectPop'
+import attention from "../teacher/attention";
 import Router from "vue-router";
 export default {
+  components: {
+    attention,
+    SelectPop,
+  },
   data() {
     return {
       value: "",
       courseName: "",
       beginTime: "",
+      attentionText: "提交成功",
+      showAttentionAlert: false,
       endTime: "",
       studentName: "",
       cusSelectedIds: [],
-      allDatas:[],
+      chuqinIds:[],
+      stringDeleteStudent:[],
+      jifeiIds:[],
+      shitingIds:[],
+      customerDataList:[],
+      allDatas: [],
       tableData: [
         //  {"name":"赵伟","chuqin":"156*****1987","jifei":"钢琴、书法、唱歌","shiting":"上海市黄浦区金陵东路569号17楼","queqin":""}
       ],
@@ -110,31 +314,98 @@ export default {
   },
   mounted() {
     this.getMyClassRoster();
+ 
     this.initData();
+       this.findAllValidReasonsForLeave();
   },
   methods: {
     onSearch() {
       this.tableData = [];
       this.getMyClassRoster();
     },
+      selectCustomerStatePop (event) {
+      let el = event.currentTarget;
+      //阻止事件冒泡
+      event.stopPropagation()
+      $(el).parent().parent().next("tr").show();
+      $(el).next(".yuanyin-list").show();
+      // this.customerData.isShow=true;
+    },
     //全部选中
-    allChecked() {
-      let categoryChecked = document.getElementById("category");
+    allCheckedChuqin() {
+      let categoryChecked = document.getElementById("categoryAll1");
       if (categoryChecked.checked) {
-        var items = document.getElementsByName("category");
+        var items = document.getElementsByName("category1");
         for (let i = 0; i < items.length; i++) {
           if (!items[i].checked) {
             items[i].checked = true;
           }
         }
       } else {
-        var items = document.getElementsByName("category");
+        var items = document.getElementsByName("category1");
         for (let i = 0; i < items.length; i++) {
           if (items[i].checked) {
             items[i].checked = false;
           }
         }
       }
+    },
+     //全部选中
+    allCheckedJifei() {
+      let categoryChecked = document.getElementById("categoryAll2");
+      if (categoryChecked.checked) {
+        var items = document.getElementsByName("category2");
+        for (let i = 0; i < items.length; i++) {
+          if (!items[i].checked) {
+            items[i].checked = true;
+          }
+        }
+      } else {
+        var items = document.getElementsByName("category2");
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].checked) {
+            items[i].checked = false;
+          }
+        }
+      }
+    },
+    selectedQueqin(id,name,event){
+       let el = event.currentTarget;
+      //阻止事件冒泡
+      event.stopPropagation();
+      $(el).parent().parent().parent().parent().next("tr").find(".seleced-yuanyin").text(name);
+       $(el).parent().parent().hide();
+
+        
+    },
+     //全部选中
+    allCheckedShiting() {
+      let categoryChecked = document.getElementById("categoryAll3");
+      if (categoryChecked.checked) {
+        var items = document.getElementsByName("category3");
+        for (let i = 0; i < items.length; i++) {
+          if (!items[i].checked) {
+            items[i].checked = true;
+          }
+        }
+      } else {
+        var items = document.getElementsByName("category3");
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].checked) {
+            items[i].checked = false;
+          }
+        }
+      }
+    },
+    //弹出层提示
+    alertMessage: function(alertMessage) {
+      let _self = this;
+      _self.attentionText = alertMessage;
+      _self.showAttentionAlert = true;
+      setTimeout(function() {
+        _self.showAttentionAlert = false;
+        // window.location.href = "/teacher/customerManagement?type=0";
+      }, 2000);
     },
     addStu() {
       let timeable_id = this.$route.query["timeable_id"];
@@ -170,26 +441,29 @@ export default {
     classBeginAndNaming: function() {
       let _self = this;
       // let params = {};
-      let stringDeleteStudent=[];
+      // let stringDeleteStudent = [];
       let studentinfosArray = [];
-      studentinfosArray=this.cusSelectedIds;
-      for(let i=0;i<studentinfosArray.length;i++){
-          stringDeleteStudent.push(JSON.parse(studentinfosArray[i]).id);
-      }
+      studentinfosArray = this.cusSelectedIds;
+      studentinfosArray=JSON.stringify(this.allDatas);
+      // for (let i = 0; i < studentinfosArray.length; i++) {
+      //   stringDeleteStudent.push(JSON.parse(studentinfosArray[i]).id);
+      // }
       // params.stringDeleteStudent=stringDeleteStudent;
       // params.studentinfos=studentinfosArray;
       // params.timeable_id=_self.$route.query.timeable_id;
-      let params=new URLSearchParams();
-      params.append("stringDeleteStudent",stringDeleteStudent);
-      params.append("studentinfos",studentinfosArray);
-      params.append("timeable_id",_self.$route.query.timeable_id);
+      let params = new URLSearchParams();
+      params.append("stringDeleteStudent",null);
+      params.append("studentinfos",  studentinfosArray );
+      params.append("timeable_id", _self.$route.query.timeable_id);
       api
         .classBeginAndNaming(params)
         .then(res => {
-          if (res.status == 200) {
+          console.log(res);
+          if (res.code == 1) {
             let code = res.data.code;
-            if (code === 1) {
-              console.log(res.data.data);
+            _self.alertMessage("操作成功");
+            // if (code === 1) {
+            //   console.log(res.data.data);
 
               // let responsibleList = res.data.data;
               // let newResponsibleList = [];
@@ -200,7 +474,7 @@ export default {
               // }
               // this.rightPopDates.item03.data = newResponsibleList;
               // this.rightPopDates.item03.selectItem = responsibleList[0].name;
-            }
+            // }
           } else {
             let params = { msg: "上课点名" };
             // GlobalVue.$emit("alert", params);
@@ -208,14 +482,62 @@ export default {
           }
         })
         .catch(error => {
-          let params = { msg: "上课点名" };
+          _self.alertMessage("学员信息不匹配");
+        });
+    },
+    //json对象转字符串
+    JSONTOstringify(jsonObj) {
+      return JSON.stringify(jsonObj);
+    },
+      //获取缺勤原因
+    findAllValidReasonsForLeave() {
+      let _self = this;
+      api.findAllValidReasonsForLeave(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  console.log(res.data.data);
+
+                  let responsibleList=res.data.data;
+                  _self.customerDataList=responsibleList;
+                  // let newResponsibleList=[];
+                  // for(let i=0;i<responsibleList.length;i++){
+                  //   let newObj={};
+                  //   newObj.itemName=responsibleList[i].name;
+                  //   newObj.id=responsibleList[i].id;
+                  //   newResponsibleList.push(responsibleList[i].name);
+                  // }
+                  // this.customerData.lists=newResponsibleList;
+                  // this.customerData.selectItem=responsibleList[0].name;
+                }
+          } else {
+            let params = { msg: "获取招生来源" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取招生来源" };
           // GlobalVue.$emit("alert", params);
           // GlobalVue.$emit("blackBg", null);
         });
     },
-    //json对象转字符串
-    JSONTOstringify(jsonObj){
-       return JSON.stringify(jsonObj);
+    //打开学员详细
+    openStuItem(event){
+      let el = event.currentTarget;
+      //阻止事件冒泡
+      event.stopPropagation();
+      $(el).parent().parent().parent().find(".v-table-row1").toggle();
+    },
+    //移除学员
+    deleteStu(id,event){
+      this.stringDeleteStudent.push(id);
+      let el = event.currentTarget;
+      //阻止事件冒泡
+      event.stopPropagation();
+      $(el).parent().parent().hide();
+      $(el).parent().parent().prev(".v-table-row").hide();
     },
     getMyClassRoster() {
       let _self = this;
@@ -229,7 +551,7 @@ export default {
         if (res.data.code == 1) {
           let allDatas = [];
           allDatas = res.data.data;
-          _self.allDatas=allDatas;
+          _self.allDatas = allDatas;
           if (allDatas) {
             for (let i = 0; i < allDatas.length; i++) {
               let stu = {};
@@ -250,6 +572,8 @@ export default {
               }
               stu.shiting = isTry;
               stu.queqin = allDatas[i].absentId;
+              stu.studentMobile=allDatas[i].studentMobile;
+              stu.id= allDatas[i].id;
               _self.tableData.push(stu);
             }
           }
@@ -259,9 +583,29 @@ export default {
     goTo() {}
   }
 };
+ 
 </script>
 <style lang="less">
 .student-list {
+   .item-selected {
+        width: 26px;
+        height: 26px;
+      }
+      .yuanyin-list{
+        width: 200px;
+        background: #fff;
+        color: #333;
+        position: absolute;
+        top:100px;
+        text-align: center;
+        left: -160px;
+        ul li{
+          border-bottom: 1px solid #838383;
+        }
+        ul li:hover{
+          background: #4286ed;
+        }
+      }
   .list-table {
     display: flex;
     .checked-item {
@@ -274,10 +618,6 @@ export default {
           line-height: 100px;
           border-bottom: 1px solid rgba(221, 221, 221, 1);
         }
-      }
-      .item-selected {
-        width: 26px;
-        height: 26px;
       }
     }
   }

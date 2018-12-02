@@ -9,7 +9,7 @@
     </van-cell>
   </van-cell-group>
     <van-cell-group>
-      <van-cell title="试听预约时间" is-link @click="showListen" />
+      <van-cell title="试听预约时间" is-link @click="showListen" >{{selectedWeekDesc}}&nbsp;{{selectedTimeDesc}}</van-cell>
       <van-cell title="主责任人" is-link   @click="clickFn('item03')" >
           {{rightPopDates.item03.selectItem}}
     </van-cell>
@@ -70,28 +70,29 @@
       <dl class="listen-list">
         <dt>星期</dt>
         <dd>
-          <table cellpadding="0" cellspacing="0" border="0"><tr>
-            <td class="select">一</td>
-            <td>二</td>
-            <td>三</td>
-            <td>四</td>
-            <td>五</td>
-            <td>六</td>
-            <td>日</td></tr></table>
+          <table cellpadding="0" cellspacing="0" border="0"><tr id="weekOrder">
+            <td class="select"  v-on:click="selectedOrderTime(1,$event,'一')">一</td>
+            <td v-on:click="selectedOrderTime(2,$event,'二')">二</td>
+            <td v-on:click="selectedOrderTime(3,$event,'三')">三</td>
+            <td v-on:click="selectedOrderTime(4,$event,'四')">四</td>
+            <td v-on:click="selectedOrderTime(5,$event,'五')">五</td>
+            <td v-on:click="selectedOrderTime(6,$event,'六')">六</td>
+            <td v-on:click="selectedOrderTime(7,$event,'日')">日</td></tr></table>
         </dd>
       </dl>
       <dl class="listen-list">
         <dt>时间</dt>
         <dd>
-          <table cellpadding="0" cellspacing="0" border="0"><tr>
-            <td>上午</td>
-            <td>下午</td>
-            <td>晚上</td>
+          <table cellpadding="0" cellspacing="0" border="0"><tr id="timeOrder">
+            <td  class="select" v-on:click="selectedTimeForOrder(0,$event,'上午')">上午</td>
+            <td v-on:click="selectedTimeForOrder(1,$event,'下午')">下午</td>
+            <td v-on:click="selectedTimeForOrder(2,$event,'晚上')">晚上</td>
           </tr></table>
         </dd>
       </dl>
-      <div class="listen-btn">确定</div>
+      <div class="listen-btn" v-on:click="submitTimeAdd">确定</div>
     </van-popup>
+      <attention v-if="showAttentionAlert" v-bind:attentionText="attentionText" style="z-index:600;"></attention>
   </div>
 </template>
 <script>
@@ -99,6 +100,9 @@
   import { api } from "../../../static/js/request-api/request-api.js";
   import intentionCourse from '@/components/teacher/intentionCourse'
   import introducer from '@/components/customers/introducer'
+  import attention from '../teacher/attention'
+  import Router from "vue-router";
+  import $ from "jquery";
   import chiefOwner from '@/components/customers/chiefOwner'
   import deputyOwner from '@/components/customers/deputyOwner'
   export default {
@@ -106,6 +110,7 @@
       RightPop,
       introducer,
       chiefOwner,
+      attention,
       deputyOwner,
       intentionCourse
     },
@@ -117,6 +122,12 @@
          course:{isShow:false},
          classId:null,
          courseId:null,
+        attentionText:"提交成功",
+        showAttentionAlert:false,
+         selectedWeek:1,
+         selectedWeekDesc:"一",
+         selectedTimeDesc:"上午",
+         selectedTime:0,
          rightPopDates:{
           item01:{
             isShow:false,
@@ -178,6 +189,7 @@
           item05:{
             isShow:false,
             selectItem:'',
+            selectedId:null,
             data:[{
               itemName:'一小'
             },
@@ -201,8 +213,8 @@
   mounted () {
     // this.findAllIntroducer();
     // this.findAllCourse();
-    this.refreshSalePerson();
-    this.refreshSalePersonAssistant();
+    // this.refreshSalePerson();
+    // this.refreshSalePersonAssistant();
   },
   methods: {
     showListen(){
@@ -219,10 +231,45 @@
       this.classId=classId;
       this.courseId=courseId;
     },
+     //弹出层提示 
+    alertMessage:function(alertMessage){
+          let _self=this;
+         _self.attentionText=alertMessage;
+          _self.showAttentionAlert=true;
+               setTimeout(function(){
+              _self.showAttentionAlert=false;
+
+          },2000)
+    },
+    submitTimeAdd(){
+     this.listenShow=false;
+    },
+    //选择预约时间星期
+    selectedOrderTime(index,event,name){
+       let el = event.currentTarget;
+      //阻止事件冒泡
+      event.stopPropagation();
+       $("#weekOrder").find("td").attr("class","");
+       this.selectedWeek=index;
+       this.selectedWeekDesc=name;
+       $(el).attr("class","select");
+    },
+    //选择预约时间上午下午
+    selectedTimeForOrder(index,event,name){
+        let el = event.currentTarget;
+      //阻止事件冒泡
+      event.stopPropagation();
+      $("#timeOrder").find("td").attr("class","");
+      this.selectedTime=index;
+      this.selectedTimeDesc=name;
+       $(el).attr("class","select");
+
+    },
     //选择介绍人
     selectedIntroducer(id,code){
         this.rightPopDates.item05.selectItem=code;
         //待定
+        this.rightPopDates.item05.selectedId=id;
         this.rightPopDates.item05.isShow = false;
     },
     selectedDeputyOwner(id,code){
@@ -256,6 +303,9 @@
         clientCourses.classId=this.classId;
         clientCourses.courseId=this.courseId;
         clientCoursesArray.push(clientCourses);
+        this.cusObj.willLevel=this.rightPopDates.item01.selectedId;
+        this.cusObj.introducerId=this.rightPopDates.item05.selectedId;
+        this.cusObj.reservationsTime=0;//预约试听时间
 
         this.addIntentionClient(this.cusObj,clientCoursesArray,clientViceArray);
     },
@@ -264,23 +314,23 @@
       console.log(JSON.stringify(client));
       console.log(JSON.stringify(clientCourses));
       console.log(JSON.stringify(clientVice));
-      // let params = new URLSearchParams();
-      // params.append("client",JSON.stringify(client));
-      // params.append("clientCourses",JSON.stringify(clientCourses));
-      // params.append("clientVice",JSON.stringify(clientVice));
-       let params={};
-       params.client=JSON.stringify(client);
-       params.clientCourses=JSON.stringify(clientCourses);
-       params.clientVice=JSON.stringify(clientVice);
+      let params = new URLSearchParams();
+      params.append("client",JSON.stringify(client));
+      params.append("clientCourses",JSON.stringify(clientCourses));
+      params.append("clientVice",JSON.stringify(clientVice));
+      //  let params={};
+      //  params.client=JSON.stringify(client);
+      //  params.clientCourses=JSON.stringify(clientCourses);
+      //  params.clientVice=JSON.stringify(clientVice);
       let _self = this;
       api.addIntentionClient(params)
         .then(res => {
-          if (res.status == 200) {
-                let code=res.data.code;
-                if(code===1){
-                  console.log(res.data.data);
-                
-                }
+          console.log(res);
+          if (res.code ==1) {
+                // let code=res.data.code;
+                // if(code===1){
+                _self.alertMessage("提交成功");
+                // }
           } else {
             let params = { msg: "添加意向客户" };
             // GlobalVue.$emit("alert", params);
