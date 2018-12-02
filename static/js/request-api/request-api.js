@@ -316,6 +316,10 @@ export const api = {
     findTalkType(params) {
         return fetchGet(baseUrl + '/studentCommunication/findTalkType', params);
     },
+    //增加沟通内容
+    addStudentCommunication(params) {
+        return fetchGet(baseUrl + '/studentCommunication/addStudentCommunication', params);
+    },
     // 取获班级
     findAllGrade(params) {
         return fetchGet(baseUrl + '/studentCommunication/findAllGrade', params);

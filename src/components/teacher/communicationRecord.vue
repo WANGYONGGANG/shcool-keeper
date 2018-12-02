@@ -29,7 +29,7 @@
     </div>
   </div> -->
 
-  <bottom-btn :buttonData="buttonData"></bottom-btn>
+  <bottom-btn :buttonData="buttonData" @click="goTo()"></bottom-btn>
 </div>
 </template>
 <script>
@@ -67,8 +67,8 @@ export default {
       this.getCommunicationDetail();
   },
   methods: {
-    goTo (param) {
-      this.$router.push({path: param})
+    goTo (url,parame) {
+      this.$router.push({ path: '/teacher/addCommunicationRecord', query: { id: this.$route.query.id } })
     },
     updateDate:function(beginDate,endDate){
       this.begin_date=beginDate;
