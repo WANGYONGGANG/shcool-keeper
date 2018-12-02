@@ -351,7 +351,14 @@ export default {
       this.$store.state.sortPopup.isShow = true;
     },
     showClassPop () {
-      this.classFilterShow = true
+      this.classFilterShow = true;
+      let _self = this;
+      api.findAllGrade().then(res => {
+          if (res.data.code == 1) {
+            _self.list = res.data.data;
+            console.log(_self.list);
+          }
+      });
     },
     resetFn (param){
       if(this.classFilterShow){
@@ -371,16 +378,16 @@ export default {
           if (res.data.code == 1) {
             _self.list = res.data.data;
           }
-      });
-      console.log(value.target.value)  //todo 关键词搜索用
+        });
+      // console.log(value.target.value)  //todo 关键词搜索用
 
     },
     submitFn (param) {
-//      if(param === 2){
-//        this.classFilterShow = false
-//      }else{
-//        this.filterShow = false
-//      }
+      //      if(param === 2){
+      //        this.classFilterShow = false
+      //      }else{
+      //        this.filterShow = false
+      //      }
 
       if(this.classFilterShow){
         this.classFilterShow = false;
@@ -415,7 +422,7 @@ export default {
 
     },
     goBack () {
-      this.classFilterShow = false
+      this.classFilterShow = false;
     },
     showCalendar (n) {
       //根据参数显示对应日历弹层
