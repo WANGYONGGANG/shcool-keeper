@@ -267,6 +267,10 @@ export const api = {
     refreshSalePerson(params) {
         return fetchGet(baseUrl + '/intentionClientAPI/refreshSalePerson', params);
     },
+     // 获取缺勤原因
+     findAllValidReasonsForLeave(params) {
+        return fetchGet(baseUrl + '/namingAPI/findAllValidReasonsForLeave', params);
+    },
     //获取招生来源
     refreshSource(params) {
         return fetchGet(baseUrl + '/intentionClientAPI/refreshSource', params);
@@ -285,7 +289,7 @@ export const api = {
     },
     //获取所有介绍人
     findAllIntroducer(params) {
-        return fetchPost(baseUrl + '/intentionClientAPI/findAllIntroducer', params);
+        return fetchGet(baseUrl + '/intentionClientAPI/findAllIntroducer', params);
     },
 
     //学员加入到课表
@@ -312,6 +316,10 @@ export const api = {
     findTalkType(params) {
         return fetchGet(baseUrl + '/studentCommunication/findTalkType', params);
     },
+    //增加沟通内容
+    addStudentCommunication(params) {
+        return fetchGet(baseUrl + '/studentCommunication/addStudentCommunication', params);
+    },
     // 取获班级
     findAllGrade(params) {
         return fetchGet(baseUrl + '/studentCommunication/findAllGrade', params);
@@ -332,6 +340,10 @@ export const api = {
     //学员列表
     findAllStudent(params) {
         return fetchGet(baseUrl + '/namingAPI/findAllStudent', params);
+    },
+     //上课点名
+     classBeginAndNaming(params) {
+        return fetchPost(baseUrl + '/namingAPI/classBeginAndNaming', params);
     },
     //招生来源
     ReportCustomerAnalysisForSourceway(params) {
@@ -369,10 +381,39 @@ export const api = {
     refreshCurriculumClassType(params) {
         return fetchGet(baseUrl + '/intentionClientAPI/refreshCurriculumClassType', params);
   },
-      //课程所属期段
+    //课程所属期段
       refreshCurriculumPeriod(params) {
         return fetchGet(baseUrl + '/intentionClientAPI/refreshCurriculumPeriod', params);
   },
+     //增加意向客户所以班级
+     intentionClientAPIFindAllClass(params) {
+        return fetchPost(baseUrl + '/intentionClientAPI/findAllClass', params);
+  },
+    //增加意向客户
+    addIntentionClient(params) {
+        return fetchPost(baseUrl + '/intentionClientAPI/addIntentionClient', params);
+  },
+    //校长端满班率报表
+    QueryFullClassRand(params) {
+        return fetchGet(baseUrl + '/principalAPI/QueryFullClassRand', params);
+  },
+    //明细
+    QueryFullClassRandOfDetail(params) {
+        return fetchGet(baseUrl + '/principalAPI/QueryFullClassRandOfDetail', params);
+  },
+    //增加分组
+    addReportFullClassRandGroup(params) {
+        return fetchPost(baseUrl + '/principalAPI/addReportFullClassRandGroup', params);
+  },
+    //删除分组
+    deleteReportFullClassRandGroup(params) {
+        return fetchGet(baseUrl + '/principalAPI/deleteReportFullClassRandGroup', params);
+  },
+   //获取分组
+   findAllClassRandGroup(params) {
+    return fetchGet(baseUrl + '/principalAPI/findAllClassRandGroup', params);
+},
+
 
 
 

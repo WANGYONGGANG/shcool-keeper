@@ -51,8 +51,8 @@
         </dd>
       </dl>
       <van-cell-group class="class-name">
-        <van-cell title="选择客户状态" is-link  @click="selectCustomerStatePop" />
-        <van-cell title="选择责任人" is-link  @click="Responsible"/>
+        <van-cell title="选择客户状态" is-link  @click="selectCustomerStatePop">{{customerData.selectItem.item}}</van-cell>
+        <van-cell title="选择责任人" is-link  @click="Responsible">{{calendar.item07.selectItem}}</van-cell>
       </van-cell-group>
       <div class="filter-btn">
         <span class="btn-reset" @click="resetFn">重置</span>
@@ -71,22 +71,29 @@
     <!--选择客户状态-->
     <select-pop :lists="customerData.lists" :isShow.sync="customerData.isShow" :selectItem.sync="customerData.selectItem"></select-pop>
         <!--选择客户状态-->
-    <select-pop :lists="ResponsibleList.lists" :isShow.sync="ResponsibleList.isShow" :selectItem.sync="ResponsibleList.selectItem"></select-pop>
+    <!-- <select-pop :lists="ResponsibleList.lists" :isShow.sync="ResponsibleList.isShow" :selectItem.sync="ResponsibleList.selectItem"></select-pop> -->
+     <!-- <van-popup position="right" style="height:100%;left:100px;"> -->
+    <van-popup v-model="calendar.item07.isShow"  position="right" style="height:100%;left:0px;">
+     <chiefOwner v-on:selectedChiefOwner="selectedChiefOwner"  ></chiefOwner>
+    </van-popup>
   </div>
 </template>
 <script>
 import SelectPop from '../popup/bottomSelectPop'
 import { api } from "../../../static/js/request-api/request-api.js";
+import chiefOwner from '@/components/customers/chiefOwner'
 import Calendar from '../general/calendar'
 export default {
     components: {
       SelectPop,
+      chiefOwner,
       Calendar
     },
     data () {
     return {
       filterShow:false,
       defaultSort:name,
+      newCustomerStatusList:[],
       calendar:{
         item1:{
           isVisible:false,
@@ -111,7 +118,16 @@ export default {
         item6:{
           isVisible:false,
           date:''
-        }
+        },
+         item07:{
+            isShow:false,
+            selectItem:'',
+            selectedId:null,
+            data:[{
+              itemName:'一小'
+            }
+            ]
+          },
       },
       value: '',
       star: 4,
@@ -131,19 +147,21 @@ export default {
       customerData:{
         lists:['不限','未转化','未知','已上门','有效单','预约试听','未上门'],
         isShow:false,
-        selectItem:'未知'
+        selectItem:'',
+        selectedId:null
       },
        ResponsibleList:{
         lists:['测试'],
         isShow:false,
-        selectItem:'未知'
+        selectItem:'未知',
+         selectedId:null
       }
     }
   },
   mounted:function(){
      this.initPage();
      this.refreshAdmissionsClientState();
-     this.refreshSalePerson();
+    //  this.refreshSalePerson();
   },
   methods: {
     initPage:function(){
@@ -159,13 +177,26 @@ export default {
       }
 
     },
+    selectedChiefOwner(id,code){
+        this.calendar.item07.selectItem=code;
+        this.calendar.item07.selectedId=id;
+        this.calendar.item07.isShow = false;
+    },
   //获取意向客户
     findIntentionClientForStartPage: function() {
       let params ={};
-      // params.order=desc;
+      params.begin_nextDate=this.calendar.item1.date;
+      params.end_nextDate=this.calendar.item2.date;
+      params.begin_createTime=this.calendar.item3.date;
+      params.end_createTime=this.calendar.item4.date;
+      params.begin_lastDate=this.calendar.item5.date;
+      params.end_lastDate=this.calendar.item6.date;
+      params.client_state=this.customerData.selectedId;
+      params.major_selle=this.calendar.item07.selectedId;
+      params.order="asc";
       params.page =1;
       params.query_conditions=this.value;
-      params.rows=10;
+      params.rows=100;
       params.sort=this.defaultSort;
       
       let _self = this;
@@ -270,12 +301,13 @@ export default {
                 let code=res.data.code;
                 if(code===1){
                   let customerStatusList=res.data.data;
+                  this.newCustomerStatusList=customerStatusList;
                   let newCustomerStatusList=[];
                   for(let i=0;i<customerStatusList.length;i++){
                     newCustomerStatusList.push(customerStatusList[i].name);
                   }
+                  this.customerData.selectedId=newCustomerStatusList[0].id;
                   this.customerData.lists=newCustomerStatusList;
-                  console.log(newCustomerStatusList);
                 }
           } else {
             let params = { msg: "获取自定义客户状态错误" };
@@ -356,10 +388,17 @@ export default {
       this.calendar.item4.date="";
       this.calendar.item5.date="";
       this.calendar.item6.date="";
-      this.filterShow = false
+      this.customerData.selectedId=null;
+      this.customerData.selectItem="";
+      this.calendar.item07.selectedId=null;
+      this.calendar.item07.selectItem="";
+      this.value=null;
+      this.filterShow = false;
+   
     },
     submitFn (param) {
       this.filterShow = false
+      this.findIntentionClientForStartPage();
     },
     onSearch () {
       let value=this.value;
@@ -371,7 +410,8 @@ export default {
     },
     //选择主要责任人
     Responsible(){
-      this.ResponsibleList.isShow=true;
+      this.calendar.item07.isShow =true;
+      // this.ResponsibleList.isShow=true;
     },
     filterPopShow () {
       this.filterShow = true;
@@ -392,8 +432,11 @@ export default {
       this.initPage();
     },
     'customerData.selectItem':function (n,o) {
-        console.log(n);
-      this.$toast(n.item)
+      if(n){
+      this.customerData.selectedId=this.newCustomerStatusList[n.index-1].id;
+      this.$toast(n.item);
+      }
+
     },
     'ResponsibleList.selectItem':function (n,o) {
         console.log(n);

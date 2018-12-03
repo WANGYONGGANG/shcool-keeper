@@ -190,7 +190,7 @@
      admissionsIntentionClientEntity.name=this.name;
      admissionsIntentionClientEntity.mobile=this.mobile;
      admissionsIntentionClientEntity.sourceWayId=this.rightPopDates.item01.selectID;
-    //  admissionsIntentionClientEntity.fullTimeSchoolId=this.rightPopDates.item02.selectID;
+     admissionsIntentionClientEntity.basId=this.rightPopDates.item02.selectID;
      admissionsIntentionClientEntity.sex=this.rightPopDates.item03.selectID;
      admissionsIntentionClientEntity.birthday=this.birthday;
      admissionsIntentionClientEntity.fullTimeSchoolId=this.rightPopDates.item04.selectID;
@@ -198,18 +198,24 @@
      admissionsIntentionClientEntity.className=this.className;
      admissionsIntentionClientEntity.englishName=this.englishName;
      _self.cusObj=admissionsIntentionClientEntity;
+    //  console.log(_self.cusObj);
       if(admissionsIntentionClientEntity.name==""){
             _self.alertMessage("请填写姓名");
             return false;
        };
       if(admissionsIntentionClientEntity.mobile==""){
-            _self.alertMessage("填写手机号码");
+          _self.alertMessage("填写手机号码");
            return false;
        };
-        if(!admissionsIntentionClientEntity.sourceWayId){
+      if(!admissionsIntentionClientEntity.sourceWayId){
             _self.alertMessage("选择招生来源");
             return false;
        };
+      let phone =admissionsIntentionClientEntity.mobile;
+      if(!(/^1(3|4|5|7|8)\d{9}$/.test(phone))){ 
+        _self.alertMessage("手机号码不正确");
+        return false; 
+    } 
        return true;
 
     },
@@ -238,8 +244,6 @@
           if (res.status == 200) {
                 let code=res.data.code;
                 if(code===1){
-                  console.log(res.data.data);
-
                   let responsibleList=res.data.data;
                   let newResponsibleList=[];
                   for(let i=0;i<responsibleList.length;i++){
@@ -250,7 +254,7 @@
                   }
                   this.rightPopDates.item01.data=newResponsibleList;
                   this.rightPopDates.item01.selectItem=responsibleList[0].name;
-                  this.rightPopDates.item01.selectID = responsibleList[0].id;
+                  this.rightPopDates.item01.selectID =responsibleList[0].id;
                 }
           } else {
             let params = { msg: "获取招生来源" };
@@ -383,6 +387,7 @@
                     newResponsibleList.push(newObj);
                   }
                   this.rightPopDates.item02.data=newResponsibleList;
+                  console.log(responsibleList[0].id+"******************");
                   this.rightPopDates.item02.selectID = responsibleList[0].id;
                   this.rightPopDates.item02.selectItem=responsibleList[0].name;
                 }
@@ -415,6 +420,7 @@
         this.$toast(newval)
       },
       "rightPopDates.item02.selectID":function(newval, oldval) {
+        console.log(newval);
        this.rightPopDates.item02.selectID=newval;
        },
       'rightPopDates.item03.selectItem':function(newval,oldval){

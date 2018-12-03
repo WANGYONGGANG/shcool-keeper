@@ -1,48 +1,131 @@
 <template>
   <div class="deputy-owner">
     <div class="list-search">
-      <van-search placeholder="输入姓名搜索" background="#fff" v-model="value"  show-action >
+      <van-search placeholder="输入姓名搜索" background="#fff" v-model="name"  show-action >
         <div slot="action" @click="onSearch">搜索</div>
       </van-search>
     </div>
     <div class="owner-box">
-      <div class="box-item01" :class="{expend:isOpen}">实施专用数据库<span v-if="isOpen">&nbsp;|&nbsp;<i>潮人部落</i></span>
+      <!-- <div class="box-item01" :class="{expend:isOpen}">实施专用数据库<span v-if="isOpen">&nbsp;|&nbsp;<i>潮人部落</i></span>
         <p v-if="isOpen">其人人员(2人) <span class="all-check">全选</span></p>
+      </div> -->
+       <div class="box-item01" :class="{expend:isOpen}"><span v-if="isOpen">&nbsp;&nbsp;<i>{{selectedSchoolName}}</i></span>
+        <!-- <p v-if="isOpen"> <span class="all-check">全选</span></p> -->
       </div>
-      <van-cell title="潮人部落" value="2" is-link @click="clickFn" v-if="!isOpen" />
+      <van-cell   v-bind:title="schoolItem.name" is-link @click="clickFn(schoolItem.id,schoolItem.name)" v-if="!isOpen"    v-for="(schoolItem,index) in schoolList" v-bind:key="index"/>
       <ul class="box-list" v-if="isOpen">
-        <li><img src="../../assets/images/user/test.jpg"/> 测试员<input type="checkbox" /></li>
-        <li><img src="../../assets/images/user/test.jpg"/> 潮人部落<input type="checkbox" /></li>
+         <li  v-for="(item,index) in responsibleList" v-bind:key="index" v-on:click="selectedItem(item.id,item.name)">
+          <img src="../../assets/images/user/test.jpg"/>{{item.name}}</li>
+        <!-- <li><img src="../../assets/images/user/test.jpg"/> 潮人部落</li> -->
       </ul>
     </div>
     <div class="owner-btn">
-      <div class="all-check">已选:</div>
-      <span class="white" v-if="isOpen" click="goBack">上一页</span>
+      <!-- <div class="all-check">已选:</div> -->
+      <span class="white" v-if="isOpen" v-on:click="goBackLast">上一页</span>
       <span class="blue">确定</span>
     </div>
   </div>
 </template>
 <script>
+  import { api } from "../../../static/js/request-api/request-api.js";
   export default {
     data () {
       return {
         value:'',
-        isOpen:false
+        isOpen:false,
+        selectedSchoolName:"",
+        selectedId:null,
+        responsibleList:[],
+        schoolList:[],
+        name:""
       }
     },
     mounted () {
+      //  this.refreshSalePerson();
+       this.refreshDepartment();
     },
     methods: {
       goTo (url) {
         this.$router.push({path: url})
       },
-      clickFn(){
-        this.isOpen=true
+      goBackLast(){
+        this.isOpen=false;
       },
-      goBack(){
-        this.isOpen=false
-      }
+      onSearch(){
+       this.refreshSalePerson();
+      },
+      selectedItem(id,name){
+        this.$emit("selectedDeputyOwner",id,name);
+      },
+      clickFn(id,name){
+             console.log(id+"&&&&&&&&&333&&"+name);
+        this.selectedSchoolName=name;
+        this.selectedId=id;
+        this.isOpen=true;
+        this.refreshSalePerson();
 
+      },
+        //查询所有校区
+      refreshDepartment: function() {
+      let _self = this;
+      api.refreshDepartment(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  // console.log(res.data.data);
+                  _self.schoolList=res.data.data;
+
+                  // _self.responsibleList=res.data.data;
+                }
+          } else {
+            let params = { msg: "获取主要责任人" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取主要责任人" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+       //获取主要责任人
+      refreshSalePerson: function() {
+      let _self = this;
+      let params={};
+      params.campus_id=this.selectedId;
+      params.student_name=this.name;
+      api.refreshSalePerson(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  console.log(res.data.data);
+
+                  _self.responsibleList=res.data.data;
+
+                  // let newResponsibleList=[];
+                  // for(let i=0;i<responsibleList.length;i++){
+                  //   let newObj={};
+                  //   newObj.itemName=responsibleList[i].name;
+                  //   newResponsibleList.push(newObj);
+                  // }
+                  // this.rightPopDates.item03.data=newResponsibleList;
+                  // this.rightPopDates.item03.selectItem=responsibleList[0].name;
+                }
+          } else {
+            let params = { msg: "获取主要责任人" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取主要责任人" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    }
     },
     watch:{
 
