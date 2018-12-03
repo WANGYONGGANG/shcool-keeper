@@ -71,13 +71,21 @@
           <input type="text" placeholder="最低值" /> --- <input type="text" placeholder="最高值" />
         </dd>
       </dl> -->
-      <dl class="filter-dl"><dt>沟通时间</dt><dd>
-        <input type="text" placeholder="开始日期" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束日期" @click="showCalendar(2)" v-model="calendar.item2.date" />
+      <dl class="filter-dl"><dt>跟进时间</dt><dd>
+        <input type="text" placeholder="开始时间" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束时间" @click="showCalendar(2)" v-model="calendar.item2.date" />
       </dd></dl>
-      <dl class="filter-dl"><dt>跟进时间</dt>
+      <!-- <dl class="filter-dl"><dt>沟通时间</dt><dd>
+        <input type="text" placeholder="开始日期" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束日期" @click="showCalendar(2)" v-model="calendar.item2.date" />
+      </dd></dl> -->
+      <dl class="filter-dl"><dt>沟通时间</dt>
+        <dd>
+          <input type="text" placeholder="开始时间" @click="showCalendar(5)" v-model="calendar.item5.date" /> --- <input type="text" placeholder="结束时间" @click="showCalendar(6)" v-model="calendar.item6.date" />
+        </dd>
+      </dl>
+      <!-- <dl class="filter-dl"><dt>跟进时间</dt>
         <dd>
           <input type="text" placeholder="开始日期" @click="showCalendar(3)" v-model="calendar.item3.date" /> --- <input type="text" placeholder="结束日期" @click="showCalendar(4)" v-model="calendar.item4.date" />
-        </dd></dl>
+        </dd></dl> -->
       <van-cell-group class="class-name">
         <van-cell :title="className" is-link  @click="showClassPop" />
       </van-cell-group>
@@ -107,8 +115,8 @@
     <!--每个日历选择按钮都需要调用一个日历组件-->
     <calendar :date.sync="calendar.item1.date" :isVisible.sync="calendar.item1.isVisible"></calendar>
     <calendar :date.sync="calendar.item2.date" :isVisible.sync="calendar.item2.isVisible"></calendar>
-    <calendar :date.sync="calendar.item3.date" :isVisible.sync="calendar.item3.isVisible"></calendar>
-    <calendar :date.sync="calendar.item4.date" :isVisible.sync="calendar.item4.isVisible"></calendar>
+    <calendar :date.sync="calendar.item5.date" :isVisible.sync="calendar.item5.isVisible"></calendar>
+    <calendar :date.sync="calendar.item6.date" :isVisible.sync="calendar.item6.isVisible"></calendar>
   </div>
 </template>
 <script>
@@ -132,11 +140,11 @@ export default {
           isVisible:false,
           date:''
         },
-        item3:{
+        item5:{
           isVisible:false,
           date:''
         },
-        item4:{
+        item6:{
           isVisible:false,
           date:''
         },
@@ -179,7 +187,7 @@ export default {
       this.$router.push({ path: url, query: { id: parame } })
     },
     // 沟通列表
-    getCommunicationDetail: function(data1, p,filterRules) {
+    getCommunicationDetail: function(data1, p) {
       let _self = this;
       let param = new URLSearchParams();
       param.append('all_or_other' ,false);
@@ -188,9 +196,6 @@ export default {
       }
       if(data1){
         param.append('query_content' ,data1);
-      }
-      if(filterRules){
-        param.append('filterRules' ,filterRules);
       }
       api.findStudentCommunicationDetailStu(param)
         .then(res => {
@@ -203,6 +208,42 @@ export default {
         })
         .catch(error => {
 
+        });
+    },
+    findStudentCommunicationDetailStu: function() {
+      let params ={};
+      params.filterRules=this.calendar.item1.date;
+      params.end_nextDate=this.calendar.item2.date;
+      params.begin_createTime=this.calendar.item3.date;
+      params.end_createTime=this.calendar.item4.date;
+      params.begin_lastDate=this.calendar.item5.date;
+      params.end_lastDate=this.calendar.item6.date;
+      params.client_state=this.customerData.selectedId;
+      params.major_selle=this.calendar.item07.selectedId;
+      params.order="asc";
+      params.page =1;
+      params.query_conditions=this.value;
+      params.rows=100;
+      params.sort=this.defaultSort;
+      
+      let _self = this;
+      api.findStudentCommunicationDetailStu(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.customerList=res.data.data.rows;
+                }
+          } else {
+            let params = { msg: "获取意向客户" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取今日意向客户" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
         });
     },
     // 未沟通
@@ -360,14 +401,29 @@ export default {
           }
       });
     },
-    resetFn (param){
-      if(this.classFilterShow){
-        this.classFilterShow = false;
+    // resetFn (param){
+    //   if(this.classFilterShow){
+    //     this.classFilterShow = false;
 
-      }else {
-        this.classFilterShow = false;
-        this.filterShow = false
-      }
+    //   }else {
+    //     this.classFilterShow = false;
+    //     this.filterShow = false
+    //   }
+    // },
+    resetFn (param){
+      this.calendar.item1.date="";
+      this.calendar.item2.date="";
+      this.calendar.item3.date="";
+      this.calendar.item4.date="";
+      this.calendar.item5.date="";
+      this.calendar.item6.date="";
+      this.customerData.selectedId=null;
+      this.customerData.selectItem="";
+      this.calendar.item07.selectedId=null;
+      this.calendar.item07.selectItem="";
+      this.value=null;
+      this.filterShow = false;
+   
     },
     search (value) {
         let _self = this;
@@ -418,7 +474,7 @@ export default {
               this.className = this.list[i].className
           }
       }
-      // this.getCommunicationDetail();
+      this.findStudentCommunicationDetailStu();
 
     },
     goBack () {
@@ -434,11 +490,11 @@ export default {
         case 2:
           this.calendar.item2.isVisible = true
           break;
-        case 3:
-          this.calendar.item3.isVisible = true
+        case 5:
+          this.calendar.item5.isVisible = true
           break;
-        case 4:
-          this.calendar.item4.isVisible = true
+        case 6:
+          this.calendar.item6.isVisible = true
           break;
         default:
           Toast('出错了');
