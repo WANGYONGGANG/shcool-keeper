@@ -2,21 +2,21 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+import router from './router';
 
-import 'vant/lib/vant-css/index.css'
-import '../static/css/base.less'
-import '../static/css/private-vant.less'
-import 'vue-easytable/libs/themes-base/index.css'
+import 'vant/lib/index.css';
+import '../static/css/base.less';
+import '../static/css/private-vant.less';
+import 'vue-easytable/libs/themes-base/index.css';
 
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
-import Vant from 'vant'
-import store from './store'
-import echarts from 'echarts'
+import 'vue-awesome/icons';
+import Icon from 'vue-awesome/components/Icon';
+import Vant from 'vant';
+import store from './store';
+import echarts from 'echarts';
 
 // 导入 table 和 分页组件
-import {VTable} from 'vue-easytable'
+import {VTable} from 'vue-easytable';
 
 Vue.prototype.$echarts = echarts
 
