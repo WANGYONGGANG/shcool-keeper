@@ -59,6 +59,7 @@ export default {
     }
   },
    mounted () {
+
     //  console.log(this.$refs.calendar);
       // this.date1 = this.$refs.calendar.$el.innerText.substr(0, 10); //2018-11-01
       // this.date2 = this.$refs.calendar.$el.innerText.substr(11); //2018-11-31
