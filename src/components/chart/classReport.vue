@@ -47,6 +47,7 @@
 </div>
 </template>
 <script>
+  import { api } from "../../../static/js/request-api/request-api.js";
   import CalendarPacking from '../general/calendarPacking'
   import ChartFilter from '../general/chartFilterOther'
 
@@ -163,7 +164,8 @@
   padding-top: 0px;
   padding-left: 0px;
 float: left;
-} .charge-top-right{
+}
+.charge-top-right{
      float: right;
      line-height: 40px;
      padding-top: 15px;
@@ -215,7 +217,9 @@ float: left;
  }
 }
 .filter{
+
   width: 78%;
+
 .class-back{
   height: 70px;
   line-height: 70px;

@@ -1,6 +1,7 @@
 <template>
   <div class="bulletin">
     <van-cell-group>
+      <van-cell v-if="!noticeList||noticeList.length==0">暂无数据</van-cell>
       <van-cell  v-bind:title="noticeItem.title"  v-bind:label="noticeItem.createTime"    v-for="(noticeItem,index) in noticeList" :key="index"  v-on:click="openNoticeContent(noticeItem.id)"/>
     </van-cell-group>
   </div>
@@ -31,11 +32,11 @@ export default {
       api.findAllAnnouncement(null)
         .then(res => {
           console.log(res.data);
-          if (res.status == 200) {
-                let code=res.data.code;
-                if(code===1){
-                  _self.noticeList=res.data.data;
-                }
+          if (res.code ==1) {
+                // let code=res.data.code;
+                // if(code===1){
+                  _self.noticeList=res.data;
+                // }
           } else {
             let params = { msg: "获取公告错误" };
             // GlobalVue.$emit("alert", params);

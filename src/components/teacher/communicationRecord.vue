@@ -29,7 +29,7 @@
     </div>
   </div> -->
 
-  <bottom-btn :buttonData="buttonData"></bottom-btn>
+  <bottom-btn :buttonData="buttonData" @click="goTo()"></bottom-btn>
 </div>
 </template>
 <script>
@@ -59,6 +59,7 @@ export default {
     }
   },
    mounted () {
+
     //  console.log(this.$refs.calendar);
       // this.date1 = this.$refs.calendar.$el.innerText.substr(0, 10); //2018-11-01
       // this.date2 = this.$refs.calendar.$el.innerText.substr(11); //2018-11-31
@@ -67,8 +68,8 @@ export default {
       this.getCommunicationDetail();
   },
   methods: {
-    goTo (param) {
-      this.$router.push({path: param})
+    goTo (url,parame) {
+      this.$router.push({ path: '/teacher/addCommunicationRecord', query: { id: this.$route.query.id } })
     },
     updateDate:function(beginDate,endDate){
       this.begin_date=beginDate;

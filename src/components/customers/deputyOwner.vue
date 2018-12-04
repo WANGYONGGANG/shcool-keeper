@@ -6,10 +6,13 @@
       </van-search>
     </div>
     <div class="owner-box">
-      <div class="box-item01" :class="{expend:isOpen}">实施专用数据库<span v-if="isOpen">&nbsp;|&nbsp;<i>潮人部落</i></span>
+      <!-- <div class="box-item01" :class="{expend:isOpen}">实施专用数据库<span v-if="isOpen">&nbsp;|&nbsp;<i>潮人部落</i></span>
         <p v-if="isOpen">其人人员(2人) <span class="all-check">全选</span></p>
+      </div> -->
+       <div class="box-item01" :class="{expend:isOpen}"><span v-if="isOpen">&nbsp;&nbsp;<i>{{selectedSchoolName}}</i></span>
+        <!-- <p v-if="isOpen"> <span class="all-check">全选</span></p> -->
       </div>
-      <van-cell title="潮人部落" value="2" is-link @click="clickFn" v-if="!isOpen" />
+      <van-cell   v-bind:title="schoolItem.name" is-link @click="clickFn(schoolItem.id,schoolItem.name)" v-if="!isOpen"    v-for="(schoolItem,index) in schoolList" v-bind:key="index"/>
       <ul class="box-list" v-if="isOpen">
          <li  v-for="(item,index) in responsibleList" v-bind:key="index" v-on:click="selectedItem(item.id,item.name)">
           <img src="../../assets/images/user/test.jpg"/>{{item.name}}</li>
@@ -17,8 +20,8 @@
       </ul>
     </div>
     <div class="owner-btn">
-      <div class="all-check">已选:</div>
-      <span class="white" v-if="isOpen" click="goBack">上一页</span>
+      <!-- <div class="all-check">已选:</div> -->
+      <span class="white" v-if="isOpen" v-on:click="goBackLast">上一页</span>
       <span class="blue">确定</span>
     </div>
   </div>
@@ -30,31 +33,70 @@
       return {
         value:'',
         isOpen:false,
+        selectedSchoolName:"",
+        selectedId:null,
         responsibleList:[],
+        schoolList:[],
         name:""
       }
     },
     mounted () {
-       this.refreshSalePerson();
+      //  this.refreshSalePerson();
+       this.refreshDepartment();
     },
     methods: {
       goTo (url) {
         this.$router.push({path: url})
       },
+      goBackLast(){
+        this.isOpen=false;
+      },
       onSearch(){
        this.refreshSalePerson();
       },
       selectedItem(id,name){
-        console.log("^^^^^^^^^^^^^^^"+id+"&&&&&&&&&&&&"+name);
         this.$emit("selectedDeputyOwner",id,name);
       },
-      clickFn(){
-        this.isOpen=true
+      clickFn(id,name){
+             console.log(id+"&&&&&&&&&333&&"+name);
+        this.selectedSchoolName=name;
+        this.selectedId=id;
+        this.isOpen=true;
+        this.refreshSalePerson();
+
       },
+        //查询所有校区
+      refreshDepartment: function() {
+      let _self = this;
+      api.refreshDepartment(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  // console.log(res.data.data);
+                  _self.schoolList=res.data.data;
+
+                  // _self.responsibleList=res.data.data;
+                }
+          } else {
+            let params = { msg: "获取主要责任人" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取主要责任人" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
        //获取主要责任人
       refreshSalePerson: function() {
       let _self = this;
-      api.refreshSalePerson(null)
+      let params={};
+      params.campus_id=this.selectedId;
+      params.student_name=this.name;
+      api.refreshSalePerson(params)
         .then(res => {
           if (res.status == 200) {
                 let code=res.data.code;
@@ -83,11 +125,7 @@
           // GlobalVue.$emit("alert", params);
           // GlobalVue.$emit("blackBg", null);
         });
-    },
-      goBack(){
-        this.isOpen=false
-      }
-
+    }
     },
     watch:{
 

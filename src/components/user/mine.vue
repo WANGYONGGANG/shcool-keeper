@@ -17,7 +17,7 @@
   <van-cell-group>
     <van-cell title="工作统计" icon="edit-data" is-link to="/user/workStatistics" />
     <van-cell title="家长评价排名" icon="records" is-link to="/user/parentRatingRanking" />
-    <van-cell title="投诉与建议" icon="sign" is-link />
+    <van-cell title="投诉与建议" icon="sign" is-link to="/user/complaints" />
   </van-cell-group>
 
   <van-cell-group>
@@ -56,7 +56,7 @@ export default {
 				},()=>{
 					// alert('请输入用户名或密码');
 				});
-      
+
     }
   }
 }

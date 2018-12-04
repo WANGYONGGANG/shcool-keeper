@@ -15,7 +15,7 @@
           <div @click="goTo(urls.communicationRecord,data.id)">
               <div class="card-list" >
                 <div class="card-list-l">
-                  <img class="img" src="../../assets/images/user/test.jpg"/>{{data.name}}
+                  <img class="img" :src="data.userPic"/>{{data.name}}
                   <span class="times">沟通次数：{{data.talkCount}}</span>
                 </div>
                 <div class="card-list-r"><van-icon name="arrow" /></div>
@@ -71,13 +71,21 @@
           <input type="text" placeholder="最低值" /> --- <input type="text" placeholder="最高值" />
         </dd>
       </dl> -->
-      <dl class="filter-dl"><dt>沟通时间</dt><dd>
-        <input type="text" placeholder="开始日期" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束日期" @click="showCalendar(2)" v-model="calendar.item2.date" />
+      <dl class="filter-dl"><dt>跟进时间</dt><dd>
+        <input type="text" placeholder="开始时间" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束时间" @click="showCalendar(2)" v-model="calendar.item2.date" />
       </dd></dl>
-      <dl class="filter-dl"><dt>跟进时间</dt>
+      <!-- <dl class="filter-dl"><dt>沟通时间</dt><dd>
+        <input type="text" placeholder="开始日期" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束日期" @click="showCalendar(2)" v-model="calendar.item2.date" />
+      </dd></dl> -->
+      <dl class="filter-dl"><dt>沟通时间</dt>
+        <dd>
+          <input type="text" placeholder="开始时间" @click="showCalendar(5)" v-model="calendar.item5.date" /> --- <input type="text" placeholder="结束时间" @click="showCalendar(6)" v-model="calendar.item6.date" />
+        </dd>
+      </dl>
+      <!-- <dl class="filter-dl"><dt>跟进时间</dt>
         <dd>
           <input type="text" placeholder="开始日期" @click="showCalendar(3)" v-model="calendar.item3.date" /> --- <input type="text" placeholder="结束日期" @click="showCalendar(4)" v-model="calendar.item4.date" />
-        </dd></dl>
+        </dd></dl> -->
       <van-cell-group class="class-name">
         <van-cell :title="className" is-link  @click="showClassPop" />
       </van-cell-group>
@@ -107,8 +115,8 @@
     <!--每个日历选择按钮都需要调用一个日历组件-->
     <calendar :date.sync="calendar.item1.date" :isVisible.sync="calendar.item1.isVisible"></calendar>
     <calendar :date.sync="calendar.item2.date" :isVisible.sync="calendar.item2.isVisible"></calendar>
-    <calendar :date.sync="calendar.item3.date" :isVisible.sync="calendar.item3.isVisible"></calendar>
-    <calendar :date.sync="calendar.item4.date" :isVisible.sync="calendar.item4.isVisible"></calendar>
+    <calendar :date.sync="calendar.item5.date" :isVisible.sync="calendar.item5.isVisible"></calendar>
+    <calendar :date.sync="calendar.item6.date" :isVisible.sync="calendar.item6.isVisible"></calendar>
   </div>
 </template>
 <script>
@@ -132,11 +140,11 @@ export default {
           isVisible:false,
           date:''
         },
-        item3:{
+        item5:{
           isVisible:false,
           date:''
         },
-        item4:{
+        item6:{
           isVisible:false,
           date:''
         },
@@ -200,6 +208,42 @@ export default {
         })
         .catch(error => {
 
+        });
+    },
+    findStudentCommunicationDetailStu: function() {
+      let params ={};
+      params.filterRules=this.calendar.item1.date;
+      params.end_nextDate=this.calendar.item2.date;
+      params.begin_createTime=this.calendar.item3.date;
+      params.end_createTime=this.calendar.item4.date;
+      params.begin_lastDate=this.calendar.item5.date;
+      params.end_lastDate=this.calendar.item6.date;
+      params.client_state=this.customerData.selectedId;
+      params.major_selle=this.calendar.item07.selectedId;
+      params.order="asc";
+      params.page =1;
+      params.query_conditions=this.value;
+      params.rows=100;
+      params.sort=this.defaultSort;
+      
+      let _self = this;
+      api.findStudentCommunicationDetailStu(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.customerList=res.data.data.rows;
+                }
+          } else {
+            let params = { msg: "获取意向客户" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取今日意向客户" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
         });
     },
     // 未沟通
@@ -348,16 +392,38 @@ export default {
       this.$store.state.sortPopup.isShow = true;
     },
     showClassPop () {
-      this.classFilterShow = true
+      this.classFilterShow = true;
+      let _self = this;
+      api.findAllGrade().then(res => {
+          if (res.data.code == 1) {
+            _self.list = res.data.data;
+            console.log(_self.list);
+          }
+      });
     },
-    resetFn (param){
-      if(this.classFilterShow){
-        this.classFilterShow = false;
+    // resetFn (param){
+    //   if(this.classFilterShow){
+    //     this.classFilterShow = false;
 
-      }else {
-        this.classFilterShow = false;
-        this.filterShow = false
-      }
+    //   }else {
+    //     this.classFilterShow = false;
+    //     this.filterShow = false
+    //   }
+    // },
+    resetFn (param){
+      this.calendar.item1.date="";
+      this.calendar.item2.date="";
+      this.calendar.item3.date="";
+      this.calendar.item4.date="";
+      this.calendar.item5.date="";
+      this.calendar.item6.date="";
+      this.customerData.selectedId=null;
+      this.customerData.selectItem="";
+      this.calendar.item07.selectedId=null;
+      this.calendar.item07.selectItem="";
+      this.value=null;
+      this.filterShow = false;
+   
     },
     search (value) {
         let _self = this;
@@ -368,16 +434,16 @@ export default {
           if (res.data.code == 1) {
             _self.list = res.data.data;
           }
-      });
-      console.log(value.target.value)  //todo 关键词搜索用
+        });
+      // console.log(value.target.value)  //todo 关键词搜索用
 
     },
     submitFn (param) {
-//      if(param === 2){
-//        this.classFilterShow = false
-//      }else{
-//        this.filterShow = false
-//      }
+      //      if(param === 2){
+      //        this.classFilterShow = false
+      //      }else{
+      //        this.filterShow = false
+      //      }
 
       if(this.classFilterShow){
         this.classFilterShow = false;
@@ -407,12 +473,12 @@ export default {
           if(this.list[i].id == this.radio){
               this.className = this.list[i].className
           }
-
       }
+      this.findStudentCommunicationDetailStu();
 
     },
     goBack () {
-      this.classFilterShow = false
+      this.classFilterShow = false;
     },
     showCalendar (n) {
       //根据参数显示对应日历弹层
@@ -424,11 +490,11 @@ export default {
         case 2:
           this.calendar.item2.isVisible = true
           break;
-        case 3:
-          this.calendar.item3.isVisible = true
+        case 5:
+          this.calendar.item5.isVisible = true
           break;
-        case 4:
-          this.calendar.item4.isVisible = true
+        case 6:
+          this.calendar.item6.isVisible = true
           break;
         default:
           Toast('出错了');
@@ -669,9 +735,13 @@ export default {
       height: 70px;
       padding: 18px 20px;
       line-height: 32px;
+
       .van-cell__title{
         -webkit-box-flex: 6;
         flex:6;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
   .van-radio__input{
     height: 5em;

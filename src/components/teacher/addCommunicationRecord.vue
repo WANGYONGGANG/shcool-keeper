@@ -2,13 +2,19 @@
   <div class="add-com-rec">
     <div class="recipient">
       <van-cell-group>
-        <van-cell title="沟通类型" required  v-model="talkType" to="/teacher/communicationTemplate?type=1" is-link />
-        <van-cell title="沟通结果" required v-model="talkResult" to="/teacher/communicationTemplate?type=2" is-link />
+        <van-cell title="沟通类型" required  v-model="talkType" required  @click="clickFn('item01')" is-link>
+          {{rightPopDates.item01.selectItem}}
+        </van-cell>
+        <van-cell title="沟通结果" required v-model="talkResult" required @click="clickFn('item02')" is-link>
+          {{rightPopDates.item02.selectItem}}
+        </van-cell>
       </van-cell-group>
     </div>
     <div class="class-evaluation">
       <van-cell-group>
-        <van-cell title="沟通内容" required value="请选择" to="/teacher/communicationTemplate?type=3" is-link />
+        <van-cell title="沟通内容" required value="请选择" @click="clickFn('item03')">
+        {{rightPopDates.item03.selectItem}}
+      </van-cell>
         <van-field
           v-model="talkConent"
           type="textarea"
@@ -18,7 +24,9 @@
       </van-cell-group>
     </div>
     <van-cell-group class="next">
-      <van-cell title="下次跟进类型" v-model="followType" to="/teacher/communicationTemplate?type=4" is-link />
+      <van-cell title="下次跟进类型" v-model="followType"   @click="clickFn('item01')" is-link>
+        {{rightPopDates.item04.selectItem}}
+      </van-cell>
       <van-cell title="下次跟进时间">
         <van-radio-group v-model="radio" class="next-time">
           <van-radio name="1">选择时间</van-radio>
@@ -26,15 +34,25 @@
         </van-radio-group>
       </van-cell>
     </van-cell-group>
-    <bottom-btn :buttonData="buttonData"></bottom-btn>
+    <!-- <bottom-btn :buttonData="buttonData" @click='addStudentCommunication'></bottom-btn> -->
+    <div class="bottom-btn" @click='addStudentCommunication'>提交</div>
+    <right-pop :filterShow.sync="rightPopDates.item01.isShow" :allDatas="rightPopDates.item01.data" :selectItem.sync="rightPopDates.item01.selectItem" :selectID.sync="rightPopDates.item01.selectID"></right-pop>
+    <right-pop :filterShow.sync="rightPopDates.item02.isShow" :selectItem.sync="rightPopDates.item02.selectItem" :allDatas="rightPopDates.item02.data"  :selectID.sync="rightPopDates.item02.selectID"></right-pop>
+    <right-pop :filterShow.sync="rightPopDates.item03.isShow" :selectItem.sync="rightPopDates.item03.selectItem" :allDatas="rightPopDates.item03.data"  :selectID.sync="rightPopDates.item03.selectID" :selectCon.sync="rightPopDates.item04.selectCon"></right-pop>
+    <right-pop :filterShow.sync="rightPopDates.item04.isShow" :allDatas="rightPopDates.item04.data" :selectItem.sync="rightPopDates.item04.selectItem" :selectID.sync="rightPopDates.item04.selectID"></right-pop>
   </div>
 </template>
 <script>
-import BottomBtn from '../general/bottomBtn';
-import CommunicationTemplate from './communicationTemplate'
+import RightPop from '../general/rightPop';
+import RightPopCon from '../general/rightPopCon';
+// import BottomBtn from '../general/bottomBtn';
+import CommunicationTemplate from './communicationTemplate';
+import { api } from "../../../static/js/request-api/request-api.js";
 export default {
   components: {
-    BottomBtn,
+    RightPop,
+    RightPopCon,
+    // BottomBtn,
     CommunicationTemplate
   },
   data () {
@@ -48,6 +66,56 @@ export default {
       talkResult:'请选择',
       talkConent:'请选择',
       followType:'请选择',
+      rightPopDates:{
+          item01:{
+            isShow:false,
+            selectItem:'',
+            selectID: null,
+            data:[
+              {
+                itemName:'欢乐大人'
+              }]
+          },
+           item02:{
+            isShow:false,
+            selectItem:'',
+            selectID: null,
+            data:[
+              {
+                itemName:'有效沟通',
+                id:'1'
+              },
+              {
+                itemName:'无效沟通',
+                 id:"2"
+              }]
+          },
+          item03:{
+            isShow:false,
+            selectItem:'',
+            selectID: null,
+            selectCon:'',
+            data:[
+              {
+              itemName:'不爱沟通',
+              content:''
+            },
+              {
+                itemName:'不爱沟通',
+                content:''
+              }
+              ]
+          },
+           item04:{
+            isShow:false,
+            selectItem:'',
+            selectID: null,
+            data:[
+              {
+                itemName:'欢乐大人'
+              }]
+          },
+      }
     }
   },
   mounted(){
@@ -68,18 +136,149 @@ export default {
           // this.talkConent = this.$route.params.con[0].content;
         }
     }
+    this.findTalkType();
+    this.findTalkTypeNext();
+    this.findTalkContentTemplate();
 //    this.message = this.$route.params.con;
 
   },
   methods:{
+    addStudentCommunication:function(){
+      let _self = this;
+      let param = new URLSearchParams();
+
+      param.append("nextMode", '');
+      param.append("end_date", '');
+      api.addStudentCommunication()
+        .then(res => {
+          if (res.status == 200) {
+            let code=res.data.code;
+            if(code===1){
+              this.$router.push({path: "/teacher/studentCommunicationndex"});                  
+            }
+          }
+        })
+        .catch(error => {
+          
+        });
+    },
      // 接受参数
     getMes: function(p){
       // console.log(this.$route.query.con);
-    }
+    },
+    //获取沟通类型
+    findTalkType: function() {
+      let params ={};
+      let _self = this;
+      api.findTalkType(null)
+        .then(res => {
+          console.log(res);
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  let responsibleList=res.data.data;
+                  let newResponsibleList=[];
+                  for(let i=0;i<responsibleList.length;i++){
+                    let newObj={};
+                    newObj.itemName=responsibleList[i].name;
+                    newObj.id = responsibleList[i].id;
+                    newResponsibleList.push(newObj);
+                  }
+                  this.rightPopDates.item01.data=newResponsibleList;
+                  this.rightPopDates.item01.selectItem=responsibleList[0].name;
+                  this.rightPopDates.item01.selectID = responsibleList[0].id;
+                }
+          } else {
+            let params = { msg: "获取沟通类型" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取沟通类型" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+    // 获取跟进类型
+    findTalkTypeNext: function() {
+      let params ={};
+      let _self = this;
+      api.findTalkType(null)
+        .then(res => {
+          console.log(res);
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  let responsibleList=res.data.data;
+                  let newResponsibleList=[];
+                  for(let i=0;i<responsibleList.length;i++){
+                    let newObj={};
+                    newObj.itemName=responsibleList[i].name;
+                    newObj.id = responsibleList[i].id;
+                    newResponsibleList.push(newObj);
+                  }
+                  this.rightPopDates.item04.data=newResponsibleList;
+                  this.rightPopDates.item04.selectItem=responsibleList[0].name;
+                  this.rightPopDates.item04.selectID = responsibleList[0].id;
+                }
+          } else {
+            let params = { msg: "获取沟通类型" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取沟通类型" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+    // 获取沟通内容
+    findTalkContentTemplate: function() {
+      let params ={};
+      let _self = this;
+        api.findTalkContentTemplate(null).then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  let responsibleList=res.data.data;
+                  console.log(responsibleList);
+                  let newResponsibleList=[];                  
+                  for(let i=0;i<responsibleList.length;i++){
+                    let newObj={};
+                    newObj.itemName=responsibleList[i].name;
+                    newObj.id = responsibleList[i].id;
+                    newResponsibleList.push(newObj);
+                  }
+                  this.rightPopDates.item03.data=newResponsibleList;
+                  this.rightPopDates.item03.selectItem=responsibleList[0].name;
+                  this.rightPopDates.item03.selectID = responsibleList[0].id;
+                }
+          } else {
+            let params = { msg: "获取沟通内容" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取沟通内容" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+    
+    
+    clickFn (n){
+        this.rightPopDates[n].isShow = true
+      },
   }
 }
 </script>
 <style lang="less" rel="stylesheet/less">
+.van-popup {
+  // height: 100%;
+}
   .add-com-rec{
   .recipient{
     width: 100%;
@@ -138,5 +337,17 @@ export default {
   }
   }
 
+  }
+  .bottom-btn {
+    height: 99px;
+    line-height: 99px;
+    font-size: 32px;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    background: #4286ed;
+    z-index: 100;
   }
 </style>
