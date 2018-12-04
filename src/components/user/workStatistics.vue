@@ -1,9 +1,9 @@
 <template>
 <div class="work-statistics">
   <van-cell-group class="card-list-item">
-    <van-cell title="已上课时" value="详情" is-link class="line65"  @click="goTo"/>
+    <van-cell title="已上课时" value="详情" is-link class="line65"  @click="goTo(urls.workStatisticsDetial)"/>
   </van-cell-group>
-  <dl class="work-statistics-list" @click="goTo">
+  <dl class="work-statistics-list" @click="goTo(urls.workStatisticsDetial)">
     <dt>上课率</dt>
     <dd class="num">{{attendance.attendance_ratio}}</dd>
     <dd class="progress"></dd>
@@ -14,9 +14,9 @@
     </dd>
   </dl>
   <van-cell-group class="card-list-item">
-    <van-cell title="学生出勤" value="详情" is-link class="line65" @click="goTo" />
+    <van-cell title="学生出勤" value="详情" is-link class="line65" @click="goTo(urls.workStatisticsAttendance)" />
   </van-cell-group>
-  <dl class="work-statistics-list" @click="goTo">
+  <dl class="work-statistics-list" @click="goTo(urls.workStatisticsAttendance)">
     <dt>出勤率</dt>
     <dd class="num">{{comment.comment_ratio}}</dd>
     <dd class="progress"></dd>
@@ -27,9 +27,9 @@
     </dd>
   </dl>
   <van-cell-group class="card-list-item">
-    <van-cell title="课程评价" value="详情" is-link class="line65" @click="goTo" />
+    <van-cell title="课程评价" class="line65" />
   </van-cell-group>
-  <dl class="work-statistics-list" @click="goTo">
+  <dl class="work-statistics-list">
     <dt>评价率</dt>
     <dd class="num">{{course.course_ratio}}</dd>
     <dd class="progress"></dd>
@@ -54,7 +54,11 @@ export default {
     return {
       attendance:'',
       comment:'',
-      course:''
+      course:'',
+      urls:{
+        workStatisticsDetial:'/user/workStatisticsDetial',
+        workStatisticsAttendance:'/user/workStatisticsAttendance'
+      }
     }
   },
   mounted(){
@@ -78,12 +82,12 @@ export default {
             this.course.real_count='已评价：'+this.course.real_count+'人'
             this.course.total_count='已评价：'+this.course.total_count+'人'
 				},()=>{
-          
+
 				});
   },
   methods: {
-    goTo () {
-      this.$router.push({path: '/user/workStatisticsDetial'})
+    goTo (url) {
+      this.$router.push({path: url})
     },
   }
 }
