@@ -29,7 +29,14 @@ import UserIndex from '@/components/user/userIndex'
 import ChangePassword from '@/components/user/changePassword'
 import WorkStatistics from '@/components/user/workStatistics'
 import WorkStatisticsDetial from '@/components/user/workStatisticsDetial'
+import WorkStatisticsAttendance from '@/components/user/workStatisticsAttendance'
+
 import ParentRatingRanking from '@/components/user/parentRatingRanking'
+import EvaluationLatitude from '@/components/user/evaluationLatitude'
+import EvaluationLatitudeDetial from '@/components/user/evaluationLatitudeDetial'
+import EvaluationLatitudeDetialNext from '@/components/user/evaluationLatitudeDetialNext'
+import Complaints from '@/components/user/complaints'
+import ComplaintsDetial from '@/components/user/complaintsDetial'
 
 import TeacherIndex from '@/components/teacher/teacherIndex'
 import MyTimetable from '@/components/teacher/myTimetable'
@@ -146,6 +153,36 @@ export default new Router({
       path: '/user/workStatisticsDetial',
       name: 'workStatisticsDetial',
       component: WorkStatisticsDetial
+    },
+    {
+      path: '/user/workStatisticsAttendance',
+      name: 'workStatisticsAttendance',
+      component: WorkStatisticsAttendance
+    },
+    {
+      path: '/user/evaluationLatitude',
+      name: 'evaluationLatitude',
+      component: EvaluationLatitude
+    },
+    {
+      path: '/user/evaluationLatitudeDetial',
+      name: 'evaluationLatitudeDetial',
+      component: EvaluationLatitudeDetial
+    },
+    {
+      path: '/user/evaluationLatitudeDetialNext',
+      name: 'evaluationLatitudeDetialNext',
+      component: EvaluationLatitudeDetialNext
+    },
+    {
+      path: '/user/complaints',
+      name: 'complaints',
+      component: Complaints
+    },
+    {
+      path: '/user/complaintsDetial',
+      name: 'complaintsDetial',
+      component: ComplaintsDetial
     },
     {
       path: '/user/parentRatingRanking',
