@@ -7,7 +7,7 @@
     </div>
     <div class="class-tab fn-clear">
       <calendar-packing></calendar-packing>
-      <div class="operation">课程</div>
+      <div class="operation" @click="showPop">{{popData.selectText}}</div>
     </div>
     <ul class="average">
       <li class="average-tit">我的平均分</li>
@@ -19,63 +19,121 @@
         <span>学校老师最高分<br/>5.0000</span>
       </li>
     </ul>
-    <v-table
-      is-horizontal-resize
-      style="width:100%"
-      :multiple-sort="multipleSort"
-      :columns="columns"
-      :table-data="tableData"
-      :title-row-height="50"
-      :row-height="50"
-      @sort-change="sortChange"
-      row-hover-color="#eee"
-      row-click-color="#edf7ff"
-    ></v-table>
-    <school-pop></school-pop>
+    <div class="charge-table">
+      <table class="table-top">
+        <tr class="title">
+          <th class="w450">课程</th>
+          <th class="w150">平均分 <icon name="sort" scale="2"/></th>
+          <th class="w150">排名 <icon name="sort" scale="2"/></th>
+        </tr>
+        <tr @click="goTo(urls.evaluationLatitude)">
+          <td class="w450">17暑初二英语同步班</td>
+          <td class="w150">5.0000</td>
+          <td class="w150">1<van-icon name="arrow" size="1" class="w150-arrow" /></td>
+        </tr>
+      </table>
+    </div>
+
+    <van-popup v-model="filterShow2" position="right" class="filter">
+      <div class="class-back"><van-icon name="arrow-left" @click="goBack" />校区选择</div>
+      <van-checkbox-group v-model="result">
+        <van-checkbox>
+          全选
+        </van-checkbox>
+        <van-checkbox
+          v-for="(item, index) in list"
+          :key="index"
+          :name="item"
+        >
+          {{ item }}
+        </van-checkbox>
+      </van-checkbox-group>
+      <div class="filter-btn">
+        <span class="btn-reset" @click="resetFn()">取消</span>
+        <span class="btn-submit" @click="submitFn()">确定(0/1)</span>
+      </div>
+    </van-popup>
+    <sort-pop :title="popData.title" :items.sync="popData.items" :isShow.sync="popData.isShow" :selectId.sync="popData.selectId" ></sort-pop>
   </div>
 </template>
 <script>
-import SchoolPop from '../popup/schoolPop'
 import CalendarPacking from '../general/calendarPacking'
+import SortPop from '../popup/sortPopPublish'
+
 export default {
   components: {
-    SchoolPop,
-    CalendarPacking
+    CalendarPacking,
+    SortPop
   },
   data () {
     return {
       value: '',
       urls: {
-        examinationResult: '/teacher/examinationResult'
+        examinationResult: '/teacher/examinationResult',
+        evaluationLatitude:'/user/evaluationLatitude'
       },
-      tableData: [
-        {'name': '17暑初二英语同步班','average': '5.0000','rank':'1'}
-      ],
-      multipleSort:false,
-      columns: [
-        {field: 'name', title: '课程', width: 450, titleAlign: 'left', columnAlign: 'left', orderBy: 'asc'},
-        {field: 'average', title: '平均分', width: 150, titleAlign: 'center', columnAlign: 'center', orderBy: 'asc'},
-        {field: 'rank', title: '排名', width: 150, titleAlign: 'center', columnAlign: 'center'}
+      popData:{
+        isShow:false,
+        selectId:0,
+        selectText:'期段',
+        items: [
+          {
+            text:'期段',
+            isSelect:true,
+            id:0
+
+          },
+          {
+            text:'类型',
+            isSelect:false,
+            id:1
+
+          },
+          {
+            text:'年级',
+            isSelect:false,
+            id:2
+          },
+          {
+            text:'科目',
+            isSelect:false,
+            id:3
+          },
+          {
+            text:'课程',
+            isSelect:false,
+            id:4
+          }
         ]
+      },
+      result:[],
+      filterShow2:false,
+      list:['潮人部落','金色阳光']
     }
   },
   mounted () {
   },
   methods: {
-    onSearch () {
-    },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
     showShoolZoneDia () {
-      this.$store.state.schoolPopup.isShow = true
+      this.filterShow2=true
     },
     goTo (url) {
       this.$router.push({path: url})
     },
-    // 获取 table 组件每次操作后的参数（重新去请求数据）
-    sortChange(params){
-      console.log(params)
+    goBack(){
+      this.filterShow2=false
+    },
+    resetFn(){
+
+    },
+    submitFn(){
+      this.filterShow2=false
+    },
+    showPop(){
+      this.popData.isShow = true
     }
   },
   computed : {
@@ -89,6 +147,10 @@ export default {
       handler(val){
         this.$toast(val)
       }
+    },
+    'popData.selectId':function (n,o) {
+      this.popData.selectText=this.popData.items[n].text
+
     }
   }
 }
@@ -136,6 +198,7 @@ export default {
     background: #eff1f6;
     border-radius: 35px;
     margin: 34px 5px 0 0;
+    color: #4286ed;
   }
   }
   .choose-school-zone{
@@ -199,26 +262,99 @@ width:100%;
   }
 }
 }
-.v-table-views{
-margin-top:20px;
+
+.filter{
+  height: 100%;
+  width: 78%;
+.class-back{
+  height: 70px;
+  line-height: 70px;
+  background: #eef1f6;
+  padding-left: 10px;
+.van-icon{
+  position: relative;
+  top: 4px;
+  margin-right: 10px;
+  color: #999;
+}
+}
+.van-checkbox{
+  line-height: 70px;
+.van-checkbox__icon{
+  margin:0 8px 0 30px;
+i{
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 16px;
+}
+}
+}
+.filter-btn{
+  position: fixed;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 80px;
+  font-size: 32px;
+  background: #fff;
+  height: 81px;
+.btn-reset{
+  background: #feffff;
+  display: inline-block;
+  width: 49%;
+  height: 80px;
+  color: #333333;
+  border-top:1px #f1f1f1 solid ;
+}
+.btn-submit{
+  background: #0097ef;
+  width: 49%;
+  display: inline-block;
+  height: 80px;
+  color: #fff;
+  border-top:1px #0097ef solid ;
+}
+}
+}
+.charge-table{
+  width:100%;
+.w450{
+  width: 450px;
+  padding-left: 30px;
+}
+.w150{
+  width: 150px;
+}
+.w100{
+  width: 100px;
+}
+.table-top{
+th{
+  border-bottom:2px #d2d5da solid ;
+  border-top:15px #eef1f6 solid ;
+  background: #fff;
+  line-height: 80px;
+}
 td{
-  font-size: 24px;
+  background: #fff;
+  line-height: 80px;
 }
-.v-table-body-cell{
-  padding: 0 15px;
-}
-.v-table-title-cell{
-  padding: 0 15px;
-}
-.v-table-sort-icon{
-  width: 32px;
-  height: 38px;
-  i{
-    width: 32px;
-    height: 30px;
-  }
-}
+.fa-icon{
+  position: relative;
+  top: 6px;
+  color: #d4d1d1;
 }
 
+}
+
+}
+.w150-arrow{
+  position: relative;
+  left: 25px;
+  top: 4px;
+  color: #DADCE3;
+}
 }
 </style>
