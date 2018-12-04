@@ -1,7 +1,7 @@
 <template>
   <div class="chief-owner">
     <div class="list-search">
-        <van-search placeholder="输入姓名搜索" background="#fff" v-model="value"  show-action >
+        <van-search placeholder="输入姓名搜索" background="#fff" v-model="name"  show-action >
           <div slot="action" @click="onSearch">搜索</div>
         </van-search>
     </div>
@@ -11,8 +11,9 @@
       </div>
       <van-cell title="潮人部落" value="2" is-link @click="clickFn" v-if="!isOpen" />
       <ul class="box-list" v-if="isOpen">
-        <li><img src="../../assets/images/user/test.jpg"/> 测试员</li>
-        <li><img src="../../assets/images/user/test.jpg"/> 潮人部落</li>
+        <li  v-for="(item,index) in responsibleList" v-bind:key="index" v-on:click="selectedItem(item.id,item.name)">
+          <img src="../../assets/images/user/test.jpg"/>{{item.name}}</li>
+        <!-- <li><img src="../../assets/images/user/test.jpg"/> 潮人部落</li> -->
       </ul>
     </div>
     <div class="owner-btn">
@@ -22,22 +23,65 @@
   </div>
 </template>
 <script>
+  import { api } from "../../../static/js/request-api/request-api.js";
   export default {
     data () {
       return {
         value:'',
-        isOpen:false
+        isOpen:false,
+        responsibleList:[],
+        name:""
       }
     },
     mounted () {
+      this.refreshSalePerson();
     },
     methods: {
+      onSearch(){
+         this.refreshSalePerson();
+      },
       goTo (url) {
         this.$router.push({path: url})
+      },
+      selectedItem(id,name){
+        this.$emit("selectedChiefOwner",id,name);
       },
       clickFn(){
         this.isOpen=true
       },
+        //获取主要责任人
+      refreshSalePerson: function() {
+      let _self = this;
+      api.refreshSalePerson(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  console.log(res.data.data);
+
+                  _self.responsibleList=res.data.data;
+
+                  // let newResponsibleList=[];
+                  // for(let i=0;i<responsibleList.length;i++){
+                  //   let newObj={};
+                  //   newObj.itemName=responsibleList[i].name;
+                  //   newResponsibleList.push(newObj);
+                  // }
+                  // this.rightPopDates.item03.data=newResponsibleList;
+                  // this.rightPopDates.item03.selectItem=responsibleList[0].name;
+                }
+          } else {
+            let params = { msg: "获取主要责任人" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取主要责任人" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
       goBack(){
         this.isOpen=false
       }

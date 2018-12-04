@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       courseYear:[
-        {id:0,value:"2018",type:0}, {id:0,value:"2017",type:0}, {id:0,value:"2016",type:0}, {id:0,value:"2015",type:0}
+        {id:0,value:"2018"}, {id:0,value:"2017"}, {id:0,value:"2016"}, {id:0,value:"2015"},{id:0,value:"2014"}
       ],
       accounting_id:null,
       campus_id:null,
@@ -83,6 +83,21 @@ export default {
     },
     openInitDate:function(selectedValue){
       let _self=this;
+     if(this.selectedValue==selectedValue){
+         if(!this.showProps){
+        this.showProps=true;
+      }else{
+        this.showProps=false;
+        return;
+      }
+     }else{
+       this.showProps=false;
+       setTimeout(function(){
+         _self.showProps=true;
+       },100)
+     }
+     
+      this.selectedValue=selectedValue;
       switch(selectedValue){
       case 0:
           this.courseItemList=this.courseYear;
@@ -280,6 +295,7 @@ export default {
     background: #fff;
     position: absolute;
     top:74px;
+    overflow-y: auto;
     z-index: 600;
     .selected-item{
       background-color: #4286ed;

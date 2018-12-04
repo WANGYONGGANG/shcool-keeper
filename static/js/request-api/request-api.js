@@ -285,7 +285,7 @@ export const api = {
     },
     //获取所有介绍人
     findAllIntroducer(params) {
-        return fetchPost(baseUrl + '/intentionClientAPI/findAllIntroducer', params);
+        return fetchGet(baseUrl + '/intentionClientAPI/findAllIntroducer', params);
     },
 
     //学员加入到课表
@@ -381,6 +381,11 @@ export const api = {
      getWorkStatisticsDetail(params) {
         return fetchPost(baseUrl + '/user/getWorkStatisticsDetail', params);
     },
+    //增加意向客户
+    addIntentionClient(params) {
+        return fetchPost(baseUrl + '/intentionClientAPI/addIntentionClient', params);
+  },
+
 
 
 
