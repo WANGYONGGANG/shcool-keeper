@@ -1,9 +1,9 @@
 <template>
 <div class="work-statistics-detial">
-  <ul class="detial-list">
-    <li class="item01">2018冬季班初一拓展班集体班2班</li>
-    <li class="item02">2018.11.18 14:39:00</li>
-    <li class="item03"><span>单位：次</span><span>数量：1.00</span><span>计费：1</span><span>欠费：0</span></li>
+  <ul class="detial-list" v-for='item in dataList'>
+    <li class="item01">{{item.className}}</li>
+    <li class="item02">{{item.classPleanDate}} {{item.beginTime}}</li>
+    <li class="item03"><span>单位：{{item.paymentTypeId==1?'次':'时'}}</span><span>数量：1.00</span><span>计费：1</span><span>欠费：0</span></li>
   </ul>
   <div class="detial-btn">
     <div v-if="isShowAll" class="btn-fen">
@@ -45,7 +45,7 @@
       </div>
     </div>
     <ul class="all fn-clear">
-      <li class="all-l">合计<span>2节</span></li>
+      <li class="all-l">合计<span>{{dataList.length}}节</span></li>
       <li class="all-r" @click="showAll">更多详情</li>
     </ul>
   </div>
@@ -54,13 +54,29 @@
 </div>
 </template>
 <script>
+  import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
-      isShowAll:false
+      isShowAll:false,
+      dataList:''
     }
   },
+  mounted(){
+    let time=this.$route.query.time+'-'+new Date().getDate()
+    let params = new URLSearchParams();
+      params.append("current_month", time);
+      api.getWorkStatisticsDetail(params)
+					.then(res=>{
+            console.log(res)
+            this.dataList=res.data.detail
+				},()=>{
+          
+				});
+  },
   methods: {
+
+
     showAll(){
       this.isShowAll=true
     },

@@ -389,6 +389,10 @@ export const api = {
      intentionClientAPIFindAllClass(params) {
         return fetchPost(baseUrl + '/intentionClientAPI/findAllClass', params);
   },
+     //工作统计明细
+     getWorkStatisticsDetail(params) {
+        return fetchPost(baseUrl + '/user/getWorkStatisticsDetail', params);
+    },
     //增加意向客户
     addIntentionClient(params) {
         return fetchPost(baseUrl + '/intentionClientAPI/addIntentionClient', params);

@@ -1,8 +1,10 @@
 <template>
   <div class="parent-rating-ranking">
-    <div class="choose-school-zone" @click="showShoolZoneDia">
+    <div class="choose-school-zone" >
       <van-cell-group>
-        <van-cell title="选择校区" value="潮人部落" is-link />
+       <van-cell title="选择校区"  is-link class="line65"  @click="sortPopShow">
+          {{sortData.selectItem.item}}
+      </van-cell>
       </van-cell-group>
     </div>
     <div class="class-tab fn-clear">
@@ -19,58 +21,103 @@
         <span>学校老师最高分<br/>5.0000</span>
       </li>
     </ul>
-    <div class="charge-table">
-      <table class="table-top">
-        <tr class="title">
-          <th class="w450">课程</th>
-          <th class="w150">平均分 <icon name="sort" scale="2"/></th>
-          <th class="w150">排名 <icon name="sort" scale="2"/></th>
-        </tr>
-        <tr @click="goTo(urls.evaluationLatitude)">
-          <td class="w450">17暑初二英语同步班</td>
-          <td class="w150">5.0000</td>
-          <td class="w150">1<van-icon name="arrow" size="1" class="w150-arrow" /></td>
-        </tr>
-      </table>
-    </div>
-
-    <van-popup v-model="filterShow2" position="right" class="filter">
-      <div class="class-back"><van-icon name="arrow-left" @click="goBack" />校区选择</div>
-      <van-checkbox-group v-model="result">
-        <van-checkbox>
-          全选
-        </van-checkbox>
-        <van-checkbox
-          v-for="(item, index) in list"
-          :key="index"
-          :name="item"
-        >
-          {{ item }}
-        </van-checkbox>
-      </van-checkbox-group>
-      <div class="filter-btn">
-        <span class="btn-reset" @click="resetFn()">取消</span>
-        <span class="btn-submit" @click="submitFn()">确定(0/1)</span>
-      </div>
-    </van-popup>
-    <sort-pop :title="popData.title" :items.sync="popData.items" :isShow.sync="popData.isShow" :selectId.sync="popData.selectId" ></sort-pop>
+    <v-table
+      is-horizontal-resize
+      style="width:100%"
+      :multiple-sort="multipleSort"
+      :columns="columns"
+      :table-data="tableData"
+      :title-row-height="50"
+      :row-height="50"
+      @sort-change="sortChange"
+      row-hover-color="#eee"
+      row-click-color="#edf7ff"
+    ></v-table>
+    <select-pop :title="sortData.title" :lists="sortData.lists" :isShow.sync="sortData.isShow" :selectItem.sync="sortData.selectItem"></select-pop>
   </div>
 </template>
+<!--<script>-->
+  <!--import {api} from  '../../../static/js/request-api/request-api.js';-->
+<!--import SchoolPop from '../popup/schoolPop'-->
+<!--import CalendarPacking from '../general/calendarPacking'-->
+<!--import SelectPop from '../popup/bottomSelectPop'-->
+<!--export default {-->
+  <!--components: {-->
+    <!--SchoolPop,-->
+    <!--CalendarPacking,-->
+    <!--SelectPop-->
+    <!--<div class="charge-table">-->
+      <!--<table class="table-top">-->
+        <!--<tr class="title">-->
+          <!--<th class="w450">课程</th>-->
+          <!--<th class="w150">平均分 <icon name="sort" scale="2"/></th>-->
+          <!--<th class="w150">排名 <icon name="sort" scale="2"/></th>-->
+        <!--</tr>-->
+        <!--<tr @click="goTo(urls.evaluationLatitude)">-->
+          <!--<td class="w450">17暑初二英语同步班</td>-->
+          <!--<td class="w150">5.0000</td>-->
+          <!--<td class="w150">1<van-icon name="arrow" size="1" class="w150-arrow" /></td>-->
+        <!--</tr>-->
+      <!--</table>-->
+    <!--</div>-->
+
+    <!--<van-popup v-model="filterShow2" position="right" class="filter">-->
+      <!--<div class="class-back"><van-icon name="arrow-left" @click="goBack" />校区选择</div>-->
+      <!--<van-checkbox-group v-model="result">-->
+        <!--<van-checkbox>-->
+          <!--全选-->
+        <!--</van-checkbox>-->
+        <!--<van-checkbox-->
+          <!--v-for="(item, index) in list"-->
+          <!--:key="index"-->
+          <!--:name="item"-->
+        <!-->-->
+          <!--{{ item }}-->
+        <!--</van-checkbox>-->
+      <!--</van-checkbox-group>-->
+      <!--<div class="filter-btn">-->
+        <!--<span class="btn-reset" @click="resetFn()">取消</span>-->
+        <!--<span class="btn-submit" @click="submitFn()">确定(0/1)</span>-->
+      <!--</div>-->
+    <!--</van-popup>-->
+    <!--<sort-pop :title="popData.title" :items.sync="popData.items" :isShow.sync="popData.isShow" :selectId.sync="popData.selectId" ></sort-pop>-->
+  <!--</div>-->
+<!--</template>-->
 <script>
 import CalendarPacking from '../general/calendarPacking'
 import SortPop from '../popup/sortPopPublish'
+import {api} from  '../../../static/js/request-api/request-api.js'
+//import SelectPop from '../popup/bottomSelectPop
 
 export default {
   components: {
+//    SelectPop,
     CalendarPacking,
-    SortPop
+    SortPop,
+//    SelectPop
   },
   data () {
     return {
+      schoolPartList:null,
       value: '',
       urls: {
         examinationResult: '/teacher/examinationResult',
         evaluationLatitude:'/user/evaluationLatitude'
+      },
+      tableData: [
+        {'name': '17暑初二英语同步班','average': '5.0000','rank':'1'}
+      ],
+      multipleSort:false,
+      columns: [
+        {field: 'name', title: '课程', width: 450, titleAlign: 'left', columnAlign: 'left', orderBy: 'asc'},
+        {field: 'average', title: '平均分', width: 150, titleAlign: 'center', columnAlign: 'center', orderBy: 'asc'},
+        {field: 'rank', title: '排名', width: 150, titleAlign: 'center', columnAlign: 'center'}
+        ],
+     sortData:{
+        title:'排序方式',
+        lists:['选择校区'],
+        isShow:false,
+        selectItem:''
       },
       popData:{
         isShow:false,
@@ -112,8 +159,46 @@ export default {
     }
   },
   mounted () {
+    this.refreshDepartment();
   },
   methods: {
+    initDate(){
+      let schoolPartList=this.schoolPartList;
+       for(let i=0;i<schoolPartList.length;i++){
+         this.sortData.lists.push(schoolPartList[i].name);
+       }
+       this.sortData.selectItem.item=schoolPartList[0].name;
+    },
+      //查询所有校区
+    refreshDepartment: function() {
+      let params ={};
+      let _self = this;
+      api.refreshDepartment(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.schoolPartList=res.data.data;
+                  _self.initDate();
+                }
+          } else {
+            let params = { msg: "查询所有校区" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "查询所有校区" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
+
+     sortPopShow(param){
+         this.sortData.isShow=true;
+    },
+    onSearch () {
+    },
     showCommentedDia () {
       this.$store.state.commentPopup.isShow = true
     },
