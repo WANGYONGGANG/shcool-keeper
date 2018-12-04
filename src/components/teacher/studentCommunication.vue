@@ -220,6 +220,7 @@ export default {
       params.page =1;
       params.rows=100;
       params.all_or_other=false;
+      (this.className == "班级名称" ? params.classID = '':params.classID = this.className);
       
       let _self = this;
       api.findStudentCommunicationDetailStu(params)
