@@ -212,38 +212,25 @@ export default {
     },
     findStudentCommunicationDetailStu: function() {
       let params ={};
-      params.filterRules=this.calendar.item1.date;
-      params.end_nextDate=this.calendar.item2.date;
-      params.begin_createTime=this.calendar.item3.date;
-      params.end_createTime=this.calendar.item4.date;
-      params.begin_lastDate=this.calendar.item5.date;
-      params.end_lastDate=this.calendar.item6.date;
-      params.client_state=this.customerData.selectedId;
-      params.major_selle=this.calendar.item07.selectedId;
+      params.beginNextDateDate=this.calendar.item1.date;
+      params.endNextDateDate=this.calendar.item2.date;
+      params.beginLastDate=this.calendar.item5.date;
+      params.endLastDate=this.calendar.item6.date;
       params.order="asc";
       params.page =1;
-      params.query_conditions=this.value;
       params.rows=100;
-      params.sort=this.defaultSort;
+      params.all_or_other=false;
       
       let _self = this;
       api.findStudentCommunicationDetailStu(params)
         .then(res => {
-          if (res.status == 200) {
-                let code=res.data.code;
-                if(code===1){
-                  _self.customerList=res.data.data.rows;
-                }
-          } else {
-            let params = { msg: "获取意向客户" };
-            // GlobalVue.$emit("alert", params);
-            // GlobalVue.$emit("blackBg", null);
+          console.log(res);
+          if (res.code == 1) {
+              _self.commentDetail=res.data;
           }
         })
         .catch(error => {
-          let params = { msg: "获取今日意向客户" };
-          // GlobalVue.$emit("alert", params);
-          // GlobalVue.$emit("blackBg", null);
+          
         });
     },
     // 未沟通
