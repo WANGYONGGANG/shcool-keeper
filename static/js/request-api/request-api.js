@@ -413,6 +413,10 @@ export const api = {
    findAllClassRandGroup(params) {
     return fetchGet(baseUrl + '/principalAPI/findAllClassRandGroup', params);
 },
+  //图片和文件上传
+  uploadFile(params) {
+    return fetchPost(baseUrl + '/classEvaluation/uploadFile', params);
+},
 
 
 

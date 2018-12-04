@@ -19,6 +19,7 @@
       <div class="add-img">添加图片</div>
       <div class="add-img">添加视频</div>
       <div class="add-img">添加文件</div>
+      <div><input type="file" @change="uploadFile($event)" multiple="multiple" /></div>
     </div>
     <!-- <div class="list-bottom">提交</div> -->
   </div>
@@ -31,17 +32,40 @@ export default {
     return {};
   },
   mounted: function() {
-        
+   
   },
   methods: {
+     uploadFile:function(event){
+       console.log("^^^^^^^^^^^^^^^^^^^^^");
+      this.file = event.target.files[0]; //获取input的图片file值
+      let param = new FormData(); // 创建form对象
+        console.log(this.file);
+      param.append('imgFile', this.file);//对应后台接收图片名
+       api.uploadFile(param)
+        .then(res => {
+          console.log(res);
+          if (res.status == 200) {
+            let code = res.data.code;
+           
+          } else {
+            let params = { msg: "上传文件错误" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "上传文件错误" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
     addNotice: function() {
       let params = {};
       let _self = this;
       let loginData = new URLSearchParams();
       loginData.append("username", this.userName);
       loginData.append("password", this.myPassword);
-      api
-        .addNotice(null)
+      api.addNotice(null)
         .then(res => {
           console.log(res);
           if (res.status == 200) {
