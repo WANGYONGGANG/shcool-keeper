@@ -12,7 +12,8 @@
       <div class="class-details"> <span class="time">下次跟进： {{data.nextTalkName}}</span></div>
     </div>
     <div class="table-r">
-      <span class="completion" @click="goTo(urls.addCommunicationRecord)"><van-icon name="edit-data" color="#4286ed" size="30px"/></span>
+      <!-- <span class="completion" @click="goTo(urls.addCommunicationRecord,this.$route.query.id)"><van-icon name="edit-data" color="#4286ed" size="30px"/></span> -->
+      <span class="completion"><van-icon name="edit-data" color="#4286ed" size="30px"/></span>
     </div>
   </div>
 
@@ -29,17 +30,19 @@
     </div>
   </div> -->
 
-  <bottom-btn :buttonData="buttonData" @click="goTo()"></bottom-btn>
+  <bottom-btn :buttonData="buttonData" ></bottom-btn>
 </div>
 </template>
 <script>
 import {api} from  '../../../static/js/request-api/request-api.js';
 import CalendarPacking from "../general/calendarPacking";
-import BottomBtn from '../general/bottomBtn'
+import BottomBtn from '../general/bottomBtn';
+import Router from "vue-router";
 export default {
   components: {
     CalendarPacking,
-    BottomBtn
+    BottomBtn,
+    Router
   },
   data () {
     return {
@@ -53,7 +56,7 @@ export default {
       date: "",
       buttonData: {
         text: '添加沟通记录',
-        url: '/teacher/addCommunicationRecord'
+        url: '/teacher/addCommunicationRecord?id='+this.$route.query.id
       },
       classRosterList:[]
     }
@@ -66,10 +69,12 @@ export default {
       // console.log(this.data2);
       this.initDateWeek();
       this.getCommunicationDetail();
+      console.log(this.$route.query.id)
   },
   methods: {
     goTo (url,parame) {
-      this.$router.push({ path: '/teacher/addCommunicationRecord', query: { id: this.$route.query.id } })
+      console.log(parame)
+      // this.$router.push({ path: url, query: { id: parame } })
     },
     updateDate:function(beginDate,endDate){
       this.begin_date=beginDate;
