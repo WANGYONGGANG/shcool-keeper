@@ -9,7 +9,8 @@
             </van-search>
           </div>
           <div class="operation" @click="showFilterDia">筛选</div>
-          <div class="operation" @click="showSortDia">排序</div>
+          <!-- <div class="operation" @click="showSortDia">排序</div> -->
+           <div class="operation" @click="sortPopShow">排序</div>
         </div>
         <div v-for="data in commentDetail">
           <div @click="goTo(urls.communicationRecord,data.id)">
@@ -63,7 +64,7 @@
         </div>
       </van-tab>
     </van-tabs>
-    <sort-pop v-on:sort="getMes"></sort-pop>
+    <!-- <sort-pop v-on:sort="getMes"></sort-pop> -->
     <van-popup v-model="filterShow" position="right" class="filter">
       <!-- <dl class="filter-dl">
         <dt>剩余学费(元)</dt>
@@ -74,18 +75,11 @@
       <dl class="filter-dl"><dt>跟进时间</dt><dd>
         <input type="text" placeholder="开始时间" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束时间" @click="showCalendar(2)" v-model="calendar.item2.date" />
       </dd></dl>
-      <!-- <dl class="filter-dl"><dt>沟通时间</dt><dd>
-        <input type="text" placeholder="开始日期" @click="showCalendar(1)" v-model="calendar.item1.date"  /> --- <input type="text" placeholder="结束日期" @click="showCalendar(2)" v-model="calendar.item2.date" />
-      </dd></dl> -->
       <dl class="filter-dl"><dt>沟通时间</dt>
         <dd>
           <input type="text" placeholder="开始时间" @click="showCalendar(5)" v-model="calendar.item5.date" /> --- <input type="text" placeholder="结束时间" @click="showCalendar(6)" v-model="calendar.item6.date" />
         </dd>
       </dl>
-      <!-- <dl class="filter-dl"><dt>跟进时间</dt>
-        <dd>
-          <input type="text" placeholder="开始日期" @click="showCalendar(3)" v-model="calendar.item3.date" /> --- <input type="text" placeholder="结束日期" @click="showCalendar(4)" v-model="calendar.item4.date" />
-        </dd></dl> -->
       <van-cell-group class="class-name">
         <van-cell :title="className" :classId="classId" is-link  @click="showClassPop" />
       </van-cell-group>
@@ -117,6 +111,9 @@
     <calendar :date.sync="calendar.item2.date" :isVisible.sync="calendar.item2.isVisible"></calendar>
     <calendar :date.sync="calendar.item5.date" :isVisible.sync="calendar.item5.isVisible"></calendar>
     <calendar :date.sync="calendar.item6.date" :isVisible.sync="calendar.item6.isVisible"></calendar>
+
+    <!--排序-->
+    <sort-pop v-on:sort="getMes" :title="sortData.title" :lists="sortData.lists" :isShow.sync="sortData.isShow" :selectItem.sync="sortData.selectItem"></sort-pop>
   </div>
 </template>
 <script>
@@ -162,14 +159,21 @@ export default {
       noComment:[],
       list:[],
       className:'班级名称',
-      classId:''
+      classId:'',
+      sortData:{
+        title:'排序方式',
+        lists:['按沟通时间排序','按姓氏排序','按跟进时间排序'],
+        isShow:false,
+        selectItem:'按沟通时间排序'
+      },
+      defaultSort:'lastDate'
     }
   },
   mounted() {
     // this.sort = this.$refs.calendar.$el.lastDate;
     // console.log(this.sort);
     this.filterShow = false;
-    this.getMes('lastDate');
+    this.getMes();
     this.noCommunication();
 
     // 获取子组件中获取的日期
@@ -181,20 +185,22 @@ export default {
   methods: {
     // 接受参数
     getMes: function(p){
-      this.getCommunicationDetail('',p);
-      console.log(p);
+      this.getCommunicationDetail();
     },
     goTo (url,parame) {
       this.$router.push({ path: url, query: { id: parame } })
     },
     // 沟通列表
-    getCommunicationDetail: function(data1, p) {
+    getCommunicationDetail: function(data1) {
       let _self = this;
-      let param = new URLSearchParams();
-      param.append('all_or_other' ,false);
-      if(p){
-        param.append('sort' ,p);
-      }
+      // let param = new URLSearchParams();
+      // param.append('all_or_other' ,false);
+      //   param.append('sort' ,p);
+      let param  = {};
+      param.all_or_other=false;
+      param.sort = this.defaultSort;
+      param.order = 'asc';
+
       if(data1){
         param.append('query_content' ,data1);
       }
@@ -376,9 +382,12 @@ export default {
     showFilterDia () {
       this.filterShow = true
     },
-    showSortDia () {
-      //排序弹出层显示
-      this.$store.state.sortPopup.isShow = true;
+    // showSortDia () {
+    //   //排序弹出层显示
+    //   this.$store.state.sortPopup.isShow = true;
+    // },
+    sortPopShow () {
+      this.sortData.isShow=true
     },
     showClassPop () {
       this.classFilterShow = true;
@@ -402,17 +411,9 @@ export default {
     resetFn (param){
       this.calendar.item1.date="";
       this.calendar.item2.date="";
-      this.calendar.item3.date="";
-      this.calendar.item4.date="";
       this.calendar.item5.date="";
       this.calendar.item6.date="";
-      this.customerData.selectedId=null;
-      this.customerData.selectItem="";
-      this.calendar.item07.selectedId=null;
-      this.calendar.item07.selectItem="";
-      this.value=null;
       this.filterShow = false;
-   
     },
     search (value) {
         let _self = this;
@@ -492,6 +493,19 @@ export default {
       }
     },
 
+  },
+   watch:{
+    'sortData.selectItem':function (n,o) {
+      if(n.item=="按沟通时间排序"){
+        this.defaultSort="lastDate";
+      }else if(n.item=="按姓氏排序"){
+        this.defaultSort="name";
+      }else if(n.item=="按跟进时间排序"){
+        this.defaultSort="nextDate";
+      }
+      this.$toast(n.item)
+      this.getCommunicationDetail();
+    }
   }
 }
 </script>

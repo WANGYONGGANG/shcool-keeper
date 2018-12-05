@@ -119,6 +119,7 @@ export default {
     }
   },
   mounted(){
+    console.log(this.$route.query.id)
 //      window.history.back(function () {
 //        console.log('back')
 //      });
@@ -350,4 +351,8 @@ export default {
     background: #4286ed;
     z-index: 100;
   }
+  .add-com-rec .filter {
+    width: 78%;
+    height: 100%;
+}
 </style>
