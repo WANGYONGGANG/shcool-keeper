@@ -59,6 +59,11 @@ export default {
          this.calendar.item2.date="2018-11-31";
       }
     },
+    //设置选中后的value
+    setCheckedDateValue:function(bd,ed){
+        this.calendar.item1.date=bd;
+        this.calendar.item2.date=ed;
+    },
     updateDate: function(newDate) {
       // console.log(this.calendar);
       this.$emit(

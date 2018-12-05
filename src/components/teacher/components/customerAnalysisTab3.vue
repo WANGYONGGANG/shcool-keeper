@@ -1,7 +1,8 @@
 <template>
   <div class="tab3">
     <div class="class-tab">
-        <calendar-packing v-on:updateDate=updateDate  v-bind:begin_date="begin_date"  v-bind:end_date="end_date" v-if="showCalendar" ></calendar-packing>
+        <calendar-packing v-on:updateDate=updateDate  v-bind:begin_date="begin_date"  v-bind:updateDatePicker="updateDatePicker"
+         v-bind:end_date="end_date" v-if="showCalendar"    ref="CalendarPacking"></calendar-packing>
     </div>
        <van-cell title="选择校区"  is-link class="line65"  @click="sortPopShow">
           {{sortData.selectItem.item}}
@@ -38,7 +39,7 @@ import SelectPop from '../../popup/bottomSelectPop'
 export default {
   components: {
     BottomBtn,
-        SelectPop,
+    SelectPop,
     CalendarPacking
   },
   data () {
@@ -47,10 +48,12 @@ export default {
         text: '查看详情',
         url: '/teacher/customerContrast'
       },
-       begin_date:null,
-      end_date:null,
-            campus_ids:null,
-      showCalendar:false,
+        date1: "",
+        date2: "",
+        begin_date:null,
+        end_date:null,
+        campus_ids:null,
+        showCalendar:false,
         schoolPartList:null,
         resourceList:null,
         sortData:{
@@ -72,6 +75,74 @@ export default {
         this.drawLine()
       }
     },
+    //更新日期选择
+    updateDatePicker(commentPopup){
+      console.log(commentPopup);
+
+    },
+    getDate(val) {
+      let date = new Date();
+      let seperator = "-";
+      let year = date.getFullYear(); //获取年份
+      let month = date.getMonth() + 1; //获取月份
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      let strDate = date.getDate(); //获取日期
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      let week = date.getDay(); //获取星期
+      if (val == "今天") {
+        this.date1 = year + seperator + month + seperator + strDate;
+        this.date2 = year + seperator + month + seperator + strDate;
+      }
+      if (val == "昨天") {
+        this.date1 = this.timeForMat(0,date);
+        this.date2 = this.timeForMat(0,date);
+      }
+      if (val == "本周") {
+        let num = week - 1;
+        date.setDate(date.getDate() - num); //本周第一天
+        let str = this.format("yyyy-MM-dd", date);
+        date.setDate(date.getDate() + 6); //本周最后一天
+        let str1 = this.format("yyyy-MM-dd", date);
+        this.date1 = str;
+        this.date2 = str1;
+      }
+      if (val == "最近7天") {
+        this.date1 = this.timeForMat(6,date);
+        this.date2 = year + seperator + month + seperator + strDate;
+      }
+      if (val == "最近30天") {
+        this.date1 = this.timeForMat(29,date);
+        this.date2 = year + seperator + month + seperator + strDate;
+      }
+      if (val == "本月") {
+        date.setDate(1); //本月第一天
+        var str = this.format("yyyy-MM-dd", date);
+        date.setMonth(date.getMonth() + 1); //下个月
+        date.setDate(date.getDate() - 1); //下个月第一天减1得到本月最后一天
+        var str1 = this.format("yyyy-MM-dd", date);
+        this.date1 = str;
+        this.date2 = str1;
+      }
+      if (val == "上月") {
+        month = month - 1;
+        if (month == 0) {
+          month = 12;
+          year = year - 1;
+        }
+        if (month < 10) {
+          month = "0" + month;
+        }
+        this.date1 = year + "-" + month + "-" + "01"; //上个月的第一天
+        var myDate = new Date(year, month, 0);
+        this.date2 = year + "-" + month + "-" + myDate.getDate(); //上个月的最后一天
+      }
+      console.log(this.date1);
+      console.log(this.date2);
+    },
      updateDate:function(beginDate,endDate){
       this.begin_date=beginDate;
       this.end_date=endDate;
@@ -88,6 +159,43 @@ export default {
           this.begin_date = this.getAllDateFromNow(0);
           this.end_date = this.getWeekEndDate(0);
           this.showCalendar=true;
+    },
+     //获取昨天，最近7天，最近30天
+    timeForMat(count,date) {
+      date.setTime(date.getTime() - 24 * 60 * 60 * 1000 * count);
+      let Y2 = date.getFullYear();
+      let M2 =
+        date.getMonth() + 1 > 9
+          ? date.getMonth() + 1
+          : "0" + (date.getMonth() + 1);
+      let D2 = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+      return Y2 + "-" + M2 + "-" + D2;
+    },
+    //获取本周、本月
+    format(fmt, date) {
+      var o = {
+        "M+": date.getMonth() + 1, //月份
+        "d+": date.getDate(), //日
+        "h+": date.getHours(), //小时
+        "m+": date.getMinutes(), //分
+        "s+": date.getSeconds(), //秒
+        "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+        S: date.getMilliseconds() //毫秒
+      };
+      if (/(y+)/.test(fmt))
+        fmt = fmt.replace(
+          RegExp.$1,
+          (date.getFullYear() + "").substr(4 - RegExp.$1.length)
+        );
+      for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+          fmt = fmt.replace(
+            RegExp.$1,
+            RegExp.$1.length == 1
+              ? o[k]
+              : ("00" + o[k]).substr(("" + o[k]).length)
+          );
+      return fmt;
     },
      formatDate(date) {
       var myyear = date.getFullYear();
@@ -158,7 +266,6 @@ export default {
                        newResourceSumList.push(resourceList[i].sum);
                   }
                   this.drawLine(newResourceNameList,newResourceSumList);
-                  console.log(res.data.data);
                 }
           } else {
             let params = { msg: "查询所有校区" };
@@ -257,14 +364,19 @@ export default {
   },
   watch:{
        'sortData.selectItem':function (n,o) {
-       this.$toast(n.item);
+        this.$toast(n.item);
         this.campus_ids=this.schoolPartList[n.index-1].id;
        this.ReportCustomerAnalysisForState();
     },
     item :{
       //日期快速切换值
       handler(val){
-        this.$toast(val)
+          this.getDate(val);
+          this.$toast(val);
+          this.begin_date=this.date1;
+          this.end_date=this.date2;
+          this.ReportCustomerAnalysisForState();
+          this.$refs.CalendarPacking.setCheckedDateValue(this.begin_date,this.end_date);
       }
     }
   }
