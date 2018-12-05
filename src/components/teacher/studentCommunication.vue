@@ -87,7 +87,7 @@
           <input type="text" placeholder="开始日期" @click="showCalendar(3)" v-model="calendar.item3.date" /> --- <input type="text" placeholder="结束日期" @click="showCalendar(4)" v-model="calendar.item4.date" />
         </dd></dl> -->
       <van-cell-group class="class-name">
-        <van-cell :title="className" is-link  @click="showClassPop" />
+        <van-cell :title="className" :classId="classId" is-link  @click="showClassPop" />
       </van-cell-group>
       <div class="filter-btn">
         <span class="btn-reset" @click="resetFn()">重置</span>
@@ -161,7 +161,8 @@ export default {
       userMes:'',
       noComment:[],
       list:[],
-      className:'班级名称'
+      className:'班级名称',
+      classId:''
     }
   },
   mounted() {
@@ -220,7 +221,7 @@ export default {
       params.page =1;
       params.rows=100;
       params.all_or_other=false;
-      (this.className == "班级名称" ? params.classID = '':params.classID = this.className);
+      params.classID = this.classId;
       
       let _self = this;
       api.findStudentCommunicationDetailStu(params)
@@ -442,7 +443,8 @@ export default {
       }
       for(var i=0;i<this.list.length;i++){
           if(this.list[i].id == this.radio){
-              this.className = this.list[i].className
+              this.className = this.list[i].className;
+              this.classId = this.list[i].id
           }
 
       }
@@ -460,6 +462,7 @@ export default {
       for(var i=0;i<this.list.length;i++){
           if(this.list[i].id == this.radio){
               this.className = this.list[i].className
+              this.classId = this.list[i].id
           }
       }
       this.findStudentCommunicationDetailStu();
