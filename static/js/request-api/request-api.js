@@ -318,7 +318,7 @@ export const api = {
     },
     //增加沟通内容
     addStudentCommunication(params) {
-        return fetchGet(baseUrl + '/studentCommunication/addStudentCommunication', params);
+        return fetchPost(baseUrl + '/studentCommunication/addStudentCommunication', params);
     },
     // 取获班级
     findAllGrade(params) {
