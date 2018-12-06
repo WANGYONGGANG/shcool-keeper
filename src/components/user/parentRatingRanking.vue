@@ -112,7 +112,6 @@
         this.popData.isShow = true
       },
       sortFn(){
-        alert('111')
         this.$toast('排序')
       }
     },
