@@ -3,7 +3,7 @@
     <div class="class-tab">
        <calendar-packing v-on:updateDate="updateDate"  v-bind:begin_date="begin_date"  v-bind:end_date="end_date"
         ref="CalendarPacking"  v-if="showCalendar" ></calendar-packing>
-      <div class="operation">筛选</div>
+      <div class="operation" @click="sourcePop">筛选</div>
     </div>
      <van-cell title="选择校区"  is-link class="line65"  @click="sortPopShow">
           {{sortData.selectItem.item}}
@@ -21,7 +21,7 @@
     <bottom-btn :buttonData="buttonData1"></bottom-btn>
         <select-pop :title="sortData.title" :lists="sortData.lists" :isShow.sync="sortData.isShow" :selectItem.sync="sortData.selectItem"></select-pop>
  <!--筛选-->
-
+<source-pop :isShow.sync="sourceData.isShow"></source-pop>
   </div>
 </template>
 <script>
@@ -29,17 +29,22 @@ import { api } from "../../../../static/js/request-api/request-api.js";
 import CalendarPacking from '../../general/calendarPacking'
 import BottomBtn from '../../general/bottomBtn'
 import SelectPop from '../../popup/bottomSelectPop'
+import SourcePop from '../../general/sourcePop'
 export default {
   components: {
     BottomBtn,
     SelectPop,
-    CalendarPacking
+    CalendarPacking,
+    SourcePop
   },
   data () {
     return {
       buttonData1: {
         text: '查看详情',
         url: '/teacher/enrollmentStatistics'
+      },
+      sourceData:{
+        isShow:false
       },
       begin_date:null,
       end_date:null,
@@ -310,6 +315,9 @@ export default {
         sortPopShow(param){
          this.sortData.isShow=true;
     },
+    sourcePop(){
+      this.sourceData.isShow=true;
+    }
   },
   computed : {
     item () {
