@@ -23,8 +23,8 @@
       <table class="table-top">
         <tr class="title">
           <th class="w450">课程</th>
-          <th class="w150">平均分 <icon name="sort" scale="2"/></th>
-          <th class="w150">排名 <icon name="sort" scale="2"/></th>
+          <th class="w150" @click="sortFn">平均分 <icon name="sort" scale="2" /></th>
+          <th class="w150" @click="sortFn">排名 <icon name="sort" scale="2" /></th>
         </tr>
         <tr @click="goTo(urls.evaluationLatitude)">
           <td class="w450">17暑初二英语同步班</td>
@@ -110,6 +110,10 @@
 
       showPop(){
         this.popData.isShow = true
+      },
+      sortFn(){
+        alert('111')
+        this.$toast('排序')
       }
     },
     computed : {

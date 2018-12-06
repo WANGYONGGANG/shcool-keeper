@@ -54,6 +54,10 @@
     watch:{
       result(n,o){
         this.resultLength=n.length
+      },
+      isShow(newVal){
+        this.isShow= newVal;
+        this.$emit('update:isShow', newVal);
       }
     }
   }
