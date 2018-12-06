@@ -99,6 +99,8 @@ import EnrollmentStatistics3 from '@/components/teacher/enrollmentStatistics3'
 import CustomerContrast from '@/components/teacher/customerContrast'
 import addStu from '@/components/teacher/addStu'
 
+import Test from '@/components/test'
+
 Vue.use(Router)
 
 export default new Router({
@@ -560,6 +562,11 @@ export default new Router({
       path: '/general/publishPeople',
       name: 'publishPeople',
       component: PublishPeople
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: Test
     }
   ]
 })

@@ -16,7 +16,7 @@
         {{rightPopDates.item03.selectItem}}
       </van-cell>
         <van-field
-          v-model="talkConent"
+          v-model="talkContent"
           type="textarea"
           placeholder="请输入沟通内容（必填，限300字）"
           rows="1"
@@ -24,15 +24,24 @@
       </van-cell-group>
     </div>
     <van-cell-group class="next">
-      <van-cell title="下次跟进类型" v-model="followType"   @click="clickFn('item01')" is-link>
+      <van-cell title="下次跟进类型" v-model="followType"   @click="clickFn('item04')" is-link>
         {{rightPopDates.item04.selectItem}}
       </van-cell>
-      <van-cell title="下次跟进时间">
+      <van-cell title="下次沟通类型" value="请选择" is-link  @click="clickFn('item05')"> {{rightPopDates.item05.selectItem}}</van-cell>
+      <van-cell title="下次沟通时间"  @click="showCalendar" >{{nextTalkDate}}
+           <!-- <van-field
+          v-model="message2"
+          type="textarea"
+          placeholder="输入下次沟通时间"
+          rows="1"
+        /> -->
+        </van-cell>
+      <!-- <van-cell title="下次跟进时间">
         <van-radio-group v-model="radio" class="next-time">
           <van-radio name="1">选择时间</van-radio>
           <van-radio name="2">时间待定</van-radio>
         </van-radio-group>
-      </van-cell>
+      </van-cell> -->
     </van-cell-group>
     <!-- <bottom-btn :buttonData="buttonData" @click='addStudentCommunication'></bottom-btn> -->
     <div class="bottom-btn" @click='addStudentCommunication'>提交</div>
@@ -40,20 +49,27 @@
     <right-pop :filterShow.sync="rightPopDates.item02.isShow" :selectItem.sync="rightPopDates.item02.selectItem" :allDatas="rightPopDates.item02.data"  :selectID.sync="rightPopDates.item02.selectID"></right-pop>
     <right-pop :filterShow.sync="rightPopDates.item03.isShow" :selectItem.sync="rightPopDates.item03.selectItem" :allDatas="rightPopDates.item03.data"  :selectID.sync="rightPopDates.item03.selectID" :selectCon.sync="rightPopDates.item04.selectCon"></right-pop>
     <right-pop :filterShow.sync="rightPopDates.item04.isShow" :allDatas="rightPopDates.item04.data" :selectItem.sync="rightPopDates.item04.selectItem" :selectID.sync="rightPopDates.item04.selectID"></right-pop>
+    <right-pop  class="add-height"  :filterShow.sync="rightPopDates.item05.isShow" :allDatas="rightPopDates.item05.data" :selectItem.sync="rightPopDates.item05.selectItem"  :selectID.sync="rightPopDates.item05.selectID"></right-pop>
+    <calendar :date.sync="calendar.date" :isVisible.sync="calendar.isVisible"></calendar>
+    <attention v-if="showAttentionAlert" v-bind:attentionText="attentionText" style="z-index:600;"></attention>
   </div>
 </template>
 <script>
 import RightPop from '../general/rightPop';
 import RightPopCon from '../general/rightPopCon';
 // import BottomBtn from '../general/bottomBtn';
+import Calendar from '../general/calendar'
 import CommunicationTemplate from './communicationTemplate';
+import attention from '../teacher/attention';
 import { api } from "../../../static/js/request-api/request-api.js";
 export default {
   components: {
     RightPop,
     RightPopCon,
+    Calendar,
     // BottomBtn,
-    CommunicationTemplate
+    CommunicationTemplate,
+    attention
   },
   data () {
     return {
@@ -64,13 +80,13 @@ export default {
       radio:'',
       talkType:'请选择',
       talkResult:'请选择',
-      talkConent:'请选择',
+      talkContent:'',
       followType:'请选择',
       rightPopDates:{
           item01:{
             isShow:false,
             selectItem:'',
-            selectID: null,
+            selectID: 0,
             data:[
               {
                 itemName:'欢乐大人'
@@ -79,21 +95,21 @@ export default {
            item02:{
             isShow:false,
             selectItem:'',
-            selectID: null,
+            selectID: true,
             data:[
               {
                 itemName:'有效沟通',
-                id:'1'
+                id:'true'
               },
               {
                 itemName:'无效沟通',
-                 id:"2"
+                 id:'false'
               }]
           },
           item03:{
             isShow:false,
             selectItem:'',
-            selectID: null,
+            selectID: 0,
             selectCon:'',
             data:[
               {
@@ -115,11 +131,31 @@ export default {
                 itemName:'欢乐大人'
               }]
           },
-      }
+          item05: {
+          isShow: false,
+          selectItem: "待定",
+          selectID: true,
+          data: [
+            {
+              itemName: "准确时间",
+              id:false
+            },
+            {
+              itemName: "待定",
+              id:true
+            }
+          ]
+        },
+      },
+      nextTalkDate:new Date().format("yyyy-MM-dd"),
+      calendar:{
+        isVisible:false,
+        date:'2018-10-30'
+      },
+      showAttentionAlert:false,
     }
   },
   mounted(){
-    console.log(this.$route.query.id)
 //      window.history.back(function () {
 //        console.log('back')
 //      });
@@ -132,11 +168,13 @@ export default {
         }else if(this.$route.params.type == 2){
 
         }else if(this.$route.params.type == 3){
-          this.talkConent = this.$route.params.con[0].content;
+          this.talkContent = this.$route.params.con[0].content;
         }else if(this.$route.params.type == 4){
-          // this.talkConent = this.$route.params.con[0].content;
+          // this.talkContent = this.$route.params.con[0].content;
         }
     }
+    this.rightPopDates.item02.selectItem=this.rightPopDates.item02.data[0].itemName;
+    this.rightPopDates.item02.selectID = true;
     this.findTalkType();
     this.findTalkTypeNext();
     this.findTalkContentTemplate();
@@ -144,24 +182,56 @@ export default {
 
   },
   methods:{
+    //增加沟通内容
     addStudentCommunication:function(){
-      let _self = this;
-      let param = new URLSearchParams();
+       let _self = this;
+      //  let data = new URLSearchParams();
+      //  let callLog={};
+      let callLog = new URLSearchParams();
+      callLog.append('studentID',_self.$route.query.id)
+      callLog.append('talkTypeId',this.rightPopDates.item01.selectID)
+      callLog.append('nextTalkTypeId',this.rightPopDates.item04.selectID)
+      callLog.append('talkResultStateId',this.rightPopDates.item02.selectID)
+      callLog.append('nextMode',this.rightPopDates.item05.selectID)
+      callLog.append('talkContent',this.talkContent)
+      callLog.append('nextTalkDate',this.nextTalkDate)
 
-      param.append("nextMode", '');
-      param.append("end_date", '');
-      api.addStudentCommunication()
+      //  callLog.studentID =_self.$route.query.id;
+      //  callLog.talkTypeId =this.rightPopDates.item01.selectID;
+      //  callLog.nextTalkTypeId =this.rightPopDates.item04.selectID;
+      //  callLog.talkResultStateId =this.rightPopDates.item02.selectID;
+      //  callLog.nextMode =this.rightPopDates.item05.selectID;
+      //  callLog.talkContent=this.talkContent;
+      //  callLog.nextTalkDate=this.nextTalkDate;
+     
+      if(callLog.talkContent==""){
+            _self.alertMessage("沟通内容为空");
+            return;
+      };
+      api.addStudentCommunication(callLog)
         .then(res => {
-          if (res.status == 200) {
-            let code=res.data.code;
-            if(code===1){
-              this.$router.push({path: "/teacher/studentCommunicationndex"});                  
-            }
+          if(res.code===1){
+              setTimeout(function(){
+                _self.showAttentionAlert=false;
+                _self.$router.push({
+                  path: "/teacher/communicationRecord",
+                  query: { id: _self.$route.query.id}
+                });
+            },2000)
           }
         })
         .catch(error => {
           
         });
+    },
+    //弹出层提示 
+    alertMessage:function(alertMessage){
+          let _self=this;
+         _self.attentionText=alertMessage;
+          _self.showAttentionAlert=true;
+               setTimeout(function(){
+              _self.showAttentionAlert=false;
+          },2000)
     },
      // 接受参数
     getMes: function(p){
@@ -273,7 +343,41 @@ export default {
     clickFn (n){
         this.rightPopDates[n].isShow = true
       },
-  }
+      showCalendar () {
+      //根据参数显示对应日历弹层
+      this.calendar.isVisible = true
+    },
+  },
+   watch: {
+     'calendar.date' :function (n,o) {
+      this.nextTalkDate=n;
+      this.$toast(n)
+    },
+    "rightPopDates.item01.selectItem": function(newval, oldval) {
+      this.$toast(newval);
+    },
+    "rightPopDates.item01.selectID":function(newval, oldval) {
+      this.rightPopDates.item01.selectID=newval;
+    },
+    "rightPopDates.item02.selectItem": function(newval, oldval) {
+      this.$toast(newval);
+    },
+    "rightPopDates.item02.selectID":function(newval, oldval) {
+      this.rightPopDates.item02.selectID=newval;
+    },
+    "rightPopDates.item03.selectItem": function(newval, oldval) {
+      this.$toast(newval);
+    },
+    "rightPopDates.item03.selectID":function(newval, oldval) {
+      this.rightPopDates.item03.selectID=newval;
+    },
+    "rightPopDates.item05.selectItem": function(newval, oldval) {
+      this.$toast(newval);
+    },
+    "rightPopDates.item05.selectID":function(newval, oldval) {
+      this.rightPopDates.item05.selectID=newval;
+    },
+   }
 }
 </script>
 <style lang="less" rel="stylesheet/less">

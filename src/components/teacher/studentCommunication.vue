@@ -166,7 +166,7 @@ export default {
         isShow:false,
         selectItem:'按沟通时间排序'
       },
-      defaultSort:'lastDate'
+      defaultSort:'last_date'
     }
   },
   mounted() {
@@ -202,7 +202,7 @@ export default {
       param.order = 'asc';
 
       if(data1){
-        param.append('query_content' ,data1);
+        param.query_content=data1;
       }
       api.findStudentCommunicationDetailStu(param)
         .then(res => {
@@ -497,11 +497,11 @@ export default {
    watch:{
     'sortData.selectItem':function (n,o) {
       if(n.item=="按沟通时间排序"){
-        this.defaultSort="lastDate";
+        this.defaultSort="last_date";
       }else if(n.item=="按姓氏排序"){
         this.defaultSort="name";
       }else if(n.item=="按跟进时间排序"){
-        this.defaultSort="nextDate";
+        this.defaultSort="next_date";
       }
       this.$toast(n.item)
       this.getCommunicationDetail();

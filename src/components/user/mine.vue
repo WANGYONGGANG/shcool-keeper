@@ -10,7 +10,7 @@
 
   <van-cell-group>
     <van-cell title="修改密码" icon="edit-data" is-link to="/user/changePassword" />
-    <van-cell title="修改图像" icon="records" is-link to="" />
+    <van-cell title="修改图像" icon="records" is-link to=""  @click="showPhotoPop"/>
     <van-cell title="招生二维码" icon="records" is-link to="" />
   </van-cell-group>
 
@@ -28,6 +28,13 @@
     <van-cell title="退出登陆" icon="edit-data" is-link to=""  @click="loginOut"/>
   </van-cell-group>
   <btm-tobbar></btm-tobbar>
+  <van-actionsheet
+    v-model="isPhotoShow"
+    :actions="actions"
+    cancel-text="取消"
+    @select="onSelect"
+    @cancel="onCancel"
+  />
 </div>
 </template>
 <script>
@@ -39,7 +46,16 @@ export default {
   },
   data () {
     return {
+      isPhotoShow: false,
+      actions: [
+        {
+          name: '拍照'
+        },
+        {
+          name: '从手机相册选择',
+        }
 
+      ]
     }
   },
   methods: {
@@ -57,6 +73,15 @@ export default {
 					// alert('请输入用户名或密码');
 				});
 
+    },
+    showPhotoPop(){
+      this.isPhotoShow=true
+    },
+    onSelect(){
+
+    },
+    onCancel(){
+      
     }
   }
 }
@@ -116,7 +141,11 @@ export default {
     line-height: 100px;
     font-size: 20px;
   }
-
+  .van-actionsheet__cancel, .van-actionsheet__item{
+    height: 100px;
+    line-height: 100px;
+    font-size: 28px;
+  }
   }
 
 </style>
