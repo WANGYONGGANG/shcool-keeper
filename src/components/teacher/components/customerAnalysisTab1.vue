@@ -63,7 +63,7 @@ export default {
       resourceList:[],
         schoolPartList:null,
         sortData:{
-        title:'排序方式',
+        title:'选择校区',
         lists:['选择校区'],
         isShow:false,
         selectItem:''
