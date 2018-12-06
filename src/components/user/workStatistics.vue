@@ -149,7 +149,7 @@ methods: {
 //  ,
   goTo(url)
   {
-    this.$router.push({path: url})
+    this.$router.push({path: url,query: {time: this.timeData}})
   }
 
 },
