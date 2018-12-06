@@ -35,9 +35,10 @@
 </template>
 <script>
 export default {
+  props: ['isShow'],
   data () {
     return {
-      isShow:true,
+//      isShow:true,
       isBig:true,
       result:[],
       list:['市场推广','默认'],
@@ -105,10 +106,16 @@ export default {
       })
     },
     resetFn(){
-      this.isShow=false
+      this.$emit('update:isShow', false);
     },
     submitFn(){
-      this.isShow=false
+      this.$emit('update:isShow', false);
+    }
+  },
+  watch:{
+    isShow(newVal){
+      this.isShow= newVal;
+      this.$emit('update:isShow', newVal);
     }
   }
 }

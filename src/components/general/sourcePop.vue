@@ -108,7 +108,6 @@
         this.$emit('update:isShow', false);
       },
       submitFn(){
-        this.isShow=false
         this.$emit('update:isShow', false);
       }
     },
