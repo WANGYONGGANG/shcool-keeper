@@ -20,6 +20,8 @@
     </van-cell-group>
     <bottom-btn :buttonData="buttonData1"></bottom-btn>
         <select-pop :title="sortData.title" :lists="sortData.lists" :isShow.sync="sortData.isShow" :selectItem.sync="sortData.selectItem"></select-pop>
+ <!--筛选-->
+
   </div>
 </template>
 <script>
@@ -249,7 +251,7 @@ export default {
     },
     //查询招生来源
     ReportCustomerAnalysisForSourceway: function() {
-      let params ={};      
+      let params ={};
        params.begin_date=this.begin_date;
       if(this.campus_ids){
         this.campus_ids="["+this.campus_ids+"]";
@@ -283,7 +285,7 @@ export default {
     },
     //查询所有校区
     refreshDepartment: function() {
-      let params ={};      
+      let params ={};
       let _self = this;
       api.refreshDepartment(null)
         .then(res => {
