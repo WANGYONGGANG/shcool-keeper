@@ -324,10 +324,10 @@ export default {
              _self.showAttentionAlert=true;
                setTimeout(function(){
               _self.showAttentionAlert=false;
-              // _self.$router.push({
-              //  path: "/teacher/customerCommunicationRecord",
-              //  query: { studentId: _self.$route.query.id}
-              // });
+              _self.$router.push({
+               path: "/teacher/customerCommunicationRecord",
+               query: { studentId: _self.$route.query.id}
+              });
           },2000)
           } else {
             let params = { msg: "增加客户沟通记录" };

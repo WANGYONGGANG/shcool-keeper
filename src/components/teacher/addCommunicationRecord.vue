@@ -185,35 +185,39 @@ export default {
     //增加沟通内容
     addStudentCommunication:function(){
        let _self = this;
-       let data = new URLSearchParams();
-       let callLog={};
-       callLog.studentID =_self.$route.query.id;
-       callLog.talkTypeId =this.rightPopDates.item01.selectID;
-       callLog.nextTalkTypeId =this.rightPopDates.item04.selectID;
-       callLog.talkResultStateId =this.rightPopDates.item02.selectID;
-       callLog.nextMode =this.rightPopDates.item05.selectID;
-       callLog.talkContent=this.talkContent;
-       callLog.nextTalkDate=this.nextTalkDate;
-      //  if(callLog.nextVisitDate=="选择到访日期"){
-      //       _self.alertMessage("请选择到访日期");
-      //       return;
-      //  };
-      // if(callLog.nextVisitDate=="选择到访日期"){
-      //       _self.alertMessage("请选择到访日期");
-      //       return;
-      //  };
+      //  let data = new URLSearchParams();
+      //  let callLog={};
+      let callLog = new URLSearchParams();
+      callLog.append('studentID',_self.$route.query.id)
+      callLog.append('talkTypeId',this.rightPopDates.item01.selectID)
+      callLog.append('nextTalkTypeId',this.rightPopDates.item04.selectID)
+      callLog.append('talkResultStateId',this.rightPopDates.item02.selectID)
+      callLog.append('nextMode',this.rightPopDates.item05.selectID)
+      callLog.append('talkContent',this.talkContent)
+      callLog.append('nextTalkDate',this.nextTalkDate)
+
+      //  callLog.studentID =_self.$route.query.id;
+      //  callLog.talkTypeId =this.rightPopDates.item01.selectID;
+      //  callLog.nextTalkTypeId =this.rightPopDates.item04.selectID;
+      //  callLog.talkResultStateId =this.rightPopDates.item02.selectID;
+      //  callLog.nextMode =this.rightPopDates.item05.selectID;
+      //  callLog.talkContent=this.talkContent;
+      //  callLog.nextTalkDate=this.nextTalkDate;
+     
       if(callLog.talkContent==""){
             _self.alertMessage("沟通内容为空");
             return;
       };
-      alert(1)
       api.addStudentCommunication(callLog)
         .then(res => {
-          if (res.status == 200) {
-            let code=res.data.code;
-            if(code===1){
-              this.$router.push({path: "/teacher/studentCommunicationndex"});                  
-            }
+          if(res.code===1){
+              setTimeout(function(){
+                _self.showAttentionAlert=false;
+                _self.$router.push({
+                  path: "/teacher/communicationRecord",
+                  query: { id: _self.$route.query.id}
+                });
+            },2000)
           }
         })
         .catch(error => {
