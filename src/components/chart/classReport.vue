@@ -21,28 +21,7 @@
     <van-cell title="81%-90%" is-link value="0" @click="goTo(urls.classReportListDetial)" />
     <van-cell title="91%-100%" is-link value="0" @click="goTo(urls.classReportListDetial)" />
   </van-cell-group>
-
-  <van-popup v-model="filterShow2" position="right" class="filter">
-    <div class="class-back"><van-icon name="arrow-left" @click="goBack" />校区选择</div>
-
-    <van-checkbox-group v-model="result">
-      <van-checkbox>
-        全选
-      </van-checkbox>
-      <van-checkbox
-        v-for="(item, index) in list"
-        :key="index"
-        :name="item"
-      >
-        {{ item }}
-      </van-checkbox>
-
-    </van-checkbox-group>
-    <div class="filter-btn">
-      <span class="btn-reset" @click="resetFn()">取消</span>
-      <span class="btn-submit" @click="submitFn()">确定(0/1)</span>
-    </div>
-  </van-popup>
+  <choose-school :isShow.sync="chooseSchoolDatas.filterShow2" :list.sync="chooseSchoolDatas.list" :selectItem.sync="chooseSchoolDatas.selectItem"></choose-school>
   <chart-filter :filterShow1.sync="filterShow1"></chart-filter>
 </div>
 </template>
@@ -50,18 +29,21 @@
   import { api } from "../../../static/js/request-api/request-api.js";
   import CalendarPacking from '../general/calendarPacking'
   import ChartFilter from '../general/chartFilterOther'
-
+  import ChooseSchool from '../general/chooseSchool'
   export default {
   components: {
     CalendarPacking,
-    ChartFilter
+    ChartFilter,
+    ChooseSchool
   },
   data () {
     return {
       filterShow1:false,
-      filterShow2:false,
-      list:['潮人部落','金色阳光'],
-      result:[],
+      chooseSchoolDatas:{
+        filterShow2:false,
+        selectItem:[],
+        list:['潮人部落','金色阳光']
+      },
       urls:{
         fullclassRate:'/chart/fullclassRate',
         classReportListDetial:'/chart/classReportListDetial'
@@ -75,20 +57,11 @@
     goTo (url) {
       this.$router.push({path: url})
     },
-    goBack(){
-      this.filterShow2=false
-    },
     showAreaPop(){
-      this.filterShow2=true
+      this.chooseSchoolDatas.filterShow2=true
     },
     showFilter (){
       this.filterShow1=true
-    },
-    resetFn(){
-
-    },
-    submitFn(){
-      this.filterShow2=false
     },
     drawLine () {
       // 基于准备好的dom，初始化echarts实例
@@ -144,6 +117,10 @@
         //日期快速切换值
         this.$toast(val)
       }
+    },
+    'chooseSchoolDatas.selectItem'(val){
+      console.log(val)
+      this.$toast('找到我查看选中校区的值')
     }
   }
 }
@@ -216,34 +193,9 @@ float: left;
  }
  }
 }
-.filter{
-
-  width: 78%;
-
-.class-back{
-  height: 70px;
-  line-height: 70px;
-  background: #eef1f6;
-  padding-left: 10px;
-.van-icon{
-  position: relative;
-  top: 4px;
-  margin-right: 10px;
-  color: #999;
-}
-}
-  .van-checkbox{
-    line-height: 70px;
-.van-checkbox__icon{
-  margin:0 8px 0 30px;
-i{
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-  font-size: 16px;
-}
-}
-}
+.choose-school-filter{
+  width:78%;
+  height:100%;
 }
 }
 
