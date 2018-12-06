@@ -421,6 +421,11 @@ export const api = {
   uploadFile(params) {
     return fetchPost(baseUrl + '/classEvaluation/uploadFile', params);
 },
+    //家长评价排名
+    parentEvaluationRanking(params) {
+        return fetchPost(baseUrl + '/user/parentEvaluationRanking', params);
+    },
+
 
 
 

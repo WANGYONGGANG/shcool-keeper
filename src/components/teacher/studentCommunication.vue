@@ -202,7 +202,7 @@ export default {
       param.order = 'asc';
 
       if(data1){
-        param.append('query_content' ,data1);
+        param.query_content=data1;
       }
       api.findStudentCommunicationDetailStu(param)
         .then(res => {
