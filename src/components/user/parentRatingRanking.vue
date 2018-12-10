@@ -27,7 +27,7 @@
           <th class="w150" @click="sortFn">平均分 <icon name="sort" scale="2" /></th>
           <th class="w150" @click="sortFn">排名 <icon name="sort" scale="2" /></th>
         </tr>
-        <tr @click="goTo(urls.evaluationLatitude)"  v-for="data in resourceList.detail">
+        <tr @click="goTo(urls.evaluationLatitude)"  v-for="data in resourceList.detail" :id="data.id">
           <td class="w450">{{data.name}}</td>
           <td class="w150">{{data.average_score}}</td>
           <td class="w150">{{data.ranking}}<van-icon name="arrow" size="1" class="w150-arrow" /></td>
@@ -52,8 +52,8 @@
     data () {
       return {
         begin_date:null,
-      end_date:null,
-      showCalendar:false,
+        end_date:null,
+        showCalendar:false,
         value: '',
         chooseSchoolDatas:{
           filterShow2:false,
@@ -72,7 +72,7 @@
             {
               text:'期段',
               isSelect:true,
-              id:0
+              id:2
 
             },
             {
@@ -84,21 +84,22 @@
             {
               text:'年级',
               isSelect:false,
-              id:2
+              id:3
             },
             {
               text:'科目',
               isSelect:false,
-              id:3
+              id:4
             },
             {
               text:'课程',
               isSelect:false,
-              id:4
+              id:5
             }
           ]
         },
-        resourceList:''
+        resourceList:'',
+        schoolPartList:[]
       }
     },
     mounted () {
@@ -111,7 +112,7 @@
         params.append('begin_date' ,this.begin_date);
         params.append('end_data' ,this.end_date);
         params.append('campus_id', '[9,10]');
-        params.append('type_id' ,1);
+        params.append('type_id' ,2);
 
         let _self = this;
         api.parentEvaluationRanking(params)
@@ -124,18 +125,42 @@
             
           });
       },
+      //查询所有校区
+    refreshDepartment: function() {
+      let params ={};
+      let _self = this;
+      api.refreshDepartment(null)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  _self.schoolPartList=res.data.data;
+                  _self.initDate();
+                }
+          } else {
+            let params = { msg: "查询所有校区" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "查询所有校区" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
       updateDate:function(beginDate,endDate){
-      this.begin_date=beginDate;
-      this.end_date=endDate;
-      // this.ReportCustomerAnalysisForSourceway();
-    },
+        this.begin_date=beginDate;
+        this.end_date=endDate;
+        this.parentEvaluationRanking();
+      },
       initDate(){
-      let schoolPartList=this.schoolPartList;
-       for(let i=0;i<schoolPartList.length;i++){
-         this.sortData.lists.push(schoolPartList[i].name);
-       }
-       this.sortData.selectItem.item=schoolPartList[0].name;
-    },
+        let schoolPartList=this.schoolPartList;
+        for(let i=0;i<schoolPartList.length;i++){
+          this.chooseSchoolDatas.lists.push(schoolPartList[i].name);
+        }
+        this.chooseSchoolDatas.selectItem.item=schoolPartList[0].name;
+      },
      initDateWeek:function(){
           this.begin_date = this.getAllDateFromNow(0);
           this.end_date = this.getWeekEndDate(0);
@@ -202,18 +227,13 @@
         this.date2 = year + "-" + month + "-" + myDate.getDate(); //上个月的最后一天
       }
     },
-     updateDate:function(beginDate,endDate){
-      this.begin_date=beginDate;
-      this.end_date=endDate;
-      // this.ReportCustomerAnalysisForState();
-    },
       initDate(){
-      let schoolPartList=this.schoolPartList;
-       for(let i=0;i<schoolPartList.length;i++){
-         this.sortData.lists.push(schoolPartList[i].name);
-       }
-       this.sortData.selectItem.item=schoolPartList[0].name;
-    },
+        let schoolPartList=this.schoolPartList;
+        for(let i=0;i<schoolPartList.length;i++){
+          this.chooseSchoolDatas.lists.push(schoolPartList[i].name);
+        }
+        this.chooseSchoolDatas.selectItem.item=schoolPartList[0].name;
+      },
      initDateWeek:function(){
           this.begin_date = this.getAllDateFromNow(0);
           this.end_date = this.getWeekEndDate(0);
@@ -326,7 +346,13 @@
       item :{
         //日期快速切换值
         handler(val){
+          this.getDate(val);
           this.$toast(val)
+          this.begin_date=this.date1;
+          this.end_date=this.date2;
+          console.log(this.begin_date)
+          this.parentEvaluationRanking();
+          this.$refs.CalendarPacking.setCheckedDateValue(this.begin_date,this.end_date);
         }
       },
       'popData.selectId':function (n,o) {
