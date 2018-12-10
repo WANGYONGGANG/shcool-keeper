@@ -10,14 +10,14 @@
         ref="CalendarPacking"  v-if="showCalendar" ></calendar-packing>
       <div class="operation" @click="showPop">{{popData.selectText}}</div>
     </div>
-    <ul class="average">
+    <ul class="average" :model="resourceList">
       <li class="average-tit">我的平均分</li>
-      <li class="average-item01">5.0000</li>
-      <li class="average-item02">在教师中排名第1名</li>
-      <li class="average-item03"><span>超越了所有人，位于榜首</span></li>
+      <li class="average-item01">{{resourceList.average_score}}</li>
+      <li class="average-item02">在教师中排名第{{resourceList.ranking}}名</li>
+      <li class="average-item03" v-if="resourceList.ranking === 1"><span>超越了所有人，位于榜首</span></li>
       <li class="average-item04">
-        <span>学校老师平均分<br/>4.3710</span>
-        <span>学校老师最高分<br/>5.0000</span>
+        <span>学校老师平均分<br/>{{resourceList.school_average_score}}</span>
+        <span>学校老师最高分<br/>{{resourceList.school_max_score}}</span>
       </li>
     </ul>
     <div class="charge-table">
@@ -27,10 +27,10 @@
           <th class="w150" @click="sortFn">平均分 <icon name="sort" scale="2" /></th>
           <th class="w150" @click="sortFn">排名 <icon name="sort" scale="2" /></th>
         </tr>
-        <tr @click="goTo(urls.evaluationLatitude)">
-          <td class="w450">17暑初二英语同步班</td>
-          <td class="w150">5.0000</td>
-          <td class="w150">1<van-icon name="arrow" size="1" class="w150-arrow" /></td>
+        <tr @click="goTo(urls.evaluationLatitude)"  v-for="data in resourceList.detail">
+          <td class="w450">{{data.name}}</td>
+          <td class="w150">{{data.average_score}}</td>
+          <td class="w150">{{data.ranking}}<van-icon name="arrow" size="1" class="w150-arrow" /></td>
         </tr>
       </table>
     </div>
@@ -97,7 +97,8 @@
               id:4
             }
           ]
-        }
+        },
+        resourceList:''
       }
     },
     mounted () {
@@ -116,8 +117,9 @@
         api.parentEvaluationRanking(params)
           .then(res => {
             console.log(res)
-            if(code===1){
-              this.resourceList=res.data.data;
+            if(res.code===1){
+              _self.resourceList=res.data;
+              console.log(_self.resourceList)
             }
           })
           .catch(error => {
