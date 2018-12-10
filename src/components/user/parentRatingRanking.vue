@@ -116,10 +116,8 @@
         let _self = this;
         api.parentEvaluationRanking(params)
           .then(res => {
-            console.log(res)
             if(res.code===1){
               _self.resourceList=res.data;
-              console.log(_self.resourceList)
             }
           })
           .catch(error => {
