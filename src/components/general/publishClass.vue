@@ -2,35 +2,18 @@
   <div class="publish-class">
     <div class="list-search">
       <div class="list-search-l">
-        <van-search placeholder="班级名称" background="#fff" show-action >
-          <div slot="action" @click="onSearch">搜索</div>
+        <van-search placeholder="班级名称" background="#fff" show-action  v-model="class_name">
+          <div slot="action" @click="searchAll">搜索</div>
         </van-search>
       </div>
       <div class="operation" @click="showSortDia">排序</div>
     </div>
     <van-cell-group class="class-list">
-      <van-cell is-link to="/general/publishPeople">
+      <!-- <van-cell is-link to="/general/publishPeople" v-for="(item,index) in classList" v-bind:key="index"> -->
+       <van-cell  v-for="(item,index) in classList" v-bind:key="index">
         <template slot="title">
           <input type="checkbox" />
-          <span class="list-item01">2018冬季班初一拓展班集体班 2班（0/1）</span><span class="list-item02">潮人部落</span>
-        </template>
-      </van-cell>
-      <van-cell is-link to="/general/publishPeople">
-        <template slot="title">
-          <input type="checkbox" />
-          <span class="list-item01">2018冬季班初一拓展班集体班 2班（0/2）</span><span class="list-item02">潮人部落</span>
-        </template>
-      </van-cell>
-      <van-cell is-link to="/general/publishPeople">
-        <template slot="title">
-          <input type="checkbox" />
-          <span class="list-item01">2018冬季班初一拓展班集体班 2班（0/1）</span><span class="list-item02">潮人部落</span>
-        </template>
-      </van-cell>
-      <van-cell is-link to="/general/publishPeople">
-        <template slot="title">
-          <input type="checkbox" />
-          <span class="list-item01">2018冬季班初一拓展班集体班 2班（0/1）</span><span class="list-item02">潮人部落</span>
+          <span class="list-item01"   v-on:click="openStudent(item.id)">{{item.className}}（{{item.currentStudentCount}}/{{item.recruitStudentsCount}}）</span><span class="list-item02">{{item.campusName}}</span>
         </template>
       </van-cell>
     </van-cell-group>
@@ -39,24 +22,83 @@
       <div class="fn-right"><span>确定</span></div>
     </div>
     <sort-pop></sort-pop>
+     <van-popup v-model="rightPopDates.item01.isShow"  position="right" style="height:100%;">
+       <publishPeople   ref="publishP" v-bind:classId="selectedClassId" v-on:addStudents="addStudents"></publishPeople>
+    </van-popup>
   </div>
 </template>
 <script>
+  import { api } from "../../../static/js/request-api/request-api.js";
+  import publishPeople from "@/components/general/publishPeople"
   import SortPop from '../popup/sortPopClass'
   export default {
     components: {
-      SortPop
+      SortPop,
+      publishPeople
     },
+    data() {
+    return {
+      classList:[],
+      class_name:null,
+      selectedClassId:null,
+      selectedstudentIds:null,
+      rightPopDates:{
+          item01:{
+            isShow:false,
+            selectItem:'',
+            data:[{itemName:'1'}]
+          }
+         },
+    };
+  },
+  mounted () {
+    this.findAllClassInfo();
+  },
   methods: {
     goTo (url) {
       this.$router.push({path: url})
+    },
+    addStudents(studentIds){
+        this.selectedstudentIds=studentIds;
+    },
+    searchAll(){
+     this.findAllClassInfo();
+    },
+    //打开班级花名册
+    openStudent(itemId){
+       this.selectedClassId=itemId;
+       this.rightPopDates.item01.isShow=true;
+    },
+    showSortDia(){
+
+    },
+    findAllClassInfo(){
+      let _self = this;
+      let params={};
+      params.class_name=this.class_name;
+      api.findAllClassInfo(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code===1){
+                  this.classList=res.data.data;
+                }
+          } else {
+            let params = { msg: "获取招生来源" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取招生来源" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
     },
     showSortDia () {
       //排序弹出层显示
       this.$store.state.sortPopup.isShow = true
     }
-  },
-  mounted () {
   }
 }
 </script>

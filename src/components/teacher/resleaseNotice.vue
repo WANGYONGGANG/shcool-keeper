@@ -2,7 +2,8 @@
   <div class="reslease-ass">
     <div class="recipient">
       <van-cell-group>
-        <van-cell title="接受人" value="内容" is-link to="/general/publishClass"/>
+        <!-- <van-cell title="接受人" value="内容" is-link to="/general/publishClass"/> -->
+        <van-cell title="接受人" value="请选择"  v-on:click="showIntroducer" />
       </van-cell-group>
     </div>
     <div class="ass-title">
@@ -28,7 +29,7 @@
         <div class="add-img" v-on:click="addFile">添加文件</div>
          <div class="img-sign" v-for="(item,index) in fileArray" v-bind:key="index"><span>{{item}}</span></div>
         </div>
-    <div style="display:none;">
+        <div style="display:none;">
       <div>
         <input type="file"  @change="uploadImg($event)"  multiple="multiple"  id="uploadImg" v-on:click="openUploadImg">
       </div>
@@ -41,23 +42,41 @@
    </div>
     </div>
     <div class="list-bottom">提交</div>
+    <van-popup v-model="rightPopDates.item01.isShow"  position="right" style="height:100%;">
+       <publishClass></publishClass>
+    </van-popup>
   </div>
 </template>
 <script>
 import { api } from "../../../static/js/request-api/request-api.js";
+import publishClass from "@/components/general/publishClass"
 import $ from "jquery";
 export default {
+  components: {
+      publishClass
+  },
   data() {
     return {
       notice_content:"",
       notice_title:"",
       fileArray: [],
+      rightPopDates:{
+          item01:{
+            isShow:false,
+            selectItem:'',
+            data:[{itemName:'1'}]
+          }
+         },
       mediaArray:[],
       imgArray:[]
     };
   },
   mounted: function() {},
   methods: {
+    //查询介绍人
+    showIntroducer:function(){
+        this.rightPopDates.item01.isShow=true;
+    },
     addImg: function() {
       $("#uploadImg").click();
     },

@@ -1,43 +1,78 @@
 <template>
   <div class="publish-people">
     <div class="title">
-      2018冬季班初一拓展班集体班 2班
+      {{studentList[0].className}}
     </div>
-    <van-cell-group class="class-list">
+    <div class="people-list">
+    <van-cell-group class="class-list"  v-for="(item,index) in studentList" v-bind:key="index">
       <van-cell>
         <template slot="title">
-          <input type="checkbox" />
+          <input type="checkbox"  v-bind:value="item.id" v-model="studentCheckIds"/>
           <img src="../../assets/images/user/test.jpg" class="img-auto"/>
-          000李八
-        </template>
-      </van-cell>
-      <van-cell>
-        <template slot="title">
-          <input type="checkbox" />
-          <img src="../../assets/images/user/test.jpg" class="img-auto"/>
-          王紫潼
+                 {{item.studentCode}}&nbsp;  {{item.studentName}}
         </template>
       </van-cell>
     </van-cell-group>
+    </div>
     <div class="all-choose fn-clear">
      <div class="fn-left"><input type="checkbox" /> 全选</div>
-      <div class="fn-right"><span>确定(0)</span></div>
+      <div class="fn-right"  v-on:click="addStudents"><span>确定({{studentCheckIds.length}})</span></div>
     </div>
   </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
 export default {
+   data() {
+    return {
+      studentList:[],
+      studentCheckIds:[]
+      }
+    },
+  props: ["classId"],
+  mounted () {
+     this.findAllClassStudentInfo();2
+  },
   methods: {
     goTo (url) {
       this.$router.push({path: url})
-    }
-  },
-  mounted () {
+    },
+    addStudents(){
+         this.$emit('addStudents', this.studentCheckIds);
+    },
+    //获取所有班级花名册
+      findAllClassStudentInfo(){
+      let _self = this;
+      let params={};
+      params.class_id=this.classId;
+      api.findAllClassStudentInfo(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code==1){
+                  this.studentList=res.data.data;
+                }
+          } else {
+            let params = { msg: "获取班级花名册" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取班级花名册" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
+    },
   }
 }
 </script>
 <style lang="less">
  .publish-people{
+.people-list{
+  height: 1080px;
+  overflow: auto;
+}
  .title{
   font-size: 28px;
    text-align: center;

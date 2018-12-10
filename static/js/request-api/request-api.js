@@ -422,8 +422,12 @@ export const api = {
     return fetchPost(baseUrl + '/classEvaluation/uploadFile', params);
 },
     //家长评价排名
-    parentEvaluationRanking(params) {
+parentEvaluationRanking(params) {
         return fetchPost(baseUrl + '/user/parentEvaluationRanking', params);
+},
+//获取所有班级花名册
+    findAllClassStudentInfo(params) {
+        return fetchGet(baseUrl + '/notice/findAllClassStudentInfo', params);
     },
 
 
