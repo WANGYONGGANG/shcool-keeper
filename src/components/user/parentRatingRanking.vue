@@ -27,7 +27,7 @@
           <th class="w150" @click="sortFn">平均分 <icon name="sort" scale="2" /></th>
           <th class="w150" @click="sortFn">排名 <icon name="sort" scale="2" /></th>
         </tr>
-        <tr @click="goTo(urls.evaluationLatitude)"  v-for="data in resourceList.detail" :id="data.id">
+        <tr @click="goTo(urls.evaluationLatitude,data.id,begin_date,end_date,selectid)" :selectid.sync="popData.selectId" v-bind:begin_date="begin_date"  v-bind:end_date="end_date"  v-for="data in resourceList.detail" :id="data.id">
           <td class="w450">{{data.name}}</td>
           <td class="w150">{{data.average_score}}</td>
           <td class="w150">{{data.ranking}}<van-icon name="arrow" size="1" class="w150-arrow" /></td>
@@ -53,6 +53,7 @@
       return {
         begin_date:null,
         end_date:null,
+        selectid:2,
         showCalendar:false,
         value: '',
         chooseSchoolDatas:{
@@ -66,7 +67,7 @@
         },
         popData:{
           isShow:false,
-          selectId:0,
+          selectId:2,
           selectText:'期段',
           items: [
             {
@@ -326,8 +327,8 @@
       showAreaPop(){
         this.chooseSchoolDatas.filterShow2=true
       },
-      goTo (url) {
-        this.$router.push({path: url})
+      goTo (url,parame1,parame2,parame3,parame4) {
+        this.$router.push({path: url,query:{id:parame1,begin_date:parame2,end_date:parame3,type_id:parame4} })
       },
 
       showPop(){
