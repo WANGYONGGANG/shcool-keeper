@@ -27,14 +27,14 @@
           <th class="w150" @click="sortFn">平均分 <icon name="sort" scale="2" /></th>
           <th class="w150" @click="sortFn">排名 <icon name="sort" scale="2" /></th>
         </tr>
-        <tr @click="goTo(urls.evaluationLatitude,data.id,begin_date,end_date,selectid)" :selectid.sync="popData.selectId" v-bind:begin_date="begin_date"  v-bind:end_date="end_date"  v-for="data in resourceList.detail" :id="data.id">
+        <tr @click="goTo(urls.evaluationLatitude,data.id,begin_date,end_date,selectid,[9,10])" :selectid.sync="popData.selectId" v-bind:begin_date="begin_date"  v-bind:end_date="end_date"  v-for="data in resourceList.detail" :id="data.id">
           <td class="w450">{{data.name}}</td>
           <td class="w150">{{data.average_score}}</td>
           <td class="w150">{{data.ranking}}<van-icon name="arrow" size="1" class="w150-arrow" /></td>
         </tr>
       </table>
     </div>
-    <choose-school :isShow.sync="chooseSchoolDatas.filterShow2" :list.sync="chooseSchoolDatas.list" :selectItem.sync="chooseSchoolDatas.selectItem"></choose-school>
+    <choose-school :isShow.sync="chooseSchoolDatas.filterShow2" :lists.sync="chooseSchoolDatas.lists" :selectItem.sync="chooseSchoolDatas.selectItem"></choose-school>
     <sort-pop :title="popData.title" :items.sync="popData.items" :isShow.sync="popData.isShow" :selectId.sync="popData.selectId" ></sort-pop>
   </div>
 </template>
@@ -59,7 +59,7 @@
         chooseSchoolDatas:{
           filterShow2:false,
           selectItem:[],
-          list:['潮人部落','金色阳光']
+          lists:[]
         },
         urls: {
           examinationResult: '/teacher/examinationResult',
@@ -105,6 +105,7 @@
     },
     mounted () {
       this.initDateWeek();
+      this.refreshDepartment();
       this.parentEvaluationRanking();
     },
     methods: {
@@ -126,30 +127,29 @@
             
           });
       },
-      //查询所有校区
-    refreshDepartment: function() {
-      let params ={};
-      let _self = this;
-      api.refreshDepartment(null)
-        .then(res => {
-          if (res.status == 200) {
-                let code=res.data.code;
-                if(code===1){
-                  _self.schoolPartList=res.data.data;
-                  _self.initDate();
-                }
-          } else {
+     //查询所有校区
+      refreshDepartment: function() {
+        let params ={};
+        let _self = this;
+        api.refreshDepartment(null)
+          .then(res => {
+            console.log(res)
+            if (res.status == 200) {
+                  let code=res.data.code;
+                  if(code===1){
+                    _self.schoolPartList=res.data.data;
+                    _self.initDate();
+                  }
+            } else {
+              let params = { msg: "查询所有校区" };
+             
+            }
+          })
+          .catch(error => {
             let params = { msg: "查询所有校区" };
-            // GlobalVue.$emit("alert", params);
-            // GlobalVue.$emit("blackBg", null);
-          }
-        })
-        .catch(error => {
-          let params = { msg: "查询所有校区" };
-          // GlobalVue.$emit("alert", params);
-          // GlobalVue.$emit("blackBg", null);
-        });
-    },
+            
+          });
+      },
       updateDate:function(beginDate,endDate){
         this.begin_date=beginDate;
         this.end_date=endDate;
@@ -327,8 +327,8 @@
       showAreaPop(){
         this.chooseSchoolDatas.filterShow2=true
       },
-      goTo (url,parame1,parame2,parame3,parame4) {
-        this.$router.push({path: url,query:{id:parame1,begin_date:parame2,end_date:parame3,type_id:parame4} })
+      goTo (url,parame1,parame2,parame3,parame4,parame5) {
+        this.$router.push({path: url,query:{id:parame1,begin_date:parame2,end_date:parame3,type_id:parame4,campus_id:encodeURIComponent(JSON.stringify(parame5))} })
       },
 
       showPop(){

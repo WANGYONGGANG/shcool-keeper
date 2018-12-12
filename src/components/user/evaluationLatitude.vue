@@ -53,7 +53,7 @@ export default {
         params.append('id',   this.$route.query.id);
         params.append('begin_date' ,this.$route.query.begin_date);
         params.append('end_data' ,this.$route.query.end_date);
-        params.append('campus_id', '[9,10]');
+        params.append('campus_id', JSON.parse(this.$route.query.campus_id));
         params.append('type_id' ,this.$route.query.type_id);
 
         let _self = this;
