@@ -433,8 +433,14 @@ export const api = {
     findAllClassStudentInfo(params) {
         return fetchGet(baseUrl + '/notice/findAllClassStudentInfo', params);
     },
-
-
+    //投诉建议列表
+    finaAllSuggertion(params) {
+        return fetchGet(baseUrl + '/user/finaAllSuggertion', params);
+    },
+    //增加投诉建议
+    addSuggestion(params) {
+        return fetchPost(baseUrl + '/user/addSuggestion', params);
+    },
 
 
 

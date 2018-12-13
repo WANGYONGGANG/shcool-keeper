@@ -26,21 +26,39 @@
     <li class="check-item01"><input type="checkbox">匿名回复</li>
     <li class="check-item02">勾选"匿名回复"后，家长不能看到回复人的具体姓名，否则，系统会显示回复人的真实姓名</li>
   </ul>
-<div class="complaints-submit">提交</div>
+<div class="complaints-submit" @click="btnFun()">提交</div>
 </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
       urls:{
         complaintsDetial:'/user/complaintsDetial'
-      }
+      },
+      message:'',
     }
   },
+   mounted(){
+    //  this.$route.query.time
+
+   },
   methods: {
+     btnFun(){
+      let params = new URLSearchParams();
+      params.append("campus_id", this.$route.query.nameData.campusId);
+      params.append("content", this.message);
+      params.append("student_id", this.$route.query.nameData.studentId);
+      api.addSuggestion(params)
+        .then(res=>{
+          // this.dataList=res.data.data.rows
+      },()=>{
+
+      })
+      ;
+    },
     goTo (url) {
-      alert('111')
       this.$router.push({path: url})
     }
   }
