@@ -2,7 +2,7 @@
   <div class="parent-rating-ranking">
     <div class="choose-school-zone" @click="showAreaPop">
       <van-cell-group>
-        <van-cell title="选择校区" value="潮人部落" is-link/>
+        <van-cell title="选择校区" value="请选择校区" is-link/>
       </van-cell-group>
     </div>
     <div class="class-tab fn-clear">
@@ -34,7 +34,7 @@
         </tr>
       </table>
     </div>
-    <choose-school :isShow.sync="chooseSchoolDatas.filterShow2" :lists.sync="chooseSchoolDatas.lists" :selectItem.sync="chooseSchoolDatas.selectItem"></choose-school>
+    <choose-school :isShow.sync="chooseSchoolDatas.filterShow2" :listLen.sync="chooseSchoolDatas.listLen" :lists.sync="chooseSchoolDatas.lists" :selectItem.sync="chooseSchoolDatas.selectItem"></choose-school>
     <sort-pop :title="popData.title" :items.sync="popData.items" :isShow.sync="popData.isShow" :selectId.sync="popData.selectId" ></sort-pop>
   </div>
 </template>
@@ -59,7 +59,8 @@
         chooseSchoolDatas:{
           filterShow2:false,
           selectItem:[],
-          lists:[]
+          lists:[],
+          listLen:''
         },
         urls: {
           examinationResult: '/teacher/examinationResult',
@@ -100,7 +101,8 @@
           ]
         },
         resourceList:'',
-        schoolPartList:[]
+        schoolPartList:[],
+        selectIds:[]
       }
     },
     mounted () {
@@ -113,7 +115,11 @@
         let params = new URLSearchParams();
         params.append('begin_date' ,this.begin_date);
         params.append('end_data' ,this.end_date);
-        params.append('campus_id', '[9,10]');
+        if(this.selectIds==''){
+          params.append('campus_id', '');
+        }else{
+          params.append('campus_id', '['+this.selectIds+']');
+        }
         params.append('type_id' ,this.popData.selectId);
 
         let _self = this;
@@ -158,9 +164,12 @@
       initDate(){
         let schoolPartList=this.schoolPartList;
         for(let i=0;i<schoolPartList.length;i++){
-          this.chooseSchoolDatas.lists.push(schoolPartList[i].name);
+          // this.chooseSchoolDatas.lists.push(schoolPartList[i].name);
+          this.chooseSchoolDatas.lists.push(schoolPartList[i]);
         }
+        this.chooseSchoolDatas.listLen = schoolPartList.length;
         this.chooseSchoolDatas.selectItem.item=schoolPartList[0].name;
+        this.selectIds=schoolPartList[0].id;
       },
      initDateWeek:function(){
           this.begin_date = this.getAllDateFromNow(0);
@@ -228,13 +237,6 @@
         this.date2 = year + "-" + month + "-" + myDate.getDate(); //上个月的最后一天
       }
     },
-      initDate(){
-        let schoolPartList=this.schoolPartList;
-        for(let i=0;i<schoolPartList.length;i++){
-          this.chooseSchoolDatas.lists.push(schoolPartList[i].name);
-        }
-        this.chooseSchoolDatas.selectItem.item=schoolPartList[0].name;
-      },
      initDateWeek:function(){
           this.begin_date = this.getAllDateFromNow(0);
           this.end_date = this.getWeekEndDate(0);
@@ -328,7 +330,7 @@
         this.chooseSchoolDatas.filterShow2=true
       },
       goTo (url,parame1,parame2,parame3,parame4,parame5) {
-        this.$router.push({path: url,query:{id:parame1,begin_date:parame2,end_date:parame3,type_id:parame4,campus_id:encodeURIComponent(JSON.stringify(parame5))} })
+        this.$router.push({path: url,query:{id:parame1,begin_date:parame2,end_date:parame3,type_id:parame4,campus_id:JSON.stringify(parame5)} })
       },
 
       showPop(){
@@ -359,12 +361,18 @@
       'popData.selectId': {
         handler(val){
           this.$toast(val)
-          this.popData.selectText = this.popData.items[val].text
+          this.popData.selectText = this.popData.items[val-1].text
         }
       },
       'chooseSchoolDatas.selectItem'(val){
         console.log(val)
+        this.selectIds=[];
+        for(var i=0;i<val.length;i++){
+            this.selectIds.push(val[i].id);
+        }
+        console.log(this.selectIds)
         this.$toast('找到我查看选中校区的值')
+        this.parentEvaluationRanking()
       }
     }
   }

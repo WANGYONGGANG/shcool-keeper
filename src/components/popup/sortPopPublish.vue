@@ -18,6 +18,7 @@ export default {
   },
   methods: {
     clickFn (item,index) {
+      console.log(item)
       this.$emit('update:isShow', false);
       this.$emit('update:selectId', item.id);
       this.items.map(function (v,k) {

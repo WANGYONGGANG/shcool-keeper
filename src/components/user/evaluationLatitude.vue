@@ -44,7 +44,7 @@ export default {
   mounted () {
     this.drawLine();
     console.log(this.$route.query.id)
-    console.log(this.$route.query.begin_date)
+    console.log(this.$route.query.campus_id)
     this.parentEvaluationDimension()
   },
   methods: {
