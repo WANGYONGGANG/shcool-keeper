@@ -357,9 +357,8 @@
         }
       },
       'popData.selectId':function (n,o) {
-        console.log(n)
+        // console.log(n)
         this.popData.selectText=this.popData.items[n].text
-        
         // this.popData.selectId=this.popData.items[n].id
         // this.$toast(this.popData.selectText)
         // this.parentEvaluationRanking();
