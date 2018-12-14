@@ -1,10 +1,10 @@
 <template>
-  <van-popup v-model="isShow" position="bottom" @click-overlay="closePop">
+  <van-popup v-model="isShow" position="bottom" :close-on-click-overlay=false  @click-overlay="closePop">
     <dl class="ip-list">
       <dt>{{title}}</dt>
       <dd v-for="(item, index) in items" @click="clickFn(item, index)" :data-index="index" :class="{ select: item.isSelect }" :v-model="item.sort">
         {{item.text}}
-        <span v-show="item.isSelect" class="fn-right"><van-icon name="success" /></span>
+        <span v-show="item.isSeclect" class="fn-right"><van-icon name="success" /></span>
       </dd>
     </dl>
   </van-popup>
