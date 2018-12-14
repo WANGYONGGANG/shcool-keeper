@@ -12,14 +12,14 @@
       <!-- <van-cell is-link to="/general/publishPeople" v-for="(item,index) in classList" v-bind:key="index"> -->
        <van-cell  v-for="(item,index) in classList" v-bind:key="index">
         <template slot="title">
-          <input type="checkbox" />
+          <input type="checkbox"  v-bind:value="item.id" v-model="classCheckIds"  />
           <span class="list-item01"   v-on:click="openStudent(item.id)">{{item.className}}（{{item.currentStudentCount}}/{{item.recruitStudentsCount}}）</span><span class="list-item02">{{item.campusName}}</span>
         </template>
       </van-cell>
     </van-cell-group>
     <div class="all-choose fn-clear">
      <div class="fn-left"><input type="checkbox" /> 全选</div>
-      <div class="fn-right"><span>确定</span></div>
+      <div class="fn-right" v-on:click="addClass"><span>确定</span></div>
     </div>
     <sort-pop></sort-pop>
      <van-popup v-model="rightPopDates.item01.isShow"  position="right" style="height:100%;">
@@ -41,7 +41,9 @@
       classList:[],
       class_name:null,
       selectedClassId:null,
-      selectedstudentIds:null,
+      classCheckIds:[],
+      classObjAllSelcted:[],
+      selectedClassObj:null,
       rightPopDates:{
           item01:{
             isShow:false,
@@ -58,8 +60,15 @@
     goTo (url) {
       this.$router.push({path: url})
     },
-    addStudents(studentIds){
-        this.selectedstudentIds=studentIds;
+    addStudents(classObj){
+        this.selectedClassObj=classObj;
+        this.rightPopDates.item01.isShow=false;
+        this.classObjAllSelcted.push(classObj);
+    },
+    //添加班级
+    addClass(){
+      // let classCheckIds=this.classCheckIds;
+      this.$emit('addClass', this.classObjAllSelcted);
     },
     searchAll(){
      this.findAllClassInfo();
