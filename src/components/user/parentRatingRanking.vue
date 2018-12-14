@@ -356,13 +356,11 @@
           this.$refs.CalendarPacking.setCheckedDateValue(this.begin_date,this.end_date);
         }
       },
-      'popData.selectId':function (n,o) {
-        // console.log(n)
-        this.popData.selectText=this.popData.items[n].text
-        // this.popData.selectId=this.popData.items[n].id
-        // this.$toast(this.popData.selectText)
-        // this.parentEvaluationRanking();
-
+      'popData.selectId': {
+        handler(val){
+          this.$toast(val)
+          this.popData.selectText = this.popData.items[val].text
+        }
       },
       'chooseSchoolDatas.selectItem'(val){
         console.log(val)
