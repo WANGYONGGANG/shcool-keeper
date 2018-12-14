@@ -10,14 +10,14 @@
         ref="CalendarPacking"  v-if="showCalendar" ></calendar-packing>
       <div class="operation" @click="showPop">{{popData.selectText}}</div>
     </div>
-    <ul class="average">
+    <ul class="average" :model="resourceList">
       <li class="average-tit">我的平均分</li>
-      <li class="average-item01">5.0000</li>
-      <li class="average-item02">在教师中排名第1名</li>
-      <li class="average-item03"><span>超越了所有人，位于榜首</span></li>
+      <li class="average-item01">{{resourceList.average_score}}</li>
+      <li class="average-item02">在教师中排名第{{resourceList.ranking}}名</li>
+      <li class="average-item03" v-if="resourceList.ranking === 1"><span>超越了所有人，位于榜首</span></li>
       <li class="average-item04">
-        <span>学校老师平均分<br/>4.3710</span>
-        <span>学校老师最高分<br/>5.0000</span>
+        <span>学校老师平均分<br/>{{resourceList.school_average_score}}</span>
+        <span>学校老师最高分<br/>{{resourceList.school_max_score}}</span>
       </li>
     </ul>
     <div class="charge-table">
@@ -27,14 +27,14 @@
           <th class="w150" @click="sortFn">平均分 <icon name="sort" scale="2" /></th>
           <th class="w150" @click="sortFn">排名 <icon name="sort" scale="2" /></th>
         </tr>
-        <tr @click="goTo(urls.evaluationLatitude)">
-          <td class="w450">17暑初二英语同步班</td>
-          <td class="w150">5.0000</td>
-          <td class="w150">1<van-icon name="arrow" size="1" class="w150-arrow" /></td>
+        <tr @click="goTo(urls.evaluationLatitude,data.id,begin_date,end_date,selectid,[9,10])" :selectid.sync="popData.selectId" v-bind:begin_date="begin_date"  v-bind:end_date="end_date"  v-for="data in resourceList.detail" :id="data.id">
+          <td class="w450">{{data.name}}</td>
+          <td class="w150">{{data.average_score}}</td>
+          <td class="w150">{{data.ranking}}<van-icon name="arrow" size="1" class="w150-arrow" /></td>
         </tr>
       </table>
     </div>
-    <choose-school :isShow.sync="chooseSchoolDatas.filterShow2" :list.sync="chooseSchoolDatas.list" :selectItem.sync="chooseSchoolDatas.selectItem"></choose-school>
+    <choose-school :isShow.sync="chooseSchoolDatas.filterShow2" :lists.sync="chooseSchoolDatas.lists" :selectItem.sync="chooseSchoolDatas.selectItem"></choose-school>
     <sort-pop :title="popData.title" :items.sync="popData.items" :isShow.sync="popData.isShow" :selectId.sync="popData.selectId" ></sort-pop>
   </div>
 </template>
@@ -52,13 +52,14 @@
     data () {
       return {
         begin_date:null,
-      end_date:null,
-      showCalendar:false,
+        end_date:null,
+        selectid:2,
+        showCalendar:false,
         value: '',
         chooseSchoolDatas:{
           filterShow2:false,
           selectItem:[],
-          list:['潮人部落','金色阳光']
+          lists:[]
         },
         urls: {
           examinationResult: '/teacher/examinationResult',
@@ -66,13 +67,13 @@
         },
         popData:{
           isShow:false,
-          selectId:0,
+          selectId:2,
           selectText:'期段',
           items: [
             {
               text:'期段',
               isSelect:true,
-              id:0
+              id:2
 
             },
             {
@@ -84,24 +85,27 @@
             {
               text:'年级',
               isSelect:false,
-              id:2
+              id:3
             },
             {
               text:'科目',
               isSelect:false,
-              id:3
+              id:4
             },
             {
               text:'课程',
               isSelect:false,
-              id:4
+              id:5
             }
           ]
-        }
+        },
+        resourceList:'',
+        schoolPartList:[]
       }
     },
     mounted () {
       this.initDateWeek();
+      this.refreshDepartment();
       this.parentEvaluationRanking();
     },
     methods: {
@@ -110,32 +114,54 @@
         params.append('begin_date' ,this.begin_date);
         params.append('end_data' ,this.end_date);
         params.append('campus_id', '[9,10]');
-        params.append('type_id' ,1);
+        params.append('type_id' ,this.popData.selectId);
 
         let _self = this;
         api.parentEvaluationRanking(params)
           .then(res => {
-            console.log(res)
-            if(code===1){
-              this.resourceList=res.data.data;
+            if(res.code===1){
+              _self.resourceList=res.data;
             }
           })
           .catch(error => {
             
           });
       },
+     //查询所有校区
+      refreshDepartment: function() {
+        let params ={};
+        let _self = this;
+        api.refreshDepartment(null)
+          .then(res => {
+            console.log(res)
+            if (res.status == 200) {
+                  let code=res.data.code;
+                  if(code===1){
+                    _self.schoolPartList=res.data.data;
+                    _self.initDate();
+                  }
+            } else {
+              let params = { msg: "查询所有校区" };
+             
+            }
+          })
+          .catch(error => {
+            let params = { msg: "查询所有校区" };
+            
+          });
+      },
       updateDate:function(beginDate,endDate){
-      this.begin_date=beginDate;
-      this.end_date=endDate;
-      // this.ReportCustomerAnalysisForSourceway();
-    },
+        this.begin_date=beginDate;
+        this.end_date=endDate;
+        this.parentEvaluationRanking();
+      },
       initDate(){
-      let schoolPartList=this.schoolPartList;
-       for(let i=0;i<schoolPartList.length;i++){
-         this.sortData.lists.push(schoolPartList[i].name);
-       }
-       this.sortData.selectItem.item=schoolPartList[0].name;
-    },
+        let schoolPartList=this.schoolPartList;
+        for(let i=0;i<schoolPartList.length;i++){
+          this.chooseSchoolDatas.lists.push(schoolPartList[i].name);
+        }
+        this.chooseSchoolDatas.selectItem.item=schoolPartList[0].name;
+      },
      initDateWeek:function(){
           this.begin_date = this.getAllDateFromNow(0);
           this.end_date = this.getWeekEndDate(0);
@@ -202,18 +228,13 @@
         this.date2 = year + "-" + month + "-" + myDate.getDate(); //上个月的最后一天
       }
     },
-     updateDate:function(beginDate,endDate){
-      this.begin_date=beginDate;
-      this.end_date=endDate;
-      // this.ReportCustomerAnalysisForState();
-    },
       initDate(){
-      let schoolPartList=this.schoolPartList;
-       for(let i=0;i<schoolPartList.length;i++){
-         this.sortData.lists.push(schoolPartList[i].name);
-       }
-       this.sortData.selectItem.item=schoolPartList[0].name;
-    },
+        let schoolPartList=this.schoolPartList;
+        for(let i=0;i<schoolPartList.length;i++){
+          this.chooseSchoolDatas.lists.push(schoolPartList[i].name);
+        }
+        this.chooseSchoolDatas.selectItem.item=schoolPartList[0].name;
+      },
      initDateWeek:function(){
           this.begin_date = this.getAllDateFromNow(0);
           this.end_date = this.getWeekEndDate(0);
@@ -306,8 +327,8 @@
       showAreaPop(){
         this.chooseSchoolDatas.filterShow2=true
       },
-      goTo (url) {
-        this.$router.push({path: url})
+      goTo (url,parame1,parame2,parame3,parame4,parame5) {
+        this.$router.push({path: url,query:{id:parame1,begin_date:parame2,end_date:parame3,type_id:parame4,campus_id:encodeURIComponent(JSON.stringify(parame5))} })
       },
 
       showPop(){
@@ -326,11 +347,21 @@
       item :{
         //日期快速切换值
         handler(val){
+          this.getDate(val);
           this.$toast(val)
+          this.begin_date=this.date1;
+          this.end_date=this.date2;
+          console.log(this.begin_date)
+          this.parentEvaluationRanking();
+          this.$refs.CalendarPacking.setCheckedDateValue(this.begin_date,this.end_date);
         }
       },
       'popData.selectId':function (n,o) {
+        // console.log(n)
         this.popData.selectText=this.popData.items[n].text
+        // this.popData.selectId=this.popData.items[n].id
+        // this.$toast(this.popData.selectText)
+        // this.parentEvaluationRanking();
 
       },
       'chooseSchoolDatas.selectItem'(val){

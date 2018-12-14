@@ -10,12 +10,12 @@
           <th class="w150">平均分</th>
           <th class="w150">排名</th>
         </tr>
-        <tr @click="goTo(urls.evaluationLatitudeDetial)">
-          <td class="w450">老是仪容仪表</td>
-          <td class="w150">5.0000</td>
-          <td class="w150">1<van-icon name="arrow" size="1" class="w150-arrow" /></td>
+        <tr @click="goTo(urls.evaluationLatitudeDetial)" v-for="data in resourceList" :id="data.id">
+          <td class="w450">{{data.name}}</td>
+          <td class="w150">{{data.average_score}}</td>
+          <td class="w150">{{data.ranking}}<van-icon name="arrow" size="1" class="w150-arrow" /></td>
         </tr>
-        <tr @click="goTo(urls.evaluationLatitudeDetial)">
+        <!-- <tr @click="goTo(urls.evaluationLatitudeDetial)">
           <td class="w450">教学内容</td>
           <td class="w150">5.0000</td>
           <td class="w150">1<van-icon name="arrow" size="1" class="w150-arrow" /></td>
@@ -24,24 +24,50 @@
           <td class="w450">教学态度</td>
           <td class="w150">5.0000</td>
           <td class="w150">1<van-icon name="arrow" size="1" class="w150-arrow" /></td>
-        </tr>
+        </tr> -->
       </table>
     </div>
   </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
+import Router from "vue-router";
 export default {
   data () {
     return {
+      resourceList:[],
       urls: {
         evaluationLatitudeDetial: '/user/evaluationLatitudeDetial'
       }
     }
   },
   mounted () {
-    this.drawLine()
+    this.drawLine();
+    console.log(this.$route.query.id)
+    console.log(this.$route.query.begin_date)
+    this.parentEvaluationDimension()
   },
   methods: {
+    parentEvaluationDimension:function(){
+        let params = new URLSearchParams();
+        params.append('id',   this.$route.query.id);
+        params.append('begin_date' ,this.$route.query.begin_date);
+        params.append('end_data' ,this.$route.query.end_date);
+        params.append('campus_id', '['+JSON.parse(this.$route.query.campus_id)+']');
+        params.append('type_id' ,this.$route.query.type_id);
+
+        let _self = this;
+        api.parentEvaluationDimension(params)
+          .then(res => {
+            console.log(res)
+            if(res.code===1){
+              _self.resourceList=res.data;
+            }
+          })
+          .catch(error => {
+            
+          });
+    },
     goTo (url) {
       this.$router.push({path: url})
     },

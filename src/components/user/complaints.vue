@@ -1,32 +1,49 @@
 <template>
 <div class="complaints">
-  <section @click="goTo(urls.complaintsDetial)">
+  <section @click="goTo(urls.complaintsDetial)" v-for='item in dataList'>
     <div class="timetable-table">
       <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
       <div class="table-l">
-        <div class="class-tit">张跃龙</div>
-        <div class="class-details"><span class="time">2018-11-22 20:26</span></div>
+        <div class="class-tit">{{item.studentName}}</div>
+        <div class="class-details"><span class="time">{{item.createTime}}</span></div>
       </div>
       <div class="table-r">
         <van-icon name="pending-evaluate" />
       </div>
     </div>
-    <div class="complaints-txt">灯火辉煌</div>
+    <div class="complaints-txt">{{item.content}}</div>
   </section>
 </div>
 </template>
 <script>
+import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
       urls:{
         complaintsDetial:'/user/complaintsDetial'
-      }
+      },
+      dataList:'',
     }
   },
+  mounted(){
+    this.haveList()
+  },
   methods: {
+    haveList(){
+      let params = new URLSearchParams();
+      params.append("page", '1');
+      params.append("rows", '100');
+      api.finaAllSuggertion(params)
+        .then(res=>{
+          this.dataList=res.data.data.rows
+      },()=>{
+
+      })
+      ;
+    },
     goTo (url) {
-      this.$router.push({path: url})
+      this.$router.push({path: url,query:{nameData:this.dataList}})
     }
   }
 }

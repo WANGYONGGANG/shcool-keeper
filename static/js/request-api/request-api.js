@@ -412,25 +412,35 @@ export const api = {
     //删除分组
     deleteReportFullClassRandGroup(params) {
         return fetchGet(baseUrl + '/principalAPI/deleteReportFullClassRandGroup', params);
-  },
-   //获取分组
-   findAllClassRandGroup(params) {
-    return fetchGet(baseUrl + '/principalAPI/findAllClassRandGroup', params);
-},
-  //图片和文件上传
-  uploadFile(params) {
-    return fetchPost(baseUrl + '/classEvaluation/uploadFile', params);
-},
-    //家长评价排名
-parentEvaluationRanking(params) {
+    },
+    //获取分组
+    findAllClassRandGroup(params) {
+        return fetchGet(baseUrl + '/principalAPI/findAllClassRandGroup', params);
+    },
+    //图片和文件上传
+    uploadFile(params) {
+        return fetchPost(baseUrl + '/classEvaluation/uploadFile', params);
+    },
+        //家长评价排名
+    parentEvaluationRanking(params) {
         return fetchPost(baseUrl + '/user/parentEvaluationRanking', params);
-},
-//获取所有班级花名册
+    },
+    //家长评价排名->评价维度
+    parentEvaluationDimension(params) {
+        return fetchPost(baseUrl + '/user/parentEvaluationDimension', params);
+    },
+    //获取所有班级花名册
     findAllClassStudentInfo(params) {
         return fetchGet(baseUrl + '/notice/findAllClassStudentInfo', params);
     },
-
-
+    //投诉建议列表
+    finaAllSuggertion(params) {
+        return fetchGet(baseUrl + '/user/finaAllSuggertion', params);
+    },
+    //增加投诉建议
+    addSuggestion(params) {
+        return fetchPost(baseUrl + '/user/addSuggestion', params);
+    },
 
 
 

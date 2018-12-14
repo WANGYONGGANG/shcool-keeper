@@ -5,11 +5,7 @@
       全选
     </van-checkbox>
     <van-checkbox-group v-model="result">
-      <van-checkbox
-        v-for="(item, index) in list"
-        :key="index"
-        :name="item"
-      >
+      <van-checkbox v-for="(item, index) in lists" :key="index" :name="item" :id="item.id">
         {{ item }}
       </van-checkbox>
     </van-checkbox-group>
@@ -21,12 +17,12 @@
 </template>
 <script>
   export default {
-    props:['list','isShow','selectItem'],
+    props:['lists','isShow','selectItem'],
     data () {
       return {
         checked:false,
         result:[],
-        listLength:this.list.length,
+        listLength:this.lists.length,
         resultLength:0
       }
     },
@@ -36,7 +32,7 @@
       },
       changeFn(value){
         if(value===true){
-          this.result=this.list
+          this.result=this.lists
         }else{
           this.result=[]
         }
