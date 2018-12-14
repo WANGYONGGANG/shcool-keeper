@@ -114,7 +114,7 @@
         params.append('begin_date' ,this.begin_date);
         params.append('end_data' ,this.end_date);
         params.append('campus_id', '[9,10]');
-        params.append('type_id' ,2);
+        params.append('type_id' ,this.popData.selectId);
 
         let _self = this;
         api.parentEvaluationRanking(params)
@@ -357,7 +357,12 @@
         }
       },
       'popData.selectId':function (n,o) {
+        console.log(n)
         this.popData.selectText=this.popData.items[n].text
+        
+        // this.popData.selectId=this.popData.items[n].id
+        // this.$toast(this.popData.selectText)
+        // this.parentEvaluationRanking();
 
       },
       'chooseSchoolDatas.selectItem'(val){
