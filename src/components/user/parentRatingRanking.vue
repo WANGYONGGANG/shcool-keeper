@@ -360,8 +360,10 @@
       },
       'popData.selectId': {
         handler(val){
-          this.$toast(val)
           this.popData.selectText = this.popData.items[val-1].text
+          this.$toast(this.popData.selectText)
+          this.popData.selectId = val
+          this.parentEvaluationRanking()
         }
       },
       'chooseSchoolDatas.selectItem'(val){
@@ -371,7 +373,7 @@
             this.selectIds.push(val[i].id);
         }
         console.log(this.selectIds)
-        this.$toast('找到我查看选中校区的值')
+        // this.$toast('找到我查看选中校区的值')
         this.parentEvaluationRanking()
       }
     }

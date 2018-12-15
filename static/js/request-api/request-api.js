@@ -429,6 +429,15 @@ export const api = {
     parentEvaluationDimension(params) {
         return fetchPost(baseUrl + '/user/parentEvaluationDimension', params);
     },
+    //家长评价排名->评价维度->明细
+    parentEvaluationDimensionDetail(params) {
+        return fetchPost(baseUrl + '/user/parentEvaluationDimensionDetail', params);
+    },
+    //家长评价排名->评价维度->明细-》评价明细
+    parentEvaluationDimensionDetailWithClassPlean(params) {
+        return fetchPost(baseUrl + '/user/parentEvaluationDimensionDetailWithClassPlean', params);
+    },
+
     //获取所有班级花名册
     findAllClassStudentInfo(params) {
         return fetchGet(baseUrl + '/notice/findAllClassStudentInfo', params);

@@ -10,7 +10,7 @@
           <th class="w150">平均分</th>
           <th class="w150">排名</th>
         </tr>
-        <tr @click="goTo(urls.evaluationLatitudeDetial)" v-for="data in resourceList" :id="data.id">
+        <tr @click="goTo(urls.evaluationLatitudeDetial,rankId,begin_date,end_date,type_id,campus_id,data.id)" v-for="data in resourceList" :id="data.id">
           <td class="w450">{{data.name}}</td>
           <td class="w150">{{data.average_score}}</td>
           <td class="w150">{{data.ranking}}<van-icon name="arrow" size="1" class="w150-arrow" /></td>
@@ -38,7 +38,12 @@ export default {
       resourceList:[],
       urls: {
         evaluationLatitudeDetial: '/user/evaluationLatitudeDetial'
-      }
+      },
+      rankId:this.$route.query.id,
+      begin_date:this.$route.query.begin_date,
+      end_date:this.$route.query.end_date,
+      campus_id:this.$route.query.campus_id,
+      type_id:this.$route.query.type_id
     }
   },
   mounted () {
@@ -50,11 +55,11 @@ export default {
   methods: {
     parentEvaluationDimension:function(){
         let params = new URLSearchParams();
-        params.append('id',   this.$route.query.id);
-        params.append('begin_date' ,this.$route.query.begin_date);
-        params.append('end_data' ,this.$route.query.end_date);
-        params.append('campus_id', '['+JSON.parse(this.$route.query.campus_id)+']');
-        params.append('type_id' ,this.$route.query.type_id);
+        params.append('id',   this.rankId);
+        params.append('begin_date' ,this.begin_date);
+        params.append('end_data' ,this.end_date);
+        params.append('campus_id', '['+JSON.parse(this.campus_id)+']');
+        params.append('type_id' ,this.type_id);
 
         let _self = this;
         api.parentEvaluationDimension(params)
@@ -71,6 +76,9 @@ export default {
     goTo (url) {
       this.$router.push({path: url})
     },
+    goTo (url,parame1,parame2,parame3,parame4,parame5,parame6) {
+        this.$router.push({path: url,query:{id:parame1,begin_date:parame2,end_date:parame3,type_id:parame4,campus_id:JSON.stringify(parame5),dimension_id:parame6} })
+      },
     drawLine () {
       // 基于准备好的dom，初始化echarts实例
       let chart01 = this.$echarts.init(document.getElementById('chart01'))
