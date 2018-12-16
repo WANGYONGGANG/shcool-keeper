@@ -7,7 +7,7 @@
           <th class="w550">班级(一对一班级除外)</th>
           <th class="w200">平均分</th>
         </tr>
-        <tr @click="goTo(urls.evaluationLatitudeDetialNext)" v-for="data in resourceList.detail">
+        <tr @click="goTo(urls.evaluationLatitudeDetialNext,rankId,begin_date,end_date,type_id,campus_id,data.id)" v-for="data in resourceList.detail" :id="data.id">
           <td class="w550">{{data.name}}</td>
           <td class="w200">{{data.average_score}}<van-icon name="arrow" size="1" class="w150-arrow" /></td>
         </tr>
@@ -37,9 +37,9 @@ export default {
     this.parentEvaluationDimensionDetail();
   },
   methods: {
-    goTo (url) {
-      this.$router.push({path: url})
-    },
+    goTo (url,parame1,parame2,parame3,parame4,parame5,parame6) {
+        this.$router.push({path: url,query:{id:parame1,begin_date:parame2,end_date:parame3,type_id:parame4,campus_id:parame5,dimension_id:parame6} })
+      },
     parentEvaluationDimensionDetail:function(){
         let params = new URLSearchParams();
         params.append('id',   this.rankId);

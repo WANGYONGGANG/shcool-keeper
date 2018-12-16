@@ -15,16 +15,6 @@
           <td class="w150">{{data.average_score}}</td>
           <td class="w150">{{data.ranking}}<van-icon name="arrow" size="1" class="w150-arrow" /></td>
         </tr>
-        <!-- <tr @click="goTo(urls.evaluationLatitudeDetial)">
-          <td class="w450">教学内容</td>
-          <td class="w150">5.0000</td>
-          <td class="w150">1<van-icon name="arrow" size="1" class="w150-arrow" /></td>
-        </tr>
-        <tr @click="goTo(urls.evaluationLatitudeDetial)">
-          <td class="w450">教学态度</td>
-          <td class="w150">5.0000</td>
-          <td class="w150">1<van-icon name="arrow" size="1" class="w150-arrow" /></td>
-        </tr> -->
       </table>
     </div>
   </div>
@@ -48,8 +38,6 @@ export default {
   },
   mounted () {
     this.drawLine();
-    console.log(this.$route.query.id)
-    console.log(this.$route.query.campus_id)
     this.parentEvaluationDimension()
   },
   methods: {
@@ -72,9 +60,6 @@ export default {
           .catch(error => {
             
           });
-    },
-    goTo (url) {
-      this.$router.push({path: url})
     },
     goTo (url,parame1,parame2,parame3,parame4,parame5,parame6) {
         this.$router.push({path: url,query:{id:parame1,begin_date:parame2,end_date:parame3,type_id:parame4,campus_id:JSON.stringify(parame5),dimension_id:parame6} })
@@ -109,9 +94,6 @@ export default {
 
 
               }
-            },
-            emphasis:{
-
             },
             axisLine: {
               lineStyle: {
