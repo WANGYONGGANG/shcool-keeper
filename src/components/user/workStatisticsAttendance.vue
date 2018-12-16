@@ -2,13 +2,13 @@
 <div class="work-statistics-attendance">
   <ul class="detial-list" v-for='item in dataList'>
     <li class="item01">{{item.className}}</li>
-    <li class="item02"><span class="w45">{{item.classPleanDate}} {{item.beginTime}}</span><span class="w25">应到：{{item.recruitStudentsCount}}</span><span class="w25">实到：{{item.realPeopleCount}}</span></li>
+    <li class="item02"><span class="w45">{{item.classPleanDate}} {{item.beginTime}}</span><span class="w25">应到：{{item.willPeopleCount}}</span><span class="w25">实到：{{item.realPeopleCount}}</span></li>
   </ul>
   <div class="detial-btn">
     <ul class="all fn-clear">
       <li class="all-l w45">合计<span>{{dataList.length}}节</span></li>
-      <li class="all-r w25">2</li>
-      <li class="all-r w25">2</li>
+      <li class="all-r w25">{{willPeopleCount}}</li>
+      <li class="all-r w25">{{realPeopleCount}}</li>
     </ul>
   </div>
 </div>
@@ -18,7 +18,9 @@
 export default {
   data () {
     return {
-      dataList:''
+      dataList:'',
+      willPeopleCount:'',
+      realPeopleCount:'',
     }
   },
   mounted(){
@@ -29,6 +31,8 @@ export default {
 					.then(res=>{
             console.log(res)
             this.dataList=res.data.detail
+            this.willPeopleCount=res.data.will_count,
+            this.realPeopleCount=res.data.real_count
 				},()=>{
           
 				});
