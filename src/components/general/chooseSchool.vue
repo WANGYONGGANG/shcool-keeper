@@ -5,28 +5,24 @@
       全选
     </van-checkbox>
     <van-checkbox-group v-model="result">
-      <van-checkbox
-        v-for="(item, index) in list"
-        :key="index"
-        :name="item"
-      >
-        {{ item }}
+      <van-checkbox v-for="(item, index) in lists" :key="index" :name="item" :id="item.id">
+        {{ item.name }}
       </van-checkbox>
     </van-checkbox-group>
     <div class="filter-btn">
       <span class="btn-reset" @click="resetFn()">取消</span>
-      <span class="btn-submit" @click="submitFn()">确定({{resultLength}}/{{listLength}})</span>
+      <span class="btn-submit" @click="submitFn()">确定({{resultLength}}/{{listLen}})</span>
     </div>
   </van-popup>
 </template>
 <script>
   export default {
-    props:['list','isShow','selectItem'],
+    props:['lists','isShow','selectItem','listLen'],
     data () {
       return {
         checked:false,
         result:[],
-        listLength:this.list.length,
+        listLength:this.lists.length,
         resultLength:0
       }
     },
@@ -36,7 +32,7 @@
       },
       changeFn(value){
         if(value===true){
-          this.result=this.list
+          this.result=this.lists
         }else{
           this.result=[]
         }
@@ -46,7 +42,7 @@
       },
       submitFn(){
         this.$emit('update:isShow', false)
-        this.$emit('update:selectItem', this.result)
+       this.$emit('update:selectItem', this.result)
       },
     },
     mounted () {

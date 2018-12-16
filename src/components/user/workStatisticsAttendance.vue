@@ -6,7 +6,7 @@
   </ul>
   <div class="detial-btn">
     <ul class="all fn-clear">
-      <li class="all-l w45">合计<span>2节</span></li>
+      <li class="all-l w45">合计<span>{{dataList.length}}节</span></li>
       <li class="all-r w25">2</li>
       <li class="all-r w25">2</li>
     </ul>

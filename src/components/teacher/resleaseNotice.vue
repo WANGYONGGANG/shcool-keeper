@@ -41,9 +41,9 @@
       </div>
    </div>
     </div>
-    <div class="list-bottom">提交</div>
+    <div class="list-bottom"  v-on:click="addNotice">提交</div>
     <van-popup v-model="rightPopDates.item01.isShow"  position="right" style="height:100%;">
-       <publishClass></publishClass>
+       <publishClass v-on:addClass="addClass"></publishClass>
     </van-popup>
   </div>
 </template>
@@ -59,6 +59,7 @@ export default {
     return {
       notice_content:"",
       notice_title:"",
+      notice_student:"",
       fileArray: [],
       rightPopDates:{
           item01:{
@@ -71,11 +72,36 @@ export default {
       imgArray:[]
     };
   },
-  mounted: function() {},
+  mounted: function() {
+    this.openRecorder();
+  },
   methods: {
     //查询介绍人
     showIntroducer:function(){
         this.rightPopDates.item01.isShow=true;
+    },
+    //添加班级
+   addClass:function(classObjAllSelcted){
+         this.notice_student=classObjAllSelcted;
+         this.rightPopDates.item01.isShow=false;
+    },
+    //录音
+  openRecorder:function(){
+  var rec=Recorder();
+rec.open(function(){//打开麦克风授权获得相关资源
+	rec.start();//开始录音
+	
+	setTimeout(function(){
+		rec.stop(function(blob){//到达指定条件停止录音，拿到blob对象想干嘛就干嘛：立即播放、上传
+			console.log(URL.createObjectURL(blob));
+			rec.close();//释放录音资源
+		},function(msg){
+			console.log("录音失败:"+msg);
+		});
+	},3000);
+},function(msg){//未授权或不支持
+	console.log("无法录音:"+msg);
+});
     },
     addImg: function() {
       $("#uploadImg").click();
@@ -176,9 +202,10 @@ export default {
       params.image_path=this.imgArray;
       params.notice_title=this.notice_title;
       params.notice_content=this.notice_content;
+      params.notice_student=this.notice_student;
       params.video_paths=this.mediaArray;
       params.voice_paths=null,
-      api.addNotice(null)
+      api.addNotice(params)
         .then(res => {
           console.log(res);
           if (res.status == 200) {
