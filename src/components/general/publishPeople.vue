@@ -42,6 +42,7 @@ export default {
          classObj.classID=this.classId;
          classObj.studentIDs=this.studentCheckIds;
          this.$emit('addStudents',classObj);
+         
     },
     //获取所有班级花名册
       findAllClassStudentInfo(){
