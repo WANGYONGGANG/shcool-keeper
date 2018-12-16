@@ -39,6 +39,7 @@ export default {
     },
     addStudents(){
          this.$emit('addStudents', this.studentCheckIds);
+         
     },
     //获取所有班级花名册
       findAllClassStudentInfo(){

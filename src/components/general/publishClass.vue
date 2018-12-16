@@ -59,6 +59,7 @@
       this.$router.push({path: url})
     },
     addStudents(studentIds){
+        console.log(studentIds);
         this.selectedstudentIds=studentIds;
     },
     searchAll(){
