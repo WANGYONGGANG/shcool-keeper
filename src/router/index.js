@@ -37,6 +37,7 @@ import EvaluationLatitudeDetial from '@/components/user/evaluationLatitudeDetial
 import EvaluationLatitudeDetialNext from '@/components/user/evaluationLatitudeDetialNext'
 import Complaints from '@/components/user/complaints'
 import ComplaintsDetial from '@/components/user/complaintsDetial'
+import ComplaintsDetialReply from '@/components/user/complaintsDetialReply'
 
 import TeacherIndex from '@/components/teacher/teacherIndex'
 import MyTimetable from '@/components/teacher/myTimetable'
@@ -185,6 +186,11 @@ export default new Router({
       path: '/user/complaintsDetial',
       name: 'complaintsDetial',
       component: ComplaintsDetial
+    },
+    {
+      path: '/user/complaintsDetialReply',
+      name: 'complaintsDetialReply',
+      component: ComplaintsDetialReply
     },
     {
       path: '/user/parentRatingRanking',

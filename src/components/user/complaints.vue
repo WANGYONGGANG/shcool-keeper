@@ -23,7 +23,11 @@ export default {
       urls:{
         complaintsDetial:'/user/complaintsDetial'
       },
-      dataList:'',
+      dataList:[{
+        studentName:'张静静',
+        createTime:'2018-12-17',
+        content:'随便写写，随便谢谢'
+      }],
     }
   },
   mounted(){
