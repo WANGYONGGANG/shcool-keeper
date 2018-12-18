@@ -38,7 +38,7 @@
   </div>
 <div class="complaints-submit">
   <ul>
-    <li class="blue">确定</li>
+    <li class="blue" @click="btnFun()">确定</li>
     <li>取消</li>
   </ul>
 </div>
@@ -56,13 +56,28 @@ export default {
     }
   },
    mounted(){
-    //  this.$route.query.time
-
+    this.message=this.$route.query.reply.content
    },
   methods: {
-    goTo (url) {
-      this.$router.push({path: url})
-    }
+      btnFun(){
+      let params = new URLSearchParams();
+      params.append("id", this.$route.query.reply.id);
+      params.append("content", this.message);
+      params.append("suggestionId", this.$route.query.reply.suggestionId);
+      api.editSuggestionWithTeacher(params)
+        .then(res=>{
+          console.log(res)
+          if(res.code==1){
+            this.haveReplyList();
+            this.message=''
+          }
+          
+          // this.dataList=res.data.data.rows
+      },()=>{
+
+      })
+      ;
+    },
   }
 }
 </script>

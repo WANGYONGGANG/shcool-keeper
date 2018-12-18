@@ -1,6 +1,6 @@
 <template>
 <div class="complaints">
-  <section @click="goTo(urls.complaintsDetial)" v-for='item in dataList'>
+  <section @click="goTo(urls.complaintsDetial,item)" v-for='item in dataList'>
     <div class="timetable-table">
       <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
       <div class="table-l">
@@ -11,7 +11,7 @@
         <van-icon name="pending-evaluate" />
       </div>
     </div>
-    <div class="complaints-txt">{{item.content}}</div>
+    <div class="complaints-txt" v-html="item.content"></div>
   </section>
 </div>
 </template>
@@ -23,11 +23,7 @@ export default {
       urls:{
         complaintsDetial:'/user/complaintsDetial'
       },
-      dataList:[{
-        studentName:'张静静',
-        createTime:'2018-12-17',
-        content:'随便写写，随便谢谢'
-      }],
+      dataList:[],
     }
   },
   mounted(){
@@ -46,8 +42,8 @@ export default {
       })
       ;
     },
-    goTo (url) {
-      this.$router.push({path: url,query:{nameData:this.dataList}})
+    goTo (url,item) {
+      this.$router.push({path: url,query:{information:item}})
     }
   }
 }

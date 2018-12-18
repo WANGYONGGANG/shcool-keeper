@@ -446,12 +446,18 @@ export const api = {
     finaAllSuggertion(params) {
         return fetchGet(baseUrl + '/user/finaAllSuggertion', params);
     },
-    //增加投诉建议
-    addSuggestion(params) {
-        return fetchPost(baseUrl + '/user/addSuggestion', params);
+    //增加老师对投诉建议的回复
+    addSuggestionWithTeacher(params) {
+        return fetchPost(baseUrl + '/user/addSuggestionWithTeacher', params);
     },
-
-
+    //获取所有老师回复
+    finaAllSuggertionForTeacher(params) {
+        return fetchGet(baseUrl + '/user/finaAllSuggertionForTeacher', params);
+    },
+    //修改老师对投诉建议的回复
+    editSuggestionWithTeacher(params) {
+        return fetchPost(baseUrl + '/user/editSuggestionWithTeacher', params);
+    },
 
 
 

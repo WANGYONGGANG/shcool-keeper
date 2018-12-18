@@ -4,13 +4,11 @@
     <div class="timetable-table">
       <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
       <div class="table-l">
-        <div class="class-tit">张跃龙</div>
-        <div class="class-details"><span class="time">2018-11-22 20:26</span></div>
+        <div class="class-tit">{{this.$route.query.information.studentName}}</div>
+        <div class="class-details"><span class="time">{{this.$route.query.information.createTime}}</span></div>
       </div>
     </div>
-    <div class="complaints-txt">灯火辉煌
-    <br/>
-    <img src="../../assets/images/banner.jpg" width="400">
+    <div class="complaints-txt" v-html="this.$route.query.information.content">
     </div>
   </section>
   <div class="reply-record" @click="immediateReply">
@@ -21,50 +19,21 @@
       </template>
     </van-cell>
   </div>
-  <section class="reply-box" @click="goTo(urls.complaintsDetialReply)">
+  <section class="reply-box" @click="goTo(urls.complaintsDetialReply,item)" v-for="item in dataList">
     <div class="timetable-table">
       <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
       <div class="table-l">
         <div class="class-tit">回复</div>
-        <div class="class-details"><span class="time">2018-11-22 20:26</span></div>
+        <div class="class-details"><span class="time">{{item.createTime}}</span></div>
       </div>
       <div class="table-r">
         <van-icon name="records" />
       </div>
     </div>
-    <div class="complaints-txt">什么鬼
+    <div class="complaints-txt">{{item.content}}
     </div>
   </section>
-  <section class="reply-box" @click="goTo(urls.complaintsDetialReply)">
-    <div class="timetable-table">
-      <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
-      <div class="table-l">
-        <div class="class-tit">回复</div>
-        <div class="class-details"><span class="time">2018-11-22 20:26</span></div>
-      </div>
-      <div class="table-r">
-        <van-icon name="records" />
-      </div>
-    </div>
-    <div class="complaints-txt">
-      哈哈哈
-    </div>
-  </section>
-  <section class="reply-box" @click="goTo(urls.complaintsDetialReply)">
-    <div class="timetable-table">
-      <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
-      <div class="table-l">
-        <div class="class-tit">昵称</div>
-        <div class="class-details"><span class="time">2018-11-22 20:26</span></div>
-      </div>
-      <div class="table-r">
-        <van-icon name="records" />
-      </div>
-    </div>
-    <div class="complaints-txt">
-      哈哈哈
-    </div>
-  </section>
+  
   <div class="class-evaluation">
     <van-cell-group>
       <van-cell title="回复"/>
@@ -72,7 +41,7 @@
     </van-cell-group>
   </div>
   <ul class="check">
-    <li class="check-item01"><input type="checkbox">匿名回复</li>
+    <li class="check-item01"><input type="checkbox" @click="checkFun()" v-model="checkNum">匿名回复</li>
     <li class="check-item02">勾选"匿名回复"后，家长不能看到回复人的具体姓名，否则，系统会显示回复人的真实姓名</li>
   </ul>
 <div class="complaints-submit" @click="btnFun()">提交</div>
@@ -87,25 +56,49 @@ export default {
         complaintsDetialReply:'/user/complaintsDetialReply'
       },
       message:'',
+      dataList:'',
+      checkNum:false
     }
   },
    mounted(){
-    //  this.$route.query.time
+    //  this.$route.query.information
+    this.haveReplyList()
 
    },
   methods: {
+    
+      haveReplyList(){
+        console.log(this.$route.query.information.id)
+        let params = new URLSearchParams();
+        params.append("suggestionId", this.$route.query.information.id);
+        api.finaAllSuggertionForTeacher(params)
+        .then(res=>{
+          this.dataList=res.data.data
+        },()=>{
+
+      })
+      },
      btnFun(){
       let params = new URLSearchParams();
-      params.append("campus_id", this.$route.query.nameData.campusId);
+      params.append("isIncognito", this.checkNum);
       params.append("content", this.message);
-      params.append("student_id", this.$route.query.nameData.studentId);
-      api.addSuggestion(params)
+      params.append("suggestionId", this.$route.query.information.id);
+      api.addSuggestionWithTeacher(params)
         .then(res=>{
+          console.log(res)
+          if(res.code==1){
+            this.haveReplyList();
+            this.message=''
+          }
+          
           // this.dataList=res.data.data.rows
       },()=>{
 
       })
       ;
+    },
+    checkFun(){
+      console.log(this.checkNum)
     },
     immediateReply (){
       //点击立即回复 手动滚动到响应地址
@@ -116,8 +109,8 @@ export default {
         behavior: "smooth"
       });
     },
-    goTo (url) {
-      this.$router.push({path: url})
+    goTo (url,item) {
+      this.$router.push({path: url,query:{reply:item}})
     }
   }
 }
