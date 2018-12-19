@@ -22,10 +22,10 @@
 
   <van-cell-group>
     <van-cell title="老师秀" icon="edit-data" is-link to="" />
-    <van-cell title="电子推荐卡" icon="edit-data" is-link to="" />
+    <!-- <van-cell title="电子推荐卡" icon="edit-data" is-link to="" /> -->
   </van-cell-group>
   <van-cell-group>
-    <van-cell title="退出登陆" icon="edit-data" is-link to=""  @click="loginOut"/>
+    <van-cell title="退出登录" icon="edit-data" is-link to=""  @click="loginOut"/>
   </van-cell-group>
   <btm-tobbar></btm-tobbar>
   <van-actionsheet
