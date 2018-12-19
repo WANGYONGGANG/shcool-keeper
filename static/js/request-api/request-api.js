@@ -145,7 +145,7 @@ export const api = {
     },
     //获取接到作业的全部学员/releaseHomework/ getAllReleaseHomeworkStudent
     getAllReleaseHomeworkStudent(params) {
-        return fetchGet(baseUrl + "/releaseHomework/ getAllReleaseHomeworkStudent", params)
+        return fetchGet(baseUrl + "/releaseHomework/getAllReleaseHomeworkStudent", params)
     },
     //获取接到作业的学员并且是没有提交的/releaseHomework/getAllReleaseHomeworkStudentAndSubmit
     getAllReleaseHomeworkStudentAndSubmit(params) {

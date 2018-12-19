@@ -1,6 +1,6 @@
 <template>
   <div class="task">
-    <calendar-packing ref="calendar"></calendar-packing>
+    <calendar-packing   v-on:updateDate="updateDate" ref="calendar"   v-bind:begin_date="begin_date"  v-bind:end_date="end_date" v-if="showCalendar"></calendar-packing>
     <div class="task-table"  v-for="data in allDatas">
       <van-cell-group class="tab-list-item01">
         <van-cell :title="data.title" is-link :to="{path:'/teacher/taskDetial'}" :@click="taskDetial(data)"/>
@@ -37,28 +37,28 @@ export default {
       urls: {
         studentCompletion: "/teacher/studentCompletion",
         resleaseAssignments: "/teacher/resleaseAssignments"
-      }
+      },
+      begin_date:null,
+      end_date:null,
+      showCalendar:false,
     };
   },
   mounted() {
-    console.log(this.$refs.calendar);
-    //获取子组件中日历中获取到的日期数据
-    this.date1 = this.$refs.calendar.$el.innerText.substr(0, 10); //2018-11-01
-    this.date2 = this.$refs.calendar.$el.innerText.substr(11); //2018-11-31
-    this.findReleaseHomework(this.date1, this.date2);
+    this.initDateWeek();
+    this.findReleaseHomework();
   },
   methods: {
     taskDetial : function(data){
       this.$store.state.teacherTask.taskDetial = data;
     },
-    findReleaseHomework: function(date1, date2) {
+    findReleaseHomework: function() {
       let _self = this;
       let param = new URLSearchParams();
 
-      param.append("begin_date", date1);
-      param.append("end_date", date2);
+      param.append("begin_date", this.begin_date);
+      param.append("end_date", this.end_date);
       param.append("pag ", 1);
-      param.append("rows", 10);
+      param.append("rows", 100);
 
       api.findReleaseHomework(param).then(res => {
         if (res.data.code == 1) {
@@ -72,29 +72,86 @@ export default {
     goTo(url, param) {
       this.$router.push({ path: url, query: { id: param } });
     },
-    timeForMat(count) {
-      // 拼接时间
-      let time1 = new Date();
-      time1.setTime(time1.getTime() - 24 * 60 * 60 * 1000);
-      let Y1 = time1.getFullYear();
-      let M1 =
-        time1.getMonth() + 1 > 10
-          ? time1.getMonth() + 1
-          : "0" + (time1.getMonth() + 1);
-      let D1 = time1.getDate() > 10 ? time1.getDate() : "0" + time1.getDate();
-      let timer1 = Y1 + "-" + M1 + "-" + D1; // 当前时间
-      let time2 = new Date();
-      time2.setTime(time2.getTime() - 24 * 60 * 60 * 1000 * count);
-      let Y2 = time2.getFullYear();
+     updateDate:function(beginDate,endDate){
+      this.begin_date=beginDate;
+      this.end_date=endDate;
+      this.findReleaseHomework();
+    },
+
+    getDate(val) {
+        let date = new Date();
+        let seperator = "-";
+        let year = date.getFullYear(); //获取年份
+        let month = date.getMonth() + 1; //获取月份
+        if (month >= 1 && month <= 9) {
+          month = "0" + month;
+        }
+        let strDate = date.getDate(); //获取日期
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        let week = date.getDay(); //获取星期
+        if (val == "今天") {
+          this.date1 = year + seperator + month + seperator + strDate;
+          this.date2 = year + seperator + month + seperator + strDate;
+        }
+        if (val == "昨天") {
+          this.date1 = this.timeForMat(0,date);
+          this.date2 = this.timeForMat(0,date);
+        }
+        if (val == "本周") {
+          let num = week - 1;
+          date.setDate(date.getDate() - num); //本周第一天
+          let str = this.format("yyyy-MM-dd", date);
+          date.setDate(date.getDate() + 6); //本周最后一天
+          let str1 = this.format("yyyy-MM-dd", date);
+          this.date1 = str;
+          this.date2 = str1;
+        }
+        if (val == "最近7天") {
+          this.date1 = this.timeForMat(6,date);
+          this.date2 = year + seperator + month + seperator + strDate;
+        }
+        if (val == "最近30天") {
+          this.date1 = this.timeForMat(29,date);
+          this.date2 = year + seperator + month + seperator + strDate;
+        }
+        if (val == "本月") {
+          date.setDate(1); //本月第一天
+          var str = this.format("yyyy-MM-dd", date);
+          date.setMonth(date.getMonth() + 1); //下个月
+          date.setDate(date.getDate() - 1); //下个月第一天减1得到本月最后一天
+          var str1 = this.format("yyyy-MM-dd", date);
+          this.date1 = str;
+          this.date2 = str1;
+        }
+        if (val == "上月") {
+          month = month - 1;
+          if (month == 0) {
+            month = 12;
+            year = year - 1;
+          }
+          if (month < 10) {
+            month = "0" + month;
+          }
+          this.date1 = year + "-" + month + "-" + "01"; //上个月的第一天
+          var myDate = new Date(year, month, 0);
+          this.date2 = year + "-" + month + "-" + myDate.getDate(); //上个月的最后一天
+        }
+    },
+    //获取昨天，最近7天，最近30天
+    timeForMat(count,date) {
+      date.setTime(date.getTime() - 24 * 60 * 60 * 1000 * count);
+      let Y2 = date.getFullYear();
       let M2 =
-        time2.getMonth() + 1 > 9
-          ? time2.getMonth() + 1
-          : "0" + (time2.getMonth() + 1);
-      let D2 = time2.getDate() > 9 ? time2.getDate() : "0" + time2.getDate();
-      // let timer2 = Y2 + '-' + M2 + '-' + D2 // 之前的7天或者30天 // return { // // t1: timer1, // // t2: timer2 // }
-      this.date1 = Y2 + "-" + M2 + "-" + D2;
+        date.getMonth() + 1 > 9
+          ? date.getMonth() + 1
+          : "0" + (date.getMonth() + 1);
+      let D2 = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
       return Y2 + "-" + M2 + "-" + D2;
     },
+    
+    //获取本周、本月
     format(fmt, date) {
       var o = {
         "M+": date.getMonth() + 1, //月份
@@ -120,69 +177,57 @@ export default {
           );
       return fmt;
     },
-    getDate(val) {
-      let date = new Date();
-      let seperator = "-";
-      let year = date.getFullYear(); //获取年份
-      let month = date.getMonth() + 1; //获取月份
-      if (month >= 1 && month <= 9) {
-        month = "0" + month;
+     formatDate(date) {
+      var myyear = date.getFullYear();
+      var mymonth = date.getMonth() + 1;
+      var myweekday = date.getDate();
+
+      if (mymonth < 10) {
+        mymonth = "0" + mymonth;
       }
-      let strDate = date.getDate(); //获取日期
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
+      if (myweekday < 10) {
+        myweekday = "0" + myweekday;
       }
-      let week = date.getDay(); //获取星期
-      if (val == "今天") {
-        this.date1 = year + seperator + month + seperator + strDate;
-        this.date2 = year + seperator + month + seperator + strDate;
+      return myyear + "-" + mymonth + "-" + myweekday;
+    },
+     //获取本周开始日期
+    getAllDateFromNow(index) {
+      var now = new Date(); //当前日期
+      var nowDayOfWeek = now.getDay(); //今天本周的第几天
+      var nowDay = now.getDate(); //当前日
+      var nowMonth = now.getMonth(); //当前月
+      var nowYear = now.getFullYear(); //当前年
+      if (nowDayOfWeek == 0) {
+        nowDayOfWeek = 7;
       }
-      if (val == "昨天") {
-        this.date1 = this.timeForMat(0);
-        this.date2 = this.timeForMat(0);
+      var weekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek+index+1);
+
+      return this.formatDate(weekStartDate);
+    },
+    getWeekEndDate(index) {
+      var now = new Date(); //当前日期
+      var nowDayOfWeek = now.getDay(); //今天本周的第几天
+      var nowDay = now.getDate(); //当前日
+      var nowMonth = now.getMonth(); //当前月
+      var nowYear = now.getFullYear(); //当前年
+      if (nowDayOfWeek == 0) {
+        nowDayOfWeek = 7;
       }
-      if (val == "本周") {
-        let num = week - 1;
-        date.setDate(date.getDate() - num); //本周第一天
-        let str = this.format("yyyy-MM-dd", date);
-        date.setDate(date.getDate() + 6); //本周最后一天
-        let str1 = this.format("yyyy-MM-dd", date);
-        this.date1 = str;
-        this.date2 = str1;
-      }
-      if (val == "最近7天") {
-        this.timeForMat(6);
-        this.date2 = year + seperator + month + seperator + strDate;
-      }
-      if (val == "最近30天") {
-        this.timeForMat(29);
-        this.date2 = year + seperator + month + seperator + strDate;
-      }
-      if (val == "本月") {
-        date.setDate(1); //本月第一天
-        var str = this.format("yyyy-MM-dd", date);
-        date.setMonth(date.getMonth() + 1); //下个月
-        date.setDate(date.getDate() - 1); //下个月第一天减1得到本月最后一天
-        var str1 = this.format("yyyy-MM-dd", date);
-        this.date1 = str;
-        this.date2 = str1;
-      }
-      if (val == "上月") {
-        month = month - 1; 
-        if (month == 0) {
-          month = 12;
-          year = year - 1;
-        }
-        if (month < 10) {
-          month = "0" + month;
-        }
-        this.date1 = year + "-" + month + "-" + "01"; //上个月的第一天
-        var myDate = new Date(year, month, 0);
-        this.date2 = year + "-" + month + "-" + myDate.getDate(); //上个月的最后一天
-      }
-      console.log(this.date1);
-      console.log(this.date2);
-    }
+      var weekEndDate = new Date(
+        nowYear,
+        nowMonth,
+        nowDay + (7 - nowDayOfWeek+index)
+      );
+      return this.formatDate(weekEndDate);
+    },
+
+    initDateWeek:function(){
+          this.begin_date = this.getAllDateFromNow(0);
+          this.end_date = this.getWeekEndDate(0);
+          this.showCalendar=true;
+    },
+
+
   },
   computed: {
     item() {
@@ -193,10 +238,12 @@ export default {
     item: {
       handler(val) {
         //日期快速切换值
-        this.$toast(val);
-        console.log(val);
+         this.$toast(val);
         this.getDate(val);
-        this.findReleaseHomework(this.date1, this.date2);
+        this.begin_date=this.date1;
+        this.end_date=this.date2;
+        this.findReleaseHomework();
+        this.$refs.calendar.setCheckedDateValue(this.begin_date,this.end_date);
       }
     }
   }
