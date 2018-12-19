@@ -2,11 +2,14 @@
 <!--上课点评模块3  立即点评页面 -->
   <div class="immediately">
     <div class="class-detial">
+      <div class="immediately-title" v-if="!studentNameStatue">
+        <van-icon name="pending-payment" />正在对<span v-for="stuName in studentNameArr">{{stuName}},</span>评价
+      </div>
       <div class="immediately-title"><van-icon name="pending-payment" />上课详情</div>
       <van-cell-group>
-        <van-cell title="学生" :value="stuMessage.studentName" />
-        <van-cell title="班级" :value="stuMessage.className" />
-        <van-cell title="老师" :value="stuMessage.classTeacherName" />
+        <van-cell title="学生"  v-if="studentNameStatue" :value="stuMessage.studentName" />
+        <van-cell title="班级" :value="getstuMessage[0].className" />
+        <van-cell title="老师" :value="getstuMessage[0].classTeacherName" />
       </van-cell-group>
     </div>
     <div class="class-comment">
@@ -49,6 +52,7 @@
 </template>
 <script>
 import {api} from  '../../../static/js/request-api/request-api.js';
+import { throws } from 'assert';
 export default {
   data () {
     return {
@@ -56,11 +60,26 @@ export default {
       value2: 1,
       value3: 2,
       message: '',
+      getstuMessage: null,
+      studentNameStatue:true,
+      studentNameArr: [],
+    }
+  },
+  mounted () {
+    console.log(this.getstuMessage)
+    if(this.getstuMessage.length > 1){
+      this.studentNameStatue = false;
+      this.getstuMessage.forEach(element => {
+        this.studentNameArr.push(element.studentName);
+        console.log(this.studentNameArr);
+      });
     }
   },
   computed : {
     stuMessage () {
+      //返回的数据是一个数组
       console.log(this.$store.state.teacherComment.immediatelyCommented);
+      this.getstuMessage = this.$store.state.teacherComment.immediatelyCommented;
         return this.$store.state.teacherComment.immediatelyCommented;
     },
   }

@@ -22,30 +22,34 @@
     <!--</div>-->
 
     <div class="list-box" v-for="data in allDatas">
+      
       <div class="list-box-l" v-if="data.isEvaluation">
         <span class="box-l fn-left"><img src="../../assets/images/user/test.jpg"/></span>
         <ul class="box-r fn-left">
-          <li class="name">王紫潼</li>
-          <li class="time">2018.11.16 10.49</li>
-          <li class="detial">
-          孩子本节课表现好，下次继续努力孩子本节课表现好，下次继续努力孩子本节课表现好，下次继续努力孩子本节课表现好，下次继续努力
-        </li>
+          <li class="name">{{data.studentName}}</li>
+          <li class="time">{{data.createTime}}</li>
+          <li class="detial">{{data.studentEvaluationSummary}}</li>
         </ul>
       </div>
+
       <div class="list-box-l" v-else>
         <span class="box-l"><img src="../../assets/images/user/test.jpg"/></span>
         <span class="name">{{data.studentName}}</span>
-        <span><van-checkbox v-model="checked"></van-checkbox></span>
+        <span><van-checkbox v-model="checked" v-if="!data.isEvaluation"></van-checkbox></span>
       </div>
+
       <div class="list-box-r" @click="goTo();immediatelyCommented(data);">
         <span v-if="!data.isEvaluation">立即点评</span>
-        <van-icon name="arrow" /></div>
-    </div>
-    <div class="list-bottom">
-      <div class="bottom-l">
-        <van-checkbox v-model="checked">全选</van-checkbox>
+        <van-icon name="arrow" />
       </div>
-      <div class="bottom-r"><span @click="goTo">上课点评（0）</span></div>
+
+    </div>
+
+    <div class="list-bottom"  v-if="allChencked">
+      <div class="bottom-l" @click="checkAll">
+        <van-checkbox v-model="checked" @click="checkAll">全选</van-checkbox>
+      </div>
+      <div class="bottom-r"><span @click="goTo();">上课点评（0）</span></div>
     </div>
   </div>
 </template>
@@ -55,6 +59,8 @@ export default {
   data () {
     return {
       checked: false,
+      allChencked: false,
+      checkedStudens: [],
       allDatas : [
         {
           studentName:'张跃龙'
@@ -70,6 +76,9 @@ export default {
     this.findAllClassAndCommentsInTheClass();
   },
   methods: {
+    checkAll: function() {
+      this.$store.state.teacherComment.immediatelyCommented = this.allDatas;
+    },
     immediatelyCommented (data) {
       this.$store.state.teacherComment.immediatelyCommented = data;
     },
@@ -88,6 +97,12 @@ export default {
           if( res.data.code == 1 ){
             console.log(res.data.data);
             _self.allDatas = res.data.data;
+            //判断所有学员数据，如果有为评价的学员，则显示底部全选模块
+            _self.allDatas.forEach(function(value,index,array){
+              if(value.isEvaluation == false){
+                _self.allChencked = true;
+              }
+　　        });
           }
         });
     },

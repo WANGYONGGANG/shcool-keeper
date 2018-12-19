@@ -60,7 +60,6 @@ export default {
 
       api.classEvaluationFindMyClassRecord(param).then( res => {
         if( res.data.code == 1 ){
-          console.log(res.data);
           _self.Alldatas = res.data.data.rows;
           console.log(_self.Alldatas);
           }
