@@ -63,6 +63,7 @@ export default {
       api.findReleaseHomework(param).then(res => {
         if (res.data.code == 1) {
           _self.allDatas = res.data.data.rows;
+          console.log(_self.allDatas);
         }
       });
     },
@@ -238,7 +239,7 @@ export default {
     item: {
       handler(val) {
         //日期快速切换值
-         this.$toast(val);
+        this.$toast(val);
         this.getDate(val);
         this.begin_date=this.date1;
         this.end_date=this.date2;

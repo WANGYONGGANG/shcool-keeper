@@ -10,7 +10,12 @@
     <div class="question-answer">
       <div class="qa-user fn-clear">
         <div class="qa-user-l fn-left"><img class="img" src="../../assets/images/user/test.jpg"/></div>
-        <div class="qa-user-r fn-left"><dl><dt>{{studentMsg.studentName}}</dt><dd>{{studentMsg.answerDatetime}}</dd></dl></div>
+        <div class="qa-user-r fn-left">
+          <dl>
+            <dt>{{studentMsg.studentName}}</dt>
+            <dd>{{studentMsg.answerDatetime}}</dd>
+          </dl>
+        </div>
       </div>
       <div class="qa-text">{{studentMsg.myAnswer}}</div>
       <div class="qa-icon">问<br/>答</div>
@@ -57,7 +62,37 @@
     methods: {
       goTo (param) {
         this.$router.push({path: param})
-      }
+      },
+      //作业-增加对学员的评论 /releaseHomework/addComentForStudent
+      //参数
+      //image_path string  图片文件地址列表
+      //["/fielupload/teacher/20181027/cc496fd1-1a83-45a9-b6e4-f4e7749fb0da.pdf","/fielupload/teacher/20181027/efb7e7b6-1d28-4377-84a2-8e59d1df5724.pdf"]
+      //score  integer 作业平分 4
+      //student_id integer  评价的学员  98
+      //teacher_comment  string  老师评价  123123
+      //video_paths  string 视频文件地址列表 
+      //["/fielupload/teacher/20181027/cc496fd1-1a83-45a9-b6e4-f4e7749fb0da.pdf","/fielupload/teacher/20181027/efb7e7b6-1d28-4377-84a2-8e59d1df5724.pdf"]
+      //voice_paths  string 语音文件地址列表
+      //["/fielupload/teacher/20181027/cc496fd1-1a83-45a9-b6e4-f4e7749fb0da.pdf","/fielupload/teacher/20181027/efb7e7b6-1d28-4377-84a2-8e59d1df5724.pdf"]
+      //work_id  integer  作业主键  1???
+      addComentForStudent: function() {
+      let _self = this;
+      let param = new URLSearchParams();
+
+      param.append("image_path", '');
+      param.append("score", 4);
+      param.append("student_id", 98);
+      param.append("teacher_comment", '21312');
+      param.append("video_paths", '');
+      param.append("voice_paths", '');
+      param.append("work_id", 1);
+
+      api.addComentForStudent(param).then(res => {
+        if (res.data.code == 1) {
+          console.log(res.data);
+        }
+      });
+    },
     },
     computed : {
       data () {

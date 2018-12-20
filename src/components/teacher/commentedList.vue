@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     checkAll: function() {
-      this.$store.state.teacherComment.immediatelyCommented = this.allDatas;
+      this.$store.state.teacherComment.immediatelyCommenteds = this.allDatas;
     },
     immediatelyCommented (data) {
       this.$store.state.teacherComment.immediatelyCommented = data;

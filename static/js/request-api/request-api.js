@@ -129,6 +129,7 @@ export const api = {
     },
 
     //上课点评 模块
+
     //获取当前登录人的排课计划/classEvaluation/findMyClassRecord
     classEvaluationFindMyClassRecord(params) {
         return fetchGet(baseUrl + "/classEvaluation/findMyClassRecord", params)
@@ -136,6 +137,10 @@ export const api = {
     //获取上课的学员信息，包含评论信息/classEvaluation/findAllClassAndCommentsInTheClass
     findAllClassAndCommentsInTheClass(params) {
         return fetchGet(baseUrl + "/classEvaluation/findAllClassAndCommentsInTheClass", params)
+    },
+    //增加评价 /classEvaluation/addTeacherStudentClassEvaluation
+    addTeacherStudentClassEvaluation(params) {
+        return fetchGet(baseUrl + "/classEvaluation/addTeacherStudentClassEvaluation", params)
     },
 
     //作业 模块
@@ -154,6 +159,10 @@ export const api = {
     //获取接到作业的学员并且是已提交的/releaseHomework/getAllReleaseHomeworkStudentNoSubmit
     getAllReleaseHomeworkStudentNoSubmit(params) {
         return fetchGet(baseUrl + "/releaseHomework/getAllReleaseHomeworkStudentNoSubmit", params)
+    },
+    //作业-增加对学员的评论 /releaseHomework/addComentForStudent
+    addComentForStudent(params) {
+        return fetchPost(baseUrl + "/releaseHomework/addComentForStudent", params)
     },
     // 发布通知
     addNotice(params) {

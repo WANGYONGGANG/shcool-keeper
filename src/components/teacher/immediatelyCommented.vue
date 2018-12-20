@@ -3,11 +3,19 @@
   <div class="immediately">
     <div class="class-detial">
       <div class="immediately-title" v-if="!studentNameStatue">
-        <van-icon name="pending-payment" />正在对<span v-for="stuName in studentNameArr">{{stuName}},</span>评价
+        <van-icon name="pending-payment" />
+        正在对
+        <span v-for="stuName in studentNameArr">{{stuName}},</span>
+        {{studentNameArr.length}}人进行
+        评价
       </div>
       <div class="immediately-title"><van-icon name="pending-payment" />上课详情</div>
-      <van-cell-group>
-        <van-cell title="学生"  v-if="studentNameStatue" :value="stuMessage.studentName" />
+      <van-cell-group  v-if="studentNameStatue">
+        <van-cell title="学生" :value="stuMessage.studentName" />
+        <van-cell title="班级" :value="stuMessage.className" />
+        <van-cell title="老师" :value="stuMessage.classTeacherName" />
+      </van-cell-group>
+      <van-cell-group  v-else>
         <van-cell title="班级" :value="getstuMessage[0].className" />
         <van-cell title="老师" :value="getstuMessage[0].classTeacherName" />
       </van-cell-group>
@@ -17,17 +25,17 @@
       <dl class="detial-list">
         <dt>随堂作业表现能力</dt>
         <dd class="word"><span>人均：0 </span><span>班评：0</span> <span>星：0/1</span></dd>
-        <dd class="start"><van-rate v-model="value1" size="50" color="#f8d304" /></dd>
+        <dd class="start"><van-rate @change="changeStart" v-model="value1" :size="50" color="#f8d304" /></dd>
       </dl>
       <dl class="detial-list">
         <dt>口语表达</dt>
         <dd class="word"><span>人均：0 </span><span>班评：0</span> <span>星：0/1</span></dd>
-        <dd class="start"><van-rate v-model="value2" size="50" color="#f8d304" /></dd>
+        <dd class="start"><van-rate @change="changeStart" v-model="value2" :size="50" color="#f8d304" /></dd>
       </dl>
       <dl class="detial-list">
         <dt>课堂表现</dt>
         <dd class="word"><span>人均：0 </span><span>班评：0</span> <span>星：0/1</span></dd>
-        <dd class="start"><van-rate v-model="value3" size="50" color="#f8d304" /></dd>
+        <dd class="start"><van-rate @change="changeStart" v-model="value3" :size="50" color="#f8d304" /></dd>
       </dl>
     </div>
     <div class="class-evaluation">
@@ -45,8 +53,8 @@
       <div class="add-img">添加视频</div>
     </div>
     <div class="immediately-bottom">
-      <span class="blue-font">存为草稿</span>
-      <span class="blue-bg">提交</span>
+      <span class="blue-font" @click="addTeacherStudentClassEvaluation(false)">存为草稿</span>
+      <span class="blue-bg" @click="addTeacherStudentClassEvaluation(true)">提交</span>
     </div>
   </div>
 </template>
@@ -60,27 +68,90 @@ export default {
       value2: 1,
       value3: 2,
       message: '',
-      getstuMessage: null,
+      //返回的是多个数组
+      getstuMessage: [],
       studentNameStatue:true,
-      studentNameArr: [],
+      studentNameArr: ['学生'],
     }
   },
   mounted () {
-    console.log(this.getstuMessage)
+    this.getstuMessage = this.$store.state.teacherComment.immediatelyCommenteds;
     if(this.getstuMessage.length > 1){
       this.studentNameStatue = false;
+      this.studentNameArr = [];
       this.getstuMessage.forEach(element => {
         this.studentNameArr.push(element.studentName);
-        console.log(this.studentNameArr);
       });
+    }
+  },
+  methods: {
+    //增加评价addTeacherStudentClassEvaluation
+    
+    //*evaluation_dimension  string   评价维度 dimension_id：维度主键，score：维度平分 最多5分
+    //[{"dimension_id":1,"score":1},{"dimension_id":3,"score":3},{"dimension_id":2,"score":5}]
+
+    //image_path string  图片文件地址列表
+    //["/fielupload/teacher/20181027/cc496fd1-1a83-45a9-b6e4-f4e7749fb0da.pdf","/fielupload/teacher/20181027/efb7e7b6-1d28-4377-84a2-8e59d1df5724.pdf"]
+    
+    //*releaseState  boolean  发布状态：false：保存草稿，true：正式发布
+    
+    //*student_id  string 学生主键  98
+    
+    //teacher_remark   string 老师评论  这个是老师的评价
+    
+    //*timeable_id  string 排课主键  371
+    
+    //video_paths  string 视频文件地址列表 
+    //["/fielupload/teacher/20181027/cc496fd1-1a83-45a9-b6e4-f4e7749fb0da.pdf","/fielupload/teacher/20181027/efb7e7b6-1d28-4377-84a2-8e59d1df5724.pdf"]
+    
+    //voice_paths string 语音文件地址列表
+    //["/fielupload/teacher/20181027/cc496fd1-1a83-45a9-b6e4-f4e7749fb0da.pdf","/fielupload/teacher/20181027/efb7e7b6-1d28-4377-84a2-8e59d1df5724.pdf"]
+    
+    addTeacherStudentClassEvaluation : function (releaseState) {
+      let _self = this;
+      let param = new URLSearchParams();
+
+      let stuMes = this.$store.state.teacherComment.immediatelyCommented;
+      let stusMes = this.$store.state.teacherComment.immediatelyCommenteds;
+
+      if(stuMes.length == 1){
+        param.append('student_id',stuMes.studentId);
+        param.append('timeable_id',stuMes.timeableId);
+      }
+      if(stusMes.length > 1){
+        param.append('student_id',stusMes[0].studentId);
+        param.append('timeable_id',stusMes[0].timeableId);
+      }
+      param.append('evaluation_dimension' , 
+      '[{"dimension_id":1,"score":'+_self.value1+'},{"dimension_id":3,"score":'+_self.value3+'},{"dimension_id":2,"score":'+_self.value2+'}]');
+      param.append('image_path','');
+      param.append('releaseState',releaseState);
+      param.append('teacher_remark','123');
+      param.append('video_paths','');
+      param.append('voice_paths','');
+
+      //接口返回500，有问题
+      //参数student_id定义存在问题，这个页面有可能会有1个以上的学生，但是后台定义的student_id是一个字符串
+      //无法传入多个学生的student_id
+      api.addTeacherStudentClassEvaluation(param)
+        .then( res => {
+          if( res.data.code == 1 ){
+            console.log(res.data.data);
+          }
+        });
+    },
+    //点击星星时获取最新的评价数据值
+    changeStart: function () {
+      console.log(this.value1);
+      console.log(this.value2)
+      console.log(this.value3)
     }
   },
   computed : {
     stuMessage () {
       //返回的数据是一个数组
-      console.log(this.$store.state.teacherComment.immediatelyCommented);
-      this.getstuMessage = this.$store.state.teacherComment.immediatelyCommented;
-        return this.$store.state.teacherComment.immediatelyCommented;
+      //console.log(this.$store.state.teacherComment.immediatelyCommented);
+      return this.$store.state.teacherComment.immediatelyCommented;
     },
   }
   

@@ -12,7 +12,8 @@ export default new vuex.Store({
   state: {
     //  教师端点评
     teacherComment: {
-      immediatelyCommented: null
+      immediatelyCommented: [],
+      immediatelyCommenteds: []
     },
     //  教师端作业
     teacherTask: {
