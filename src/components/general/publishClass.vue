@@ -10,10 +10,10 @@
     </div>
     <van-cell-group class="class-list">
       <!-- <van-cell is-link to="/general/publishPeople" v-for="(item,index) in classList" v-bind:key="index"> -->
-       <van-cell  v-for="(item,index) in classList" v-bind:key="index">
+       <van-cell  v-for="(item,index) in classList" v-bind:key="index" is-link    v-on:click="openStudent(item.id)">
         <template slot="title">
           <input type="checkbox"  v-bind:value="item.id" v-model="classCheckIds"  />
-          <span class="list-item01"   v-on:click="openStudent(item.id)">{{item.className}}（{{item.currentStudentCount}}/{{item.recruitStudentsCount}}）</span><span class="list-item02">{{item.campusName}}</span>
+          <span class="list-item01">{{item.className}}（0/{{item.currentStudentCount}}）</span><span class="list-item02">{{item.campusName}}</span>
         </template>
       </van-cell>
     </van-cell-group>

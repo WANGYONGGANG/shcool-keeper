@@ -7,7 +7,7 @@
     <van-cell-group class="class-list"  v-for="(item,index) in studentList" v-bind:key="index">
       <van-cell>
         <template slot="title">
-          <input type="checkbox"  v-bind:value="item.id" v-model="studentCheckIds"/>
+          <input type="checkbox"  v-bind:value="item.id" v-model="studentCheckIds"  checked="checked"/>
           <img src="../../assets/images/user/test.jpg" class="img-auto"/>
                  {{item.studentCode}}&nbsp;  {{item.studentName}}
         </template>
@@ -15,13 +15,14 @@
     </van-cell-group>
     </div>
     <div class="all-choose fn-clear">
-     <div class="fn-left"><input type="checkbox" /> 全选</div>
+     <div class="fn-left"><input type="checkbox"  v-on:click="selectedAll"  class="all-selected"/> 全选</div>
       <div class="fn-right"  v-on:click="addStudents"><span>确定({{studentCheckIds.length}})</span></div>
     </div>
   </div>
 </template>
 <script>
 import { api } from "../../../static/js/request-api/request-api.js";
+import $ from "jquery";
 export default {
    data() {
     return {
@@ -43,6 +44,17 @@ export default {
          classObj.studentIDs=this.studentCheckIds;
          this.$emit('addStudents',classObj);
          
+    },
+    //全选
+    selectedAll:function(){
+     let allChecked=$(".all-selected").is(':checked');
+     if(allChecked){
+        $(".people-list input").prop("checked","checked");
+     }else{
+        $(".people-list input").removeAttr("checked");
+     }
+   
+
     },
     //获取所有班级花名册
       findAllClassStudentInfo(){
