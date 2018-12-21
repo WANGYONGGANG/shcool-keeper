@@ -1,6 +1,6 @@
 <template>
 <div class="complaints-detial-reply">
-  <section class="reply-box">
+  <!-- <section class="reply-box">
     <div class="timetable-table">
       <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
       <div class="table-l">
@@ -28,7 +28,7 @@
     <div class="complaints-txt">
       哈哈哈
     </div>
-  </section>
+  </section> -->
 
   <div class="class-evaluation">
     <van-cell-group>
@@ -39,7 +39,7 @@
 <div class="complaints-submit">
   <ul>
     <li class="blue" @click="btnFun()">确定</li>
-    <li>取消</li>
+    <li @click="back()">取消</li>
   </ul>
 </div>
 </div>
@@ -56,28 +56,31 @@ export default {
     }
   },
    mounted(){
-    this.message=this.$route.query.reply.content
+    this.message=this.$route.query.content
    },
   methods: {
       btnFun(){
       let params = new URLSearchParams();
-      params.append("id", this.$route.query.reply.id);
+      params.append("id", this.$route.query.id);
       params.append("content", this.message);
-      params.append("suggestionId", this.$route.query.reply.suggestionId);
+      params.append("suggestionId", this.$route.query.suggestionId);
+      params.append("isIncognito", this.$route.query.isIncognito);
       api.editSuggestionWithTeacher(params)
         .then(res=>{
           console.log(res)
           if(res.code==1){
-            this.haveReplyList();
-            this.message=''
+            this.$toast('修改成功');
+            this.$router.go(-1)
+            this.message='';
           }
-          
-          // this.dataList=res.data.data.rows
       },()=>{
 
       })
       ;
     },
+    back(){
+      this.$router.go(-1)
+    }
   }
 }
 </script>

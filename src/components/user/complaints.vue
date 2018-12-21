@@ -43,7 +43,7 @@ export default {
       ;
     },
     goTo (url,item) {
-      this.$router.push({path: url,query:{information:item}})
+      this.$router.push({path: url,query:{id:item.id,studentName:item.studentName,createTime:item.createTime,content:item.content}})
     }
   }
 }

@@ -4,11 +4,11 @@
     <div class="timetable-table">
       <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
       <div class="table-l">
-        <div class="class-tit">{{this.$route.query.information.studentName}}</div>
-        <div class="class-details"><span class="time">{{this.$route.query.information.createTime}}</span></div>
+        <div class="class-tit">{{this.$route.query.studentName}}</div>
+        <div class="class-details"><span class="time">{{this.$route.query.createTime}}</span></div>
       </div>
     </div>
-    <div class="complaints-txt" v-html="this.$route.query.information.content">
+    <div class="complaints-txt" v-html="this.$route.query.content">
     </div>
   </section>
   <div class="reply-record" @click="immediateReply">
@@ -23,7 +23,7 @@
     <div class="timetable-table">
       <div class="img"><img src="../../assets/images/user/test.jpg"/></div>
       <div class="table-l">
-        <div class="class-tit">回复</div>
+        <div class="class-tit">{{item.isIncognito ? '回复':item.teacherName}}</div>
         <div class="class-details"><span class="time">{{item.createTime}}</span></div>
       </div>
       <div class="table-r">
@@ -63,14 +63,14 @@ export default {
    mounted(){
     //  this.$route.query.information
     this.haveReplyList()
+    console.log(this.$route.query.id)
 
    },
   methods: {
     
       haveReplyList(){
-        console.log(this.$route.query.information.id)
         let params = new URLSearchParams();
-        params.append("suggestionId", this.$route.query.information.id);
+        params.append("suggestionId", this.$route.query.id);
         api.finaAllSuggertionForTeacher(params)
         .then(res=>{
           this.dataList=res.data.data
@@ -82,7 +82,7 @@ export default {
       let params = new URLSearchParams();
       params.append("isIncognito", this.checkNum);
       params.append("content", this.message);
-      params.append("suggestionId", this.$route.query.information.id);
+      params.append("suggestionId", this.$route.query.id);
       api.addSuggestionWithTeacher(params)
         .then(res=>{
           console.log(res)
@@ -110,7 +110,7 @@ export default {
       });
     },
     goTo (url,item) {
-      this.$router.push({path: url,query:{reply:item}})
+      this.$router.push({path: url,query:{content:item.content,id:item.id,suggestionId:item.suggestionId,isIncognito:item.isIncognito}})
     }
   }
 }
