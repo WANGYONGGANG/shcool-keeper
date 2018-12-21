@@ -2,49 +2,227 @@
   <div class="reslease-ass">
     <div class="recipient">
     <van-cell-group>
-      <van-cell title="接受人" value="内容" is-link to="/general/publishClass" />
+      <!-- <van-cell title="接受人" value="内容" is-link to="/general/publishClass" /> -->
+      <van-cell title="接受人" value="请选择"  v-on:click="showIntroducer" />
     </van-cell-group>
     </div>
     <div class="ass-title">
       <van-cell-group>
-        <van-field
-          v-model="message"
-          label="标题"
-          type="textarea"
-          placeholder="请输入标题"
-          rows="1"
-        />
+        <van-field v-model="message" label="标题" type="textarea" placeholder="请输入标题" rows="1" />
       </van-cell-group>
     </div>
     <div class="class-evaluation">
       <van-cell-group>
         <van-cell title="内容" />
-        <van-field
-          v-model="message"
-          type="textarea"
-          placeholder="写点什么吧"
-          rows="1"
-        />
+        <van-field v-model="message" type="textarea" placeholder="写点什么吧" rows="1" />
       </van-cell-group>
       <div class="add-voice">点击录制语音</div>
-      <div class="add-img">添加图片</div>
-      <div class="add-img">添加视频</div>
-      <div class="add-img">添加文件</div>
+      <div class="file-out">
+        <div class="add-img" v-on:click="addImg">添加图片</div>
+        <div class="img-sign"  v-for="(item,index) in  imgArray"  v-bind:key="index"><img  v-bind:src="'http://teacher.rexuejiewu.com.cn'+item"/></div>
+      </div>
+      <div class="file-out">
+        <div class="add-img" v-on:click="addMedia">添加视频</div>
+        <div class="img-sign" v-for="(item,index) in mediaArray" v-bind:key="index"><span>{{item}}</span></div>
+      </div>
+      <div class="file-out">
+        <div class="add-img" v-on:click="addFile">添加文件</div>
+         <div class="img-sign" v-for="(item,index) in fileArray" v-bind:key="index"><span>{{item}}</span></div>
+      </div>
+      <div style="display:none;">
+        <div>
+          <input type="file"  @change="uploadImg($event)"  multiple="multiple"  id="uploadImg" v-on:click="openUploadImg">
+        </div>
+        <div>
+          <input type="file" @change="uploadMedia($event)" multiple="multiple" id="uploadMedia" v-on:click="openUploadMedia">
+        </div>
+        <div>
+          <input type="file" @change="uploadFile($event)" multiple="multiple" id="uploadFile" v-on:click="openUploadFile">
+        </div>
+      </div>
     </div>
     <div class="list-bottom">提交</div>
+    <van-popup v-model="rightPopDates.item01.isShow"  position="right" style="height:100%;">
+       <publishClass v-on:addClass="addClass"></publishClass>
+    </van-popup>
   </div>
 </template>
 <script>
+import { api } from "../../../static/js/request-api/request-api.js";
+import publishClass from "@/components/general/publishClass"
 export default {
+  components: {
+      publishClass
+  },
   data () {
     return {
       message:'',
       urls:{
         publishClass:'/general/publishClass'
-      }
+      },
+      notice_content:"",
+      notice_title:"",
+      notice_student:"",
+      fileArray: [],
+      rightPopDates:{
+          item01:{
+            isShow:false,
+            selectItem:'',
+            data:[{itemName:'1'}]
+          }
+         },
+      mediaArray:[],
+      imgArray:[]
     }
   },
+  mounted: function() {
+    this.openRecorder();
+  },
   methods: {
+    //查询介绍人
+    showIntroducer:function(){
+        this.rightPopDates.item01.isShow=true;
+    },
+    //添加班级
+   addClass:function(classObjAllSelcted){
+         this.notice_student=classObjAllSelcted;
+         this.rightPopDates.item01.isShow=false;
+    },
+    //录音
+  openRecorder:function(){
+  var rec=Recorder();
+rec.open(function(){//打开麦克风授权获得相关资源
+	rec.start();//开始录音
+	
+	setTimeout(function(){
+		rec.stop(function(blob){//到达指定条件停止录音，拿到blob对象想干嘛就干嘛：立即播放、上传
+			console.log(URL.createObjectURL(blob));
+			rec.close();//释放录音资源
+		},function(msg){
+			console.log("录音失败:"+msg);
+		});
+	},3000);
+},function(msg){//未授权或不支持
+	console.log("无法录音:"+msg);
+});
+    },
+    addImg: function() {
+      $("#uploadImg").click();
+    },
+    addMedia: function() {
+       $("#uploadMedia").click();
+    },
+    addFile: function() {
+       $("#uploadFile").click();
+    },
+    //打开上传域文件
+    openUploadFile: function(event) {
+
+    },
+    //打开上传图片
+    openUploadMedia: function(event) {
+
+    },
+    openUploadImg:function(event){
+
+    },
+    //打开上传域文件
+    uploadImg: function(event) {
+
+    },
+    uploadImg: function(event) {
+      let _self = this;
+      this.file = event.target.files[0]; //获取input的图片file值
+      // this.file = event.target.files; //获取input的图片file值
+      let param = new FormData(); // 创建form对象
+      param.append("files", this.file); //对应后台接收图片名
+      console.log(this.file);
+      api.uploadFile(param)
+        .then(res => {
+          if (res.code == 1) {
+            let fileArray = res.data;
+            for (let i = 0; i < fileArray.length; i++) {
+              _self.imgArray.push(fileArray[i]);
+            }
+          } else {
+            let params = { msg: "上传文件错误" };
+          }
+        })
+        .catch(error => {
+          let params = { msg: "上传文件错误" };
+        });
+    },
+    uploadMedia: function(event) {
+      let _self = this;
+      this.file = event.target.files[0]; //获取input的图片file值
+      // this.file = event.target.files; //获取input的图片file值
+      let param = new FormData(); // 创建form对象
+      param.append("files", this.file); //对应后台接收图片名
+      api.uploadFile(param)
+        .then(res => {
+          if (res.code == 1) {
+            let fileArray = res.data;
+            for (let i = 0; i < fileArray.length; i++) {
+              _self.mediaArray.push(fileArray[i]);
+            }
+          } else {
+            let params = { msg: "上传文件错误" };
+          }
+        })
+        .catch(error => {
+          let params = { msg: "上传文件错误" };
+        });
+    },
+    uploadFile: function(event) {
+      let _self = this;
+      this.file = event.target.files[0]; //获取input的图片file值
+      // this.file = event.target.files; //获取input的图片file值
+      let param = new FormData(); // 创建form对象
+      param.append("files", this.file); //对应后台接收图片名
+      api
+        .uploadFile(param)
+        .then(res => {
+          if (res.code == 1) {
+            let fileArray = res.data;
+            for (let i = 0; i < fileArray.length; i++) {
+              _self.fileArray.push(fileArray[i]);
+            }
+          } else {
+            let params = { msg: "上传文件错误" };
+          }
+        })
+        .catch(error => {
+          let params = { msg: "上传文件错误" };
+        });
+    },
+    addNotice: function() {
+      let params = {};
+      let _self = this;
+      // let loginData = new URLSearchParams();
+      // loginData.append("username", this.userName);
+      // loginData.append("password", this.myPassword);
+      params.image_path=this.imgArray;
+      params.notice_title=this.notice_title;
+      params.notice_content=this.notice_content;
+      params.notice_student=this.notice_student;
+      params.video_paths=this.mediaArray;
+      params.voice_paths=null,
+      api.addNotice(params)
+        .then(res => {
+          console.log(res);
+          if (res.status == 200) {
+            let code = res.data.code;
+            if (code === 1) {
+              _self.list = res.data.data;
+            }
+          } else {
+            let params = { msg: "获取购物车列表错误" };
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取购物车列表错误" };
+        });
+    },
     goTo (url) {
       this.$router.push({path: url})
     }
