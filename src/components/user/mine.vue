@@ -11,7 +11,7 @@
   <van-cell-group>
     <van-cell title="修改密码" icon="edit-data" is-link to="/user/changePassword" />
     <van-cell title="修改图像" icon="records" is-link to=""  @click="showPhotoPop"/>
-    <van-cell title="招生二维码" icon="records" is-link to="" />
+    <van-cell title="招生二维码" icon="records" is-link to="/user/qrCode" />
   </van-cell-group>
 
   <van-cell-group>

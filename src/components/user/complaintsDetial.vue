@@ -12,7 +12,7 @@
     </div>
   </section>
   <div class="reply-record" @click="immediateReply">
-    <van-cell title="回复记录（3条）">
+    <van-cell title="回复记录（条）">
       <template>
         <span class="custom-text">立即回复</span>
         <van-icon name="pending-evaluate" />
@@ -63,8 +63,6 @@ export default {
    mounted(){
     //  this.$route.query.information
     this.haveReplyList()
-    console.log(this.$route.query.id)
-
    },
   methods: {
     

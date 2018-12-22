@@ -30,6 +30,7 @@ import ChangePassword from '@/components/user/changePassword'
 import WorkStatistics from '@/components/user/workStatistics'
 import WorkStatisticsDetial from '@/components/user/workStatisticsDetial'
 import WorkStatisticsAttendance from '@/components/user/workStatisticsAttendance'
+import QrCode from '@/components/user/qrCode'
 
 import ParentRatingRanking from '@/components/user/parentRatingRanking'
 import EvaluationLatitude from '@/components/user/evaluationLatitude'
@@ -196,6 +197,11 @@ export default new Router({
       path: '/user/parentRatingRanking',
       name: 'parentRatingRanking',
       component: ParentRatingRanking
+    },
+    {
+      path: '/user/qrCode',
+      name: 'qrCode',
+      component: QrCode
     },
     {
       path: '/chart/operationOverview',

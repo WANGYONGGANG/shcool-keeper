@@ -467,8 +467,14 @@ export const api = {
     editSuggestionWithTeacher(params) {
         return fetchPost(baseUrl + '/user/editSuggestionWithTeacher', params);
     },
-
-
+    //修改密码
+    resetPassword(params) {
+        return fetchPost(baseUrl + '/user/resetPassword', params);
+    },
+    //获取招生二维码
+    getSellerQRCode(params) {
+        return fetchGet(baseUrl + '/user/getSellerQRCode', params);
+    },
 
 
 
