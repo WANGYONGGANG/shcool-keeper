@@ -10,20 +10,21 @@
     </div>
     <van-cell-group class="class-list">
       <!-- <van-cell is-link to="/general/publishPeople" v-for="(item,index) in classList" v-bind:key="index"> -->
-       <van-cell  v-for="(item,index) in classList" v-bind:key="index" is-link    v-on:click="openStudent(item.id)">
+       <van-cell  v-for="(item,index) in classList" v-bind:key="index" is-link >
         <template slot="title">
-          <input type="checkbox"  v-bind:value="item.id" v-model="classCheckIds"  />
-          <span class="list-item01">{{item.className}}（0/{{item.currentStudentCount}}）</span><span class="list-item02">{{item.campusName}}</span>
+          <input type="checkbox"  v-bind:value="item.id" v-model="classCheckIds"  name="category1"  v-on:click="selectedClass(item.id,$event)" />
+          <span class="list-item01"   v-on:click="openStudent(item.id,index)">{{item.className}}（{{item.selectedCurrentStudentCount}}/{{item.currentStudentCount}}）</span>
+          <span class="list-item02"   v-on:click="openStudent(item.id,index)">{{item.campusName}}</span>
         </template>
       </van-cell>
     </van-cell-group>
     <div class="all-choose fn-clear">
-     <div class="fn-left"><input type="checkbox" /> 全选</div>
+     <div class="fn-left"><input type="checkbox"  v-on:click="selectedAll"   class="all-selected-class"/> 全选</div>
       <div class="fn-right" v-on:click="addClass"><span>确定</span></div>
     </div>
     <sort-pop></sort-pop>
-     <van-popup v-model="rightPopDates.item01.isShow"  position="right" style="height:100%;">
-       <publishPeople   ref="publishP" v-bind:classId="selectedClassId" v-on:addStudents="addStudents"></publishPeople>
+     <van-popup v-model="rightPopDates.item01.isShow"  position="right" style="height:100%;" >
+       <publishPeople   ref="publishP" v-bind:classId="selectedClassId"  v-bind:index="selectedIndex" v-on:addStudents="addStudents" v-if="showPeople"></publishPeople>
     </van-popup>
   </div>
 </template>
@@ -41,6 +42,8 @@
       classList:[],
       class_name:null,
       selectedClassId:null,
+      selectedIndex:null,
+      showPeople:true,
       classCheckIds:[],
       classObjAllSelcted:[],
       selectedClassObj:null,
@@ -60,23 +63,93 @@
     goTo (url) {
       this.$router.push({path: url})
     },
-    addStudents(classObj){
+    addStudents(classObj,index){
         this.selectedClassObj=classObj;
+        let selectedIndex=index;
+        this.classList[index].selectedCurrentStudentCount=classObj.studentIDs.length;
         this.rightPopDates.item01.isShow=false;
+        this.showPeople=false;
         this.classObjAllSelcted.push(classObj);
+    },
+    selectedClass(id,event){
+       let el = event.currentTarget;
+       event.stopPropagation();
+       let isChecked=$(el).is(':checked');
+       console.log(isChecked+"&&&&&&&&&&&&&&&&&");
+           
+    },
+    //去除重复或者重新添加
+    removeRepetitionOrAdd(id){
+       let  classObjAllSelcted=this.classObjAllSelcted;
+       for(let j=0;j<classObjAllSelcted.length;j++){
+            let classObjItem=classObjAllSelcted[j];
+            
+
+       }
+    },
+     //获取所有班级花名册
+      findAllClassStudentInfo(classId){
+      let _self = this;
+      let params={};
+      params.class_id=classId;
+      api.findAllClassStudentInfo(params)
+        .then(res => {
+          if (res.status == 200) {
+                let code=res.data.code;
+                if(code==1){
+                  let  studentList=res.data.data;
+                }
+          } else {
+            let params = { msg: "获取班级花名册" };
+            // GlobalVue.$emit("alert", params);
+            // GlobalVue.$emit("blackBg", null);
+          }
+        })
+        .catch(error => {
+          let params = { msg: "获取班级花名册" };
+          // GlobalVue.$emit("alert", params);
+          // GlobalVue.$emit("blackBg", null);
+        });
     },
     //添加班级
     addClass(){
       // let classCheckIds=this.classCheckIds;
       this.$emit('addClass', this.classObjAllSelcted);
     },
+    selectedAll:function(){
+      let _self=this;
+     let allChecked=$(".all-selected-class").is(':checked');
+     if(allChecked){
+        var items = document.getElementsByName("category1");
+        // _self.studentCheckIds=[];
+        // for(let j=0;j<_self.studentList.length;j++){
+        //     _self.studentCheckIds.push(_self.studentList[j].id);
+        // }
+         for (let i = 0; i < items.length; i++) {
+          if (!items[i].checked) {
+            items[i].checked = true;
+          }
+        }
+     }else{
+        var items = document.getElementsByName("category1");
+        _self.studentCheckIds=[];
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].checked) {
+            items[i].checked = false;
+          }
+        }
+     }
+    },
     searchAll(){
      this.findAllClassInfo();
     },
     //打开班级花名册
-    openStudent(itemId){
+    openStudent(itemId,index){
        this.selectedClassId=itemId;
+       this.selectedIndex=index;
        this.rightPopDates.item01.isShow=true;
+       this.showPeople=false;
+       this.showPeople=true;
     },
     showSortDia(){
 
@@ -90,7 +163,14 @@
           if (res.status == 200) {
                 let code=res.data.code;
                 if(code===1){
-                  this.classList=res.data.data;
+                   let item;
+                  for(let i=0;i<res.data.data.length;i++){
+                    item=(res.data.data)[i];
+                    item.selectedCurrentStudentCount=0;
+                    this.classList.push(item);
+                  }
+                  // this.classList=item;
+
                 }
           } else {
             let params = { msg: "获取招生来源" };
