@@ -78,11 +78,20 @@
        console.log(isChecked+"&&&&&&&&&&&&&&&&&");
            
     },
+    //去除重复或者重新添加
+    removeRepetitionOrAdd(id){
+       let  classObjAllSelcted=this.classObjAllSelcted;
+       for(let j=0;j<classObjAllSelcted.length;j++){
+            let classObjItem=classObjAllSelcted[j];
+            
+
+       }
+    },
      //获取所有班级花名册
-      findAllClassStudentInfo(){
+      findAllClassStudentInfo(classId){
       let _self = this;
       let params={};
-      params.class_id=this.classId;
+      params.class_id=classId;
       api.findAllClassStudentInfo(params)
         .then(res => {
           if (res.status == 200) {
