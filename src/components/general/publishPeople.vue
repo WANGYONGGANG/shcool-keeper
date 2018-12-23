@@ -7,7 +7,7 @@
     <van-cell-group class="class-list"  v-for="(item,index) in studentList" v-bind:key="index">
       <van-cell>
         <template slot="title">
-          <input type="checkbox"  v-bind:value="item.id" v-model="studentCheckIds"  checked="checked"/>
+          <input type="checkbox"  v-bind:value="item.id" v-model="studentCheckIds"/>
           <img src="../../assets/images/user/test.jpg" class="img-auto"/>
                  {{item.studentCode}}&nbsp;  {{item.studentName}}
         </template>
@@ -48,10 +48,16 @@ export default {
     //全选
     selectedAll:function(){
      let allChecked=$(".all-selected").is(':checked');
+     console.log("^^^^^^^^^^^^^^^"+allChecked);
      if(allChecked){
-        $(".people-list input").prop("checked","checked");
+        $(".people-list input").each(function(){
+          console.log($(this));
+          alert('111')
+          $(this).attr("checked","checked");
+                    alert('222')
+        })
      }else{
-        $(".people-list input").removeAttr("checked");
+        $(this).attr("checked",false);
      }
    
 

@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router';
 
-import 'vant/lib/index.css';
+import 'vant/lib/vant-css/index.css';
 import '../static/css/base.less';
 import '../static/css/private-vant.less';
 import 'vue-easytable/libs/themes-base/index.css';
