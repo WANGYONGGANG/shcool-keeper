@@ -12,6 +12,8 @@ import 'vue-easytable/libs/themes-base/index.css';
 import 'vue-awesome/icons';
 import Icon from 'vue-awesome/components/Icon';
 import Vant from 'vant';
+import { Checkbox, CheckboxGroup } from 'vant';
+
 import store from './store';
 import echarts from 'echarts';
 
@@ -28,6 +30,7 @@ Vue.component('icon', Icon)
 // 注册到全局
 Vue.component(VTable.name, VTable)
 Vue.use(Vant)
+Vue.use(Checkbox).use(CheckboxGroup);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

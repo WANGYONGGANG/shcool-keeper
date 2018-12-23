@@ -3,16 +3,14 @@
     <div class="title">
       {{studentList[0].className}}
     </div>
-    <div class="people-list">
-    <van-cell-group class="class-list"  v-for="(item,index) in studentList" v-bind:key="index">
+    <div class="people-list" v-show="showPeopleData">
+    <div class="class-list"  v-for="(item,index) in studentList" v-bind:key="index">
       <van-cell>
-        <template slot="title">
-          <input type="checkbox"  v-bind:value="item.id" v-model="studentCheckIds"  checked="checked"/>
+          <input type="checkbox"  v-bind:value="item.id" v-model="studentCheckIds"   name="category1" >
           <img src="../../assets/images/user/test.jpg" class="img-auto"/>
                  {{item.studentCode}}&nbsp;  {{item.studentName}}
-        </template>
       </van-cell>
-    </van-cell-group>
+    </div>
     </div>
     <div class="all-choose fn-clear">
      <div class="fn-left"><input type="checkbox"  v-on:click="selectedAll"  class="all-selected"/> 全选</div>
@@ -26,13 +24,14 @@ import $ from "jquery";
 export default {
    data() {
     return {
-      studentList:[],
+      studentList:[{className:""}],
+      showPeopleData:true,
       studentCheckIds:[]
       }
     },
-  props: ["classId"],
+  props: ["classId","index"],
   mounted () {
-     this.findAllClassStudentInfo();2
+     this.findAllClassStudentInfo();
   },
   methods: {
     goTo (url) {
@@ -41,20 +40,35 @@ export default {
     addStudents(){
          let classObj={};
          classObj.classID=this.classId;
+         let  index=this.index;
          classObj.studentIDs=this.studentCheckIds;
-         this.$emit('addStudents',classObj);
+         this.$emit('addStudents',classObj,index);
          
     },
     //全选
     selectedAll:function(){
+      let _self=this;
      let allChecked=$(".all-selected").is(':checked');
      if(allChecked){
-        $(".people-list input").prop("checked","checked");
+        var items = document.getElementsByName("category1");
+        _self.studentCheckIds=[];
+        for(let j=0;j<_self.studentList.length;j++){
+            _self.studentCheckIds.push(_self.studentList[j].id);
+        }
+         for (let i = 0; i < items.length; i++) {
+          if (!items[i].checked) {
+            items[i].checked = true;
+          }
+        }
      }else{
-        $(".people-list input").removeAttr("checked");
+        var items = document.getElementsByName("category1");
+        _self.studentCheckIds=[];
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].checked) {
+            items[i].checked = false;
+          }
+        }
      }
-   
-
     },
     //获取所有班级花名册
       findAllClassStudentInfo(){
