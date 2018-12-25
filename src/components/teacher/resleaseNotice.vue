@@ -201,10 +201,12 @@ rec.open(function(){//打开麦克风授权获得相关资源
       // loginData.append("password", this.myPassword);
       params.image_path=this.imgArray;
       params.notice_title=this.notice_title;
-      params.notice_content=this.notice_content;
+      params.notice_content=this.notice_content.toString();
       params.notice_student=this.notice_student;
       params.video_paths=this.mediaArray;
       params.voice_paths=null,
+      console.log("^^^^^^^^^^^^^^");
+      console.log(params);
       api.addNotice(params)
         .then(res => {
           console.log(res);

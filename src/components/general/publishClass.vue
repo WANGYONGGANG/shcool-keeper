@@ -12,7 +12,7 @@
       <!-- <van-cell is-link to="/general/publishPeople" v-for="(item,index) in classList" v-bind:key="index"> -->
        <van-cell  v-for="(item,index) in classList" v-bind:key="index" is-link >
         <template slot="title">
-          <input type="checkbox"  v-bind:value="item.id" v-model="classCheckIds"  name="category1"  v-on:click="selectedClass(item.id,$event)" />
+          <input type="checkbox"  v-bind:value="item.id" v-model="classCheckIds"  name="category1"  v-on:click="selectedClass(item.id,$event,index)" />
           <span class="list-item01"   v-on:click="openStudent(item.id,index)">{{item.className}}（{{item.selectedCurrentStudentCount}}/{{item.currentStudentCount}}）</span>
           <span class="list-item02"   v-on:click="openStudent(item.id,index)">{{item.campusName}}</span>
         </template>
@@ -71,24 +71,29 @@
         this.showPeople=false;
         this.classObjAllSelcted.push(classObj);
     },
-    selectedClass(id,event){
+    selectedClass(id,event,index){
        let el = event.currentTarget;
        event.stopPropagation();
        let isChecked=$(el).is(':checked');
-       console.log(isChecked+"&&&&&&&&&&&&&&&&&");
-           
+       this.removeRepetitionOrAdd(id,index);
+    
     },
     //去除重复或者重新添加
-    removeRepetitionOrAdd(id){
+    removeRepetitionOrAdd(id,index){
+      let _self=this;
        let  classObjAllSelcted=this.classObjAllSelcted;
        for(let j=0;j<classObjAllSelcted.length;j++){
             let classObjItem=classObjAllSelcted[j];
-            
-
+            let selectedItemIndex;
+            if(classObjItem.classID==id){
+                    selectedItemIndex=classObjAllSelcted.indexOf(classObjItem);
+                    classObjAllSelcted.splice(selectedItemIndex,1);
+            }
        }
+       _self.findAllClassStudentInfo(id,index);
     },
      //获取所有班级花名册
-      findAllClassStudentInfo(classId){
+      findAllClassStudentInfo(classId,index){
       let _self = this;
       let params={};
       params.class_id=classId;
@@ -98,6 +103,17 @@
                 let code=res.data.code;
                 if(code==1){
                   let  studentList=res.data.data;
+                  let classObj={};
+                  classObj.classID=classId;
+                  let studentCheckIds=[];
+                  for(let k=0;k<studentList.length;k++){
+                    studentCheckIds.push(studentList[k].id);
+                  }
+                  //设置选中标签
+                  _self.classList[index].selectedCurrentStudentCount=studentList.length;
+                  classObj.studentIDs=studentCheckIds;
+                 _self.classObjAllSelcted.push(classObj);
+
                 }
           } else {
             let params = { msg: "获取班级花名册" };
@@ -114,6 +130,7 @@
     //添加班级
     addClass(){
       // let classCheckIds=this.classCheckIds;
+      
       this.$emit('addClass', this.classObjAllSelcted);
     },
     selectedAll:function(){
