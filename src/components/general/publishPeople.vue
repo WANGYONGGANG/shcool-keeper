@@ -49,6 +49,7 @@ export default {
     selectedAll:function(){
       let _self=this;
      let allChecked=$(".all-selected").is(':checked');
+     console.log("^^^^^^^^^^^^^^^"+allChecked);
      if(allChecked){
         var items = document.getElementsByName("category1");
         _self.studentCheckIds=[];
