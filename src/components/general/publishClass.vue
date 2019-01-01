@@ -75,6 +75,7 @@
        let el = event.currentTarget;
        event.stopPropagation();
        let isChecked=$(el).is(':checked');
+       
        console.log(isChecked+"&&&&&&&&&&&&&&&&&");
            
     },
