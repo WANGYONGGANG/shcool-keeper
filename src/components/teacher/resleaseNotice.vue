@@ -87,21 +87,8 @@ export default {
     },
     //录音
   openRecorder:function(){
-  var rec=Recorder();
-rec.open(function(){//打开麦克风授权获得相关资源
-	rec.start();//开始录音
-	
-	setTimeout(function(){
-		rec.stop(function(blob){//到达指定条件停止录音，拿到blob对象想干嘛就干嘛：立即播放、上传
-			console.log(URL.createObjectURL(blob));
-			rec.close();//释放录音资源
-		},function(msg){
-			console.log("录音失败:"+msg);
-		});
-	},3000);
-},function(msg){//未授权或不支持
-	console.log("无法录音:"+msg);
-});
+    
+ 
     },
     addImg: function() {
       $("#uploadImg").click();
@@ -199,12 +186,14 @@ rec.open(function(){//打开麦克风授权获得相关资源
       // let loginData = new URLSearchParams();
       // loginData.append("username", this.userName);
       // loginData.append("password", this.myPassword);
-      params.image_path=this.imgArray;
-      params.notice_title=this.notice_title;
-      params.notice_content=this.notice_content;
-      params.notice_student=this.notice_student;
-      params.video_paths=this.mediaArray;
+      params.image_path=JSON.stringify(this.imgArray);
+      params.notice_title=JSON.stringify(this.notice_title);
+      params.notice_content=JSON.stringify(this.notice_content);
+      params.notice_student=JSON.stringify(this.notice_student);
+      params.video_paths=JSON.stringify(this.mediaArray);
       params.voice_paths=null,
+      console.log("^^^^^^^^^^^^^^");
+      console.log(params);
       api.addNotice(params)
         .then(res => {
           console.log(res);
