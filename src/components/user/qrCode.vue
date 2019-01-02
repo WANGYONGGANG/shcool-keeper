@@ -1,6 +1,6 @@
 <template>
     <div class="inner">
-        <img src="" alt="">
+        <img :src='url' alt="">
     </div>
 </template>
 <script>
@@ -8,6 +8,7 @@ import {api} from  '../../../static/js/request-api/request-api.js';
 export default {
   data () {
     return {
+      url:'',
     }
   },
   mounted(){
@@ -19,6 +20,7 @@ export default {
       api.getSellerQRCode()
         .then(res=>{
             console.log(res)
+            this.url=res.data.data
       },()=>{
 
       })

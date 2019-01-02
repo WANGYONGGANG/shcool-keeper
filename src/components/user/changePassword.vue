@@ -58,9 +58,9 @@ export default {
         .then(res=>{
           // this.dataList=res.data.data
           console.log(res)
-          if(res.data.code==0){
+          if(res.code==1){
             this.$toast('修改成功，请重新登录');
-            this.$router.push({path: 'user/login'})
+            this.$router.push({path: '/user/login'})
           }else{
             this.$toast(res.data.message);
           }

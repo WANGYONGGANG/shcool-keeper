@@ -12,7 +12,7 @@
     </div>
   </section>
   <div class="reply-record" @click="immediateReply">
-    <van-cell title="回复记录（条）">
+    <van-cell :title=title>
       <template>
         <span class="custom-text">立即回复</span>
         <van-icon name="pending-evaluate" />
@@ -57,7 +57,8 @@ export default {
       },
       message:'',
       dataList:'',
-      checkNum:false
+      checkNum:false,
+      title:''
     }
   },
    mounted(){
@@ -72,6 +73,7 @@ export default {
         api.finaAllSuggertionForTeacher(params)
         .then(res=>{
           this.dataList=res.data.data
+          this.title="回复记录（"+this.dataList.length+"条)"
         },()=>{
 
       })
