@@ -21,7 +21,7 @@
   </van-cell-group>
 
   <van-cell-group>
-    <van-cell title="老师秀" icon="edit-data" is-link to="" />
+    <van-cell title="老师秀" icon="edit-data" is-link to="/user/teacherShow" />
     <!-- <van-cell title="电子推荐卡" icon="edit-data" is-link to="" /> -->
   </van-cell-group>
   <van-cell-group>
